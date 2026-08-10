@@ -1,6 +1,6 @@
 # Curation Protocol
 
-Agent Memory Radar is maintained by a scheduled AI curator. The repository itself does not run a scheduled paper crawler.
+Agent Memory Radar is maintained by a scheduled AI curator. The repository itself does not run a scheduled paper crawler. Curated updates are written directly to `main`; GitHub Actions is only the consistency guardrail.
 
 ## Daily process
 
@@ -10,6 +10,20 @@ The curator should use multiple independent subtasks/agents rather than one mono
 2. **Relevance + taxonomy** — independently decide whether each candidate satisfies the inclusion rule and assign the primary research-problem category plus orthogonal tags.
 3. **Research interpretation** — for accepted papers, read enough of the full paper to support claims about method, comparisons, evidence, and limitations. Abstract-only analysis is insufficient for these fields.
 4. **QC / adversarial review** — challenge inclusion, deduplicate versions, verify links, separate relevance from importance, and reject unsupported AI claims.
+
+Daily run logs are archival provenance and live under `runs/daily/YYYY/MM/DD.md`; they should not dominate the README.
+
+## Weekly compaction
+
+On the first daily run after an ISO week closes, synthesize the previous week's accepted papers into `digests/weekly/YYYY-Www.md`.
+
+The weekly file is **not** a concatenation of paper summaries. It should identify the 2–4 meaningful changes in the design space, rank the papers worth reading, expose tensions between approaches, and state the strongest newly visible research gaps. Multiple independent subtasks should separately propose themes, challenge importance rankings, and check that each claimed trend is supported by more than superficial wording overlap.
+
+## Monthly compaction
+
+On the first daily run after a calendar month closes, synthesize that month's weekly compactions plus canonical paper records into `digests/monthly/YYYY-MM.md`.
+
+The monthly file should answer: how did the research map move; which ideas persisted across multiple weeks; which themes weakened; what were the strongest papers; what unresolved trade-offs now matter; and what future evidence would falsify the current interpretation. A rolling month-to-date file may exist during the active month, but it must be explicitly marked rolling until finalized.
 
 ## Inclusion boundary
 
@@ -31,6 +45,8 @@ A high relevance score must not imply a high importance score.
 
 Every research note should distinguish author claims from the curator's interpretation. `Compared to What`, `Evidence`, `Why It Matters`, and `Limitations` should be based on the paper body and verified external sources when needed. Unknowns should remain unknown rather than being filled by plausible text.
 
+For compactions, do not infer a trend from a single paper unless it is explicitly labeled an early signal. Prefer cross-paper synthesis and preserve counter-evidence.
+
 ## Update policy
 
-Canonical records live under `data/papers/`. The README and category pages are researcher-facing views derived from them. Preserve provenance, avoid duplicate arXiv versions, and only attach code/project URLs that were actually verified.
+Canonical records live under `data/papers/`. Per-paper notes live under `papers/`. Weekly/monthly compactions are the high-level browsing layer. README and category pages are derived researcher-facing views. Preserve provenance, avoid duplicate arXiv versions, and only attach code/project URLs that were actually verified.
