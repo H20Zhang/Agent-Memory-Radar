@@ -1,0 +1,43 @@
+{
+  "id": "2608.04746",
+  "title": "Caching for the Future: Scrub Jay Episodic Memory Principles for Agent Memory Systems",
+  "authors": ["Kartikey Singh Bhandari", "Aarya Wadhwani", "Dhruv Kumar", "Pratik Narang"],
+  "published": "2026-08-05",
+  "first_seen": "2026-08-10",
+  "paper_url": "https://arxiv.org/abs/2608.04746",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "write_update_consolidation",
+  "tags": ["episodic", "structured", "timeline", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.04746"],
+    "analyzed_from": ["https://arxiv.org/html/2608.04746"],
+    "last_verified": "2026-08-10"
+  },
+  "analysis": {
+    "tldr": "The paper makes memory value explicitly time-dependent: each episodic memory carries What-Where-When context plus perishability and a utility horizon, so retention and retrieval can adapt to how facts age.",
+    "problem": "Similarity-based memory treats old facts as uniformly useful even when their operational value decays, while global recency heuristics cannot distinguish durable facts from perishable ones.",
+    "core_idea": "Represent episodic memories with What-Where-When structure and per-memory temporal utility parameters, combine them with query-adaptive scoring, and retroactively integrate new context as evidence changes the value of earlier memories.",
+    "memory_design": {
+      "write": "Create structured episodic entries with What-Where-When context and memory-specific perishability and utility-horizon parameters.",
+      "organize": "Keep temporal utility as a property of individual memories rather than applying one global decay rule to the whole store.",
+      "read": "Rank memories with a query-adaptive score that combines semantic relevance, contextual fit, and time-dependent utility.",
+      "update_forget": "Retroactively revise memory context and utility as later evidence arrives; per-memory decay naturally suppresses memories after their useful horizon."
+    },
+    "compared_to": [
+      "Mem0-style episodic memory",
+      "dense embedding retrieval with Qwen3 embeddings",
+      "global recency and temporal-prompt retrieval baselines"
+    ],
+    "evidence": "On EventQA-64k the method reports +2.66 F1 over Mem0 and +3.09 over the Qwen3-Embedding-4B retrieval baseline under the reported Llama 3.1 setting. On the controlled TGT diagnostic, the reported generalization gap improves by 0.108 and removing decay degrades the key metric by about 5.7x.",
+    "why_it_matters": "It turns forgetting from a generic cleanup heuristic into an explicit, memory-specific model of future utility, which is a more useful abstraction for long-lived agents with changing facts.",
+    "limitations": [
+      "The strongest gains concentrate on temporal reasoning over perishable facts; dense retrieval can match it under stronger backbones on some settings.",
+      "Flat retrieval remains stronger on some conflict and fact-consolidation cases, so the mechanism is not a universal replacement for semantic memory.",
+      "TGT is a controlled temporal diagnostic and its external validity for open-ended agents is limited."
+    ],
+    "confidence": "high"
+  }
+}
