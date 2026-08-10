@@ -1,0 +1,43 @@
+{
+  "id": "2608.01679",
+  "title": "When Memory Becomes Authority: Benchmarking Authorization Collapse in Agent Memory",
+  "authors": ["Qiuyang Zhan", "Rui Zhang", "Sheng Guo", "Lepeng Zhao", "Zhuotao Liu"],
+  "published": "2026-08-03",
+  "first_seen": "2026-08-10",
+  "paper_url": "https://arxiv.org/abs/2608.01679",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["semantic", "structured", "general-agent"],
+  "relevance": 0.97,
+  "importance": 4,
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.01679"],
+    "analyzed_from": ["https://arxiv.org/html/2608.01679"],
+    "last_verified": "2026-08-10"
+  },
+  "analysis": {
+    "tldr": "AuthMem-Bench identifies 'authority collapse': memory consolidation can preserve a claim while stripping away who was authorized to make it, causing later agents to treat untrusted statements as actionable memory.",
+    "problem": "Memory systems usually optimize semantic retention, but operational agents also need to preserve the authority and provenance constraints attached to a fact; compression can silently erase those constraints.",
+    "core_idea": "Construct paired histories where the semantic claim and downstream task are held fixed while source authority changes, then test whether memory consolidation preserves that distinction; a simple source-first authority label is evaluated as a mitigation.",
+    "memory_design": {
+      "write": "The benchmark passes role- and source-labeled histories through existing memory consolidators and measures whether authorization metadata survives the write step.",
+      "organize": "The proposed mitigation stores authority information alongside consolidated claims rather than treating provenance as disposable metadata.",
+      "read": "A downstream action agent consumes consolidated memory and should condition behavior on the stored authority label.",
+      "update_forget": "The study focuses on one consolidation-to-action cycle rather than long-term correction, revocation, or forgetting."
+    },
+    "compared_to": [
+      "memory consolidation that preserves claims but not source authority",
+      "multiple existing consolidators across several LLM backbones",
+      "a source-first authority-labeling mitigation"
+    ],
+    "evidence": "The benchmark reports authority collapse in 48 of 49 consolidator/backbone configurations. Collapsed memories produce a mean unauthorized-action rate of 50.3% in the reported evaluation; persisting authority labels reduces the observed unauthorized-action rate from 16.9% to 0.0% in the mitigation setting while leaving benign-task success essentially unchanged.",
+    "why_it_matters": "This exposes a missing invariant for agent memory: remembering the content is insufficient if the system forgets who was allowed to assert or authorize it. Provenance can be part of memory semantics, not optional metadata.",
+    "limitations": [
+      "AuthMem-Bench is a controlled benchmark with synthetic paired histories and hand-specified authority relations.",
+      "The evaluation covers a single write-to-action cycle rather than long-running memory with revocation, delegation, and conflicting authorities.",
+      "Whether the proposed authority representation scales to realistic organizations and open-ended tool permissions remains untested."
+    ],
+    "confidence": "high"
+  }
+}

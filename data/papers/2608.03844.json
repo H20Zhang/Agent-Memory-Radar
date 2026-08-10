@@ -1,0 +1,43 @@
+{
+  "id": "2608.03844",
+  "title": "MAFIA: Memory Attacks via Fully Indirect Access for LLM Agents",
+  "authors": ["Jiaming Chen", "Yisen Gao", "Yanping Li", "Zifan Liu", "Yumeng Zhang", "Jun Zhang"],
+  "published": "2026-08-04",
+  "first_seen": "2026-08-10",
+  "paper_url": "https://arxiv.org/abs/2608.03844",
+  "code_url": "https://github.com/JiamingChen1234/MAFIA",
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["semantic", "text", "general-agent"],
+  "relevance": 0.96,
+  "importance": 4,
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.03844"],
+    "analyzed_from": ["https://arxiv.org/html/2608.03844", "https://github.com/JiamingChen1234/MAFIA"],
+    "last_verified": "2026-08-10"
+  },
+  "analysis": {
+    "tldr": "MAFIA shows that an attacker who can only issue normal queries can poison retrieval-based agent memory so that malicious memories are later retrieved and acted on, without direct access to the memory store.",
+    "problem": "Persistent agent memory creates a delayed attack surface: harmful information written through ordinary interaction may survive, be retrieved in a different context, and influence future actions even when the current input appears benign.",
+    "core_idea": "Use black-box probing to estimate where a malicious memory should be placed in representation space, then wrap the malicious content in factual-looking cloaks that pass write-time auditing while maximizing later retrieval and behavioral influence.",
+    "memory_design": {
+      "write": "The attack induces poisoned memories through normal interaction rather than directly editing the store.",
+      "organize": "MAFIA targets existing retrieval-based memory stores rather than proposing a new representation.",
+      "read": "The attacker optimizes memory placement so poisoned entries are selected by similarity-based retrieval for target future queries.",
+      "update_forget": "The paper studies persistence of poisoned entries but does not propose a general memory lifecycle or forgetting mechanism."
+    },
+    "compared_to": [
+      "prior query-only memory attacks such as MINJA",
+      "write-time input auditing",
+      "post-retrieval consistency checking"
+    ],
+    "evidence": "Across the reported agent tasks and datasets, MAFIA reaches attack success rates up to 90.7%, while the strongest tested write-time audit catches at most 7.4% of the crafted attacks in the highlighted setting.",
+    "why_it_matters": "Memory changes prompt injection from an ephemeral-input problem into a persistent state-integrity problem. Defenses therefore need provenance and write/read policies, not only better prompt filters.",
+    "limitations": [
+      "The attack evaluation focuses on RAG-style similarity or demonstration memory, not graph, hierarchical, or strongly typed memory systems.",
+      "The defense study covers a limited set of write-time auditing and post-retrieval checks rather than provenance, capability, or information-flow controls.",
+      "Attack success depends on the target memory pipeline and retriever, so robustness across substantially different memory architectures remains open."
+    ],
+    "confidence": "high"
+  }
+}

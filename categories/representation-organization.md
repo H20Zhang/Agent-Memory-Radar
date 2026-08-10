@@ -2,4 +2,9 @@
 
 How agent memory is represented, structured, and organized.
 
-_No papers indexed yet._
+## Recent papers
+
+| Date | Paper | Tags | Importance | AI take |
+|---|---|---|---:|---|
+| 2026-08-06 | [Activity Frames](../papers/2026/2608.05784.md) | `episodic` `structured` `timeline` | ★★★☆☆ | Deterministic compilation is a credible alternative to LLM-based construction for high-volume personal activity memory. |
+| 2026-08-04 | [LeanMem](../papers/2026/2608.03463.md) | `episodic` `semantic` `structured` | ★★★★☆ | The real contribution is heterogeneous lifecycle semantics: profile, evolving event, and source-grounded record memories should not share one storage contract. |

@@ -1,0 +1,43 @@
+{
+  "id": "2608.03463",
+  "title": "LeanMem: Simple and Efficient Long-Term Memory for LLM Agents",
+  "authors": ["Yuxin Liao", "Le Wu", "Min Hou", "Hao Liu", "Han Wu", "Zishu Wang"],
+  "published": "2026-08-04",
+  "first_seen": "2026-08-10",
+  "paper_url": "https://arxiv.org/abs/2608.03463",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "representation_organization",
+  "tags": ["episodic", "semantic", "structured", "timeline", "personalization"],
+  "relevance": 0.99,
+  "importance": 4,
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.03463"],
+    "analyzed_from": ["https://arxiv.org/html/2608.03463"],
+    "last_verified": "2026-08-10"
+  },
+  "analysis": {
+    "tldr": "LeanMem stores different kinds of dialogue evidence differently—stable profile facts, evolving events, and source-grounded records—and plans retrieval over those stores instead of forcing all history into one memory representation.",
+    "problem": "Long-term agent histories mix facts with very different temporal dynamics and fidelity requirements; a single summarization or retrieval policy either wastes tokens or destroys information needed later.",
+    "core_idea": "Filter low-value dialogue, route retained information into profile, event, or record memory based on its semantics, evolve only the temporal event store, and assemble evidence with query-specific memory-type and token budgets.",
+    "memory_design": {
+      "write": "Filter low-information content, segment conversations by topic, and route useful evidence into representation-specific memory types.",
+      "organize": "Separate stable profile memory, temporally evolving event memory, and source-grounded records rather than using one homogeneous store.",
+      "read": "Adaptive Evidence Composition decides which memory types to consult and how much evidence to retrieve for each query.",
+      "update_forget": "Only event memory is selectively evolved as new temporal evidence arrives; stable profile and source-grounded records follow different update semantics."
+    },
+    "compared_to": [
+      "SimpleMem",
+      "LightMem",
+      "MemoryOS and A-MEM-style long-term memory systems"
+    ],
+    "evidence": "The paper evaluates LoCoMo and LongMemEval-S with GPT-4.1-mini and Qwen3-8B backbones. It reports gains over the strongest memory baseline of up to 5.54 points on LoCoMo and 15.07 points on LongMemEval-S depending on the backbone. Ablations show the heterogeneous storage schedule is the largest contributor, with memory evolution and retrieval planning also helping.",
+    "why_it_matters": "The important idea is the storage contract: heterogeneous evidence should have heterogeneous lifecycle semantics. That is a more scalable design principle than continuously improving one universal vector-memory abstraction.",
+    "limitations": [
+      "Evaluation is limited to dialogue-memory QA rather than agents taking consequential actions in changing environments.",
+      "Routing quality depends on correctly inferring the information type and temporal dynamics of each observation.",
+      "The reported evidence does not establish behavior under months- or years-long histories with distribution shifts and conflicting updates."
+    ],
+    "confidence": "high"
+  }
+}
