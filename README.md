@@ -2,9 +2,17 @@
 
 A daily-updated, GitHub-native research radar for **agent memory** papers, with a stable taxonomy and AI-generated research notes designed for researchers rather than generic summaries.
 
-> **Maintenance model:** paper discovery, filtering, classification, full-paper interpretation, and repository updates are maintained by a scheduled ChatGPT task. GitHub Actions only validates repository consistency; it is not the daily crawler.
+> **Maintenance model:** scheduled ChatGPT curation writes directly to `main`. Daily runs discover and curate papers; weekly and monthly compactions compress the stream into research-level takeaways. GitHub Actions only validates repository consistency.
 
-**Last curated:** 2026-08-10 · [Run log](runs/2026-08-10.md)
+**Last curated:** 2026-08-10 · [raw daily log](runs/daily/2026/08/10.md)
+
+## 🧭 Research Compactions
+
+- **[Weekly · 2026-W32](digests/weekly/2026-W32.md)** — early-August memory work shifts from “better retrieval” toward heterogeneous lifecycles, explicit memory policies, and persistent-state trust boundaries.
+- **[Monthly · 2026-08 (rolling)](digests/monthly/2026-08.md)** — month-to-date research map; finalized after August closes.
+- [How compaction works](digests/README.md)
+
+Daily logs are archival provenance, not the primary reading interface.
 
 ## 🔥 Latest Papers
 
@@ -89,16 +97,11 @@ Canonical structured records live in `data/papers/`; Markdown views are derived 
 
 Primary categories answer **which part of the memory system the paper changes**, rather than forcing every paper into a single cognitive-memory label. Orthogonal tags capture memory type, substrate, and application. See [`taxonomy.yaml`](taxonomy.yaml).
 
-## Daily Curation
+## Curation Cadence
 
-The scheduled curator uses an overlapping recent-paper window and multiple independent subtasks for:
+The scheduled curator uses multiple independent subtasks for broad discovery, semantic filtering/taxonomy, full-paper interpretation, and adversarial QC. It writes clean, auditable updates directly to `main`.
 
-1. broad discovery;
-2. semantic relevance filtering + taxonomy assignment;
-3. full-paper research interpretation;
-4. adversarial quality control, deduplication, and claim checking.
-
-The QC step explicitly challenges both inclusion and importance. Updates should preserve source provenance and only add code/project links when verified.
+On the first daily run after an ISO week closes, it creates or revises the previous week's **research compaction**. On the first daily run after a calendar month closes, it creates the previous month's **monthly research map**. Compaction must synthesize changes and trade-offs rather than concatenate paper summaries.
 
 ## Repository Status
 
