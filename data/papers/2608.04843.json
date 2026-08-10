@@ -1,0 +1,43 @@
+{
+  "id": "2608.04843",
+  "title": "MemoryCPT: An End-to-End Agent Memory Framework for Cost-Performance Trade-off",
+  "authors": ["Songxin Lei", "Kun Ouyang", "Weilin Ruan", "Yuqian Wu", "Zhijiang Guo", "Yushi Sun", "Fugee Tsung"],
+  "published": "2026-08-05",
+  "first_seen": "2026-08-10",
+  "paper_url": "https://arxiv.org/abs/2608.04843",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": ["episodic", "semantic", "structured", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.04843"],
+    "analyzed_from": ["https://arxiv.org/html/2608.04843"],
+    "last_verified": "2026-08-10"
+  },
+  "analysis": {
+    "tldr": "MemoryCPT jointly learns offline memory construction and online query-conditioned compression, explicitly optimizing answer quality against inference cost rather than treating the memory pipeline as fixed heuristics.",
+    "problem": "Multi-stage agent-memory systems repeatedly call large models for segmentation, abstraction, retrieval, and summarization, creating a cost-quality trade-off that hand-written pipelines do not optimize end to end.",
+    "core_idea": "QAD distills several memory-construction roles into a Qwen2.5-7B model using supervised reasoning traces, while QAR uses hybrid retrieval followed by a GRPO-trained summarizer whose reward balances answer F1 and context cost.",
+    "memory_design": {
+      "write": "A distilled construction model segments histories and emits episodic and semantic memory operations such as creating, merging, and abstracting entries.",
+      "organize": "Maintain complementary episodic and semantic memory stores produced by the learned construction stage.",
+      "read": "Fuse dense and sparse retrieval with reciprocal-rank fusion, then use a query-aware learned summarizer before the frozen answer model.",
+      "update_forget": "Construction includes merging and abstraction, but the paper does not center on a learned deletion or long-term forgetting policy."
+    },
+    "compared_to": [
+      "training-free modular memory pipelines such as LightMem and MemoryOS",
+      "learned memory-policy systems such as Memory-R1",
+      "cost-aware memory baselines such as BudgetMem"
+    ],
+    "evidence": "On LoCoMo and LongMemEval, the reported full system is competitive in answer quality while using much less query context. In the authors' ablation average, removing QAR increases cost from 5.02 to 11.10 and reduces F1 from 0.482 to 0.309; removing QAD also reduces answer quality.",
+    "why_it_matters": "The useful shift is to treat memory construction and query-time compression as trainable system components under an explicit cost objective, rather than optimizing retrieval quality alone.",
+    "limitations": [
+      "Evaluation is concentrated on conversational memory-QA benchmarks rather than agents acting through tools or environments.",
+      "The monetary cost objective depends on the selected model-pricing and amortization assumptions.",
+      "The learned construction policy may be benchmark-specific; broader transfer across domains and changing memory distributions is not established."
+    ],
+    "confidence": "high"
+  }
+}
