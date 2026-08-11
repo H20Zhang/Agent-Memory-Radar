@@ -5,7 +5,7 @@ Agent Memory Radar uses visuals as **research compression**, not decoration. The
 ## When to generate a figure
 
 - **Required:** papers with importance >= 4/5.
-- **Required:** weekly and monthly compactions.
+- **Required:** weekly, monthly, and yearly compactions.
 - **Optional:** lower-importance papers whose mechanism is unusually hard to understand from text.
 - **Skip:** incremental papers where a figure would mostly restate the abstract.
 
@@ -49,6 +49,19 @@ The monthly figure should show movement rather than volume:
 - persistent vs weakening themes;
 - unresolved trade-offs;
 - concrete falsification conditions that would weaken the curator's current interpretation.
+
+## Yearly research map
+
+The yearly figure is the most compressed visual layer. It should show only signals that survived beyond a short-lived weekly spike:
+
+- the year's durable design-space transitions;
+- the strongest / field-shaping papers or benchmarks supporting each transition;
+- themes that strengthened, weakened, or disappeared over the year;
+- durable trade-offs and open research gaps;
+- important corrections where an earlier monthly narrative did not survive later evidence;
+- 2–4 concrete conditions that would falsify the final yearly thesis.
+
+If the current-year coverage is partial, the visual must state the coverage window prominently and must not imply a full-year reconstruction.
 
 ## Iterative multi-role review
 
