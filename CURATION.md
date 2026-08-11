@@ -11,8 +11,29 @@ The README should prioritize:
 1. what Agent Memory Radar is and why it is useful;
 2. the current high-level research signals;
 3. weekly and monthly research compactions;
-4. papers worth reading and the latest accepted work;
+4. reading paths, papers worth reading, and the latest accepted work;
 5. clear category and scope entry points.
+
+Use **progressive disclosure** rather than choosing between a tiny README and an unreadably long one. For latest papers, prefer GitHub-native `<details><summary>...</summary>...</details>` blocks: the collapsed summary should expose title, importance, and date; the expanded body should let a reader understand the paper without leaving the README.
+
+A good expanded paper card contains only high-signal fields:
+
+- **Why read it** — the single reason this paper deserves attention;
+- **Problem** — what existing memory abstraction fails;
+- **Core idea** — the actual mechanism / design change;
+- **Compared to what** — the closest baseline and the real delta;
+- **Evidence** — only the strongest result or ablation that changes confidence;
+- **Caveat** — the main reason not to over-generalize;
+- links to paper, code/project when verified, and the full analysis.
+
+Do not duplicate the whole paper page inside README. The purpose of the foldout is **technical triage**, not exhaustive documentation.
+
+Keep the landing page bounded as the corpus grows:
+
+- keep roughly **8–10 latest paper foldouts** on README, rather than accumulating every paper forever;
+- keep roughly **3 reading paths** that reflect the current design space, not a static taxonomy dump;
+- keep **2–4 current research signals**, rewritten as evidence changes rather than appended historically;
+- keep a short **Papers Worth Reading** ranking; older work remains discoverable through category pages, paper pages, and compactions.
 
 Do **not** expose routine implementation details in the README: scheduler behavior, subagent roles, schemas, validation internals, storage layout, prompt mechanics, or operational provenance. Those belong in `CURATION.md`, `VISUAL_POLICY.md`, `assets/README.md`, schemas, and run logs.
 
