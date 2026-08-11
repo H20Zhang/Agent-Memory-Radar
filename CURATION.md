@@ -10,7 +10,7 @@ The README should prioritize:
 
 1. what Agent Memory Radar is and why it is useful;
 2. the current high-level research signals;
-3. weekly and monthly research compactions;
+3. weekly, monthly, and yearly research compactions;
 4. reading paths, papers worth reading, and the latest accepted work;
 5. clear category and scope entry points.
 
@@ -33,7 +33,8 @@ Keep the landing page bounded as the corpus grows:
 - keep roughly **8–10 latest paper foldouts** on README, rather than accumulating every paper forever;
 - keep roughly **3 reading paths** that reflect the current design space, not a static taxonomy dump;
 - keep **2–4 current research signals**, rewritten as evidence changes rather than appended historically;
-- keep a short **Papers Worth Reading** ranking; older work remains discoverable through category pages, paper pages, and compactions.
+- keep a short **Papers Worth Reading** ranking;
+- for **Research Compactions**, show every weekly compaction from roughly the last 31 days, every monthly compaction from the last 3 calendar months, and all yearly compactions. Older weekly/monthly files stay in the archive but fall off the landing page.
 
 Do **not** expose routine implementation details in the README: scheduler behavior, subagent roles, schemas, validation internals, storage layout, prompt mechanics, or operational provenance. Those belong in `CURATION.md`, `VISUAL_POLICY.md`, `assets/README.md`, schemas, and run logs.
 
@@ -62,6 +63,21 @@ On the first daily run after a calendar month closes, synthesize that month's we
 
 The monthly file should answer: how did the research map move; which ideas persisted across multiple weeks; which themes weakened; what were the strongest papers; what unresolved trade-offs now matter; and what future evidence would falsify the current interpretation. A rolling month-to-date file may exist during the active month, but it must be explicitly marked rolling until finalized.
 
+## Yearly compaction
+
+On the first daily run after a calendar year closes, synthesize that year's finalized monthly compactions plus canonical paper records into `digests/yearly/YYYY.md`.
+
+The yearly file should be the most compressed and durable research map. It should identify:
+
+- design-space shifts that persisted beyond a few weeks or one benchmark cycle;
+- the strongest / field-shaping papers and benchmarks of the year;
+- themes that strengthened, weakened, fragmented, or disappeared;
+- durable trade-offs and research gaps;
+- where earlier weekly/monthly interpretations were wrong or needed revision;
+- concrete evidence that would falsify the final yearly thesis.
+
+A rolling current-year file may exist, but its **coverage window must be explicit**. Never present a mid-year or partially backfilled view as a full-year reconstruction.
+
 ## Inclusion boundary
 
 Include work when memory persists or manages information across interaction/reasoning steps and materially affects a language or multimodal agent's future behavior.
@@ -86,4 +102,4 @@ For compactions, do not infer a trend from a single paper unless it is explicitl
 
 ## Update policy
 
-Canonical records live under `data/papers/`. Per-paper notes live under `papers/`. Weekly/monthly compactions are the high-level browsing layer. README and category pages are derived researcher-facing views. Preserve provenance, avoid duplicate arXiv versions, and only attach code/project URLs that were actually verified.
+Canonical records live under `data/papers/`. Per-paper notes live under `papers/`. Weekly/monthly/yearly compactions are the high-level browsing layer. README and category pages are derived researcher-facing views. Preserve provenance, avoid duplicate arXiv versions, and only attach code/project URLs that were actually verified.
