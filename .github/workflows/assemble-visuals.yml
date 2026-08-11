@@ -1,0 +1,45 @@
+name: Assemble Visual Assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '_visual_upload/.ready'
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Decode visual assets
+        shell: python
+        run: |
+          import base64
+          from pathlib import Path
+          ids = ['2608.05784','2608.04843','2608.04746','2608.03844','2608.03463','2608.01679']
+          out = Path('assets/visuals')
+          out.mkdir(parents=True, exist_ok=True)
+          for pid in ids:
+              parts = sorted(Path('_visual_upload').glob(f'{pid}.part*'))
+              if not parts:
+                  raise SystemExit(f'missing chunks for {pid}')
+              payload = ''.join(p.read_text().strip() for p in parts)
+              data = base64.b64decode(payload, validate=True)
+              if not data.startswith(b'RIFF') or b'WEBP' not in data[:16]:
+                  raise SystemExit(f'invalid WebP for {pid}')
+              (out / f'{pid}.webp').write_bytes(data)
+              print(pid, len(data), 'bytes')
+      - name: Commit binaries and clean staging
+        run: |
+          rm -rf _visual_upload
+          rm -f .github/workflows/assemble-visuals.yml
+          git config user.name 'agent-memory-radar'
+          git config user.email 'actions@github.com'
+          git add -A
+          git commit -m 'Add GPT visual explainers for curated papers'
+          git push
