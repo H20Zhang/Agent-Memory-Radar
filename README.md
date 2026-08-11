@@ -6,7 +6,7 @@ Agent Memory Radar tracks how AI agents **store, organize, retrieve, update, lea
 
 > **What changed? Compared to what? Why does it matter?**
 
-Rather than maximizing paper count, the radar separates *relevance* from *importance*, explains the actual technical delta of each paper, and periodically compacts the stream into weekly and monthly research maps.
+Rather than maximizing paper count, the radar separates *relevance* from *importance*, explains the actual technical delta of each paper, and periodically compacts the stream into weekly, monthly, and yearly research maps.
 
 **Last updated:** 2026-08-10
 
@@ -18,15 +18,25 @@ Early-August work suggests three shifts worth watching:
 - **Fixed heuristics → learned or utility-aware memory policies.** Memory construction, compression, retrieval, and forgetting are beginning to be treated as adaptive decisions rather than fixed knobs.
 - **Retrieval quality → persistent-state correctness.** Once memory survives across sessions, provenance, authorization, poisoning, and state integrity become part of the memory problem itself.
 
-These are **early signals, not settled trends**. The weekly and monthly compactions track whether they strengthen, weaken, or fragment as new evidence arrives.
+These are **early signals, not settled trends**. The compactions track whether they strengthen, weaken, or fragment as new evidence arrives.
 
 ## 🗺 Research Compactions
 
-If you do not want to scan individual papers, start here. Compactions synthesize **changes in the design space**, not a concatenation of paper summaries.
+Start here if you care more about the **research landscape** than the daily paper stream. The time scale gets coarser as the horizon grows: weekly reports capture local shifts; monthly reports track design-space movement; yearly reports preserve the durable map.
 
-- **[Weekly · 2026-W32](digests/weekly/2026-W32.md)** — how early-August work shifts from “better retrieval” toward heterogeneous lifecycles, explicit memory policies, and persistent-state trust boundaries.
-- **[Monthly · 2026-08 (rolling)](digests/monthly/2026-08.md)** — a month-to-date map of which themes are strengthening, which assumptions are being challenged, and what evidence would change the current interpretation.
-- **[Browse all compactions](digests/README.md)**
+### Weekly · last 1 month
+
+- **[2026-W32 · Aug 3–9](digests/weekly/2026-W32.md)** — early-August work shifts from “better retrieval” toward heterogeneous lifecycles, explicit memory policies, and persistent-state trust boundaries.
+
+### Monthly · last 1 quarter
+
+- **[2026-08 · rolling](digests/monthly/2026-08.md)** — month-to-date map of which themes are strengthening, which assumptions are being challenged, and what evidence would change the current interpretation.
+
+### Yearly · all available years
+
+- **[2026 · rolling](digests/yearly/2026.md)** — current yearly research map. **Coverage begins Aug 2026**, so it is explicitly not presented as a full-year reconstruction yet.
+
+**[Browse the full compaction archive →](digests/README.md)**
 
 ## 🧭 Choose a Reading Path
 
