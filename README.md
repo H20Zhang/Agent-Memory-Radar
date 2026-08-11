@@ -1,18 +1,44 @@
 # 🧠 Agent Memory Radar
 
-**A living research map of memory for AI agents — updated daily, explained for researchers.**
+**A living research map of memory for AI agents — updated daily, distilled for researchers.**
 
-Agent Memory Radar tracks new work on how agents **store, organize, retrieve, update, learn from, and reason over persistent memory**. The goal is not to maximize paper count: it is to help you quickly answer **what is new, compared to what, and why it matters**.
+Agent Memory Radar tracks how AI agents **store, organize, retrieve, update, learn from, and reason over persistent experience**. It is designed to answer three questions quickly:
+
+> **What changed? Compared to what? Why does it matter?**
+
+Rather than maximizing paper count, the radar separates *relevance* from *importance*, explains the actual technical delta of each paper, and periodically compacts the stream into weekly and monthly research maps.
 
 **Last updated:** 2026-08-10
 
-## 🧭 Start Here: Research Compactions
+## 🧭 Current Research Signals
 
-If you do not want to scan individual papers, start with the compactions. They synthesize papers into changes in the research landscape rather than concatenating summaries.
+Early-August work suggests three shifts worth watching:
 
-- **[Weekly · 2026-W32](digests/weekly/2026-W32.md)** — early-August work points toward heterogeneous memory lifecycles, explicit memory policies, and persistent-state trust boundaries.
-- **[Monthly · 2026-08 (rolling)](digests/monthly/2026-08.md)** — a rolling map of where the agent-memory design space is moving this month.
+- **Flat memory → heterogeneous memory lifecycles.** Different kinds of memory increasingly get different write, update, and read semantics rather than sharing one universal interface.
+- **Fixed heuristics → learned or utility-aware memory policies.** Memory construction, compression, retrieval, and forgetting are beginning to be treated as adaptive decisions rather than fixed knobs.
+- **Retrieval quality → persistent-state correctness.** Once memory survives across sessions, provenance, authorization, poisoning, and state integrity become part of the memory problem itself.
+
+These are **early signals, not settled trends**. The weekly and monthly compactions track whether they strengthen, weaken, or fragment as new evidence arrives.
+
+## 🗺 Research Compactions
+
+If you do not want to scan individual papers, start here. Compactions synthesize **changes in the design space**, not a concatenation of paper summaries.
+
+- **[Weekly · 2026-W32](digests/weekly/2026-W32.md)** — how early-August work shifts from “better retrieval” toward heterogeneous lifecycles, explicit memory policies, and persistent-state trust boundaries.
+- **[Monthly · 2026-08 (rolling)](digests/monthly/2026-08.md)** — a month-to-date map of which themes are strengthening, which assumptions are being challenged, and what evidence would change the current interpretation.
 - **[Browse all compactions](digests/README.md)**
+
+## ⭐ Papers Worth Reading
+
+Not every on-topic paper deserves equal attention. Current highlights:
+
+| Paper | Why it is worth reading |
+|---|---|
+| **[MemoryCPT](papers/2026/2608.04843.md)** | Treats memory construction and query-time compression as a joint **cost × quality optimization** problem rather than optimizing retrieval alone. |
+| **[LeanMem](papers/2026/2608.03463.md)** | Makes a strong case that profile, event, and source-grounded evidence should have **different lifecycle semantics**. |
+| **[Scrub Jay Memory](papers/2026/2608.04746.md)** | Reframes forgetting around **per-memory future utility** instead of one universal recency rule. |
+| **[AuthMem-Bench](papers/2026/2608.01679.md)** | Shows that memory can preserve a claim while losing **who had authority to make it**. |
+| **[MAFIA](papers/2026/2608.03844.md)** | Demonstrates that persistent memory turns prompt injection into a **cross-session state-integrity** problem. |
 
 ## 🔥 Latest Papers
 
@@ -58,43 +84,33 @@ If you do not want to scan individual papers, start with the compactions. They s
 
 [Paper](https://arxiv.org/abs/2608.01679) · [AI Analysis](papers/2026/2608.01679.md)
 
-## ⭐ Papers Worth Reading
-
-Not every on-topic paper deserves equal attention. **Importance is scored separately from relevance.** Current highlights:
-
-- **MemoryCPT** — end-to-end cost/performance optimization across memory construction and query-time use.
-- **LeanMem** — heterogeneous memory types with different lifecycle semantics.
-- **Scrub Jay Memory** — per-memory temporal utility as an explicit forgetting abstraction.
-- **AuthMem-Bench + MAFIA** — complementary evidence that provenance, authority, and state integrity become first-class problems once memory persists.
-
 ## 🗂 Browse by Research Problem
 
-- [Representation & Organization](categories/representation-organization.md) — how memory is represented and structured.
-- [Retrieval & Access](categories/retrieval-access.md) — how agents locate, query, and navigate memory.
-- [Write, Update & Consolidation](categories/write-update-consolidation.md) — what gets written, merged, corrected, compressed, or forgotten.
-- [Memory Learning & Evolution](categories/memory-learning-evolution.md) — learned memory policies, experience accumulation, and self-evolving agents.
-- [Evaluation & Analysis](categories/evaluation-analysis.md) — benchmarks, empirical studies, security, and failure analysis.
+The primary taxonomy asks **which part of the memory system a paper changes**:
 
-## 🔍 What Counts as Agent Memory?
+- **[Representation & Organization](categories/representation-organization.md)** — how memory is represented, structured, and materialized.
+- **[Retrieval & Access](categories/retrieval-access.md)** — how agents locate, query, navigate, and reason over memory.
+- **[Write, Update & Consolidation](categories/write-update-consolidation.md)** — what gets written, merged, corrected, compressed, or forgotten.
+- **[Memory Learning & Evolution](categories/memory-learning-evolution.md)** — learned memory policies, accumulated experience, procedural memory, and self-evolving agents.
+- **[Evaluation & Analysis](categories/evaluation-analysis.md)** — benchmarks, empirical studies, security, reliability, and failure analysis.
 
-We include work where memory **persists or manages information across interaction or reasoning steps and materially affects an agent's future behavior**.
+## 🔍 Scope
 
-Generic RAG, KV-cache optimization, and long-context work are not included unless persistent agent memory is a central mechanism. Discovery is intentionally broad; inclusion is semantic rather than keyword-based.
+A work belongs here when memory **persists or manages information across interaction or reasoning steps and materially affects an agent's future behavior**.
 
-## 📝 What You Get for Each Paper
+Generic RAG, KV-cache optimization, or long-context work is not included unless persistent agent memory is a central mechanism. The boundary is deliberately semantic rather than keyword-based.
 
-Each paper has a researcher-facing note designed for fast technical triage:
+## 📖 What Each Paper Page Gives You
+
+Each accepted paper is turned into a researcher-facing technical note:
 
 - **TL;DR, problem, and core idea**
 - **Memory design:** write, organize, read, update / forget
 - **Compared to what:** closest design points and the actual delta
 - **Evidence:** benchmarks, gains, and useful ablations
 - **Why it matters, limitations, and confidence**
+- **Visual explainer** for important or mechanism-heavy papers when a figure genuinely reduces reading effort
 
-Important or mechanism-heavy papers also receive a visual explainer when it adds information rather than decoration.
+---
 
-## About This Radar
-
-This is a living bibliography: new papers are added continuously, while weekly and monthly compactions turn the stream into a more stable research map. The taxonomy is organized around **which part of the memory system a paper changes**; orthogonal tags capture memory type, substrate, and application.
-
-For implementation details, curation rules, schemas, and provenance, see [`CURATION.md`](CURATION.md), [`VISUAL_POLICY.md`](VISUAL_POLICY.md), [`taxonomy.yaml`](taxonomy.yaml), and the [`data/`](data/) directory.
+**Agent Memory Radar is a living bibliography, but the primary reading interface is the research map — not the daily stream.**
