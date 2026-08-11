@@ -4,41 +4,64 @@ Agent Memory Radar is maintained by a scheduled AI curator. The repository itsel
 
 ## Public surface policy
 
-`README.md` is the **reader-facing landing page**, not the maintainer manual. Optimize it for a researcher who lands on the repository for the first time and wants to understand the field quickly.
+`README.md` is the **reader-facing landing page**, not the maintainer manual. Its job is to behave like a compact living survey: orient a first-time reader, expose the newest evidence without becoming a feed, and connect short-term papers to a more durable research map.
 
-The README should prioritize:
+### README information architecture
 
-1. what Agent Memory Radar is and why it is useful;
-2. the current high-level research signals;
-3. weekly, monthly, and yearly research compactions;
-4. reading paths, papers worth reading, and the latest accepted work;
-5. clear category and scope entry points.
+Keep this order unless there is a strong reader-facing reason to change it:
 
-Use **progressive disclosure** rather than choosing between a tiny README and an unreadably long one. For latest papers, prefer GitHub-native `<details><summary>...</summary>...</details>` blocks: the collapsed summary should expose title, importance, and date; the expanded body should let a reader understand the paper without leaving the README.
+1. **Research Compactions** — the highest-signal entry point, with recent-month weekly, recent-quarter monthly, and all yearly reports.
+2. **Start Here** — 2–4 short reading paths plus an optional “if you only read three papers” foldout.
+3. **Latest Papers** — newest accepted work with a visible AI take and a collapsible 60-second explanation.
+4. **Design Anchors** — durable design points, explicitly not a best-paper ranking.
+5. **Browse by Research Problem** — taxonomy table plus foldouts stating current anchors, strongest signal, biggest unresolved question, and next decisive evidence.
+6. **Scope / ratings** — compact and usually folded.
 
-A good expanded paper card contains only high-signal fields:
+Do not add a separate “current signals” or “papers worth reading” section when the same information is already expressed more coherently through compactions, Start Here, Latest Papers, or Design Anchors. Prefer fewer stronger surfaces over duplicated summaries.
 
-- **Why read it** — the single reason this paper deserves attention;
-- **Problem** — what existing memory abstraction fails;
-- **Core idea** — the actual mechanism / design change;
-- **Compared to what** — the closest baseline and the real delta;
-- **Evidence** — only the strongest result or ablation that changes confidence;
-- **Caveat** — the main reason not to over-generalize;
-- links to paper, code/project when verified, and the full analysis.
+### Research Compactions on README
 
-Do not duplicate the whole paper page inside README. The purpose of the foldout is **technical triage**, not exhaustive documentation.
+The archive deliberately becomes coarser with time:
 
-Keep the landing page bounded as the corpus grows:
+`recent month → weekly` · `recent quarter → monthly` · `all years → yearly`
 
-- keep roughly **8–10 latest paper foldouts** on README, rather than accumulating every paper forever;
-- keep roughly **3 reading paths** that reflect the current design space, not a static taxonomy dump;
-- keep **2–4 current research signals**, rewritten as evidence changes rather than appended historically;
-- keep a short **Papers Worth Reading** ranking;
-- for **Research Compactions**, show every weekly compaction from roughly the last 31 days, every monthly compaction from the last 3 calendar months, and all yearly compactions. Older weekly/monthly files stay in the archive but fall off the landing page.
+Each visible compaction entry should contain a short **thesis paragraph**, not just a filename. Weekly entries may include a suggested reading order. Monthly entries should state how the reader's mental model of the field should change. Yearly entries should emphasize durable shifts and be explicit when coverage is rolling or incomplete.
 
-Do **not** expose routine implementation details in the README: scheduler behavior, subagent roles, schemas, validation internals, storage layout, prompt mechanics, or operational provenance. Those belong in `CURATION.md`, `VISUAL_POLICY.md`, `assets/README.md`, schemas, and run logs.
+README should show every weekly compaction from roughly the last 31 days, every monthly compaction from the last 3 calendar months, and all yearly compactions. Older weekly/monthly reports stay in `digests/README.md` but age out of the homepage.
 
-A useful test is: **does this sentence help a visitor understand agent-memory research or decide what to read?** If not, it probably does not belong in the README.
+### Latest-paper presentation
+
+Use **progressive disclosure**, but keep the most useful judgment visible before the fold:
+
+- visible by default: paper title, category/tags, importance, date, a 1–2 sentence **AI take**, and paper/code/research-note links;
+- inside `<details><summary><strong>Understand this paper in 60 seconds</strong></summary>`: **Problem**, **Core mechanism**, a compact memory/data/control loop when useful, **Compared with**, **Evidence to remember**, and **Open question**.
+
+The 60-second foldout should let a researcher understand the paper's real delta without leaving README, but it must not duplicate the full research note. Prefer one decisive result/ablation over a table of metrics. The “Open question” should reveal the main assumption that could change the importance judgment.
+
+Keep roughly **8–10 latest papers** on README. Older work remains discoverable through category pages, anchors, paper pages, and compactions.
+
+### Start Here and Design Anchors
+
+Maintain roughly **3 short reading paths** that reflect the current design space, not a static topic list. Each path should say what the reader is supposed to learn, not merely provide links.
+
+Maintain roughly **5–8 Design Anchors** in README and `papers/anchors.md`. Anchors are design points, not rankings. They should span distinct abstractions or control boundaries and may be replaced when stronger papers supersede them.
+
+### Browse by Research Problem
+
+Maintain `categories/README.md` as the compact overview. On README, each primary category should have a concise foldout with:
+
+- **Current anchors**;
+- **Strongest signal**;
+- **Biggest unresolved question**;
+- **Next decisive evidence**.
+
+Category views are living research arguments, not append-only paper lists. If no paper clears the radar's threshold for a category, say so; absence can expose an important research gap.
+
+### What never belongs on README
+
+Do **not** expose scheduler behavior, subagent roles, schemas, validation internals, storage layout, prompt mechanics, binary-upload details, or operational provenance. Those belong in `CURATION.md`, `VISUAL_POLICY.md`, `assets/README.md`, schemas, and run logs.
+
+A useful final test is: **does this help a visitor understand agent-memory research, compare design points, or decide what to read next?** If not, it probably does not belong in README.
 
 ## Daily process
 
@@ -102,4 +125,4 @@ For compactions, do not infer a trend from a single paper unless it is explicitl
 
 ## Update policy
 
-Canonical records live under `data/papers/`. Per-paper notes live under `papers/`. Weekly/monthly/yearly compactions are the high-level browsing layer. README and category pages are derived researcher-facing views. Preserve provenance, avoid duplicate arXiv versions, and only attach code/project URLs that were actually verified.
+Canonical records live under `data/papers/`. Per-paper notes live under `papers/`. Weekly/monthly/yearly compactions are the high-level browsing layer. `papers/anchors.md`, `categories/README.md`, README, and category pages are derived researcher-facing views. Preserve provenance, avoid duplicate arXiv versions, and only attach code/project URLs that were actually verified.
