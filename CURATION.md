@@ -2,6 +2,22 @@
 
 Agent Memory Radar is maintained by a scheduled AI curator. The repository itself does not run a scheduled paper crawler. Curated updates are written directly to `main`; GitHub Actions is only the consistency guardrail.
 
+## Public surface policy
+
+`README.md` is the **reader-facing landing page**, not the maintainer manual. Optimize it for a researcher who lands on the repository for the first time and wants to understand the field quickly.
+
+The README should prioritize:
+
+1. what Agent Memory Radar is and why it is useful;
+2. the current high-level research signals;
+3. weekly and monthly research compactions;
+4. papers worth reading and the latest accepted work;
+5. clear category and scope entry points.
+
+Do **not** expose routine implementation details in the README: scheduler behavior, subagent roles, schemas, validation internals, storage layout, prompt mechanics, or operational provenance. Those belong in `CURATION.md`, `VISUAL_POLICY.md`, `assets/README.md`, schemas, and run logs.
+
+A useful test is: **does this sentence help a visitor understand agent-memory research or decide what to read?** If not, it probably does not belong in the README.
+
 ## Daily process
 
 The curator should use multiple independent subtasks/agents rather than one monolithic pass:
