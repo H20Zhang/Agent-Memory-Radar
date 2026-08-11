@@ -16,20 +16,18 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Decode visual assets
+      - name: Assemble visual assets
         shell: python
         run: |
-          import base64
           from pathlib import Path
           ids = ['2608.05784','2608.04843','2608.04746','2608.03844','2608.03463','2608.01679']
           out = Path('assets/visuals')
           out.mkdir(parents=True, exist_ok=True)
           for pid in ids:
-              parts = sorted(Path('_visual_upload').glob(f'{pid}.part*'))
+              parts = sorted(Path('_visual_upload').glob(f'{pid}.binpart*'))
               if not parts:
                   raise SystemExit(f'missing chunks for {pid}')
-              payload = ''.join(p.read_text().strip() for p in parts)
-              data = base64.b64decode(payload, validate=True)
+              data = b''.join(p.read_bytes() for p in parts)
               if not data.startswith(b'RIFF') or b'WEBP' not in data[:16]:
                   raise SystemExit(f'invalid WebP for {pid}')
               (out / f'{pid}.webp').write_bytes(data)
