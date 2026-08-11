@@ -28,6 +28,16 @@ If you do not want to scan individual papers, start here. Compactions synthesize
 - **[Monthly · 2026-08 (rolling)](digests/monthly/2026-08.md)** — a month-to-date map of which themes are strengthening, which assumptions are being challenged, and what evidence would change the current interpretation.
 - **[Browse all compactions](digests/README.md)**
 
+## 🧭 Choose a Reading Path
+
+You do not need to read the papers chronologically.
+
+| If you care about… | Start with | Question to keep in mind |
+|---|---|---|
+| **Memory systems & representation** | [LeanMem](papers/2026/2608.03463.md) → [Activity Frames](papers/2026/2608.05784.md) | Should different evidence types have different storage and lifecycle semantics? |
+| **Adaptive memory policies** | [MemoryCPT](papers/2026/2608.04843.md) → [Scrub Jay Memory](papers/2026/2608.04746.md) | Which memory decisions should be learned instead of fixed heuristics? |
+| **Safety, provenance & correctness** | [AuthMem-Bench](papers/2026/2608.01679.md) → [MAFIA](papers/2026/2608.03844.md) | What new failure modes appear once state persists across sessions? |
+
 ## ⭐ Papers Worth Reading
 
 Not every on-topic paper deserves equal attention. Current highlights:
@@ -42,47 +52,109 @@ Not every on-topic paper deserves equal attention. Current highlights:
 
 ## 🔥 Latest Papers
 
-### [Activity Frames: Deterministic Screen-Activity Compilation for Agent Memory and Replay](papers/2026/2608.05784.md)
-`Representation & Organization` · `episodic` `structured` `timeline` · **★★★☆☆** · 2026-08-06
+The list stays compact by default. **Expand a paper to understand it without leaving the README; open the full analysis when you want the complete technical note.**
 
-**AI take:** Some high-volume personal memory may be better **compiled deterministically before retrieval** than summarized by an LLM. Promising architecture; current evidence is single-user.
+<details>
+<summary><strong>★★★☆☆ Activity Frames — Deterministic Screen-Activity Compilation for Agent Memory and Replay</strong> · 2026-08-06</summary>
 
-[Paper](https://arxiv.org/abs/2608.05784) · [Code](https://github.com/nossa-y/activity-frames) · [AI Analysis](papers/2026/2608.05784.md)
+**Why read it.** It challenges a common assumption: high-volume personal memory does not necessarily need an LLM in the construction path.
 
-### [MemoryCPT: An End-to-End Agent Memory Framework for Cost-Performance Trade-off](papers/2026/2608.04843.md)
-`Memory Learning & Evolution` · `episodic` `semantic` `structured` · **★★★★☆** · 2026-08-05
+- **Problem:** raw desktop activity is too verbose, while LLM summaries can be lossy, expensive, and hard to audit.
+- **Core idea:** deterministically compile screen events into typed, chronological **Activity Frames** with application/site, time, input volume, and evidence pointers.
+- **Compared to what:** the meaningful baseline is **raw activity rows or LLM-generated activity summaries**, not another vector retriever.
+- **Evidence:** across eight evaluated days, the strongest reported setting reaches **98.4% QA accuracy**, versus **82.1–91.1%** for raw rows and **66.1–80.4%** for LLM summaries; compilation is reported at **68 ms**.
+- **Caveat:** the study is single-user and single-machine; the architecture is more convincing than the current breadth of evidence.
 
-**AI take:** Treat both memory construction and query-time compression as trainable components under an explicit **quality × cost** objective, instead of optimizing retrieval in isolation.
+`Representation & Organization` · `episodic` `structured` `timeline`
 
-[Paper](https://arxiv.org/abs/2608.04843) · [AI Analysis](papers/2026/2608.04843.md)
+[Paper](https://arxiv.org/abs/2608.05784) · [Code](https://github.com/nossa-y/activity-frames) · **[Full AI Analysis →](papers/2026/2608.05784.md)**
 
-### [Caching for the Future: Scrub Jay Episodic Memory Principles for Agent Memory Systems](papers/2026/2608.04746.md)
-`Write, Update & Consolidation` · `episodic` `timeline` · **★★★★☆** · 2026-08-05
+</details>
 
-**AI take:** The useful abstraction is **per-memory future utility**: forgetting should depend on how a particular fact ages, not one universal recency function.
+<details>
+<summary><strong>★★★★☆ MemoryCPT — An End-to-End Agent Memory Framework for Cost-Performance Trade-off</strong> · 2026-08-05</summary>
 
-[Paper](https://arxiv.org/abs/2608.04746) · [AI Analysis](papers/2026/2608.04746.md)
+**Why read it.** It turns memory from a retrieval component into an **end-to-end systems optimization problem**.
 
-### [MAFIA: Memory Attacks via Fully Indirect Access for LLM Agents](papers/2026/2608.03844.md)
-`Evaluation & Analysis` · `semantic` `text` · **★★★★☆** · 2026-08-04
+- **Problem:** multi-stage memory pipelines repeatedly call LLMs for construction, retrieval, and summarization, but usually optimize quality and cost only indirectly.
+- **Core idea:** learn both offline construction (**QAD**) and online query-aware compression (**QAR**), with a reward that explicitly balances answer quality against context/inference cost.
+- **Compared to what:** unlike training-free modular systems such as LightMem/MemoryOS, learned policy approaches such as Memory-R1, or cost-aware BudgetMem, MemoryCPT makes **both write-time construction and read-time compression trainable parts of one pipeline**.
+- **Evidence:** on LoCoMo / LongMemEval, removing QAR reportedly raises cost from **5.02 → 11.10** while F1 falls from **0.482 → 0.309**; removing QAD also hurts answer quality.
+- **Caveat:** evidence is concentrated on conversational memory QA; transfer to tool-using and environment-acting agents remains unclear.
 
-**AI take:** Persistent memory turns prompt injection into a **state-integrity** problem: malicious content can be written now and retrieved into a later benign-looking interaction.
+`Memory Learning & Evolution` · `episodic` `semantic` `structured`
 
-[Paper](https://arxiv.org/abs/2608.03844) · [Code](https://github.com/JiamingChen1234/MAFIA) · [AI Analysis](papers/2026/2608.03844.md)
+[Paper](https://arxiv.org/abs/2608.04843) · **[Full AI Analysis →](papers/2026/2608.04843.md)**
 
-### [LeanMem: Simple and Efficient Long-Term Memory for LLM Agents](papers/2026/2608.03463.md)
-`Representation & Organization` · `episodic` `semantic` `structured` · **★★★★☆** · 2026-08-04
+</details>
 
-**AI take:** The strongest idea is not another store but **heterogeneous lifecycle semantics**: profile, event, and source-grounded evidence should not share one write/update/read contract.
+<details>
+<summary><strong>★★★★☆ Scrub Jay Memory — Caching for the Future</strong> · 2026-08-05</summary>
 
-[Paper](https://arxiv.org/abs/2608.03463) · [AI Analysis](papers/2026/2608.03463.md)
+**Why read it.** It gives forgetting a cleaner abstraction: **estimate each memory's future utility**, rather than apply one global recency rule.
 
-### [When Memory Becomes Authority: Benchmarking Authorization Collapse in Agent Memory](papers/2026/2608.01679.md)
-`Evaluation & Analysis` · `semantic` `structured` · **★★★★☆** · 2026-08-03
+- **Problem:** similarity retrieval ignores time, while global recency heuristics still treat all memories as if they age the same way.
+- **Core idea:** attach What-Where-When context, **perishability**, and a **utility horizon** to each episodic memory; combine semantic relevance with time-dependent utility at retrieval time.
+- **Compared to what:** compared with Mem0, dense retrieval, and global-recency baselines, the key delta is that **time affects each memory differently**.
+- **Evidence:** on EventQA-64k, the highlighted setting reports **+2.66 F1 over Mem0** and **+3.09 over Qwen3-Embedding-4B**; removing decay worsens the key controlled diagnostic by roughly **5.7×**.
+- **Caveat:** the gains are strongest on temporal/perishable facts; flat retrieval remains stronger in some conflict and consolidation settings.
 
-**AI take:** A memory can preserve the claim but lose **who had authority to make it**. For tool-using agents, provenance is part of memory semantics rather than optional metadata.
+`Write, Update & Consolidation` · `episodic` `timeline`
 
-[Paper](https://arxiv.org/abs/2608.01679) · [AI Analysis](papers/2026/2608.01679.md)
+[Paper](https://arxiv.org/abs/2608.04746) · **[Full AI Analysis →](papers/2026/2608.04746.md)**
+
+</details>
+
+<details>
+<summary><strong>★★★★☆ MAFIA — Memory Attacks via Fully Indirect Access for LLM Agents</strong> · 2026-08-04</summary>
+
+**Why read it.** It shows why persistent memory is qualitatively different from one-turn prompt injection: the attack becomes part of future agent state.
+
+- **Problem:** malicious input can be written now, retrieved later under a benign-looking query, and influence the agent after the original interaction has disappeared from context.
+- **Core idea:** infer where malicious content should land in retrieval space using black-box probes, then wrap payloads in factual-looking **cloaks** that evade write-time audits while maximizing future retrieval.
+- **Compared to what:** the right comparison is not ordinary prompt injection; MAFIA extends **query-only memory attacks** such as MINJA into persistent-state poisoning.
+- **Evidence:** the paper reports attack-success rates up to **90.7%**; in a highlighted setting, the strongest tested write-time audit detects at most **7.4%** of crafted attacks.
+- **Caveat:** the evaluation mainly targets similarity/RAG-style memories, leaving graph, hierarchical, and strongly typed stores underexplored.
+
+`Evaluation & Analysis` · `semantic` `text`
+
+[Paper](https://arxiv.org/abs/2608.03844) · [Code](https://github.com/JiamingChen1234/MAFIA) · **[Full AI Analysis →](papers/2026/2608.03844.md)**
+
+</details>
+
+<details>
+<summary><strong>★★★★☆ LeanMem — Simple and Efficient Long-Term Memory for LLM Agents</strong> · 2026-08-04</summary>
+
+**Why read it.** Its strongest claim is architectural: **heterogeneous evidence should have heterogeneous memory lifecycles**.
+
+- **Problem:** long-term histories mix stable profile facts, evolving events, and source-grounded evidence; one universal summary/vector store either wastes context or destroys needed detail.
+- **Core idea:** route retained evidence into **profile / event / record** memory, evolve only the temporal event store, and plan retrieval with memory-type and token budgets.
+- **Compared to what:** versus SimpleMem, LightMem, MemoryOS, and A-MEM, the main delta is not a more elaborate universal store but **different write/update/read semantics for different evidence types**.
+- **Evidence:** on LoCoMo and LongMemEval-S, the paper reports gains over the strongest memory baseline of up to **5.54** and **15.07 points**, depending on backbone; removing heterogeneous storage causes the largest ablation drop.
+- **Caveat:** routing relies on correctly identifying information type and temporal dynamics, and the evaluation remains dialogue-memory QA rather than consequential agent action.
+
+`Representation & Organization` · `episodic` `semantic` `structured` `timeline`
+
+[Paper](https://arxiv.org/abs/2608.03463) · **[Full AI Analysis →](papers/2026/2608.03463.md)**
+
+</details>
+
+<details>
+<summary><strong>★★★★☆ AuthMem-Bench — When Memory Becomes Authority</strong> · 2026-08-03</summary>
+
+**Why read it.** It exposes an invariant most memory benchmarks miss: preserving the statement is not enough if consolidation loses **who was authorized to make it**.
+
+- **Problem:** semantic compression can preserve *what was said* while silently deleting provenance and authorization constraints that determine how an agent should act.
+- **Core idea:** construct paired histories with identical claims/tasks but different **source authority**, then measure whether memory consolidation preserves the behavioral distinction.
+- **Compared to what:** the deeper baseline assumption being challenged is that a **semantically faithful summary is necessarily a behaviorally faithful memory**.
+- **Evidence:** authority collapse appears in **48/49** tested consolidator/backbone configurations; collapsed memories produce a mean **50.3% unauthorized-action rate**. A source-first mitigation reports **16.9% → 0.0%** unauthorized actions while benign-task success stays essentially unchanged.
+- **Caveat:** the benchmark is controlled and synthetic, with one consolidation-to-action cycle; delegation, revocation, and realistic organizational authority remain open.
+
+`Evaluation & Analysis` · `semantic` `structured`
+
+[Paper](https://arxiv.org/abs/2608.01679) · **[Full AI Analysis →](papers/2026/2608.01679.md)**
+
+</details>
 
 ## 🗂 Browse by Research Problem
 
@@ -100,16 +172,20 @@ A work belongs here when memory **persists or manages information across interac
 
 Generic RAG, KV-cache optimization, or long-context work is not included unless persistent agent memory is a central mechanism. The boundary is deliberately semantic rather than keyword-based.
 
+<details>
+<summary><strong>How to interpret the ratings and notes</strong></summary>
+
+- **★★★★★ Field-shaping** — likely changes an important design point, benchmark, or research direction.
+- **★★★★☆ Notable** — clear technical or empirical delta that agent-memory researchers should know.
+- **★★★☆☆ Useful** — solid relevant work, but currently more incremental, narrow, or weakly validated.
+- The rating is **importance, not relevance**. A paper can be highly relevant to agent memory without being high priority to read.
+- Numeric results in the README are included only when they materially help understand the paper; the full page carries the richer evidence and caveats.
+
+</details>
+
 ## 📖 What Each Paper Page Gives You
 
-Each accepted paper is turned into a researcher-facing technical note:
-
-- **TL;DR, problem, and core idea**
-- **Memory design:** write, organize, read, update / forget
-- **Compared to what:** closest design points and the actual delta
-- **Evidence:** benchmarks, gains, and useful ablations
-- **Why it matters, limitations, and confidence**
-- **Visual explainer** for important or mechanism-heavy papers when a figure genuinely reduces reading effort
+Each accepted paper is turned into a researcher-facing technical note with **TL;DR → problem → core mechanism → memory design → compared-to-what → evidence → why-it-matters → limitations**. Important or mechanism-heavy papers also receive a visual explainer when a figure genuinely reduces reading effort.
 
 ---
 
