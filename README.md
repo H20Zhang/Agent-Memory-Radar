@@ -1,18 +1,18 @@
 # 🧠 Agent Memory Radar
 
-A daily-updated, GitHub-native research radar for **agent memory** papers, with a stable taxonomy and AI-generated research notes designed for researchers rather than generic summaries.
+**A living research map of memory for AI agents — updated daily, explained for researchers.**
 
-> **Maintenance model:** scheduled ChatGPT curation writes directly to `main`. Daily runs discover and curate papers; weekly and monthly compactions compress the stream into research-level takeaways. GitHub Actions only validates repository consistency.
+Agent Memory Radar tracks new work on how agents **store, organize, retrieve, update, learn from, and reason over persistent memory**. The goal is not to maximize paper count: it is to help you quickly answer **what is new, compared to what, and why it matters**.
 
-**Last curated:** 2026-08-10 · [raw daily log](runs/daily/2026/08/10.md)
+**Last updated:** 2026-08-10
 
-## 🧭 Research Compactions
+## 🧭 Start Here: Research Compactions
 
-- **[Weekly · 2026-W32](digests/weekly/2026-W32.md)** — early-August memory work shifts from “better retrieval” toward heterogeneous lifecycles, explicit memory policies, and persistent-state trust boundaries.
-- **[Monthly · 2026-08 (rolling)](digests/monthly/2026-08.md)** — month-to-date research map; finalized after August closes.
-- [How compaction works](digests/README.md)
+If you do not want to scan individual papers, start with the compactions. They synthesize papers into changes in the research landscape rather than concatenating summaries.
 
-Daily logs are archival provenance, not the primary reading interface.
+- **[Weekly · 2026-W32](digests/weekly/2026-W32.md)** — early-August work points toward heterogeneous memory lifecycles, explicit memory policies, and persistent-state trust boundaries.
+- **[Monthly · 2026-08 (rolling)](digests/monthly/2026-08.md)** — a rolling map of where the agent-memory design space is moving this month.
+- **[Browse all compactions](digests/README.md)**
 
 ## 🔥 Latest Papers
 
@@ -58,51 +58,43 @@ Daily logs are archival provenance, not the primary reading interface.
 
 [Paper](https://arxiv.org/abs/2608.01679) · [AI Analysis](papers/2026/2608.01679.md)
 
-## ⭐ Notable Recent Papers
+## ⭐ Papers Worth Reading
 
-The first seed run has no 5/5 paper. That is intentional: **relevance is not importance**, and a new preprint needs unusually strong conceptual or empirical evidence to be called field-shaping.
+Not every on-topic paper deserves equal attention. **Importance is scored separately from relevance.** Current highlights:
 
-- **MemoryCPT** — learned end-to-end cost/performance optimization across the memory pipeline.
-- **LeanMem** — heterogeneous memory representation and lifecycle semantics with strong ablation signal.
-- **Scrub Jay Memory** — explicit temporal utility / perishability as a forgetting abstraction.
-- **AuthMem-Bench + MAFIA** — two complementary warnings that persistent memory introduces provenance, authority, and state-integrity failure modes.
+- **MemoryCPT** — end-to-end cost/performance optimization across memory construction and query-time use.
+- **LeanMem** — heterogeneous memory types with different lifecycle semantics.
+- **Scrub Jay Memory** — per-memory temporal utility as an explicit forgetting abstraction.
+- **AuthMem-Bench + MAFIA** — complementary evidence that provenance, authority, and state integrity become first-class problems once memory persists.
 
 ## 🗂 Browse by Research Problem
 
-- [Representation & Organization](categories/representation-organization.md)
-- [Retrieval & Access](categories/retrieval-access.md)
-- [Write, Update & Consolidation](categories/write-update-consolidation.md)
-- [Memory Learning & Evolution](categories/memory-learning-evolution.md)
-- [Evaluation & Analysis](categories/evaluation-analysis.md)
+- [Representation & Organization](categories/representation-organization.md) — how memory is represented and structured.
+- [Retrieval & Access](categories/retrieval-access.md) — how agents locate, query, and navigate memory.
+- [Write, Update & Consolidation](categories/write-update-consolidation.md) — what gets written, merged, corrected, compressed, or forgotten.
+- [Memory Learning & Evolution](categories/memory-learning-evolution.md) — learned memory policies, experience accumulation, and self-evolving agents.
+- [Evaluation & Analysis](categories/evaluation-analysis.md) — benchmarks, empirical studies, security, and failure analysis.
 
-## Inclusion Rule
+## 🔍 What Counts as Agent Memory?
 
-A work is included when memory **persists or manages information across interaction/reasoning steps and materially affects a language or multimodal agent's future behavior**.
+We include work where memory **persists or manages information across interaction or reasoning steps and materially affects an agent's future behavior**.
 
-Generic RAG, KV-cache optimization, and long-context work are excluded unless agent memory is a central mechanism. The curator intentionally uses a broad discovery stage followed by semantic filtering, rather than relying on the phrase “agent memory.”
+Generic RAG, KV-cache optimization, and long-context work are not included unless persistent agent memory is a central mechanism. Discovery is intentionally broad; inclusion is semantic rather than keyword-based.
 
-## Research Note for Each Paper
+## 📝 What You Get for Each Paper
 
-Each accepted paper gets a concise researcher-facing note covering:
+Each paper has a researcher-facing note designed for fast technical triage:
 
-- **TL;DR / Problem / Core Idea**
-- **Memory Design:** write, organize, read, update/forget
-- **Compared to What:** the closest prior design points and the actual delta
-- **Evidence:** benchmarks, gains, and the strongest supporting ablations
-- **Why It Matters / Limitations / AI Confidence**
+- **TL;DR, problem, and core idea**
+- **Memory design:** write, organize, read, update / forget
+- **Compared to what:** closest design points and the actual delta
+- **Evidence:** benchmarks, gains, and useful ablations
+- **Why it matters, limitations, and confidence**
 
-Canonical structured records live in `data/papers/`; Markdown views are derived from those records.
+Important or mechanism-heavy papers also receive a visual explainer when it adds information rather than decoration.
 
-## Taxonomy
+## About This Radar
 
-Primary categories answer **which part of the memory system the paper changes**, rather than forcing every paper into a single cognitive-memory label. Orthogonal tags capture memory type, substrate, and application. See [`taxonomy.yaml`](taxonomy.yaml).
+This is a living bibliography: new papers are added continuously, while weekly and monthly compactions turn the stream into a more stable research map. The taxonomy is organized around **which part of the memory system a paper changes**; orthogonal tags capture memory type, substrate, and application.
 
-## Curation Cadence
-
-The scheduled curator uses multiple independent subtasks for broad discovery, semantic filtering/taxonomy, full-paper interpretation, and adversarial QC. It writes clean, auditable updates directly to `main`.
-
-On the first daily run after an ISO week closes, it creates or revises the previous week's **research compaction**. On the first daily run after a calendar month closes, it creates the previous month's **monthly research map**. Compaction must synthesize changes and trade-offs rather than concatenate paper summaries.
-
-## Repository Status
-
-This is an early living bibliography. The schema and taxonomy are intentionally kept small enough to stay stable as the collection grows.
+For implementation details, curation rules, schemas, and provenance, see [`CURATION.md`](CURATION.md), [`VISUAL_POLICY.md`](VISUAL_POLICY.md), [`taxonomy.yaml`](taxonomy.yaml), and the [`data/`](data/) directory.
