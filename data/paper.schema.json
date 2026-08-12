@@ -16,6 +16,19 @@
     "tags": {"type": "array", "items": {"type": "string"}},
     "relevance": {"type": "number", "minimum": 0, "maximum": 1},
     "importance": {"type": "integer", "minimum": 1, "maximum": 5},
+    "visual_explainer": {
+      "type": "object",
+      "required": ["status", "path", "format", "generator", "grounding", "last_verified"],
+      "properties": {
+        "status": {"enum": ["not_required", "pending", "blocked", "generated"]},
+        "path": {"type": ["string", "null"]},
+        "format": {"const": "webp"},
+        "generator": {"const": "gpt-image"},
+        "grounding": {"const": "full-paper"},
+        "last_verified": {"type": ["string", "null"]},
+        "blocker": {"type": ["string", "null"]}
+      }
+    },
     "provenance": {
       "type": "object",
       "required": ["discovered_from", "analyzed_from"],
