@@ -11,6 +11,15 @@
   "tags": ["episodic", "structured", "timeline", "personalization"],
   "relevance": 0.92,
   "importance": 3,
+  "visual_explainer": {
+    "status": "not_required",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": null
+  },
   "provenance": {
     "discovered_from": ["https://arxiv.org/abs/2608.05784"],
     "analyzed_from": ["https://arxiv.org/html/2608.05784"],
@@ -26,18 +35,10 @@
       "read": "Expose compact frames to downstream agents and replay/pattern tools instead of injecting raw activity rows or free-form summaries.",
       "update_forget": "Frames can be deterministically recompiled as source events change; the paper does not introduce a semantic forgetting policy."
     },
-    "compared_to": [
-      "raw screen/activity rows",
-      "LLM-generated activity summaries",
-      "LLM-centric personal-memory pipelines"
-    ],
+    "compared_to": ["raw screen/activity rows", "LLM-generated activity summaries", "LLM-centric personal-memory pipelines"],
     "evidence": "Across eight evaluated days, Activity Frames reach 98.4% QA accuracy with the strongest reported Claude settings, versus 82.1-91.1% for raw rows and 66.1-80.4% for LLM summaries; the compiler is reported at 68 ms and the representation is much smaller than raw activity.",
     "why_it_matters": "The interesting design point is not another retrieval algorithm: it shows that some high-volume agent memory can be compiled deterministically before any model sees it, improving provenance and reducing construction cost.",
-    "limitations": [
-      "Evaluation is a single-user, single-machine study with one capture engine.",
-      "Screen presence is an imperfect proxy for user attention and intent remains largely unobserved.",
-      "The evaluation covers one model family and a short observation period, so generalization to long-lived multi-device agents is unknown."
-    ],
+    "limitations": ["Evaluation is a single-user, single-machine study with one capture engine.", "Screen presence is an imperfect proxy for user attention and intent remains largely unobserved.", "The evaluation covers one model family and a short observation period, so generalization to long-lived multi-device agents is unknown."],
     "confidence": "high"
   }
 }
