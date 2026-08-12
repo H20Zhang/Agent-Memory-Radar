@@ -1,0 +1,53 @@
+{
+  "id": "2608.01543",
+  "title": "V-Mem: Modality-Routed Retrieval for Long-Term Multimodal Agentic Memory",
+  "authors": ["Dingyi Kang", "Dongming Jiang", "Yi Li", "Guanpeng Li", "Bingzhe Li"],
+  "published": "2026-08-02",
+  "first_seen": "2026-08-12",
+  "paper_url": "https://arxiv.org/abs/2608.01543",
+  "code_url": "https://github.com/Dingyi-Kang/V-Mem",
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["episodic", "multimodal", "timeline", "personalization"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": "The available GitHub write connector supports UTF-8 text files but exposes no binary-upload action, so the required WebP cannot be committed to main in this run."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.01543"],
+    "analyzed_from": ["https://arxiv.org/html/2608.01543", "https://github.com/Dingyi-Kang/V-Mem"],
+    "last_verified": "2026-08-12"
+  },
+  "analysis": {
+    "tldr": "V-Mem treats multimodal memory retrieval as a routing problem: search within a modality, cross modalities through shared conversational rounds, and synthesize a search anchor when the raw query is not similar to the evidence that answers it.",
+    "problem": "Multimodal histories break the usual similarity-search assumption twice: text and image evidence are separated by a modality gap, and the most query-similar item can still differ from the evidence needed to answer the question.",
+    "core_idea": "Keep raw conversations as rounds with separate text and image lanes, infer query and target-evidence modality, retrieve within the appropriate lane, use same-round binding for cross-modal lookup, and generate hypothetical captions or image-enriched text anchors when raw similarity is insufficient.",
+    "memory_design": {
+      "write": "Append raw conversational rounds without LLM summarization or fact extraction; build text dense/BM25 indexes and an image embedding lane while preserving raw images and round bindings.",
+      "organize": "Represent memory as chronological rounds containing modality-specific units, with text and image retrieval lanes connected by shared-round identity rather than one joint vector space.",
+      "read": "Route by query modality and inferred target modality, perform lane-specific retrieval and rank fusion, cross modalities by returning content from matched rounds, optionally generate a query-side anchor, and include neighboring rounds when useful.",
+      "update_forget": "Memory construction is incremental append; the paper does not introduce consolidation, conflict repair, or forgetting beyond retrieval-time selection."
+    },
+    "compared_to": [
+      "Omni-SimpleMem as a multimodalized extraction/retrieval baseline",
+      "M2A multimodal agent memory",
+      "A-Mem-style structured memory under matched backbones and encoders"
+    ],
+    "evidence": "On Mem-Gallery with gpt-4o-mini, V-Mem reports 0.825 LLM-judge score versus 0.561 for the strongest baseline, and 0.872 on provided-image questions where no baseline exceeds 0.472. On LoCoMo it reports 0.690 versus 0.583. The incremental ablation is especially informative: vanilla retrieval scores 0.680, routing 0.689, shared-round matching 0.818, and generated anchors 0.825, making shared-round structure the load-bearing component. Build-time memory construction uses zero LLM tokens, although answer-time context can be larger than some baselines.",
+    "why_it_matters": "It fills a real access-interface gap in current agent memory: richer modalities do not necessarily need a more universal embedding space; preserving interaction structure and routing to modality-specific operators can be more important than cross-modal similarity itself.",
+    "limitations": [
+      "Target-modality routing partly relies on query-form heuristics, so ambiguous information needs may be misrouted.",
+      "The generated-anchor component gives only a small aggregate gain after shared-round matching and can hurt some text-to-text cases.",
+      "Evaluation is still long-term conversation QA rather than an acting multimodal agent whose memory affects tools or environment behavior.",
+      "Open-domain LoCoMo questions are weaker than M2A in the reported breakdown, and results vary with smaller vision-language backbones."
+    ],
+    "confidence": "high"
+  }
+}
