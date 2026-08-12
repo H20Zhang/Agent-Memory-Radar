@@ -11,6 +11,15 @@
   "tags": ["semantic", "text", "general-agent"],
   "relevance": 0.96,
   "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": "The available GitHub write connector supports UTF-8 text files but exposes no binary-upload action, so the required WebP cannot be committed to main in this run."
+  },
   "provenance": {
     "discovered_from": ["https://arxiv.org/abs/2608.03844"],
     "analyzed_from": ["https://arxiv.org/html/2608.03844", "https://github.com/JiamingChen1234/MAFIA"],
@@ -26,18 +35,10 @@
       "read": "The attacker optimizes memory placement so poisoned entries are selected by similarity-based retrieval for target future queries.",
       "update_forget": "The paper studies persistence of poisoned entries but does not propose a general memory lifecycle or forgetting mechanism."
     },
-    "compared_to": [
-      "prior query-only memory attacks such as MINJA",
-      "write-time input auditing",
-      "post-retrieval consistency checking"
-    ],
+    "compared_to": ["prior query-only memory attacks such as MINJA", "write-time input auditing", "post-retrieval consistency checking"],
     "evidence": "Across the reported agent tasks and datasets, MAFIA reaches attack success rates up to 90.7%, while the strongest tested write-time audit catches at most 7.4% of the crafted attacks in the highlighted setting.",
     "why_it_matters": "Memory changes prompt injection from an ephemeral-input problem into a persistent state-integrity problem. Defenses therefore need provenance and write/read policies, not only better prompt filters.",
-    "limitations": [
-      "The attack evaluation focuses on RAG-style similarity or demonstration memory, not graph, hierarchical, or strongly typed memory systems.",
-      "The defense study covers a limited set of write-time auditing and post-retrieval checks rather than provenance, capability, or information-flow controls.",
-      "Attack success depends on the target memory pipeline and retriever, so robustness across substantially different memory architectures remains open."
-    ],
+    "limitations": ["The attack evaluation focuses on RAG-style similarity or demonstration memory, not graph, hierarchical, or strongly typed memory systems.", "The defense study covers a limited set of write-time auditing and post-retrieval checks rather than provenance, capability, or information-flow controls.", "Attack success depends on the target memory pipeline and retriever, so robustness across substantially different memory architectures remains open."],
     "confidence": "high"
   }
 }
