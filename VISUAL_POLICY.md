@@ -15,6 +15,14 @@ Final researcher-facing visuals should be generated with **GPT Image** rather th
 
 Generated figures are curator interpretations, not reproductions of the paper's original figures. Each figure should say so when ambiguity is possible.
 
+### Invocation isolation
+
+While per-paper visual backfill exists, generate **exactly one named paper per GPT Image invocation**. A per-paper render must stay inside that paper's grounded brief: mechanism, memory/data/control flow, comparison, evidence, and limitation.
+
+Do **not** render repository dashboards, status/QC UI, paper-count summaries, multi-paper collages, or maintenance metadata as a substitute for a paper explainer. If a render introduces fabricated paper IDs, dates, publication status, benchmark numbers, or repository state, Visual QA must reject it rather than crop or salvage it.
+
+Only after required per-paper backfill is healthy should compaction maps be generated, one named weekly/monthly/yearly synthesis per invocation.
+
 ## Paper figure: required information
 
 A useful paper figure must communicate concrete content from the full paper:
