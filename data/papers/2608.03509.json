@@ -1,0 +1,53 @@
+{
+  "id": "2608.03509",
+  "title": "SkillJack: Persistent Skill Backdoors in Self-Evolving Agents",
+  "authors": ["Zonghao Ying", "Xiangfan Wu", "Huiyu Wu", "Xing Zheng", "Huangsheng Cheng", "Xiaorong Shi", "Jing Guo"],
+  "published": "2026-08-04",
+  "first_seen": "2026-08-12",
+  "paper_url": "https://arxiv.org/abs/2608.03509",
+  "code_url": "https://github.com/Tencent/AI-Infra-Guard/tree/main/Research/SkillJack",
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["procedural", "structured", "general-agent"],
+  "relevance": 0.98,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": "The available GitHub write connector supports UTF-8 text files but exposes no binary-upload action, so the required WebP cannot be committed to main in this run."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.03509"],
+    "analyzed_from": ["https://arxiv.org/html/2608.03509", "https://github.com/Tencent/AI-Infra-Guard/tree/main/Research/SkillJack"],
+    "last_verified": "2026-08-12"
+  },
+  "analysis": {
+    "tldr": "SkillJack shows that poisoned experience can be compiled by an agent's own experience-to-skill pipeline into a separately stored behavioral artifact that becomes harder to detect and can survive deletion of the source trajectory.",
+    "problem": "Memory-poisoning defenses often focus on malicious records being retrieved later, but self-evolving agents transform experience into reusable skills; that derived artifact can outlive and semantically launder the source record.",
+    "core_idea": "Inject functionally framed poisoned trajectories that survive automated skill extraction, then measure three transformation-specific properties: sanitization whitewashing, cross-layer promotion into a routable skill, and persistence isolation after the original experience is removed.",
+    "memory_design": {
+      "write": "The attacker only influences the experience corpus; the unmodified system loads the trajectory and extracts a structured skill containing name, description, and executable/procedural content.",
+      "organize": "Derived skills are stored in a separate reusable skill library, creating a descendant artifact whose lifecycle is decoupled from the source experience.",
+      "read": "Native or system-specific routing selects the derived skill for later tasks; the evaluation measures both intended and collateral triggering.",
+      "update_forget": "Deleting the source trajectory does not automatically revoke its derived skill. The paper argues that cleanup must propagate provenance and revocation across transformation boundaries."
+    },
+    "compared_to": [
+      "memory poisoning that only matters when the poisoned source record is later retrieved",
+      "direct-context injection on matched tasks",
+      "static extraction-time safety review and preliminary runtime behavior monitoring"
+    ],
+    "evidence": "On SkillX, an LLM judge flags 98.5% of framed poisoned trajectories but only 11.4% of the extracted skills; A2S shows the same qualitative whitewashing with different extraction rates. Skill-level routing triggers the policy-violation proxy on 56.2% of attack-oriented SkillX tasks and 89.2% in the A2S DOC evaluation. In the matched deletion experiment, 80.0% of skill-mediated triggers persist after removing source trajectories. The paper also reports a 20.0% clean-task trigger rate for SkillX, which is both collateral risk and evidence that routing is not tightly targeted.",
+    "why_it_matters": "This extends memory security from protecting stored records to protecting the entire artifact lineage. Once experience can be compiled into skills, provenance and revocation need to survive transformation—not merely storage and retrieval.",
+    "limitations": [
+      "The main study covers two experience-to-skill systems under one DeepSeek-v4-flash configuration; cross-model generalization is not established.",
+      "Most attack-success numbers are routing-level policy-violation proxies, not successful live compromises; only a very small code-generation check bridges toward behavior.",
+      "The dataset is controlled and synthesized from AppWorld-style patterns rather than independently collected real-world experience.",
+      "Defense experiments are small and partly post-hoc; the paper itself treats them as preliminary."
+    ],
+    "confidence": "high"
+  }
+}
