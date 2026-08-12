@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Agent Memory Radar Paper",
   "type": "object",
-  "required": ["id", "title", "authors", "published", "first_seen", "paper_url", "primary_category", "tags", "relevance", "importance", "analysis", "provenance"],
+  "required": ["id", "title", "authors", "published", "first_seen", "paper_url", "primary_category", "tags", "relevance", "importance", "visual_explainer", "analysis", "provenance"],
   "properties": {
     "id": {"type": "string"},
     "title": {"type": "string"},
