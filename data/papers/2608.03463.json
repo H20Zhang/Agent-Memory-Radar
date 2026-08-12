@@ -11,6 +11,15 @@
   "tags": ["episodic", "semantic", "structured", "timeline", "personalization"],
   "relevance": 0.99,
   "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": "The available GitHub write connector supports UTF-8 text files but exposes no binary-upload action, so the required WebP cannot be committed to main in this run."
+  },
   "provenance": {
     "discovered_from": ["https://arxiv.org/abs/2608.03463"],
     "analyzed_from": ["https://arxiv.org/html/2608.03463"],
@@ -26,18 +35,10 @@
       "read": "Adaptive Evidence Composition decides which memory types to consult and how much evidence to retrieve for each query.",
       "update_forget": "Only event memory is selectively evolved as new temporal evidence arrives; stable profile and source-grounded records follow different update semantics."
     },
-    "compared_to": [
-      "SimpleMem",
-      "LightMem",
-      "MemoryOS and A-MEM-style long-term memory systems"
-    ],
+    "compared_to": ["SimpleMem", "LightMem", "MemoryOS and A-MEM-style long-term memory systems"],
     "evidence": "The paper evaluates LoCoMo and LongMemEval-S with GPT-4.1-mini and Qwen3-8B backbones. It reports gains over the strongest memory baseline of up to 5.54 points on LoCoMo and 15.07 points on LongMemEval-S depending on the backbone. Ablations show the heterogeneous storage schedule is the largest contributor, with memory evolution and retrieval planning also helping.",
     "why_it_matters": "The important idea is the storage contract: heterogeneous evidence should have heterogeneous lifecycle semantics. That is a more scalable design principle than continuously improving one universal vector-memory abstraction.",
-    "limitations": [
-      "Evaluation is limited to dialogue-memory QA rather than agents taking consequential actions in changing environments.",
-      "Routing quality depends on correctly inferring the information type and temporal dynamics of each observation.",
-      "The reported evidence does not establish behavior under months- or years-long histories with distribution shifts and conflicting updates."
-    ],
+    "limitations": ["Evaluation is limited to dialogue-memory QA rather than agents taking consequential actions in changing environments.", "Routing quality depends on correctly inferring the information type and temporal dynamics of each observation.", "The reported evidence does not establish behavior under months- or years-long histories with distribution shifts and conflicting updates."],
     "confidence": "high"
   }
 }
