@@ -1,0 +1,53 @@
+{
+  "id": "2608.08995",
+  "title": "Muscle Memory for Agents: Compile not Merely Retrieve",
+  "authors": ["Pouya Ghiasnezhad Omran", "Soujanya Lanka", "Qin Zhang", "Tanya Dixit"],
+  "published": "2026-08-10",
+  "first_seen": "2026-08-12",
+  "paper_url": "https://arxiv.org/abs/2608.08995",
+  "code_url": "https://github.com/GoogleCloudPlatform/generative-ai/tree/main/agents/personalized-agent-swarms",
+  "project_url": null,
+  "primary_category": "representation_organization",
+  "tags": ["procedural", "structured", "personalization", "general-agent"],
+  "relevance": 0.98,
+  "importance": 3,
+  "visual_explainer": {
+    "status": "not_required",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": null
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.08995"],
+    "analyzed_from": ["https://arxiv.org/html/2608.08995", "https://github.com/GoogleCloudPlatform/generative-ai/tree/main/agents/personalized-agent-swarms"],
+    "last_verified": "2026-08-12"
+  },
+  "analysis": {
+    "tldr": "Muscle Memory proposes compiling recurring user intent into quality-gated executable specialist agents instead of storing every pattern as text to retrieve and reinterpret at runtime.",
+    "problem": "Retrieval-based personalization repeatedly asks a general orchestrator to reinterpret remembered preferences and procedures, so users can still pay a multi-turn tax for recurring tasks whose desired behavior is already stable.",
+    "core_idea": "A Harvest→Analyze→Augment→Evaluate pipeline mines recurring task and behavioral patterns from conversation history, generates specialist mini-agents, validates them against source interactions, and triggers a specialist through a two-stage matcher when a future request fits its learned scope.",
+    "memory_design": {
+      "write": "Mine recurring intent from conversation history, separate task patterns from behavioral style, and compile sufficiently frequent/high-quality task patterns into executable specialist modules.",
+      "organize": "Store a user-specific library of specialist agents plus trigger metadata and a separate style profile rather than one retrieval corpus of textual memories.",
+      "read": "Route a new request by attribute/embedding matching plus a binary-questionnaire disambiguation stage, then invoke the matched specialist as its own task-specific LLM program.",
+      "update_forget": "The reference system regenerates and quality-filters specialists offline; it does not demonstrate continual online updating, conflict handling, or automatic retirement of stale specialists."
+    },
+    "compared_to": [
+      "retrieval-centric personalization where remembered instructions are inserted into a general orchestrator's context",
+      "skill/workflow memory that retrieves reusable text or procedures for the same controller to interpret",
+      "an unaugmented general assistant evaluated on the same held-out scenarios"
+    ],
+    "evidence": "The study builds history from 250 synthetic conversations across five personas and evaluates 90 held-out scenarios. A generated specialist fires in 36 cases and the augmented assistant wins 32 of those 36 comparisons (88.9%); the reported personalization score improves by 2.05 points on a 1–4 scale while accuracy falls by 0.28. Triggering remains imperfect: the paper reports 72% activation on similar scenarios and a 20% false-positive rate on different-domain scenarios.",
+    "why_it_matters": "The design point is important even if the evidence is early: some mature procedural memory may be better represented as executable capability than as text that must be retrieved and reinterpreted every time.",
+    "limitations": [
+      "The evaluation is synthetic: personas, histories, and held-out scenarios are generated rather than collected from long-lived real users.",
+      "Generation, matching, and judging rely heavily on the same Gemini model family, and no human evaluation is reported.",
+      "The paper does not establish a matched comparison against strong retrieval-based procedural-memory systems with equivalent specialist prompts and inference budget.",
+      "The compiled specialists are effectively static after generation; drift, conflict, revocation, and cross-user transfer remain open."
+    ],
+    "confidence": "high"
+  }
+}
