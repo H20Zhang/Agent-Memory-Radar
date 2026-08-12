@@ -1,0 +1,53 @@
+{
+  "id": "2608.02508",
+  "title": "RoMeRL: Balancing Feedback Coverage and the Memory-Reward Trap in Self-Evolving Agent Memory via Reduced-Order Utility States",
+  "authors": ["Yi Yang", "Zhennan Chen", "Yihong Zhuang", "Tiehan Fan", "Yinan Chen", "Jian Li", "Jian Yang", "Ying Tai"],
+  "published": "2026-08-03",
+  "first_seen": "2026-08-12",
+  "paper_url": "https://arxiv.org/abs/2608.02508",
+  "code_url": "https://github.com/YOUNG-fnxm/RoMeRL",
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": ["episodic", "procedural", "structured", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": "The available GitHub write connector supports UTF-8 text files but exposes no binary-upload action, so the required WebP cannot be committed to main in this run."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.02508"],
+    "analyzed_from": ["https://arxiv.org/html/2608.02508", "https://github.com/YOUNG-fnxm/RoMeRL"],
+    "last_verified": "2026-08-12"
+  },
+  "analysis": {
+    "tldr": "RoMeRL replaces a growing utility variable per stored trajectory with four persistent semantic coordinates, concentrating sparse feedback and reducing the chance that irrelevant co-retrieved memories are reinforced by bundle-level rewards.",
+    "problem": "Runtime memory RL has a scaling and attribution problem: every new trajectory adds another utility to estimate, while task-level rewards are assigned to co-retrieved bundles and can positively reinforce memories with little or negative causal contribution—the paper's Memory-Reward Trap.",
+    "core_idea": "Factor each task's active utility-bearing memory into outcome polarity (success/failure) × dynamics (consolidated/adaptive): best efficient success, first recovery success, useful consolidated failure, and most recent failure. Coordinate contents are replaced over time while utility identities stay fixed, and retrieval combines semantic similarity with learned coordinate utility.",
+    "memory_design": {
+      "write": "Map each new successful or failed trajectory into one of four task-level semantic roles rather than allocating it a permanent utility variable.",
+      "organize": "Maintain at most four active representatives per task: positive-consolidated, positive-adaptive, negative-consolidated, and negative-adaptive, each with a persistent utility estimate.",
+      "read": "Rank the active representatives by a weighted combination of embedding similarity and learned Q-value, then retrieve the top-k for the frozen agent.",
+      "update_forget": "Replace coordinate contents according to efficiency, temporal transition, or utility rules; the incoming representative inherits the coordinate's utility as a warm start and later outcome rewards update retrieved coordinates. Superseded trajectories leave the active utility state."
+    },
+    "compared_to": [
+      "MemRL-style trajectory-indexed runtime memory reinforcement learning",
+      "MemP procedural memory",
+      "non-learning RAG and Mem0 baselines under the same interaction budgets"
+    ],
+    "evidence": "Across ALFWorld and the OS/DB tasks of LifelongAgentBench, RoMeRL reports a 0.862 macro-average success rate versus 0.830 for MemRL. On the OS feedback analysis it reduces Cold-Q from about 44.9% for MemRL to 9.0%, raises feedback density from 4.96 to 29.93, reduces average memory size from 45K to 7K (84.4%), and cuts LLM calls from 570K to 450K (21.1%). In a controlled noisy-memory stress test it reaches 82.0% success with 0.15% final noise versus 79.2%/1.02% for MemRL. Coordinate ablations show both consolidated negative and adaptive positive evidence contribute.",
+    "why_it_matters": "The paper reframes memory learning as choosing the dimension and semantics of the utility state, not merely a better exploration policy over an ever-growing memory pool. That is a useful systems principle whenever feedback is sparse relative to stored experience.",
+    "limitations": [
+      "RoMeRL still learns from outcome-level bundle rewards and explicitly does not solve causal credit assignment; it reduces exposure to attribution error rather than identifying true marginal memory utility.",
+      "The four-coordinate factorization encodes strong task semantics and may be too restrictive for open-ended domains with multiple strategies, subgoals, or non-binary outcomes.",
+      "The analysis assumes stationary raw-return targets or stylized transition dynamics for several theoretical results.",
+      "The paper calls for longer-horizon and more open-ended evaluation; current evidence is concentrated on ALFWorld and two LifelongAgentBench task families."
+    ],
+    "confidence": "high"
+  }
+}
