@@ -18,7 +18,7 @@
     "generator": "gpt-image",
     "grounding": "full-paper",
     "last_verified": "2026-08-12",
-    "blocker": "GPT Image generation in this interactive run repeatedly rendered repository-dashboard/status UI instead of the requested single-paper grounded explainer and introduced fabricated metadata, so Visual QA failed. GitHub binary upload is available and was verified via create_blob(base64); publication is blocked only until a grounded render passes QA."
+    "blocker": "Fresh isolated V-Mem visual backfill on 2026-08-12 failed Visual QA after three GPT Image renders. Each render materially deviated from the full paper: it changed the paper title/subtitle, modeled an impossible image-only query instead of V-Mem's four query/target modality cases, mislabeled the Mem-Gallery LLM-judge ablation as accuracy, genericized the actual SigLIP/anchor mechanisms, and introduced unsupported framing. Because these errors could misstate both mechanism and evidence, no WebP was published. GitHub binary transport is available; the blocker is GPT Image grounding/faithfulness for this figure."
   },
   "provenance": {
     "discovered_from": ["https://arxiv.org/abs/2608.01543"],
