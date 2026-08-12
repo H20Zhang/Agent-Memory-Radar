@@ -11,6 +11,15 @@
   "tags": ["episodic", "semantic", "structured", "general-agent"],
   "relevance": 0.99,
   "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": "The available GitHub write connector supports UTF-8 text files but exposes no binary-upload action, so the required WebP cannot be committed to main in this run."
+  },
   "provenance": {
     "discovered_from": ["https://arxiv.org/abs/2608.04843"],
     "analyzed_from": ["https://arxiv.org/html/2608.04843"],
@@ -26,18 +35,10 @@
       "read": "Fuse dense and sparse retrieval with reciprocal-rank fusion, then use a query-aware learned summarizer before the frozen answer model.",
       "update_forget": "Construction includes merging and abstraction, but the paper does not center on a learned deletion or long-term forgetting policy."
     },
-    "compared_to": [
-      "training-free modular memory pipelines such as LightMem and MemoryOS",
-      "learned memory-policy systems such as Memory-R1",
-      "cost-aware memory baselines such as BudgetMem"
-    ],
+    "compared_to": ["training-free modular memory pipelines such as LightMem and MemoryOS", "learned memory-policy systems such as Memory-R1", "cost-aware memory baselines such as BudgetMem"],
     "evidence": "On LoCoMo and LongMemEval, the reported full system is competitive in answer quality while using much less query context. In the authors' ablation average, removing QAR increases cost from 5.02 to 11.10 and reduces F1 from 0.482 to 0.309; removing QAD also reduces answer quality.",
     "why_it_matters": "The useful shift is to treat memory construction and query-time compression as trainable system components under an explicit cost objective, rather than optimizing retrieval quality alone.",
-    "limitations": [
-      "Evaluation is concentrated on conversational memory-QA benchmarks rather than agents acting through tools or environments.",
-      "The monetary cost objective depends on the selected model-pricing and amortization assumptions.",
-      "The learned construction policy may be benchmark-specific; broader transfer across domains and changing memory distributions is not established."
-    ],
+    "limitations": ["Evaluation is concentrated on conversational memory-QA benchmarks rather than agents acting through tools or environments.", "The monetary cost objective depends on the selected model-pricing and amortization assumptions.", "The learned construction policy may be benchmark-specific; broader transfer across domains and changing memory distributions is not established."],
     "confidence": "high"
   }
 }
