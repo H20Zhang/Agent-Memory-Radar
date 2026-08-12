@@ -18,7 +18,7 @@
     "generator": "gpt-image",
     "grounding": "full-paper",
     "last_verified": "2026-08-12",
-    "blocker": "The available GitHub write connector supports UTF-8 text files but exposes no binary-upload action, so the required WebP cannot be committed to main in this run."
+    "blocker": "GPT Image generation in this interactive run repeatedly rendered repository-dashboard/status UI instead of the requested single-paper grounded explainer and introduced fabricated metadata, so Visual QA failed. GitHub binary upload is available and was verified via create_blob(base64); publication is blocked only until a grounded render passes QA."
   },
   "provenance": {
     "discovered_from": ["https://arxiv.org/abs/2608.03509"],
