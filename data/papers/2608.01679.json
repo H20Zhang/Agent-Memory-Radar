@@ -11,6 +11,15 @@
   "tags": ["semantic", "structured", "general-agent"],
   "relevance": 0.97,
   "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": "The available GitHub write connector supports UTF-8 text files but exposes no binary-upload action, so the required WebP cannot be committed to main in this run."
+  },
   "provenance": {
     "discovered_from": ["https://arxiv.org/abs/2608.01679"],
     "analyzed_from": ["https://arxiv.org/html/2608.01679"],
