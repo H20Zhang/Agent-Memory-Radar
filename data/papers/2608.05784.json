@@ -1,0 +1,44 @@
+{
+  "id": "2608.05784",
+  "title": "Activity Frames: Deterministic Screen-Activity Compilation for Agent Memory and Replay",
+  "authors": ["Nossa Iyamu"],
+  "published": "2026-08-06",
+  "first_seen": "2026-08-10",
+  "paper_url": "https://arxiv.org/abs/2608.05784",
+  "code_url": "https://github.com/nossa-y/activity-frames",
+  "project_url": null,
+  "primary_category": "representation_organization",
+  "tags": ["episodic", "structured", "timeline", "personalization"],
+  "relevance": 0.92,
+  "importance": 3,
+  "visual_explainer": {
+    "status": "not_required",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": null
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.05784"],
+    "analyzed_from": ["https://arxiv.org/html/2608.05784"],
+    "last_verified": "2026-08-10"
+  },
+  "analysis": {
+    "tldr": "A deterministic compiler turns passive desktop activity into compact, auditable episodic memory frames, avoiding an LLM in the memory-construction path.",
+    "problem": "Personal agents need persistent memory of what a user actually did on a computer, but raw screen/activity logs are too verbose and LLM summaries can be lossy, expensive, and hard to audit.",
+    "core_idea": "Compile low-level screen activity into typed Activity Frames keyed by application/site, time, input volume, and evidence pointers, while separating measured facts from optional inferred semantics.",
+    "memory_design": {
+      "write": "Deterministically segment passive screen-activity events into bounded frames and retain pointers to supporting evidence.",
+      "organize": "Store a chronological sequence of typed activity frames with coverage/gap information and a strict measured-versus-inferred tier boundary.",
+      "read": "Expose compact frames to downstream agents and replay/pattern tools instead of injecting raw activity rows or free-form summaries.",
+      "update_forget": "Frames can be deterministically recompiled as source events change; the paper does not introduce a semantic forgetting policy."
+    },
+    "compared_to": ["raw screen/activity rows", "LLM-generated activity summaries", "LLM-centric personal-memory pipelines"],
+    "evidence": "Across eight evaluated days, Activity Frames reach 98.4% QA accuracy with the strongest reported Claude settings, versus 82.1-91.1% for raw rows and 66.1-80.4% for LLM summaries; the compiler is reported at 68 ms and the representation is much smaller than raw activity.",
+    "why_it_matters": "The interesting design point is not another retrieval algorithm: it shows that some high-volume agent memory can be compiled deterministically before any model sees it, improving provenance and reducing construction cost.",
+    "limitations": ["Evaluation is a single-user, single-machine study with one capture engine.", "Screen presence is an imperfect proxy for user attention and intent remains largely unobserved.", "The evaluation covers one model family and a short observation period, so generalization to long-lived multi-device agents is unknown."],
+    "confidence": "high"
+  }
+}

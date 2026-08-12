@@ -1,0 +1,21 @@
+primary_categories:
+  - id: representation_organization
+    name: Representation & Organization
+    description: How agent memory is represented, structured, and organized.
+  - id: retrieval_access
+    name: Retrieval & Access
+    description: How an agent locates, queries, navigates, or reasons over stored memory.
+  - id: write_update_consolidation
+    name: Write, Update & Consolidation
+    description: How memory is extracted, written, compressed, merged, corrected, forgotten, or consolidated.
+  - id: memory_learning_evolution
+    name: Memory Learning & Evolution
+    description: Learned memory policies, experience accumulation, procedural memory, and self-evolving agents.
+  - id: evaluation_analysis
+    name: Evaluation & Analysis
+    description: Benchmarks, surveys, empirical studies, and failure analyses of agent memory.
+
+tag_axes:
+  memory_type: [episodic, semantic, procedural, working, parametric]
+  substrate: [text, structured, graph, hierarchical, timeline, multimodal]
+  application: [personalization, coding, web-agent, embodied, research-agent, general-agent]
