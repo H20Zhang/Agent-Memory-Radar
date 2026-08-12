@@ -11,6 +11,15 @@
   "tags": ["episodic", "structured", "timeline", "general-agent"],
   "relevance": 0.99,
   "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": "The available GitHub write connector supports UTF-8 text files but exposes no binary-upload action, so the required WebP cannot be committed to main in this run."
+  },
   "provenance": {
     "discovered_from": ["https://arxiv.org/abs/2608.04746"],
     "analyzed_from": ["https://arxiv.org/html/2608.04746"],
@@ -26,18 +35,10 @@
       "read": "Rank memories with a query-adaptive score that combines semantic relevance, contextual fit, and time-dependent utility.",
       "update_forget": "Retroactively revise memory context and utility as later evidence arrives; per-memory decay naturally suppresses memories after their useful horizon."
     },
-    "compared_to": [
-      "Mem0-style episodic memory",
-      "dense embedding retrieval with Qwen3 embeddings",
-      "global recency and temporal-prompt retrieval baselines"
-    ],
+    "compared_to": ["Mem0-style episodic memory", "dense embedding retrieval with Qwen3 embeddings", "global recency and temporal-prompt retrieval baselines"],
     "evidence": "On EventQA-64k the method reports +2.66 F1 over Mem0 and +3.09 over the Qwen3-Embedding-4B retrieval baseline under the reported Llama 3.1 setting. On the controlled TGT diagnostic, the reported generalization gap improves by 0.108 and removing decay degrades the key metric by about 5.7x.",
     "why_it_matters": "It turns forgetting from a generic cleanup heuristic into an explicit, memory-specific model of future utility, which is a more useful abstraction for long-lived agents with changing facts.",
-    "limitations": [
-      "The strongest gains concentrate on temporal reasoning over perishable facts; dense retrieval can match it under stronger backbones on some settings.",
-      "Flat retrieval remains stronger on some conflict and fact-consolidation cases, so the mechanism is not a universal replacement for semantic memory.",
-      "TGT is a controlled temporal diagnostic and its external validity for open-ended agents is limited."
-    ],
+    "limitations": ["The strongest gains concentrate on temporal reasoning over perishable facts; dense retrieval can match it under stronger backbones on some settings.", "Flat retrieval remains stronger on some conflict and fact-consolidation cases, so the mechanism is not a universal replacement for semantic memory.", "TGT is a controlled temporal diagnostic and its external validity for open-ended agents is limited."],
     "confidence": "high"
   }
 }
