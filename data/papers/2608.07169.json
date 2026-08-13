@@ -1,0 +1,44 @@
+{
+  "id": "2608.07169",
+  "title": "Agent Memory Distillation: Empowering Small LLM Agents with Hierarchical Teacher Memory",
+  "authors": ["Taeil Kim", "Kangsan Kim", "Sung Ju Hwang"],
+  "published": "2026-08-07",
+  "first_seen": "2026-08-12",
+  "paper_url": "https://arxiv.org/abs/2608.07169",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": ["procedural", "structured", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": "Two isolated GPT Image attempts on 2026-08-12 ignored the paper-specific AMD brief and rendered an unrelated Agent Memory Radar dashboard with fabricated papers, counts, dates, and repository status instead of the hierarchical teacher-memory mechanism. Visual QA rejected both renders; binary publication itself is available."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.07169"],
+    "analyzed_from": ["https://arxiv.org/html/2608.07169"],
+    "last_verified": "2026-08-12"
+  },
+  "analysis": {
+    "tldr": "AMD uses memory as training-free capability transfer: successful trajectories from a large teacher are distilled into workflow-, subtask-, and function-level memories whose retrieval timing is matched to the decision granularity of a small student agent.",
+    "problem": "Small 4B–8B agents often cannot generate enough successful trajectories to bootstrap their own experience memory, while directly giving them teacher trajectories or one flat teacher-memory format can create a capability mismatch rather than usable guidance.",
+    "core_idea": "Build three complementary memory views from successful teacher trajectories: Workflow memory abstracts task-level strategy, Subtask memory stores concrete intermediate behavioral examples, and Function memory captures tool-call conventions and pitfalls. Workflow and Subtask memories are retrieved proactively at task start; Function memory is retrieved reactively after tool-call errors.",
+    "memory_design": {
+      "write": "Offline, retain successful teacher trajectories and distill them into task-level workflows, semantically segmented subtask exemplars, and per-function examples/pitfalls.",
+      "organize": "Hierarchical procedural memory is aligned to three control granularities—task, subtask, and function—rather than one flat trajectory store.",
+      "read": "At task start, retrieve workflow guidance plus one example for each decomposed subtask; on a function-call error, retrieve the relevant function memory by function identity and inject it into the error context.",
+      "update_forget": "The evaluated student uses a teacher-built memory bank as a read-only transfer substrate; the paper does not study online student-side consolidation, deletion, or forgetting during evaluation."
+    },
+    "compared_to": ["ReasoningBank adapted to the same teacher trajectories as a flat task-level memory baseline", "MemP adapted to the same teacher trajectories as a procedural-memory baseline", "SASM adapted to the same teacher trajectories as a uniform subtask-level memory baseline"],
+    "evidence": "Across Qwen3-4B, Gemma-4B-class, Qwen3-8B, and Llama3.1-8B students with GPT-5-mini as teacher, AMD reports average absolute gains over zero-shot of +27.2 percentage points on AppWorld, +11.2 on BFCL V3, and +3.4 on ToolSandbox, while outperforming the adapted memory baselines. The paper reports Subtask memory as the largest contributor and shows teacher usefulness depends on both teacher capability and student compatibility.",
+    "why_it_matters": "The important design point is not merely hierarchical memory. It shows that memory can act as a non-parametric teacher→student transfer channel, but only when representation and retrieval timing are matched to what the weaker consumer can operationalize.",
+    "limitations": ["The gains are measured on three tool-use benchmarks with a strong external teacher; this is capability transfer, not evidence that small agents can self-evolve from their own sparse experience.", "Teacher effectiveness depends on student compatibility as well as teacher strength, so a stronger teacher is not automatically a better memory source.", "The evaluated memory bank is constructed offline from successful teacher trajectories; long-term online update, conflict, and forgetting are not studied.", "The largest gains occur for weaker 4B students, so the value proposition may shrink as base-agent capability rises."],
+    "confidence": "high"
+  }
+}

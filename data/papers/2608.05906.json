@@ -1,0 +1,27 @@
+{
+  "id": "2608.05906",
+  "title": "Causal Episodic Memory for Feedback-Driven Agent Repair",
+  "authors": ["Khang Nhat Hoang Vo", "Tam Minh Chu", "Anh Trac Duc Dinh", "Thuyen Vinh Ha Bui", "Tho Quan"],
+  "published": "2026-08-06",
+  "first_seen": "2026-08-12",
+  "paper_url": "https://arxiv.org/abs/2608.05906",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "write_update_consolidation",
+  "tags": ["episodic", "structured"],
+  "relevance": 0.94,
+  "importance": 3,
+  "visual_explainer": {"status": "not_required", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-12", "blocker": null},
+  "provenance": {"discovered_from": ["https://arxiv.org/abs/2608.05906"], "analyzed_from": ["https://arxiv.org/html/2608.05906"], "last_verified": "2026-08-12"},
+  "analysis": {
+    "tldr": "MERIT is useful mainly as a controlled reality check: finalized cross-query repair memory improves over stateless repair, but its typed dual-polarity structure is not reliably better than a simpler untyped dynamic-retrieval memory.",
+    "problem": "Feedback-driven repair agents often throw away successful corrections and failed directions after each episode, forcing later related tasks to rediscover the same repair evidence.",
+    "core_idea": "After each finalized Text-to-SQL episode, write oracle-confirmed successful repair transitions and final unsuccessful directions into positive/negative episodic memory. A deterministic failure classifier selects a coarse type, and a hybrid dense+BM25 retriever surfaces only memories from earlier finalized episodes before the frozen model revises the current query.",
+    "memory_design": {"write": "Persist positive oracle-verified correction transitions and negative finalized unsuccessful directions only after an episode is complete.", "organize": "Partition memories by polarity and coarse deterministic failure type while preserving schema/task context.", "read": "Use the predicted failure type to condition hybrid lexical+dense retrieval; only causally prior finalized episodes are eligible.", "update_forget": "Append finalized episode evidence online; the paper does not study learned forgetting or consolidation beyond the fixed memory eligibility and retrieval rules."},
+    "compared_to": ["Stateless iterative execution-guided repair under identical initial SQL and repair budget", "Untyped dynamic retrieval from prior finalized episodes", "Reflexion-style verbal memory with higher inference cost"],
+    "evidence": "With Qwen2.5-7B-Instruct and matched initial predictions/budgets, MERIT improves Spider execution accuracy from 66.34% to 69.79% and BIRD from 47.35% to 48.44% over stateless iterative repair. The Spider paired gain is clear, but BIRD evidence is weaker; importantly, MERIT is not reliably separated from untyped dynamic retrieval on either benchmark, while Reflexion reaches 51.24% on BIRD at substantially higher inference cost.",
+    "why_it_matters": "The negative result matters more than the branding: cross-query experience is useful, but adding failure typing, polarity, and a more structured retriever does not automatically create extra value. Structure needs a decision-relevant reason to exist.",
+    "limitations": ["The paper's use of 'causal' means temporal eligibility—only earlier finalized episodes are retrieved—not identification of each memory's causal contribution.", "Oracle-assisted benchmark feedback is required to label successful corrections, limiting direct deployment realism.", "The structured MERIT design is not reliably better than untyped dynamic retrieval, so its extra representation machinery is not empirically load-bearing on these benchmarks.", "Evidence is concentrated on Text-to-SQL repair with one frozen 7B model."],
+    "confidence": "high"
+  }
+}

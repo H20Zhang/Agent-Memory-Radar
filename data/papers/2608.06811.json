@@ -1,0 +1,44 @@
+{
+  "id": "2608.06811",
+  "title": "Coupling Planning with Episodic Memory in LLM Agents for Software Issue Resolution",
+  "authors": ["Jiahao Zhang", "Yifan Zhang", "Yu Huang"],
+  "published": "2026-08-07",
+  "first_seen": "2026-08-12",
+  "paper_url": "https://arxiv.org/abs/2608.06811",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["episodic", "structured", "coding"],
+  "relevance": 0.98,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-12",
+    "blocker": "Two paper-specific GPT Image attempts on 2026-08-12 ignored the PMCoder brief and rendered an unrelated Agent Memory Radar dashboard with fabricated papers, counts, dates, and repository UI. Visual QA rejected both renders; binary publication itself is available."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.06811"],
+    "analyzed_from": ["https://arxiv.org/html/2608.06811"],
+    "last_verified": "2026-08-12"
+  },
+  "analysis": {
+    "tldr": "PMCoder makes planning and memory a bidirectional control loop: the current repair phase changes what episodic evidence is retrieved, while memory-derived trajectory statistics decide when the plan is stuck and should backtrack or replan.",
+    "problem": "Repository agents often add planning or long-context memory independently, so retrieval can be stale relative to the current repair phase, failed edits repeat, and verification can rely on the model's own completion claim instead of execution evidence.",
+    "core_idea": "Use a deterministic hierarchical phase planner for exploration, hypothesis, implementation, and verification; maintain episodic nodes plus lightweight code-structure relations; retrieve under a phase-conditioned MMR/token budget; feed edit/read/repetition statistics back into stuck detection and replanning; when available, use issue-reproduction verdicts to ground verification.",
+    "memory_design": {
+      "write": "Mirror agent observations and actions into episodic nodes with role/recency, compact content, file/edit metadata, and trajectory statistics; do not recursively re-ingest injected memory context.",
+      "organize": "Keep chronological episodic nodes and an incremental file/code-structure graph derived from imports, co-occurrence, and trajectory adjacency.",
+      "read": "The planner phase and active subtask set retrieval anchors, scoring, and token budgets; MMR selects a diverse evidence set from episodic memory plus code-structure signals.",
+      "update_forget": "Append new observations continuously and truncate/select at retrieval time; memory statistics can trigger plan backtracking/replanning, but there is no semantic consolidation or cross-issue forgetting policy."
+    },
+    "compared_to": ["A harness-matched repository agent without PMCoder's coupled planner-memory substrate", "Plan-only and memory-only component variants in a 2×2 ablation", "An OpenHands port and additional model backbones used as portability checks"],
+    "evidence": "On SWE-bench Verified with Qwen3-Coder-30B, the full system resolves 167.33/500 cases on average versus 142.33/500 for the harness-matched baseline (+25 cases, +5.0pp). In the 2×2 component study, plan-only is +1.3pp, memory-only +1.7pp, and the full system +5.0pp; the reported interaction contrast is +2.1pp (F(1,8)=10.92, p=.011). An OpenHands port shows +4.6pp, while several additional model and TerminalWorld probes are supportive but budget-limited.",
+    "why_it_matters": "The strongest evidence is the interaction, not the coding benchmark headline: memory becomes more valuable when access is conditioned on explicit controller state and, reciprocally, memory statistics can change that controller state.",
+    "limitations": ["The strongest repeated evidence is concentrated on SWE-bench Verified and one primary local model; several portability probes are single-run because of cost.", "The 2×2 ablation supports planner-memory interaction but does not independently isolate every auxiliary mechanism such as execution grounding and edit recovery.", "Thresholds and retrieval budgets are engineered from pilot behavior, so robustness to different repository/task regimes remains open.", "The memory is primarily within-issue episodic state; transfer across independent software issues is not the paper's main demonstrated benefit."],
+    "confidence": "high"
+  }
+}
