@@ -1,0 +1,44 @@
+{
+  "id": "2608.09410",
+  "title": "Skills in Weights, Memory in Code: Hybrid Learning for Memory-Dependent Robot Manipulation",
+  "authors": ["Yunhao Zhao", "Zhenyang Ni", "Haoyang Chen", "Ruohan Zhang", "Qi Zhu"],
+  "published": "2026-08-10",
+  "first_seen": "2026-08-13",
+  "paper_url": "https://arxiv.org/abs/2608.09410",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": ["working", "procedural", "structured", "embodied"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-13",
+    "blocker": "Two isolated GPT Image attempts on 2026-08-13 failed paper-specific Visual QA: the first rendered an unrelated GitHub repository dashboard with fabricated maintenance metadata; the second rendered a V-Mem explainer instead of HyMeS. Binary publication is available; the blocker is render grounding/identity."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.09410"],
+    "analyzed_from": ["https://arxiv.org/html/2608.09410"],
+    "last_verified": "2026-08-13"
+  },
+  "analysis": {
+    "tldr": "HyMeS separates motor skills from memory strategy: a VLA learns reusable physical skills in weights, while a coding agent learns executable memory-management rules in code; symbolic task state then steers the frozen VLA's action denoising and is updated from multimodal execution feedback.",
+    "problem": "Memory-dependent manipulation is non-Markovian: identical current observations can require different actions depending on earlier cues or counts. End-to-end memory-augmented VLAs can learn this, but they entangle memory logic with motor learning and require demonstrations that cover combinatorial history-dependent task states.",
+    "core_idea": "Fine-tune a Markovian flow-matching VLA only for reusable motor skills, then use development rollouts to let a coding agent iteratively edit an executable program containing constraint-selection, event-verification, and memory-update rules. At runtime, the resulting symbolic memory selects a stage-specific differentiable constraint whose gradient steers VLA denoising; PACE verifies stage completion from proprioception plus multi-frame VLM evidence and updates memory.",
+    "memory_design": {
+      "write": "During development, rollout traces and stage-wise verdicts are used by a coding agent to revise the executable heuristic program. At episode start, the frozen program instantiates an initial symbolic task memory from the instruction and observation.",
+      "organize": "The program separates constraint-selection, event-verification, and update rules; runtime memory stores the plan, active stage, bindings, repetition counters, and persistent interaction state.",
+      "read": "The active symbolic state selects a differentiable stage constraint that is injected into the frozen flow-matching VLA's denoising process, so memory changes action-mode selection without changing policy weights.",
+      "update_forget": "PACE accepts stage-progress events using proprioceptive and multi-frame VLM judgments, then advances the stage and updates bindings/counters/persistent state. The learned program itself is frozen during evaluation; the paper does not study long-term forgetting."
+    },
+    "compared_to": ["The same-weight reactive pi0.5 policy on the corrected RoboMemArena protocol", "PrediMem reevaluated on the same corrected 12-task protocol", "End-to-end memory-augmented VLAs that learn history-conditioned behavior in weight space from demonstrations"],
+    "evidence": "On a corrected 12-task/160-episode RoboMemArena protocol, HyMeS reports 66.2% cumulative success and 60.1% task success versus 52.5%/41.3% for pi0.5 and 61.7%/45.6% for PrediMem. On SO-101, task success rises from 25.7% to 57.1%. The paper reports that rollout experience adds +8.5 CSR and +18.4 TSR, and that combining proprioceptive and visual completion evidence is more reliable than either alone.",
+    "why_it_matters": "HyMeS exposes a useful substrate boundary: long-horizon memory logic need not be baked into policy weights. Keeping motor competence in weights while putting inspectable, revisable task-state logic in code can reduce demonstration requirements and let memory directly steer action generation rather than merely orchestrate a high-level tool call.",
+    "limitations": ["The evaluation uses a corrected 12-task subset selected to isolate missing-history failures; although selection uses protocol checks and base-policy behavior rather than HyMeS results, broader RoboMemArena generality is not established.", "Memory-strategy learning happens on development rollouts; the program is frozen at evaluation, so this is not continual online program evolution during deployment.", "PACE depends partly on Qwen3-VL-8B completion judgments and hand-specified voting settings, creating another failure surface for memory updates.", "Evidence covers one main VLA family and a small real-robot task set; transfer of learned code-space memory strategies across robots, policies, or open-ended tasks remains unclear."],
+    "confidence": "high"
+  }
+}

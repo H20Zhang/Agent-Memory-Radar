@@ -1,0 +1,44 @@
+{
+  "id": "2608.11224",
+  "title": "Harnessing agent memory to build lifelong AI partners for materials scientists",
+  "authors": ["Siyu Liu", "Bo Hu", "Beilin Ye", "He Cao", "David J. Srolovitz", "Tongqi Wen"],
+  "published": "2026-07-25",
+  "first_seen": "2026-08-13",
+  "paper_url": "https://arxiv.org/abs/2608.11224",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": ["semantic", "procedural", "structured", "research-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-13",
+    "blocker": "Two isolated GPT Image attempts on 2026-08-13 ignored the materials-memory brief and rendered unrelated GitHub repository dashboards with fabricated maintenance metadata. Visual QA rejected both; binary publication itself is available."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.11224"],
+    "analyzed_from": ["https://arxiv.org/html/2608.11224"],
+    "last_verified": "2026-08-13"
+  },
+  "analysis": {
+    "tldr": "The paper treats memory—not the current agent—as the durable scientific asset: execution-grounded experience is consolidated into inspectable fact and skill memories with provenance, revised from failures, and reused across tasks and even model backbones.",
+    "problem": "Scientific agents can execute tools but typically lose operational know-how when sessions, projects, models, or orchestration stacks change. Raw conversation traces are neither sufficiently trustworthy nor portable because scientific procedures need provenance, boundary conditions, validation, and failure history.",
+    "core_idea": "Maintain two human-readable, provenance-linked memory types: facts for observations, warnings, interpretations, and boundary conditions; skills for reusable procedures, scripts, protocols, and checks. Sandbox/job feedback determines what should be trusted and what should be revised, while retrieval carries validated corrections and procedures into later tasks or another model.",
+    "memory_design": {
+      "write": "After scientific execution, persist observations, failures, validated corrections, and successful procedures as fact or skill memory together with provenance and applicability information.",
+      "organize": "Facts and executable skills form an inspectable, editable, versionable external knowledge base rather than hidden model weights or a flat conversation log.",
+      "read": "Future tasks retrieve relevant facts and skills before or during execution; a frozen source-model memory namespace can also be bound read-only to a different target model for cross-model transfer.",
+      "update_forget": "Sandbox and job feedback revise incorrect procedures and turn repeated failures into guardrails. The paper motivates versioning/deprecation policies but does not yet provide a mature automatic forgetting policy."
+    },
+    "compared_to": ["Bare LLM execution on the same MatTools real-world tool-use subset", "Sandbox-only and memory-only variants separating execution feedback from persistence", "Self-memory from the target model in the cross-model transfer matrix"],
+    "evidence": "On 49 MatTools questions / 138 executable subtasks, GPT-5.2 task success rises from 44.2% bare to 75.4% after three memory rounds; the full system rises 62.3%→75.4% while sandbox-only and memory-only variants remain around 57–60%. On Sol27LC, 22/1/4 Correct/Partial/Error becomes 25/2/0 after accumulated memory. GPT-5.4 memory improves GPT-5.4-nano by +50.8 percentage points relative to nano's own R3 memory, but weaker-source memories can be neutral or harmful. In 13 practical workflows, later rounds reduce aggregate token/tool-call burden, although success is not uniformly monotonic.",
+    "why_it_matters": "This is unusually direct evidence for memory as a portable artifact rather than model-local context. More importantly, the asymmetric transfer matrix challenges a naive portability story: useful memory depends on source reliability, target competence, provenance, and validation—not just on having a reusable text representation.",
+    "limitations": ["The evaluation is computational materials science; experimental protocols, instruments, and multi-year human laboratory practice are not yet tested.", "Memory retrieval and validation can add substantial token overhead, and smaller models sometimes cannot operationalize extra memory effectively.", "Cross-model transfer can be negative when source memory is weaker or less reliable than the target's own experience, so portability requires trust and compatibility checks.", "The paper motivates richer applicability tags, deprecation, repeated-success counts, and executable validation tests; these lifecycle controls are not yet fully realized."],
+    "confidence": "high"
+  }
+}

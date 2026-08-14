@@ -1,0 +1,32 @@
+{
+  "id": "2608.11654",
+  "title": "Towards a Formal Definition of Agent Memory: Basis, Span, Optimality, and the Sequential Memory Problem",
+  "authors": ["Hongyao Tang"],
+  "published": "2026-08-12",
+  "first_seen": "2026-08-13",
+  "paper_url": "https://arxiv.org/abs/2608.11654",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["general-agent"],
+  "relevance": 0.98,
+  "importance": 3,
+  "visual_explainer": {"status": "not_required", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-13", "blocker": null},
+  "provenance": {"discovered_from": ["https://arxiv.org/abs/2608.11654"], "analyzed_from": ["https://arxiv.org/html/2608.11654"], "last_verified": "2026-08-13"},
+  "analysis": {
+    "tldr": "The paper proposes a representation-agnostic formalism in which stored events form a memory basis, a generation operator defines its knowledge span, memory quality becomes query coverage under a capacity budget, and sequential writing becomes an MDP with delayed query-time reward.",
+    "problem": "Agent-memory systems use incompatible representations and metrics, so memory quality is hard to compare and the optimal write problem is rarely stated explicitly.",
+    "core_idea": "Separate stored events from the knowledge they generate via an operator Phi. Under a single-item-support assumption, answerability becomes coverage over the memory's span; capacity-constrained optimal memory traces a utility-capacity frontier. Noisy extraction separates coverage from precision, and unknown future query distributions motivate a sequential memorization MDP.",
+    "memory_design": {
+      "write": "A write policy selects a bounded subset of events from material; in the sequential formulation, writing is an action whose value is revealed later by query-time utility.",
+      "organize": "Memory is the event basis; its semantic span is Phi(memory). Under noise, stored claims are separated into asserted span versus good/true span. The formalism deliberately abstracts away graph/page/vector layout.",
+      "read": "A read policy retrieves a subset of the span for a query. The main theory uses single-item support, pushing composition into Phi rather than answer-time multi-item reasoning.",
+      "update_forget": "The sequential MDP allows memory state to change as queries arrive under a capacity constraint, but the paper does not propose a concrete replacement/forgetting algorithm."
+    },
+    "compared_to": ["Representative agent-memory systems are positioned in a common formal write/read/reasoning framework rather than empirically outperformed"],
+    "evidence": "The main evidence is theoretical: the utility-capacity frontier is non-decreasing and saturates at the full-context baseline under monotonicity; with decomposable Phi, optimal writing reduces to weighted maximum coverage with the classical greedy (1-1/e) approximation, while cross-event synergy breaks that guarantee. An Odyssey case study is illustrative rather than a broad empirical validation.",
+    "why_it_matters": "If the assumptions are useful, the utility-capacity frontier provides a cleaner way to compare memory systems at matched capacity and separates what is stored, what knowledge it spans, and how well a reasoner uses it.",
+    "limitations": ["Single-item support rules out answer-time composition; all multi-event reasoning must already be materialized inside the generation operator.", "Coverage is explicitly not correctness, and the theory treats reasoner failures as a separate layer.", "Monotonicity and self-containment are only approximate for real LLM extraction; conflicting memories can violate them.", "The formalism is representation-agnostic and empirically illustrated on a hand-checked Odyssey instance, so it does not establish that the proposed yardstick predicts real agent performance across modern memory architectures."],
+    "confidence": "high"
+  }
+}

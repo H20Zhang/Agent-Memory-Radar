@@ -1,0 +1,32 @@
+{
+  "id": "2608.01708",
+  "title": "PGMem: Tightly Coupled Persona-Memory Graph for Lifelong Personalized Agents",
+  "authors": ["Wonjun Choi", "Yerim Kim", "Yukyung Lee", "Susik Yoon"],
+  "published": "2026-08-03",
+  "first_seen": "2026-08-13",
+  "paper_url": "https://arxiv.org/abs/2608.01708",
+  "code_url": "https://github.com/wonjunchoi23/pgmem",
+  "project_url": null,
+  "primary_category": "representation_organization",
+  "tags": ["episodic", "semantic", "graph", "personalization"],
+  "relevance": 0.98,
+  "importance": 3,
+  "visual_explainer": {"status": "not_required", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-13", "blocker": null},
+  "provenance": {"discovered_from": ["https://arxiv.org/abs/2608.01708"], "analyzed_from": ["https://arxiv.org/html/2608.01708", "https://github.com/wonjunchoi23/pgmem"], "last_verified": "2026-08-13"},
+  "analysis": {
+    "tldr": "PGMem couples episodic dialogue evidence and evolving persona signals in one heterogeneous graph, using provenance/evidence edges to retrieve currently valid persona information; its own ablations show persona-level representation is more load-bearing than graph structure by itself.",
+    "problem": "Personalized dialogue memories often store persona profiles separately from the events that support, contradict, or revise them. That creates a validity gap at write time and a retrieval gap when surface similarity returns old episodes that conflict with the user's current persona.",
+    "core_idea": "Maintain event-level Context/Episode nodes and persona-level State/Trait nodes connected by source/provenance edges and support/contradiction/shift evidence edges. Retrieval begins from query-relevant seeds, expands through evidence relations, then ranks candidates by query relevance and evidential validity.",
+    "memory_design": {
+      "write": "Incrementally extract event and persona nodes from dialogue, preserving source provenance and adding typed support, contradiction, and temporal-shift relations.",
+      "organize": "A heterogeneous graph separates Context/Episode evidence from transient State and stable Trait persona signals while keeping them connected by provenance and validity relations.",
+      "read": "Seed retrieval finds query-aligned nodes, evidence-guided graph expansion recovers indirectly relevant persona evidence, and final assembly ranks by relevance plus validity.",
+      "update_forget": "New interactions can support, contradict, or shift persona nodes. The paper identifies stale/superseded nodes but leaves explicit pruning, consolidation, decay, and long-horizon lifecycle policies to future work."
+    },
+    "compared_to": ["Full-history and summary-based long-term dialogue memory", "Persona-aware memory baselines", "Graph-structured and agentic memory baselines under small-model backbones"],
+    "evidence": "With Qwen3-1.7B, PGMem reports 1.33 ImplexConv, 2.21 PrefEval, 45.50 PersonaMem-32k, and 46.35 PersonaMem-128k. Removing persona-level nodes falls to 1.21, 2.02, 41.09, and 38.80. Removing graph expansion is much smaller on the first three settings (1.27, 2.21, 44.99) but grows at 128k (43.53), showing explicit persona representation is more load-bearing than graph alone. Construction on ImplexConv uses about 2.254M input and 271k output tokens, materially more than summary-based methods.",
+    "why_it_matters": "PGMem makes provenance part of personalization semantics: a persona signal is useful only when the system can explain which experiences support or supersede it. The skeptical lesson is equally useful—its ablation does not support a generic graphs-are-better claim; persona representation drives most of the gain, with graph expansion becoming more important mainly at longer context.",
+    "limitations": ["All evaluated long-term dialogue datasets are synthetic; organic persona evolution over months or years remains untested.", "Persona-level extraction and graph construction are expensive compared with simple summary memory.", "Explicit pruning, consolidation, decay, and user-data lifecycle controls are discussed but not implemented for truly lifelong scale.", "The graph-only ablation is modest on several settings, so importance should be attributed to evidence-grounded persona representation rather than graph structure in general."],
+    "confidence": "high"
+  }
+}
