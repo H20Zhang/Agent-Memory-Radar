@@ -1,0 +1,27 @@
+{
+  "id": "2608.11775",
+  "title": "The Sleeping Agent: What Gist-Based Context Compression Loses and Why",
+  "authors": ["Nicholas E. Kyrkewood"],
+  "published": "2026-08-12",
+  "first_seen": "2026-08-13",
+  "paper_url": "https://arxiv.org/abs/2608.11775",
+  "code_url": "https://github.com/kyrkewood/sleeping-agent",
+  "project_url": null,
+  "primary_category": "write_update_consolidation",
+  "tags": ["semantic", "text", "timeline", "general-agent"],
+  "relevance": 0.97,
+  "importance": 3,
+  "visual_explainer": {"status": "not_required", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-13", "blocker": null},
+  "provenance": {"discovered_from": ["https://arxiv.org/abs/2608.11775"], "analyzed_from": ["https://arxiv.org/html/2608.11775", "https://github.com/kyrkewood/sleeping-agent"], "last_verified": "2026-08-13"},
+  "analysis": {
+    "tldr": "Gist compression is selective forgetting, not neutral compression: the studied abstraction prompt preserved entities/events while systematically discarding temporal expressions, and one targeted prompt change largely repaired the temporal failure without materially changing other preservation rates.",
+    "problem": "Long-horizon agents often summarize old context to fit a budget, but aggregate memory scores hide which information types the compression operator systematically removes. A generic gist prompt can therefore preserve the story while deleting the exact temporal anchors later questions require.",
+    "core_idea": "Use Salience-Weighted Consolidation as a diagnostic: score history by salience, preserve high-priority material, gist-abstract mid-priority material, and test preservation/QA by question type. Then modify only the abstraction prompt to explicitly retain dates/times and measure whether the targeted information type and downstream temporal accuracy recover.",
+    "memory_design": {"write": "History chunks are salience-scored; high-priority content is retained and mid-priority content is rewritten into structured gist summaries.", "organize": "The method partitions history into priority tiers and substitutes compact gist representations for older mid-priority material within a context budget.", "read": "The answer model reads the resulting compressed context directly rather than retrieving from a separate external store.", "update_forget": "Compression is reactive to context pressure in the evaluated offline setup. The paper diagnoses what is lost but does not evaluate a mature online scheduling/forgetting policy."},
+    "compared_to": ["Recent-token truncation", "A sliding-window summarization baseline", "Full uncompressed context as a limited reference ceiling", "The same SWC pipeline with and without temporal-anchor protection"],
+    "evidence": "Across all ten LoCoMo conversations, temporal-expression verbatim preservation rises from 3.05% to 62.39% after a one-sentence temporal-protection change—about 20×—while named-entity and event preservation change only 1.02× and 1.11×. On the matched temporal questions the change recovers +0.314 judge accuracy [0.254, 0.375]. The result is diagnostic rather than a claim that SWC is a state-of-the-art memory system.",
+    "why_it_matters": "Compression policies need explicit preservation contracts. 'Keep the gist' is underspecified for memory: a representation can preserve relational/event semantics yet erase the small class of tokens that determines a later answer. Type-specific failure analysis is therefore more informative than aggregate compression quality.",
+    "limitations": ["The intervention is tested only inside SWC on LoCoMo; transfer to other summarizers and agent workloads is unproven.", "Full-context comparison is available for only two conversations.", "Verbatim preservation is a conservative proxy that can miss semantically faithful paraphrases.", "Online scheduling cannot be evaluated on this offline benchmark, and open-domain category differences are not statistically reliable."],
+    "confidence": "high"
+  }
+}

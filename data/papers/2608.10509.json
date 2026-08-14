@@ -1,0 +1,27 @@
+{
+  "id": "2608.10509",
+  "title": "MAP-Graph: Provenance-Aware Shared Memory for Multi-Agent Workflows",
+  "authors": ["Yiqi Wang", "Zihao Yan", "Jiaqi Zhang", "Zhangkai Wu", "Mingkai Zheng", "Zequn Sun", "Yanming Zhu", "Taotao Cai"],
+  "published": "2026-08-11",
+  "first_seen": "2026-08-13",
+  "paper_url": "https://arxiv.org/abs/2608.10509",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["semantic", "graph", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {"status": "blocked", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-13", "blocker": "An isolated MAP-Graph GPT Image attempt on 2026-08-13 ignored the paper-specific brief and rendered a V-Mem explainer with unrelated mechanism/evidence. Visual QA rejected it. Binary publication is available; the blocker is render grounding/paper identity."},
+  "provenance": {"discovered_from": ["https://arxiv.org/abs/2608.10509"], "analyzed_from": ["https://arxiv.org/html/2608.10509"], "last_verified": "2026-08-13"},
+  "analysis": {
+    "tldr": "MAP-Graph makes provenance an operational memory control signal: semantic candidates are filtered by hard read permissions, reranked by recursive ancestry trust, and checked again against action risk, while revocation remains visible through descendant lineage.",
+    "problem": "In shared agent memory, a relevant record may still be ineligible for a particular reader or action. Summaries and derived memories can hide restricted, low-trust, or revoked ancestors, so semantic relevance and local metadata are insufficient correctness criteria.",
+    "core_idea": "Couple a task-scoped typed provenance graph with semantic vector retrieval. Retrieval first applies CanRead, then scores eligible candidates by semantic similarity times recursive path trust. A separate action-time gate uses affected ancestry and action risk, while revocation propagates through lineage rather than deleting provenance.",
+    "memory_design": {"write": "Append new records with derived_from references to visible sources and retrieved memories; inherited permission scope is computed from referenced inputs.", "organize": "A typed directed provenance graph records agents, sources, memories, claims, actions, and derivation/access relations, coupled by memory ID to a Chroma semantic store.", "read": "Chroma produces candidates; CanRead removes ineligible records; remaining candidates are reranked by semantic score multiplied by recursive path trust, then action-time gating can require Allow, Block, Redact, Reverify, or AskUser.", "update_forget": "New text appends rather than overwrites. Explicit revocation marks source/affected records and is discovered recursively by descendants; lineage is retained for audit. There is no general active/superseded/contradicted state machine."},
+    "compared_to": ["Shared and isolated vector-memory baselines", "Adapted graph/collaborative/lineage-memory mechanisms", "A flat-provenance control with rich per-record metadata but no recursive ancestry/path-trust propagation"],
+    "evidence": "On the paper's single-run 2,700-task synthetic benchmark, MAP-Graph reports 94.96% task success and 72.70% exact decision accuracy, versus 74.67% best baseline task success and 51.07% best baseline exact accuracy. Removing trust propagation lowers task success to 87.37% and changes the adverse-action rate from 1.52% to 8.56%. Removing the permission filter raises aggregate utility but makes conditional unauthorized access 100%, showing why endpoint utility cannot substitute for read-boundary instrumentation.",
+    "why_it_matters": "The important delta is not 'memory as a graph'; it is separating three control boundaries that semantic retrieval conflates: whether evidence may be read, how much inherited trust it should carry, and whether it is sufficient for the risk of the proposed action. Provenance becomes executable policy state rather than post-hoc metadata.",
+    "limitations": ["The benchmark is synthetic and templated, actions are simulated, and every task uses one four-agent round rather than a genuinely long-lived workflow.", "Main results are one temperature-zero run; inference nondeterminism is not estimated.", "Several baselines are core-mechanism adaptations rather than complete reproductions, complicating external comparisons.", "The action-risk group still has 9.11% impermissible Allow outcomes, and provenance/trust constants are hand-designed rather than learned or calibrated from deployment data."],
+    "confidence": "high"
+  }
+}

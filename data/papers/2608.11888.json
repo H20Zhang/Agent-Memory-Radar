@@ -1,0 +1,27 @@
+{
+  "id": "2608.11888",
+  "title": "Agent Skills Can Be Harmful: An Empirical Study of Skill-Induced Failures in LLM Agents",
+  "authors": ["Gen Dong", "Yanjie Gao", "Liqun Li", "Tianyin Xu", "Yu Hua", "Fan Yang"],
+  "published": "2026-08-12",
+  "first_seen": "2026-08-13",
+  "paper_url": "https://arxiv.org/abs/2608.11888",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["procedural", "text", "general-agent"],
+  "relevance": 0.98,
+  "importance": 4,
+  "visual_explainer": {"status": "blocked", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-13", "blocker": "A GPT Image tool-level failure occurred earlier in the 2026-08-13 visual pass and the tool required no further retries in this request. Earlier isolated renders in the same pass also showed paper-identity failures, so no grounded visual could be published."},
+  "provenance": {"discovered_from": ["https://arxiv.org/abs/2608.11888"], "analyzed_from": ["https://arxiv.org/html/2608.11888"], "last_verified": "2026-08-13"},
+  "analysis": {
+    "tldr": "This empirical study uses matched no-skill and alternative-skill executions to attribute 307 observed skill-related functional or efficiency regressions, showing that reusable procedural guidance can be topically relevant yet operationally mismatched or overly costly.",
+    "problem": "Outcome-only skill benchmarks cannot distinguish a skill-related regression from base-agent limitations, task difficulty, verifier scope, environment effects, or ordinary run variation; cost can also come from changed execution procedure rather than prompt length alone.",
+    "core_idea": "Hold task, harness, model, repository/container state, input data, and verifier fixed while varying only the skill setup. Compare a target skill-guided execution with a no-skill or semantically matched reference and inspect trajectory differences to classify functional and efficiency mechanisms; SkillTriage automates part of this attribution.",
+    "memory_design": {"write": "The study evaluates existing reusable SKILL.md packages rather than learning new memory.", "organize": "Procedural memory is packaged as named skills containing instructions, examples, constraints, tool guidance, and optional references.", "read": "Selected skills are loaded into agent context and can alter planning, tool use, implementation, validation, and stopping behavior.", "update_forget": "The study does not implement skill revision or forgetting; it motivates compatibility checks, lazy loading, and budget-aware selection."},
+    "compared_to": ["The same task with no skill", "The same task with a semantically matched alternative skill", "SkillsBench and SWE-Skills-Bench outcome-focused evaluations"],
+    "evidence": "The final analysis contains 307 confirmed cases: 125 functional and 182 high-confidence efficiency regressions. Task-Implementation Fault accounts for 86/125 functional cases, whereas simple applicability mismatch is only 2/125. Excessive Procedure accounts for 114/182 efficiency cases, including 67 excessive-verification and 30 heavy-pipeline cases; context bloat accounts for 46/182. SkillTriage matches manual exact labels on 111/125 functional and 132/182 efficiency cases.",
+    "why_it_matters": "For procedural memory, topical relevance is not enough. The useful evaluation unit is the skill's marginal behavioral and cost effect relative to a matched alternative, because reusable guidance can change the control trajectory even when it is semantically appropriate.",
+    "limitations": ["Root-cause labeling still requires manual judgment, and automated attribution has boundary errors between nearby categories.", "The study uses SkillsBench and SWE-Skills-Bench under one OpenCode/Claude Opus 4.6 setup, so external validity across harnesses/models remains open.", "Matched reference runs support attribution but do not establish a unique causal explanation for every trajectory difference.", "No online skill-revision or suppression policy is evaluated."],
+    "confidence": "high"
+  }
+}

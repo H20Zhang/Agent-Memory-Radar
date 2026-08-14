@@ -1,0 +1,44 @@
+{
+  "id": "2608.11879",
+  "title": "Total Recall at What Cost? Benchmarking the Serving Cost of Agentic Memory Systems",
+  "authors": ["Natchanon Pollertlam", "Witchayut Kornsuwannawit"],
+  "published": "2026-08-12",
+  "first_seen": "2026-08-13",
+  "paper_url": "https://arxiv.org/abs/2608.11879",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["semantic", "text", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-13",
+    "blocker": "A paper-specific GPT Image invocation on 2026-08-13 failed at the image-tool level before a render was returned. Earlier same-run isolated attempts for MESA and MAP-Graph also failed paper identity/grounding. The image tool required no further retries in this request; no visual was published."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.11879"],
+    "analyzed_from": ["https://arxiv.org/html/2608.11879"],
+    "last_verified": "2026-08-13"
+  },
+  "analysis": {
+    "tldr": "This paper turns serving cost into a first-class agent-memory benchmark and shows that dedicated memory is not automatically cheaper than resending history: break-even depends strongly on architecture, backbone, message size, and conversation length, with no system dominating both cost and accuracy.",
+    "problem": "Memory systems are often justified by avoiding ever-growing full-history prompts, but their own ingest, retrieval, reflection, and answer pipelines consume model calls. Prior evaluations rarely measure those costs under matched systems/backbones or ask when memory actually pays back its overhead.",
+    "core_idea": "Replay identical conversations through Mem0, Hindsight, Mastra Observational Memory, a ten-turn rolling window, and full-history prompting. Instrument billed input across ingest/retrieval/answer stages, fit a depth×message-size cost surface, compute sustained break-even against full history from measured per-turn cost, and pair each configuration with LoCoMo answer accuracy.",
+    "memory_design": {
+      "write": "The benchmark leaves each system's ingest pipeline intact and meters its billed model input, including fact extraction or reflection/consolidation when the implementation triggers it.",
+      "organize": "Memory representations are not standardized; the benchmark intentionally spans flat fact extraction, retain/recall/reflect, and observer/reflector designs while measuring their serving behavior under matched configurations.",
+      "read": "Each system retrieves from its native memory and answers under the benchmark backbone; rolling-window and full-history strategies provide transparent cost references.",
+      "update_forget": "The paper evaluates each implementation's native ingest/consolidation behavior rather than proposing a new lifecycle policy."
+    },
+    "compared_to": ["Full-transcript resubmission as the cost ceiling", "A fixed ten-turn rolling window as the cheap non-persistent floor", "Mem0, Hindsight, and Mastra Observational Memory under common backbone/reasoning settings"],
+    "evidence": "A separable depth/message-size regression predicts the two window baselines with 2.9–6.5% held-out error but misses memory systems by 18–69%, showing internal memory behavior drives cost. Across measured 400-turn workloads, sustained break-even against full history spans Mastra OM 0–86 turns, Mem0 0–342, and Hindsight 60–never. At 400 turns full history can cost up to 12.7× a memory system after break-even, while Hindsight can still cost up to 3.3× full history in small-message cases. Accuracy across configurations spans about 21–54%; no system dominates both axes.",
+    "why_it_matters": "This challenges a common systems premise: retrieval memory is not economically justified merely because it sends fewer answer-time history tokens. Architecture-specific maintenance work and serving-stack choice can move the break-even point by hundreds of turns, so cost must be measured as an end-to-end lifecycle property.",
+    "limitations": ["The cost grid uses synthetic dialogues whose fact density may not reproduce real ingest/consolidation behavior.", "Accuracy is evaluated on one stratified LoCoMo subset, so joint cost-quality conclusions may not transfer to task-oriented agents.", "The fitted cost model is descriptive and generalizes poorly for the memory systems; it should not be extrapolated mechanistically.", "Hindsight's ingest backbone was not controlled across benchmark cells, so its cross-backbone/reasoning comparisons are explicitly invalid.", "Provider routing/caching variance and serving-stack token-count mismatches affect observed costs."],
+    "confidence": "high"
+  }
+}

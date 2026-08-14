@@ -1,0 +1,44 @@
+{
+  "id": "2608.10108",
+  "title": "MESA: Task-Adaptive Multi-Structure Evidence Selection for Long-Horizon Agent Memory",
+  "authors": ["Beidi Zhao", "Yaoqi Chen", "Yuru Feng", "Menghao Li", "Qianxi Zhang", "Baotong Lu", "Jianan Lu", "Zhirui Wang", "Xinjiang Wang", "Shusen Xu", "Zengzhong Li", "Xiaoxiao Li", "Qi Chen"],
+  "published": "2026-08-10",
+  "first_seen": "2026-08-13",
+  "paper_url": "https://arxiv.org/abs/2608.10108",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["episodic", "structured", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-13",
+    "blocker": "Two isolated GPT Image attempts on 2026-08-13 failed paper-specific Visual QA: the first rendered an unrelated GitHub repository dashboard with fabricated maintenance metadata; the second rendered a V-Mem explainer instead of MESA. Binary publication is available; the blocker is render grounding/paper identity."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.10108"],
+    "analyzed_from": ["https://arxiv.org/html/2608.10108"],
+    "last_verified": "2026-08-13"
+  },
+  "analysis": {
+    "tldr": "MESA treats memory access as structure-level composition: construct several complementary views once, then learn an explicit query-adaptive policy that selects a subset rather than always reading one view or all views.",
+    "problem": "Multi-structure memories face a read-time trade-off: a fixed union adds redundant/noisy evidence and token cost, while route-to-one prevents complementary global, temporal, relational, semantic, and step-level evidence from being combined.",
+    "core_idea": "Build five fixed views of each trajectory—summary, temporal store, knowledge graph, vector database, and raw episodic trace—then optimize an inspectable selection policy from answer-level feedback. For each query the policy selects a non-empty subset, invokes each view's native access operator, composes the returned evidence, and passes it to a frozen answer model.",
+    "memory_design": {
+      "write": "Offline builders convert each trajectory into five complementary memory structures; builders remain fixed while the selector is optimized.",
+      "organize": "Maintain summary, temporal, graph, vector, and raw episodic views as complementary representations rather than collapsing them into one store.",
+      "read": "An explicit query/context-conditioned policy selects a subset of structures; their native retrievers return evidence that is composed before a frozen answer model.",
+      "update_forget": "The evaluated structures are fixed after construction. MESA evolves the access-selection policy, not the stored memories; continuous update and forgetting are not studied."
+    },
+    "compared_to": ["AMA-Agent and other long-horizon memory baselines", "Reading all five structures for every query", "Routing each query to exactly one structure", "Validation-selected coarse domain/capability lookup policies"],
+    "evidence": "On AMA-Bench with Qwen3-32B, MESA reaches 65.1±0.8% overall accuracy versus 56.6% for AMA-Agent. The diagnostic comparison is selection: route-to-one scores 57.0%, all five structures 63.7% with 18.7k evidence tokens/query, while MESA selects 2.8 structures on average and reaches 65.1% with 11.0k tokens—1.4 points above all-structure with 41.2% fewer evidence tokens. A domain-conditioned fixed policy already reaches 64.4%, so the gain from fine-grained learned selection over a strong coarse selector is modest. On LoCoMo, MESA reports 49.0 F1 versus 47.2 for EMem.",
+    "why_it_matters": "This strengthens a more precise design rule than 'use multiple memories': structure is useful when the access layer can choose which relations to expose for the current decision. The negative comparison to both route-to-one and read-everything makes the composition boundary the real contribution.",
+    "limitations": ["The library is limited to five preselected structures, so the result does not establish which representation set is optimal.", "A validation-selected domain-conditioned policy reaches 64.4% versus MESA's 65.1%, so some gains can be explained by coarse query/task regularities.", "Constructing all complementary views adds offline cost relative to simpler systems even though read-time evidence is reduced.", "Continuously updated and multimodal memories are not evaluated, and builders/retrievers are not jointly optimized with the selector."],
+    "confidence": "high"
+  }
+}
