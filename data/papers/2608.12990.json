@@ -1,0 +1,44 @@
+{
+  "id": "2608.12990",
+  "title": "LycheeMemory V2: Efficient Long-Term Memory for LLM Agents via Semantic Segment-Level Consolidation",
+  "authors": ["Dongfang Li", "Zixuan Liu", "Junmai Wang", "Jiahe Huang", "Fuhao Li", "Bonian Jia", "Baotian Hu", "Min Zhang"],
+  "published": "2026-08-13",
+  "first_seen": "2026-08-14",
+  "paper_url": "https://arxiv.org/abs/2608.12990",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "write_update_consolidation",
+  "tags": ["semantic", "structured", "timeline", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-14",
+    "blocker": "Per-paper GPT Image backfill is blocked in this run because two fresh isolated ReFind renders ignored their paper-specific brief and produced an unrelated dashboard with fabricated metadata. After repeated generator-level paper-identity failure, no ungrounded LycheeMemory V2 render was published."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.12990"],
+    "analyzed_from": ["https://arxiv.org/html/2608.12990"],
+    "last_verified": "2026-08-14"
+  },
+  "analysis": {
+    "tldr": "LycheeMemory V2 makes consolidation granularity a first-class systems knob: batching semantically coherent exchanges into segments cuts high-frequency LLM construction calls, while semantic rather than fixed boundaries preserve enough event/temporal structure to improve accuracy instead of merely trading quality for cost.",
+    "problem": "Eager per-turn LLM consolidation is expensive, but coarse summaries or mechanical batching can delete fine-grained evidence. Existing efficiency work often changes what is stored or how retrieval works without isolating how frequently and at what semantic granularity consolidation should run.",
+    "core_idea": "Buffer exchanges online and finalize a segment using deterministic embedding-based surprise/cohesion signals. Invoke the LLM once per finalized semantic segment, normalize its output into typed self-contained records with bounded cross-segment reference context, index those records by entity/topic/time/event-frame relations, and use a query planner plus deterministic multi-route retrieval to assemble compact evidence.",
+    "memory_design": {
+      "write": "Accumulate exchanges until a semantic boundary or cap finalizes the active segment; perform one LLM encoding call for the whole segment instead of one call per turn, carrying limited same-session reference context only for disambiguation.",
+      "organize": "Normalize segment output into typed records with entities, topics, temporal scopes, provenance, and event-frame links; insert them into an append-only store with semantic and lightweight structured evidence indexes.",
+      "read": "A query planner creates typed recall routes over semantic records, entity/topic/temporal/event-frame indexes, and raw turns; deterministic modules retrieve, rerank, fuse, and diversity-select a compact evidence context.",
+      "update_forget": "The store is append-only in this work. Segment finalization controls when consolidation happens, but explicit contradiction repair, deletion, and long-term forgetting are not central mechanisms."
+    },
+    "compared_to": ["Eager per-turn consolidation with the same overall framework", "Fixed-window batching that preserves batching but removes semantic boundary detection", "A-Mem, Mem0, TiMem, MemoryOS, and other conversational-memory baselines under GPT-4.1-Mini"],
+    "evidence": "On LoCoMo with GPT-4.1-Mini, full LycheeMemory reaches 89.22 accuracy with 204.1K construction tokens. Eager consolidation uses 849.9K tokens (+316%) yet falls to 81.88; fixed-window batching uses slightly fewer tokens (174.7K) but falls to 82.40, isolating batching as the cost saver and semantic boundaries as the accuracy-preserving factor. Relative to A-Mem, construction tokens fall 86.0% on LoCoMo and 75.9% on LongMemEval-S; query tokens are also lower. Representation and retrieval ablations are substantial: summary-level records score 80.78, record-vector-only retrieval 81.75, and removing fusion/rerank/diversity drops to 66.62 versus 89.22 full.",
+    "why_it_matters": "The paper adds an orthogonal design axis to memory efficiency: not only what to remember or how to retrieve it, but the temporal/semantic granularity at which expensive memory transformation runs. A memory pipeline can save construction cost without collapsing into coarse summaries if it batches around coherent event boundaries.",
+    "limitations": ["Evaluation is text-only conversational memory on LoCoMo and LongMemEval-S; multimodal memory, acting agents, online feedback, and production deployment are not covered.", "The paper optimizes token cost, not end-to-end database latency, index storage, cache behavior, or monitoring overhead.", "Preference-heavy questions remain a weakness relative to systems with dedicated persona/profile modeling.", "Semantic boundary quality depends on the embedding/scoring pipeline and the chosen threshold; transfer across domains and conversation styles is not established."],
+    "confidence": "high"
+  }
+}

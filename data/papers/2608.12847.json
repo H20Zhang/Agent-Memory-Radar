@@ -1,0 +1,44 @@
+{
+  "id": "2608.12847",
+  "title": "Beyond Retrieval: Query-Conditioned Reuse of Long-Horizon Agent Trajectories",
+  "authors": ["Yifei Li", "Heng Wang", "Lingling Zhang", "Muye Huang", "Xinyu Zhang", "Jiashuai Liu", "Hang Yan", "Rongman Xu"],
+  "published": "2026-08-13",
+  "first_seen": "2026-08-14",
+  "paper_url": "https://arxiv.org/abs/2608.12847",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "representation_organization",
+  "tags": ["procedural", "text", "web-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-14",
+    "blocker": "Per-paper GPT Image backfill is blocked in this run because two fresh isolated ReFind renders ignored their paper-specific brief and produced an unrelated dashboard with fabricated metadata. After repeated generator-level paper-identity failure, no ungrounded QCR render was published."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.12847"],
+    "analyzed_from": ["https://arxiv.org/html/2608.12847"],
+    "last_verified": "2026-08-14"
+  },
+  "analysis": {
+    "tldr": "QCR identifies a distinct post-retrieval bottleneck: once a relevant long trajectory has been selected, the agent still needs a target-bound representation that preserves reusable procedure while forcing stale source bindings to be reacquired from current state.",
+    "problem": "Retrieving a successful trajectory does not specify how to reuse it when users, files, IDs, dates, constraints, or environment state have changed. Raw traces can cause source-specific values to displace current evidence, while generic source-only summaries may omit target-specific applicability and verification requirements.",
+    "core_idea": "Hold retrieval and execution conditions fixed, then insert one post-retrieval transformation. From the selected trajectory, target query, and initial target observation, QCR writes a compact support object containing a workflow invariant, bindings to re-obtain, applicability conditions, and a verification guardrail. The actor must recover current target bindings instead of copying source values.",
+    "memory_design": {
+      "write": "Successful source trajectories are cached offline with compact descriptors used for retrieval and selection; generic summaries are source-only and built before the target query.",
+      "organize": "QCR does not replace the persistent store. It creates a target-bound support representation from one selected trajectory, separating reusable workflow from source-specific bindings and preserving applicability/verification constraints.",
+      "read": "A fixed top-5 embedding retriever and summary ranker select one reusable trajectory. The actor then receives no memory, the full trajectory, a generic summary, or QCR support under matched target/model/tool conditions.",
+      "update_forget": "The paper studies reuse of verified prior trajectories rather than online memory editing, consolidation, or forgetting."
+    },
+    "compared_to": ["Direct injection of the same selected full trajectory", "A length-matched generic source-only summary of the same historical record", "No-memory execution under the same target state, actor, decoding, and tool budget"],
+    "evidence": "Across 2,391 WebArena, WorkArena, and AppWorld targets, QCR reaches 62.3% average Success, 10.7 points above Full Trajectory while using 9.4k online tokens versus 18.4k (-48.9%). Candidate selection is already strong: the ranker selects reusable history for 94.8% of targets and end-task success is only 1.8 points below an oracle reusable selector, making post-selection reuse a plausible remaining bottleneck. Under large binding shift, Full Trajectory produces stale-binding errors on 46.9% of targets versus 10.9% for QCR; correct rebinding rises 31.7%→77.8%. QCR retains +20.1 points of utility under large shift versus +2.2 for Full Trajectory.",
+    "why_it_matters": "This adds a missing boundary to the memory pipeline: storage → retrieval → selection is still not enough for long procedural memories. The representation delivered to the actor must be adapted to current state, and a complete source trace may be a worse interface than a compact support object even when retrieval is correct.",
+    "limitations": ["The evaluation uses successful source trajectories, one selected memory, and controlled source-target rewrites; natural recurring histories, partial failures, and multi-memory composition are not studied.", "QCR's four-field schema is not individually ablated, so the experiment supports target-conditioned reuse as an operation more strongly than this exact schema.", "Binding-shift analyses are associative across task groups except for the direct annotation of stale/correct rebinding; task difficulty differs across length groups.", "Verified completion does not measure irreversible side effects or policy violations caused by trajectory reuse."],
+    "confidence": "high"
+  }
+}

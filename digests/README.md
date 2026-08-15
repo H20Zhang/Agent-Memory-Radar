@@ -5,22 +5,18 @@ Daily curation optimizes for **recall and provenance**. Compactions optimize for
 ## Current research maps
 
 - **Weekly:** [2026-W32 — Structure only matters when control can use it](weekly/2026-W32.md). W33 (Aug 10–16) is still open, so no closed-week compaction is due yet.
-- **Monthly:** [2026-08 — rolling through Aug 13](monthly/2026-08.md). Current movement: selective structure-level access, provenance/admissibility, lifecycle economics, and consumer-compatible procedural memory.
+- **Monthly:** [2026-08 — rolling through Aug 14](monthly/2026-08.md). Current movement: raw-record access as a strong control, post-retrieval reuse, semantic consolidation scheduling, lifecycle economics, and persistent-adaptation governance.
 - **Yearly:** [2026 — rolling, incomplete](yearly/2026.md). Active curation begins in August with one accepted July backfill; this is not a full-year reconstruction.
 
 ## Reader-facing windows
 
-The repository landing page keeps compactions useful without growing forever:
-
-- **Weekly — last ~31 days:** show every available closed-week compaction.
-- **Monthly — last 3 calendar months:** show every available monthly compaction; active months are explicitly rolling.
-- **Yearly — all available years:** retain the full yearly list because it grows slowly.
-
-Older weekly/monthly reports remain in their archive directories after aging off the README.
+- **Weekly — last ~31 days:** every available closed-week compaction.
+- **Monthly — last 3 calendar months:** all available monthly maps; active months are explicitly rolling.
+- **Yearly — all available years:** retained because the list grows slowly.
 
 ## What compaction means
 
-A weekly report should identify 2–4 design-space changes, ranked reading, tensions, research gaps, and evidence to watch next; one-paper observations are labeled early signals. A monthly report compresses weekly evidence into movement, persistent/weakening themes, trade-offs, hidden assumptions, and falsification conditions. A yearly report keeps only shifts that appear durable and records where earlier interpretations weakened.
+Weekly reports identify 2–4 design-space changes, ranked reading, tensions, gaps, and evidence to watch next; one-paper observations are labeled early signals. Monthly reports ask how the field map moved and what would falsify the current interpretation. Yearly maps retain only shifts that appear durable and explicitly record incomplete coverage or earlier narratives that weaken.
 
 ## Raw daily logs
 

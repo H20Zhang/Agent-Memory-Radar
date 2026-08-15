@@ -1,0 +1,44 @@
+{
+  "id": "2608.12851",
+  "title": "Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents",
+  "authors": ["Xutao Mao", "Liangjie Zhao", "Xiang Zheng", "Cong Wang"],
+  "published": "2026-08-13",
+  "first_seen": "2026-08-14",
+  "paper_url": "https://arxiv.org/abs/2608.12851",
+  "code_url": "https://github.com/henrymao2004/misevolve",
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["procedural", "structured", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-14",
+    "blocker": "Per-paper GPT Image backfill is blocked in this run because two fresh isolated ReFind renders ignored their paper-specific brief and produced an unrelated dashboard with fabricated metadata. After repeated generator-level paper-identity failure, no ungrounded Skill Misevolution render was published."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.12851"],
+    "analyzed_from": ["https://arxiv.org/html/2608.12851", "https://github.com/henrymao2004/misevolve"],
+    "last_verified": "2026-08-14"
+  },
+  "analysis": {
+    "tldr": "This paper shows a lifecycle safety failure in self-improving procedural memory: successful but unsafe experience can be generalized into persistent skills, later retrieved in clean sessions, and cause fresh harm even after the original trigger disappears; governance therefore has to span authoring, retrieval, attribution, and retirement.",
+    "problem": "Skill-evolution systems optimize successful reuse but usually lack a benchmark that traces whether an unsafe success becomes a persistent artifact, whether that artifact is later retrieved, and whether it causes fresh-session harm. Endpoint safety metrics cannot localize which lifecycle gate failed.",
+    "core_idea": "SkillMisevo-Gym versions skill state across repeated episodes and SkillMisevo-Bench freezes malicious exposure, benign tasks, carryover tasks, and nine lifecycle metrics so risk can be attributed across authoring → retrieval → later execution. SafeEvolve wraps existing evolution methods with critic-localized delete-only repair, lineage-risk-aware retrieval, harmful-reuse attribution, and safety-aware retirement/eviction.",
+    "memory_design": {
+      "write": "Native self-improvement methods distill successful trajectories into persistent executable skills. SafeEvolve audits each candidate plus its lineage and minimally deletes localized unsafe instructions before admission when possible.",
+      "organize": "Skills remain persistent reusable artifacts with versioned lineage, utility, and risk evidence so later outcomes can be attributed to the procedures that influenced them.",
+      "read": "At reuse time, skills are ranked using both utility and lineage risk; the benchmark separately measures unsafe retrieval and clean-session attack success rather than conflating them.",
+      "update_forget": "Outcome attribution updates utility/risk; skills crossing safety-risk or low-utility thresholds can be retired, and capacity eviction uses utility-minus-risk rather than utility alone."
+    },
+    "compared_to": ["No-evolution agents under the same benchmark episodes", "Multiple native skill-evolution methods across Claude Code, Codex, Hermes, and OpenClaw-style agents", "Raw evolution, utility-only governance, and alternative safety wrappers when evaluating SafeEvolve"],
+    "evidence": "Across 25 agent-method configurations (525 tasks in 25 episodes each), all 21 evolved configurations author unsafe artifacts and 15 produce fresh-session harm. In the controlled exposure sweep, three malicious tasks raise carryover ASR from 16.0% to 35.3%. Averaged over AutoSkill and EvoSkill, SafeEvolve lowers unsafe-artifact authoring from 37.37% to 18.80%, unsafe retrieval from 35.33% to 8.67%, and carryover ASR from 21.33% to 4.00%; the abstract reports mean benign utility changes by only 0.4 points. The separation among authoring, retrieval, and harm is important because unsafe artifacts do not deterministically cause later failure.",
+    "why_it_matters": "SkillJack established that malicious experience can be laundered into derived skills; this work adds a more explicit evolution lifecycle and controlled exposure dose. The broader systems point is that persistent adaptation needs observability and revocation at every transition—not merely a safety filter on the original experience or on final model output.",
+    "limitations": ["The benchmark focuses on executable skill libraries and computer-use/coding workflows; other persistent update substrates, modalities, and much longer natural task streams are not tested.", "The malicious exposure concepts and carryover tasks are controlled/synthetic enough to support attribution but may not reproduce open-ended production failure distributions.", "SafeEvolve's delete-only repair cannot add missing positive checks or human-approval steps and may therefore miss implicit unsafe generalizations.", "Utility/safety trade-offs vary by method and metric; aggregate benign utility remaining close does not mean every useful procedure is preserved."],
+    "confidence": "high"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "id": "2608.12888",
+  "title": "When Your Agent Opens the Chat App: Agent-Controlled Search over Raw Chat Logs Rivals Structured Memory",
+  "authors": ["Ruizhe Li", "Licheng Zhang", "Benfeng Xu", "Mingxuan Du", "Zheren Fu", "Weidong Chen"],
+  "published": "2026-08-13",
+  "first_seen": "2026-08-14",
+  "paper_url": "https://arxiv.org/abs/2608.12888",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["episodic", "text", "timeline", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-14",
+    "blocker": "Two isolated GPT Image attempts for ReFind on 2026-08-14 ignored the paper-specific brief and rendered an unrelated Agent Memory Daily Briefing/dashboard with fabricated paper/date/status metadata. Visual QA rejected both; no image was published."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.12888"],
+    "analyzed_from": ["https://arxiv.org/html/2608.12888"],
+    "last_verified": "2026-08-14"
+  },
+  "analysis": {
+    "tldr": "ReFind is a strong negative result against mandatory semantic preprocessing: for precise chat-memory refinding, a stateful agent can search the raw archive with turn-level BM25 plus chat-native controls and outperform the compared graph/tree memory systems without any LLM-based index construction.",
+    "problem": "Structured memory commits to summaries, graphs, or cards before the future question is known. That can discard details and adds construction cost, but prior evaluations often confound representation structure with the quality of the retrieval interface used to access history.",
+    "core_idea": "Keep raw timestamped chat turns as the memory substrate and move intelligence to query time. A ReAct retriever iteratively issues keyword/time-bounded searches over a turn-level BM25 index, while session-aware RRF, local ±2-turn expansion, temporal filtering, and seen-session deduplication expose chat-native control; saved verbatim notes are then passed to a separate answer model.",
+    "memory_design": {
+      "write": "Append raw user/assistant turns with existing session IDs and timestamps; update a turn-level BM25 inverted index. No summarization, entity extraction, graph linking, or LLM-based construction is performed.",
+      "organize": "Retain the archive's native turn/session/time structure. Session identity is used for reranking and deduplication, but ReFind creates no learned or LLM-generated semantic memory representation.",
+      "read": "A bounded ReAct loop issues parameterized keyword/time queries, applies session-aware RRF, expands hits by neighboring turns, avoids already inspected sessions, saves relevant verbatim fragments, and lets a separate reasoning stage answer from the collected notes.",
+      "update_forget": "New turns are appended incrementally; the paper does not introduce consolidation or forgetting. Cross-search state only tracks saved notes, seen sessions, and the latest observation during retrieval."
+    },
+    "compared_to": ["Single-shot BM25-RAG over the same chat history", "A matched generic-agentic BM25 control with the same multi-round controller but without the four chat-native controls", "Structured conversational-memory systems including HippoRAG 2, RAPTOR, GraphRAG, Mem0, A-Mem, and Zep"],
+    "evidence": "Across six MemoryAgentBench retrieval/fact-tracking tasks (about 2,800 questions) with GPT-4o-mini matched to reused baselines, ReFind reaches 58.2 macro-average versus 53.2 for HippoRAG 2 and 48.8 for BM25-RAG. On fixed LongMemEval-S/M subsets with GPT-5-mini, the full method reaches 93.2±3.3 / 89.3±6.0; matched generic-agentic BM25 reaches 78.7±4.6 / 82.2±3.8, and a one-search control reaches 84.7±3.1 / 68.9±3.8. Component ablations show context expansion is especially important on S and seen-session deduplication on M. BM25 also slightly outperforms dense/hybrid backends under the fixed agent interface.",
+    "why_it_matters": "The important lesson is not that lexical search is universally better. It is that representation claims need a matched access-interface control: for evidence-grounded chat refinding, question-directed online control over the raw record can recover much of the benefit attributed to expensive semantic memory construction.",
+    "limitations": ["The strongest evidence is for precise retrieval and factual-update tracking over text chat archives, not semantic abstraction, low-latency serving, or acting agents with external tools.", "ReFind shifts work from offline construction to query-time agent search; its full LongMemEval runs use substantially more tokens and latency than simpler controls, so the cost trade-off is not free.", "Most MemoryAgentBench baseline numbers are reused from the benchmark paper rather than reproduced in the same implementation stack.", "The native archive still supplies turn, session, and timestamp structure, so 'no structure' means no generated semantic representation rather than literally structure-free memory."],
+    "confidence": "high"
+  }
+}
