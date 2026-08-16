@@ -12,13 +12,13 @@
   "relevance": 0.97,
   "importance": 4,
   "visual_explainer": {
-    "status": "pending",
+    "status": "blocked",
     "path": null,
     "format": "webp",
     "generator": "gpt-image",
     "grounding": "full-paper",
     "last_verified": "2026-08-15",
-    "blocker": null
+    "blocker": "Current-run GPT Image grounding is unreliable: two isolated RippleMem paper-specific attempts produced unrelated repository/dashboard content with fabricated metadata. SkillEvo rendering was not attempted after the repeated identity failure to avoid publishing ungrounded art. GitHub binary publication is available; blocker is image-generator identity/grounding."
   },
   "provenance": {
     "discovered_from": ["https://arxiv.org/list/cs.AI/recent", "https://arxiv.org/abs/2608.13120"],
