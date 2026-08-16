@@ -12,13 +12,13 @@
   "relevance": 0.99,
   "importance": 4,
   "visual_explainer": {
-    "status": "pending",
+    "status": "blocked",
     "path": null,
     "format": "webp",
     "generator": "gpt-image",
     "grounding": "full-paper",
     "last_verified": "2026-08-15",
-    "blocker": null
+    "blocker": "Current-run GPT Image grounding is unreliable: two isolated RippleMem paper-specific attempts produced unrelated repository/dashboard content with fabricated metadata. ERSkill rendering was not attempted after the repeated identity failure to avoid publishing ungrounded art. GitHub binary publication is available; blocker is image-generator identity/grounding."
   },
   "provenance": {
     "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.12720"],
@@ -40,7 +40,7 @@
       "self-evolving experience/prompt systems Dynamic Cheatsheet, ReasoningBank, GEPA, and MemSkill",
       "LLM-based skill selection in the router ablation and seed-only retrieval skills in the no-evolution ablation"
     ],
-    "evidence": "Across LoCoMo, LongMemEval, and PerLTQA, ERSkill has the strongest reported average under both Qwen3-Next-80B-A3B-Instruct and GPT-5.4-nano. With Qwen, average F1/BLEU-1/L-J are 49.55/49.19/61.30 versus the strongest competing averages substantially lower; with GPT-5.4-nano they are 40.97/37.62/61.11. The authors report 31.3% and 28.1% relative improvement in the overall metric average over the strongest baseline. LongMemEval uses a transfer setting: router and retrieval skills trained on LoCoMo are reused without additional training and still lead both backbones. Ablations show the largest losses when skill evolution or the learned router is removed; the double frontier and experience trie provide smaller stability/search-efficiency gains.",
+    "evidence": "Across LoCoMo, LongMemEval, and PerLTQA, ERSkill has the strongest reported average under both Qwen3-Next-80B-A3B-Instruct and GPT-5.4-nano. With Qwen, average F1/BLEU-1/L-J are 49.55/49.19/61.30; with GPT-5.4-nano they are 40.97/37.62/61.11. The authors report 31.3% and 28.1% relative improvement in the overall metric average over the strongest baseline. LongMemEval uses a transfer setting: router and retrieval skills trained on LoCoMo are reused without additional training and still lead both backbones. Ablations show the largest losses when skill evolution or the learned router is removed; the double frontier and experience trie provide smaller stability/search-efficiency gains.",
     "why_it_matters": "ERSkill moves self-evolution from stored content into the access program. That is a distinct systems boundary: an agent can preserve the same memory substrate while learning which retrieval procedure to execute for each evidence need, and the deploy frontier explicitly recognizes that a theoretically strong skill is useless if the router cannot reliably activate it.",
     "limitations": [
       "Skill evolution is training-time expensive because it depends on rollout evaluation and LLM-as-a-Judge supervision.",
