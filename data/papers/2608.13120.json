@@ -3,7 +3,7 @@
   "title": "SkillEvo: Self-Renewing Evolution Gradients from Multi-Turn Interaction Feedback",
   "authors": ["Qianxi Yan", "Chunrong Chen", "Jiuzhou Zhao", "Min Zhang", "Yongzhou Xu", "Xiaochuan Xu"],
   "published": "2026-08-13",
-  "first_seen": "2026-08-15",
+  "first_seen": "2026-08-16",
   "paper_url": "https://arxiv.org/abs/2608.13120",
   "code_url": null,
   "project_url": null,
@@ -17,13 +17,13 @@
     "format": "webp",
     "generator": "gpt-image",
     "grounding": "full-paper",
-    "last_verified": "2026-08-15",
+    "last_verified": "2026-08-16",
     "blocker": "Current-run GPT Image grounding is unreliable: two isolated RippleMem paper-specific attempts produced unrelated repository/dashboard content with fabricated metadata. SkillEvo rendering was not attempted after the repeated identity failure to avoid publishing ungrounded art. GitHub binary publication is available; blocker is image-generator identity/grounding."
   },
   "provenance": {
     "discovered_from": ["https://arxiv.org/list/cs.AI/recent", "https://arxiv.org/abs/2608.13120"],
     "analyzed_from": ["https://arxiv.org/html/2608.13120"],
-    "last_verified": "2026-08-15"
+    "last_verified": "2026-08-16"
   },
   "analysis": {
     "tldr": "SkillEvo argues that sustained procedural-memory evolution is limited by the feedback surface: multi-turn interaction keeps revealing new defects after earlier ones are repaired, while a separate governance layer prevents repeated edits from causing regression and bloat.",
