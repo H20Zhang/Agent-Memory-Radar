@@ -1,0 +1,53 @@
+{
+  "id": "2608.12720",
+  "title": "ERSkill: Evolving for Skill-Guided Adaptive Memory Retrieval",
+  "authors": ["Haolong Chen", "Liang Zhang", "Zhuo Li", "Lei Xue", "Guangxu Zhu"],
+  "published": "2026-08-13",
+  "first_seen": "2026-08-15",
+  "paper_url": "https://arxiv.org/abs/2608.12720",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": ["procedural", "structured", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "pending",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-15",
+    "blocker": null
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.12720"],
+    "analyzed_from": ["https://arxiv.org/html/2608.12720"],
+    "last_verified": "2026-08-15"
+  },
+  "analysis": {
+    "tldr": "ERSkill makes the memory read policy itself evolvable: retrieval is expressed as executable skills composed from primitives, while a learned router and two-level frontier co-evolve so new capabilities enter deployment only when they are both useful and routable.",
+    "problem": "Self-evolving memory systems usually update stored summaries or experiences while keeping query-time access fixed, so heterogeneous questions continue to use the same retrieval behavior even when different evidence-construction procedures would be better.",
+    "core_idea": "Represent retrieval behaviors as executable skills, accumulate explored primitive paths in an experience trie, propose improved skills from rollout evidence, maintain a broad capability frontier and a conservative deploy frontier, and co-train a query-conditioned router so deployment evolves with the skill set rather than lagging behind it.",
+    "memory_design": {
+      "write": "Compile histories into structured memory atoms; LLM use during construction is limited mainly to relation extraction among atoms rather than full-history semantic rewriting.",
+      "organize": "Store the memory substrate separately from executable retrieval skills. Skill-search history is recorded in an experience trie, while capability and deploy frontiers retain non-redundant retrieval programs under oracle and routed-performance criteria.",
+      "read": "A learned query-conditioned router selects one retrieval skill, which executes a sequence of retrieval/evidence-processing primitives over the memory store while maintaining an evidence state for answer generation.",
+      "update_forget": "Training iteratively generates skill candidates from rollout traces, updates the router, recomputes capability/deploy frontiers, and records accept/reject outcomes. Weaker or redundant skills can leave the frontiers, but the paper does not study deletion/forgetting of the underlying user memory."
+    },
+    "compared_to": [
+      "non-evolving memory systems A-Mem, MemoryOS, and LightMem",
+      "self-evolving experience/prompt systems Dynamic Cheatsheet, ReasoningBank, GEPA, and MemSkill",
+      "LLM-based skill selection in the router ablation and seed-only retrieval skills in the no-evolution ablation"
+    ],
+    "evidence": "Across LoCoMo, LongMemEval, and PerLTQA, ERSkill has the strongest reported average under both Qwen3-Next-80B-A3B-Instruct and GPT-5.4-nano. With Qwen, average F1/BLEU-1/L-J are 49.55/49.19/61.30 versus the strongest competing averages substantially lower; with GPT-5.4-nano they are 40.97/37.62/61.11. The authors report 31.3% and 28.1% relative improvement in the overall metric average over the strongest baseline. LongMemEval uses a transfer setting: router and retrieval skills trained on LoCoMo are reused without additional training and still lead both backbones. Ablations show the largest losses when skill evolution or the learned router is removed; the double frontier and experience trie provide smaller stability/search-efficiency gains.",
+    "why_it_matters": "ERSkill moves self-evolution from stored content into the access program. That is a distinct systems boundary: an agent can preserve the same memory substrate while learning which retrieval procedure to execute for each evidence need, and the deploy frontier explicitly recognizes that a theoretically strong skill is useless if the router cannot reliably activate it.",
+    "limitations": [
+      "Skill evolution is training-time expensive because it depends on rollout evaluation and LLM-as-a-Judge supervision.",
+      "The retrieval primitive library is fixed, so evolution searches compositions of known operations rather than inventing fundamentally new access operators.",
+      "Evaluation remains long-term memory QA; planning, tool use, and interactive decision-making are not tested.",
+      "Main-system gains combine memory construction, executable skill search, frontier governance, and router learning, so the headline improvement should not be attributed to any one component alone."
+    ],
+    "confidence": "high"
+  }
+}
