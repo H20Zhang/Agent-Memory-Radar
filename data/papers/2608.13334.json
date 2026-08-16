@@ -12,13 +12,13 @@
   "relevance": 0.99,
   "importance": 4,
   "visual_explainer": {
-    "status": "pending",
+    "status": "blocked",
     "path": null,
     "format": "webp",
     "generator": "gpt-image",
     "grounding": "full-paper",
     "last_verified": "2026-08-15",
-    "blocker": null
+    "blocker": "Two isolated RippleMem GPT Image renders on 2026-08-15 failed Visual QA by producing an unrelated Agent Memory Radar repository/dashboard view with fabricated paper/count/date/status content instead of the grounded associative-recollection mechanism. GitHub binary publication is available; blocker is render identity/grounding."
   },
   "provenance": {
     "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.13334"],
