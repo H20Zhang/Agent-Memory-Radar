@@ -1,0 +1,53 @@
+{
+  "id": "2608.13334",
+  "title": "RippleMem: From Isolated Retrieval to Associative Recollection for Long-Term Agent Memory",
+  "authors": ["Jingbo Ji", "Lingyi Li", "Xilong Cheng", "Yuhao Zhou", "Wenji Zhang", "Yuting Tan", "Yunxiao Qin"],
+  "published": "2026-08-13",
+  "first_seen": "2026-08-15",
+  "paper_url": "https://arxiv.org/abs/2608.13334",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["episodic", "graph", "structured", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "pending",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-15",
+    "blocker": null
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.13334"],
+    "analyzed_from": ["https://arxiv.org/html/2608.13334"],
+    "last_verified": "2026-08-15"
+  },
+  "analysis": {
+    "tldr": "RippleMem treats long-term memory access as evidence completion: first-hop memories become anchors that guide bounded local expansion toward missing support instead of ending retrieval at the initially matched records.",
+    "problem": "When answer evidence is distributed across sessions, one-shot retrieval can surface a relevant but incomplete memory, while unguided graph expansion can return nearby yet non-supporting memories.",
+    "core_idea": "Construct cue-rich event memories linked by sparse semantic and structural associations, perform hybrid first-hop recall, let a recollection controller decide whether support is missing and choose memory anchors plus a missing-support target, then expand only around those anchors and assemble a budgeted evidence set.",
+    "memory_design": {
+      "write": "Process overlapping dialogue windows with a schema-guided LLM extractor that emits self-contained event memories containing a canonical restatement, dense vector, participants, locations, and temporal cues when grounded.",
+      "organize": "Maintain a sparse event-centric graph with typed semantic edges and structural edges based on shared participant/location/time cues; incremental insertion uses bounded semantic and cue-based candidate pools.",
+      "read": "Use semantic, lexical, and structured-cue recall for the initial evidence set; if evidence is incomplete, a controller selects anchors and a missing-support target, performs bounded anchor-local expansion over typed graph edges, then orders and budgets the assembled evidence.",
+      "update_forget": "New event memories and graph edges are added incrementally. The paper does not introduce long-horizon aging, deletion, privacy-preserving forgetting, or conflict-repair policies."
+    },
+    "compared_to": [
+      "RF-Mem under matched RippleMem memory units and per-question evidence budget, isolating the access strategy more cleanly than cross-system comparisons",
+      "SimpleMem and long-term memory systems including Mem0, Zep, LightMem, MemOS, and EverMemOS",
+      "structured/associative access systems including REMem, MemGAS, and M-Flow"
+    ],
+    "evidence": "On LoCoMo, RippleMem reaches 87.14% LLM-judge accuracy versus 83.83% for RF-Mem under matched memory units/evidence budget. The access ablation is diagnostic: removing graph expansion drops judge accuracy to 83.12, removing structural cues to 83.83, and removing planned recollection to 84.35. On LongMemEval-S it reaches 84.80% in the SimpleMem-aligned setting and 86.60% in the EverMemOS-aligned setting; multi-session accuracy improves from 60.92 to 78.20 versus SimpleMem and from 73.68 to 80.45 versus EverMemOS. Graph construction is reported at 117.5 s and 87K tokens per LoCoMo dialogue, about 30x less time than the compared Mem0g/Zep graph-construction settings.",
+    "why_it_matters": "RippleMem supplies a stronger answer to the current raw-record-versus-structure debate: structure earns complexity when it changes the read operator from isolated matching into controlled evidence completion, and the matched RF-Mem comparison suggests that the gain is not only from better memory extraction.",
+    "limitations": [
+      "Evaluation is primarily text conversational QA rather than acting agents, multimodal memory, or tool-state reuse.",
+      "Memory extraction, query analysis, and recollection planning still require LLM calls, so the low build cost relative to graph baselines does not imply low end-to-end query latency.",
+      "The reported recollection budget is only one additional round, leaving scaling behavior under deeper iterative recollection unclear.",
+      "Continuously growing histories, aging, deletion, privacy, and contradiction repair are not stress-tested."
+    ],
+    "confidence": "high"
+  }
+}
