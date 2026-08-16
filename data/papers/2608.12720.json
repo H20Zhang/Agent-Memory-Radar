@@ -3,7 +3,7 @@
   "title": "ERSkill: Evolving for Skill-Guided Adaptive Memory Retrieval",
   "authors": ["Haolong Chen", "Liang Zhang", "Zhuo Li", "Lei Xue", "Guangxu Zhu"],
   "published": "2026-08-13",
-  "first_seen": "2026-08-15",
+  "first_seen": "2026-08-16",
   "paper_url": "https://arxiv.org/abs/2608.12720",
   "code_url": null,
   "project_url": null,
@@ -17,13 +17,13 @@
     "format": "webp",
     "generator": "gpt-image",
     "grounding": "full-paper",
-    "last_verified": "2026-08-15",
+    "last_verified": "2026-08-16",
     "blocker": "Current-run GPT Image grounding is unreliable: two isolated RippleMem paper-specific attempts produced unrelated repository/dashboard content with fabricated metadata. ERSkill rendering was not attempted after the repeated identity failure to avoid publishing ungrounded art. GitHub binary publication is available; blocker is image-generator identity/grounding."
   },
   "provenance": {
     "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.12720"],
     "analyzed_from": ["https://arxiv.org/html/2608.12720"],
-    "last_verified": "2026-08-15"
+    "last_verified": "2026-08-16"
   },
   "analysis": {
     "tldr": "ERSkill makes the memory read policy itself evolvable: retrieval is expressed as executable skills composed from primitives, while a learned router and two-level frontier co-evolve so new capabilities enter deployment only when they are both useful and routable.",
