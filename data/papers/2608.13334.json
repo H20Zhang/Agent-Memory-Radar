@@ -3,7 +3,7 @@
   "title": "RippleMem: From Isolated Retrieval to Associative Recollection for Long-Term Agent Memory",
   "authors": ["Jingbo Ji", "Lingyi Li", "Xilong Cheng", "Yuhao Zhou", "Wenji Zhang", "Yuting Tan", "Yunxiao Qin"],
   "published": "2026-08-13",
-  "first_seen": "2026-08-15",
+  "first_seen": "2026-08-16",
   "paper_url": "https://arxiv.org/abs/2608.13334",
   "code_url": null,
   "project_url": null,
@@ -17,13 +17,13 @@
     "format": "webp",
     "generator": "gpt-image",
     "grounding": "full-paper",
-    "last_verified": "2026-08-15",
-    "blocker": "Two isolated RippleMem GPT Image renders on 2026-08-15 failed Visual QA by producing an unrelated Agent Memory Radar repository/dashboard view with fabricated paper/count/date/status content instead of the grounded associative-recollection mechanism. GitHub binary publication is available; blocker is render identity/grounding."
+    "last_verified": "2026-08-16",
+    "blocker": "Two isolated RippleMem GPT Image renders on 2026-08-16 failed Visual QA by producing an unrelated Agent Memory Radar repository/dashboard view with fabricated paper/count/date/status content instead of the grounded associative-recollection mechanism. GitHub binary publication is available; blocker is render identity/grounding."
   },
   "provenance": {
     "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.13334"],
     "analyzed_from": ["https://arxiv.org/html/2608.13334"],
-    "last_verified": "2026-08-15"
+    "last_verified": "2026-08-16"
   },
   "analysis": {
     "tldr": "RippleMem treats long-term memory access as evidence completion: first-hop memories become anchors that guide bounded local expansion toward missing support instead of ending retrieval at the initially matched records.",
