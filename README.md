@@ -3,7 +3,7 @@
 **A living research map of memory for AI agents.**  
 Track new papers, understand what actually changed, and see how the field is moving — with skeptical research notes and weekly/monthly/yearly synthesis.
 
-**Last updated:** 2026-08-15 · [Research compactions](#-research-compactions) · [Latest papers](#-latest-papers) · [Browse by research problem](#-browse-by-research-problem)
+**Last updated:** 2026-08-16 · [Research compactions](#-research-compactions) · [Latest papers](#-latest-papers) · [Browse by research problem](#-browse-by-research-problem)
 
 ## 🧭 Research Compactions
 
@@ -12,11 +12,11 @@ The archive deliberately becomes coarser with time: `recent month → weekly` ·
 ### Recent Month · Weekly
 
 **[2026-W32 · Structure only matters when control can use it](digests/weekly/2026-W32.md)**  
-The closed Aug 3–9 week established the first correction to “more structure is better”: controller↔memory coupling and consumer-compatible granularity matter, while plausible extra typing can fail to beat a simpler dynamic policy. **W33 (Aug 10–16) is still open**, so no partial weekly report is presented as finished.
+The closed Aug 3–9 week established the first correction to “more structure is better”: controller↔memory coupling and consumer-compatible granularity matter, while plausible extra typing can fail to beat a simpler dynamic policy. **W33 (Aug 10–16) is still open at the current UTC+8 run time**, so no partial weekly report is presented as finished.
 
 ### Recent Quarter · Monthly
 
-**[2026-08 · Rolling through Aug 15](digests/monthly/2026-08.md)**  
+**[2026-08 · Rolling through Aug 16](digests/monthly/2026-08.md)**  
 The August map now separates **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update feedback/governance → lifecycle cost/provenance**. ReFind raises the raw-record baseline; RippleMem shows when structure still earns complexity through evidence completion; SkillEvo and ERSkill move self-improvement into the feedback surface and the read policy itself.
 
 The methodological rule is getting stricter: **credit memory complexity only at the stage where a matched simpler alternative fails.**
