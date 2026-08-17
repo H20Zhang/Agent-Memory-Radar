@@ -3,7 +3,7 @@
 **A living research map of memory for AI agents.**  
 Track new papers, understand what actually changed, and see how the field is moving — with skeptical research notes and weekly/monthly/yearly synthesis.
 
-**Last updated:** 2026-08-16 · [Research compactions](#-research-compactions) · [Latest papers](#-latest-papers) · [Browse by research problem](#-browse-by-research-problem)
+**Last updated:** 2026-08-17 · [Research compactions](#-research-compactions) · [Latest papers](#-latest-papers) · [Browse by research problem](#-browse-by-research-problem)
 
 ## 🧭 Research Compactions
 
@@ -11,15 +11,19 @@ The archive deliberately becomes coarser with time: `recent month → weekly` ·
 
 ### Recent Month · Weekly
 
+**[2026-W33 · Memory architecture decomposes into stage-specific controls](digests/weekly/2026-W33.md)**  
+Aug 10–16 made “best memory architecture” a weaker question. The sharper comparison is now **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update/governance → lifecycle cost**. ReFind raises the raw-record baseline; RippleMem shows where structure still earns complexity; QCR separates retrieval from reuse; SkillEvo and ERSkill split self-improvement into feedback quality and evolvable read policy.
+
+**Suggested reading:** ReFind → RippleMem → QCR → SkillEvo → Total Recall.  
+[Read the W33 synthesis →](digests/weekly/2026-W33.md)
+
 **[2026-W32 · Structure only matters when control can use it](digests/weekly/2026-W32.md)**  
-The closed Aug 3–9 week established the first correction to “more structure is better”: controller↔memory coupling and consumer-compatible granularity matter, while plausible extra typing can fail to beat a simpler dynamic policy. **W33 (Aug 10–16) is still open at the current UTC+8 run time**, so no partial weekly report is presented as finished.
+Aug 3–9 established the first correction to “more structure is better”: controller↔memory coupling and consumer-compatible granularity matter, while plausible extra typing can fail to beat a simpler dynamic policy.
 
 ### Recent Quarter · Monthly
 
 **[2026-08 · Rolling through Aug 16](digests/monthly/2026-08.md)**  
-The August map now separates **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update feedback/governance → lifecycle cost/provenance**. ReFind raises the raw-record baseline; RippleMem shows when structure still earns complexity through evidence completion; SkillEvo and ERSkill move self-improvement into the feedback surface and the read policy itself.
-
-The methodological rule is getting stricter: **credit memory complexity only at the stage where a matched simpler alternative fails.**
+The August map now separates **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update feedback/governance → lifecycle cost/provenance**. The methodological rule is getting stricter: **credit memory complexity only at the stage where a matched simpler alternative fails.**
 
 ### All Years · Yearly
 
@@ -54,21 +58,19 @@ Together they frame a sharper question than “what is the best memory architect
 ### [RippleMem: From Isolated Retrieval to Associative Recollection for Long-Term Agent Memory](papers/2026/2608.13334.md)
 `Retrieval & Access` · `episodic` `graph` `structured` · **★★★★☆** · 2026-08-13
 
-**AI take:** The useful result is not “graphs beat flat memory.” First-hop memories become **anchors for missing-evidence search**, and a matched RF-Mem control suggests the gain survives after holding RippleMem's memory units and evidence budget fixed.
+**AI take:** The useful result is not “graphs beat flat memory.” First-hop memories become **anchors for missing-evidence search**, and a matched RF-Mem control suggests the gain survives after holding memory units and evidence budget fixed.
 
 [Paper](https://arxiv.org/abs/2608.13334) · [Research note](papers/2026/2608.13334.md)
 
 <details><summary><strong>Understand this paper in 60 seconds</strong></summary>
 
-**Problem.** A relevant first-hop memory may be incomplete when answer evidence is distributed across sessions; unguided expansion can retrieve related but non-supporting memories.
+**Problem.** A relevant first-hop memory may be incomplete when answer evidence is distributed across sessions.
 
-**Core mechanism.** Cue-rich event memories + sparse semantic/structural graph → hybrid first-hop recall → controller decides whether support is missing → choose anchors + missing-support target → bounded local graph expansion → budgeted evidence assembly.
+**Core mechanism.** Cue-rich event memories + sparse associations → first-hop recall → detect missing support → choose anchors + target → bounded local expansion → budgeted evidence assembly.
 
-**Memory loop.** `event extraction → sparse associations → first-hop recall → planned recollection → evidence completion → answer`
+**Compared with.** RF-Mem using RippleMem's extracted units and the same evidence budget, plus standard flat/graph memory baselines.
 
-**Compared with.** RF-Mem using RippleMem's extracted units and the same evidence budget, plus SimpleMem/Mem0/Zep/MemOS-style and graph-memory baselines.
-
-**Evidence to remember.** LoCoMo LLM-judge: **87.14** full vs **83.83** matched RF-Mem; removing graph expansion gives **83.12**, and removing planned recollection **84.35**.
+**Evidence to remember.** LoCoMo LLM-judge: **87.14** full vs **83.83** matched RF-Mem; removing graph expansion gives **83.12**.
 
 **Open question.** Does associative recollection still justify build/query cost on acting agents when online latency is matched to raw-record search?
 
@@ -77,30 +79,28 @@ Together they frame a sharper question than “what is the best memory architect
 ### [SkillEvo: Self-Renewing Evolution Gradients from Multi-Turn Interaction Feedback](papers/2026/2608.13120.md)
 `Memory Learning & Evolution` · `procedural` `structured` · **★★★★☆** · 2026-08-13
 
-**AI take:** The strongest result is a feedback-source ablation: **multi-turn interaction keeps exposing useful defects after single-turn feedback saturates**. Governance matters too, but mainly by limiting regression and bloat rather than driving most of the score gain.
+**AI take:** The strongest result is a feedback-source ablation: **multi-turn interaction keeps exposing useful defects after single-turn feedback saturates**. Governance mainly limits regression and bloat rather than driving most of the score gain.
 
 [Paper](https://arxiv.org/abs/2608.13120) · [Research note](papers/2026/2608.13120.md)
 
 <details><summary><strong>Understand this paper in 60 seconds</strong></summary>
 
-**Problem.** Procedural-memory evolution can plateau once obvious single-turn defects are fixed, while repeated editing can accumulate factual regression and structural bloat.
+**Problem.** Procedural-memory evolution can plateau once obvious single-turn defects are fixed, while repeated editing accumulates regression and bloat.
 
-**Core mechanism.** Multi-turn user simulation → failure attribution → evidence-bounded skill/reference edits → independent governance → persist inspected checkpoint → repeat.
+**Core mechanism.** Multi-turn interaction → failure attribution → evidence-bounded skill edits → governance → persist checkpoint → repeat.
 
-**Memory loop.** `interaction → diagnose skill defect → revise persistent skill → govern → evaluate → next interaction`
+**Compared with.** Original Skills, multi-round self-reflection, and single-turn-QA-driven evolution under otherwise aligned update machinery.
 
-**Compared with.** Original production Skills, multi-round self-reflection, and single-turn-QA-driven evolution with attribution/revision/governance otherwise matched.
+**Evidence to remember.** Four-round task success reaches **81.8%** vs **66.4%** for matched single-turn QA; without governance it is **78.6%**, but bloat rises **+2.8%→+16.2%**.
 
-**Evidence to remember.** Four-round task success reaches **81.8%** vs **66.4%** for the matched single-turn-QA condition; without governance it is **78.6%**, but cumulative bloat rises **+2.8%→+16.2%**.
-
-**Open question.** Does the multi-turn advantage survive real-user feedback outside cloud technical support, rather than a high-fidelity simulator?
+**Open question.** Does the multi-turn advantage survive real-user feedback outside a high-fidelity simulator?
 
 </details>
 
 ### [ERSkill: Evolving for Skill-Guided Adaptive Memory Retrieval](papers/2026/2608.12720.md)
 `Memory Learning & Evolution` · `procedural` `structured` · **★★★★☆** · 2026-08-13
 
-**AI take:** ERSkill makes the **read policy itself persistent evolvable state**: executable retrieval skills and the router co-evolve, while capability/deploy frontiers acknowledge that an oracle-good skill is useless if the controller cannot reliably activate it.
+**AI take:** ERSkill makes the **read policy itself persistent evolvable state**: executable retrieval skills and the router co-evolve, while deployment quality depends on whether the controller can reliably activate a useful skill.
 
 [Paper](https://arxiv.org/abs/2608.12720) · [Research note](papers/2026/2608.12720.md)
 
@@ -108,15 +108,13 @@ Together they frame a sharper question than “what is the best memory architect
 
 **Problem.** Self-evolving memory often changes stored content while leaving query-time retrieval behavior fixed.
 
-**Core mechanism.** Structured memory atoms + executable retrieval primitives → experience trie → candidate retrieval skills → capability/deploy frontiers → learned query-conditioned router → selected skill executes evidence construction.
+**Core mechanism.** Memory atoms + retrieval primitives → candidate retrieval skills → capability/deploy frontiers → learned query-conditioned router → selected skill constructs evidence.
 
-**Control loop.** `rollout → propose/evaluate retrieval skill → update frontiers + router → route future query → execute skill`
+**Compared with.** Standard memory systems and self-evolving experience/prompt systems, plus no-skill-evolution and router ablations.
 
-**Compared with.** A-Mem/MemoryOS/LightMem and self-evolving experience/prompt systems, plus internal no-skill-evolution and router ablations.
+**Evidence to remember.** The largest ablation losses come from removing **skill evolution** or the **learned router**; LoCoMo-trained skills/router transfer to LongMemEval without further training.
 
-**Evidence to remember.** The largest ablation losses come from removing **skill evolution** or the **learned router**; LoCoMo-trained skills/router transfer to LongMemEval without additional training and still lead the reported table for both backbones.
-
-**Open question.** Does an expensive rollout-trained retrieval program still pay off on tool-using agents versus a cheaper online adaptive controller?
+**Open question.** Does rollout-trained retrieval policy still pay off on tool-using agents versus a cheaper online adaptive controller?
 
 </details>
 
@@ -131,7 +129,7 @@ Together they frame a sharper question than “what is the best memory architect
 
 **Problem.** Structured memory may be credited for gains that actually come from comparing against a weak flat retrieval interface.
 
-**Core mechanism.** Raw timestamped turns → turn-level BM25 → multi-round ReAct search → session-RRF + local context + time filter + seen-session dedup → saved verbatim notes → answer.
+**Core mechanism.** Raw timestamped turns → turn-level BM25 → multi-round search → session fusion + local context/time controls → saved verbatim notes → answer.
 
 **Compared with.** Single-shot BM25, matched generic-agentic BM25, and graph/tree/note memory systems.
 
@@ -158,7 +156,7 @@ Together they frame a sharper question than “what is the best memory architect
 
 **Evidence to remember.** **62.3% success, +10.7pp over Full Trajectory, −48.9% online tokens**; under large binding shift, stale-binding errors **46.9%→10.9%**.
 
-**Open question.** Can target-conditioned reuse remain faithful when multiple memories conflict or the support writer itself can hallucinate missing constraints?
+**Open question.** Can target-conditioned reuse remain faithful when multiple memories conflict or the support writer hallucinates missing constraints?
 
 </details>
 
@@ -173,13 +171,13 @@ Together they frame a sharper question than “what is the best memory architect
 
 **Problem.** “Successful” trajectories can contain unsafe shortcuts that self-improvement turns into persistent reusable policy.
 
-**Core mechanism.** Version skill state across malicious exposure → evolution → later retrieval → clean-session execution; SafeEvolve adds lineage-aware repair, risk-aware retrieval, attribution, and retirement.
+**Core mechanism.** Version skill state across exposure → evolution → later retrieval → clean-session execution; SafeEvolve adds lineage-aware repair, risk-aware retrieval, attribution, and retirement.
 
-**Compared with.** No evolution, native skill-evolution methods, raw evolution, and utility-only/alternative governance conditions.
+**Compared with.** No evolution, native skill-evolution methods, raw evolution, and utility-only governance conditions.
 
 **Evidence to remember.** All **21 evolved configurations** author unsafe artifacts, but only **15** cause fresh-session harm; SafeEvolve reduces unsafe retrieval **35.33%→8.67%** in the reported aggregate.
 
-**Open question.** Can lifecycle governance generalize from controlled skill libraries to implicit memory/policy updates over months of real agent use?
+**Open question.** Can lifecycle governance generalize from controlled skill libraries to implicit memory/policy updates over months of real use?
 
 </details>
 
@@ -192,11 +190,11 @@ Together they frame a sharper question than “what is the best memory architect
 
 <details><summary><strong>Understand this paper in 60 seconds</strong></summary>
 
-**Problem.** Per-turn LLM consolidation is expensive; arbitrary batching is cheap but can split coherent events and erase temporal/reference evidence.
+**Problem.** Per-turn consolidation is expensive; arbitrary batching is cheap but can split coherent events and erase temporal/reference evidence.
 
 **Core mechanism.** Online semantic boundary detection → one LLM encode per finalized segment → typed self-contained records + provenance/indexes → planned multi-route retrieval and deterministic fusion.
 
-**Compared with.** Eager per-turn construction, fixed-window batching, and A-Mem/Mem0/TiMem/MemoryOS-style conversational memory.
+**Compared with.** Eager per-turn construction, fixed-window batching, and standard conversational-memory systems.
 
 **Evidence to remember.** LoCoMo: **89.22 / 204.1K construction tokens** full vs **81.88 / 849.9K** eager and **82.40 / 174.7K** fixed-window.
 
@@ -287,7 +285,7 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 
 `what state exists → whether to pre-structure it → how to access it → how selected evidence is adapted to the current decision → how control state learns → whether authority/provenance survive lifecycle transforms`
 
-**RippleMem** and **ERSkill** are important current additions but do not yet force a ninth/tenth anchor: RippleMem sharpens the access boundary already represented by ReFind/V-Mem, while ERSkill is a strong candidate to replace an older control-state anchor if access-policy evolution survives broader acting-agent evaluation.
+**RippleMem** and **ERSkill** are important challengers but do not yet force extra anchors: RippleMem sharpens the access boundary already represented by ReFind/V-Mem, while ERSkill should displace an older control-state anchor only if access-policy evolution survives broader acting-agent evaluation.
 
 [See the full anchor notes →](papers/anchors.md)
 
@@ -360,7 +358,7 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 
 **Current anchors.** AuthMem-Bench and SkillJack; current evidence from Total Recall, Agent Skills Can Be Harmful, and Practice Makes Unsafe.
 
-**Strongest signal.** Endpoint recall/success hides lifecycle failures: cost can move break-even by hundreds of turns, relevant skills can worsen execution, and unsafe state may be authored without later harm—or later harm without obvious current-session evidence.
+**Strongest signal.** Endpoint recall/success hides lifecycle failures: cost can move break-even by hundreds of turns, relevant skills can worsen execution, and unsafe state may be authored without later harm.
 
 **Biggest unresolved question.** Can one benchmark jointly expose utility, cost, provenance, authority, descendant state, and downstream action without collapsing them into one opaque score?
 
