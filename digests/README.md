@@ -4,7 +4,7 @@ Daily curation optimizes for **recall and provenance**. Compactions optimize for
 
 ## Current research maps
 
-- **Weekly:** [2026-W32 — Structure only matters when control can use it](weekly/2026-W32.md). W33 (Aug 10–16) is still open at the current UTC+8 run time, so no closed-week compaction is due yet.
+- **Weekly:** [2026-W33 — Memory architecture decomposes into stage-specific controls](weekly/2026-W33.md) and [2026-W32 — Structure only matters when control can use it](weekly/2026-W32.md). W33's main correction is that archive, access, reuse, evolution, and lifecycle cost need matched controls rather than one architecture-level score.
 - **Monthly:** [2026-08 — rolling through Aug 16](monthly/2026-08.md). Current movement: matched raw-record vs associative access, evolvable retrieval programs, consumer-facing reuse, feedback-rich procedural evolution, lifecycle economics, and provenance/governance.
 - **Yearly:** [2026 — rolling, incomplete](yearly/2026.md). Active curation begins in August with one accepted July backfill; this is not a full-year reconstruction.
 
