@@ -3,7 +3,7 @@
 **A living research map of memory for AI agents.**  
 Track new papers, understand what actually changed, and see how the field is moving — with skeptical research notes and weekly/monthly/yearly synthesis.
 
-**Last updated:** 2026-08-17 · [Research compactions](#-research-compactions) · [Latest papers](#-latest-papers) · [Browse by research problem](#-browse-by-research-problem)
+**Last updated:** 2026-08-18 · [Research compactions](#-research-compactions) · [Latest papers](#-latest-papers) · [Browse by research problem](#-browse-by-research-problem)
 
 ## 🧭 Research Compactions
 
@@ -22,7 +22,7 @@ Aug 3–9 established the first correction to “more structure is better”: co
 
 ### Recent Quarter · Monthly
 
-**[2026-08 · Rolling through Aug 17](digests/monthly/2026-08.md)**  
+**[2026-08 · Rolling through Aug 18](digests/monthly/2026-08.md)**  
 The August map now separates **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update feedback/governance → lifecycle cost/provenance**. The methodological rule is getting stricter: **credit memory complexity only at the stage where a matched simpler alternative fails.**
 
 ### All Years · Yearly
