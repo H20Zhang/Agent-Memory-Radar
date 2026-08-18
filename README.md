@@ -12,9 +12,9 @@ The archive deliberately becomes coarser with time: `recent month → weekly` ·
 ### Recent Month · Weekly
 
 **[2026-W33 · Memory architecture decomposes into stage-specific controls](digests/weekly/2026-W33.md)**  
-Aug 10–16 made “best memory architecture” a weaker question. The sharper comparison is now **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update/governance → lifecycle cost**. ReFind raises the raw-record baseline; RippleMem shows where structure still earns complexity; QCR separates retrieval from reuse; SkillEvo and ERSkill split self-improvement into feedback quality and evolvable read policy.
+Aug 10–16 made “best memory architecture” a weaker question. The sharper comparison is now **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update/governance → lifecycle cost**. ReFind raises the raw-record baseline; RippleMem shows where structure still earns complexity; QCR separates retrieval from reuse; Demystifying Agent Skills separates procedural representation from retrieval/invocation; SkillEvo and ERSkill split self-improvement into feedback quality and evolvable read policy.
 
-**Suggested reading:** ReFind → RippleMem → QCR → SkillEvo → Total Recall.  
+**Suggested reading:** ReFind → RippleMem → QCR → Demystifying Agent Skills → SkillEvo.  
 [Read the W33 synthesis →](digests/weekly/2026-W33.md)
 
 **[2026-W32 · Structure only matters when control can use it](digests/weekly/2026-W32.md)**  
@@ -22,7 +22,7 @@ Aug 3–9 established the first correction to “more structure is better”: co
 
 ### Recent Quarter · Monthly
 
-**[2026-08 · Rolling through Aug 16](digests/monthly/2026-08.md)**  
+**[2026-08 · Rolling through Aug 17](digests/monthly/2026-08.md)**  
 The August map now separates **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update feedback/governance → lifecycle cost/provenance**. The methodological rule is getting stricter: **credit memory complexity only at the stage where a matched simpler alternative fails.**
 
 ### All Years · Yearly
@@ -37,7 +37,7 @@ Active curation starts in August with one July backfill, so this is **not a full
 | If you want to understand… | Read in this order | What you should learn |
 |---|---|---|
 | **When structure actually earns its cost** | [ReFind](papers/2026/2608.12888.md) → [RippleMem](papers/2026/2608.13334.md) → [MESA](papers/2026/2608.10108.md) | A competent raw-record interface is the baseline; structure matters when it enables evidence completion or selective access that online search cannot cheaply recover. |
-| **What happens after retrieval succeeds** | [QCR](papers/2026/2608.12847.md) → [PMCoder](papers/2026/2608.06811.md) → [Agent Skills Can Be Harmful](papers/2026/2608.11888.md) | Selection is not reuse: current bindings, controller state, and marginal procedural effect determine whether retrieved experience helps. |
+| **What happens after retrieval succeeds** | [QCR](papers/2026/2608.12847.md) → [Demystifying Agent Skills](papers/2026/2608.14036.md) → [Agent Skills Can Be Harmful](papers/2026/2608.11888.md) | Selection is not reuse: representation, current bindings, invocation, and marginal procedural effect determine whether retrieved experience helps. |
 | **How memory becomes self-improving state** | [SkillEvo](papers/2026/2608.13120.md) → [ERSkill](papers/2026/2608.12720.md) → [Practice Makes Unsafe](papers/2026/2608.12851.md) | Evolution depends on the feedback surface, the policy being evolved, and governance of the persistent descendants it creates. |
 
 <details>
@@ -54,6 +54,27 @@ Together they frame a sharper question than “what is the best memory architect
 </details>
 
 ## 🔥 Latest Papers
+
+### [Demystifying Agent Skills: Why They Work—Until They Don’t](papers/2026/2608.14036.md)
+`Evaluation & Analysis` · `procedural` `text` `coding` · **★★★★☆** · 2026-08-14
+
+**AI take:** Same source experience, different representation: standardized Skills outperform Workflow Memory and mostly work as **procedural anchors**, while exact retrieval labels remain a weak proxy for downstream utility.
+
+[Paper](https://arxiv.org/abs/2608.14036) · [Research note](papers/2026/2608.14036.md)
+
+<details><summary><strong>Understand this paper in 60 seconds</strong></summary>
+
+**Problem.** Aggregate skill success conflates representation, outcome annotations, framework transfer, retrieval, invocation, and execution.
+
+**Core mechanism.** Hold prior trajectories fixed → build Workflow Memory or SKILL.md → compare matched executions → separately measure embedding retrieval, explicit selection, actual skill use, and final success → contrast trajectories to identify how the artifact changed behavior.
+
+**Compared with.** Raw execution and Workflow Memory built from the same source trajectories; retrieval metrics are also separated from downstream execution rather than treated as one pipeline score.
+
+**Evidence to remember.** Skills beat Workflow Memory by **6.06 points**; **65.7%** of skill cases are procedural anchoring vs **4.5%** knowledge injection. With pool size **5→100**, actual-use precision falls **29.6%→3.3%** while downstream success remains comparatively stable.
+
+**Open question.** Does standardized procedural anchoring still win in large evolving skill libraries and non-software domains where “ground-truth skill” is less well defined?
+
+</details>
 
 ### [RippleMem: From Isolated Retrieval to Associative Recollection for Long-Term Agent Memory](papers/2026/2608.13334.md)
 `Retrieval & Access` · `episodic` `graph` `structured` · **★★★★☆** · 2026-08-13
@@ -244,27 +265,6 @@ Together they frame a sharper question than “what is the best memory architect
 
 </details>
 
-### [The Sleeping Agent: What Gist-Based Context Compression Loses and Why](papers/2026/2608.11775.md)
-`Write, Update & Consolidation` · `semantic` `text` `timeline` · **★★★☆☆** · 2026-08-12
-
-**AI take:** Compression is selective forgetting. A generic gist prompt preserved entities/events while systematically deleting temporal anchors that later “when?” questions required.
-
-[Paper](https://arxiv.org/abs/2608.11775) · [Code](https://github.com/kyrkewood/sleeping-agent) · [Research note](papers/2026/2608.11775.md)
-
-<details><summary><strong>Understand this paper in 60 seconds</strong></summary>
-
-**Problem.** Aggregate compression quality can hide a low-volume but decision-critical field being systematically erased.
-
-**Core mechanism.** Diagnose preservation by content type, then change only the gist prompt to explicitly protect temporal expressions.
-
-**Compared with.** The same compression pipeline before temporal protection plus truncation/sliding/full-context controls.
-
-**Evidence to remember.** Temporal-expression preservation rises **3.05%→62.39% (~20×)** and temporal judge accuracy improves **+0.314**.
-
-**Open question.** Which other sparse fields—authority, identifiers, provenance, constraints—are silently deleted by mainstream compressors?
-
-</details>
-
 ## ⭐ Design Anchors
 
 These are **design points, not a ranking**. The set changes slowly so the radar does not become a recency leaderboard.
@@ -285,7 +285,7 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 
 `what state exists → whether to pre-structure it → how to access it → how selected evidence is adapted to the current decision → how control state learns → whether authority/provenance survive lifecycle transforms`
 
-**RippleMem** and **ERSkill** are important challengers but do not yet force extra anchors: RippleMem sharpens the access boundary already represented by ReFind/V-Mem, while ERSkill should displace an older control-state anchor only if access-policy evolution survives broader acting-agent evaluation.
+**RippleMem**, **ERSkill**, and **Demystifying Agent Skills** are important challengers but do not yet force extra anchors: RippleMem sharpens the access boundary already represented by ReFind/V-Mem; ERSkill should displace an older control-state anchor only if access-policy evolution survives broader acting-agent evaluation; Demystifying strengthens the QCR/SkillJack procedural-reuse evaluation boundary without creating a new durable control point.
 
 [See the full anchor notes →](papers/anchors.md)
 
@@ -299,7 +299,7 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 | **[Retrieval & Access](categories/retrieval-access.md)** | How should the agent search, compose, and govern evidence once memory is not one flat store? |
 | **[Write, Update & Consolidation](categories/write-update-consolidation.md)** | When should memory be transformed, consolidated, corrected, or forgotten? |
 | **[Memory Learning & Evolution](categories/memory-learning-evolution.md)** | Which memory decisions should be learned/evolved, and from what feedback? |
-| **[Evaluation & Analysis](categories/evaluation-analysis.md)** | How do we measure memory once cost, provenance, side effects, and persistence matter? |
+| **[Evaluation & Analysis](categories/evaluation-analysis.md)** | How do we measure memory once representation, retrieval, reuse, cost, provenance, side effects, and persistence matter? |
 
 <details>
 <summary><strong>Representation & Organization — archive faithfully, or optimize for the consumer?</strong></summary>
@@ -356,13 +356,13 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 <details>
 <summary><strong>Evaluation & Analysis — what does “good memory” mean after retrieval?</strong></summary>
 
-**Current anchors.** AuthMem-Bench and SkillJack; current evidence from Total Recall, Agent Skills Can Be Harmful, and Practice Makes Unsafe.
+**Current anchors.** AuthMem-Bench and SkillJack; current evidence from Demystifying Agent Skills, Total Recall, Agent Skills Can Be Harmful, and Practice Makes Unsafe.
 
-**Strongest signal.** Endpoint recall/success hides lifecycle failures: cost can move break-even by hundreds of turns, relevant skills can worsen execution, and unsafe state may be authored without later harm.
+**Strongest signal.** Endpoint recall/success hides stage-level effects: the same experience behaves differently as Workflow Memory vs Skill, exact retrieval can decouple from utility, lifecycle cost can move break-even by hundreds of turns, and persistent state can be authored without later harm.
 
-**Biggest unresolved question.** Can one benchmark jointly expose utility, cost, provenance, authority, descendant state, and downstream action without collapsing them into one opaque score?
+**Biggest unresolved question.** Can one benchmark jointly expose representation, retrieval, invocation/reuse, utility, cost, provenance, authority, descendant state, and downstream action without collapsing them into one opaque score?
 
-**Next decisive evidence.** Long-running acting-agent traces with stage-level attribution and matched no-memory / raw-history / governed-memory controls.
+**Next decisive evidence.** Long-running acting-agent traces with stage-level attribution and matched no-memory / raw-history / alternative-representation / governed-memory controls.
 
 </details>
 
