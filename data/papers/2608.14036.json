@@ -1,0 +1,53 @@
+{
+  "id": "2608.14036",
+  "title": "Demystifying Agent Skills: Why They Work-Until They Don't",
+  "authors": ["Zhiyuan Jiang", "Fangrui Huang", "Hanwen Xing", "Xander Wu", "Yipeng Gao", "Rui Cao", "Mengdi Wang", "Shilong Liu", "Yijiang Li"],
+  "published": "2026-08-14",
+  "first_seen": "2026-08-17",
+  "paper_url": "https://arxiv.org/abs/2608.14036",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["procedural", "text", "coding", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-17",
+    "blocker": "Two GPT Image attempts on 2026-08-17 ignored the grounded single-paper brief and rendered unrelated Agent Memory Radar dashboard/status UI with fabricated paper/date/count metadata. Visual QA rejected both. GitHub binary publication is available; the blocker is paper-identity/grounding failure in image generation."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.14036"],
+    "analyzed_from": ["https://arxiv.org/html/2608.14036"],
+    "last_verified": "2026-08-17"
+  },
+  "analysis": {
+    "tldr": "The paper turns agent-skill evaluation from an endpoint-success question into a stage-factorized reuse study. Holding source trajectories fixed, standardized skills outperform direct Workflow Memory and primarily act as procedural anchors; retrieval and invocation quality then become separate bottlenecks rather than reliable proxies for downstream utility.",
+    "problem": "Skill systems are usually judged by aggregate task success, which confounds representation, outcome annotations, framework transfer, retrieval, invocation, and execution. That makes it unclear whether a skill helps because it contains better knowledge, packages the same experience more usefully, is easier to transfer, or is simply easier to retrieve.",
+    "core_idea": "Run controlled matched studies over the same prior trajectories: compare Raw, cleaned Workflow Memory, and standardized SKILL.md representations; remove success/failure hints; transfer artifacts across agent frameworks; and separately measure embedding retrieval, explicit skill selection, actual execution-time skill use, and downstream verifier success. Contrastive trajectory coding then attributes behavior to concrete skill-use mechanisms.",
+    "memory_design": {
+      "write": "Distill selected successful/failed execution trajectories into either cleaned Workflow Memory or a standardized SKILL.md under matched source-evidence budgets; the study also removes explicit outcome labels to isolate their contribution.",
+      "organize": "Treat skills as reusable procedural artifacts whose representation is intentionally compared with direct workflow-memory traces built from the same source experience.",
+      "read": "Expose candidate skill pools during execution and separately evaluate embedding ranking, explicit agent selection, actual skill access, and final task success so retrieval quality is not conflated with use quality.",
+      "update_forget": "The paper analyzes construction, transfer, retrieval, and use rather than proposing an online consolidation, forgetting, or long-running skill-evolution policy."
+    },
+    "compared_to": [
+      "Workflow Memory built from the same source trajectories under matched task conditions",
+      "Raw execution without prior-experience artifacts",
+      "skill retrieval/selection metrics treated separately from full-pool downstream execution"
+    ],
+    "evidence": "Across matched comparisons, skills improve over Workflow Memory by 6.06 points. Contrastive trajectory analysis finds procedural anchoring in 65.7% of skill cases versus 4.5% explicit knowledge injection. As candidate pools grow from 5 to 100, actual-use precision falls from 29.6% to 3.3%, yet downstream success is comparatively stable; exact ground-truth skill invocation is neither sufficient nor necessary for success. The taxonomy is built from 8,135 normalized trials and 238 valid coded labels, with 95.8% human/LLM aggregation agreement (Cohen's kappa 0.952).",
+    "why_it_matters": "It supplies a stronger causal baseline for procedural memory: the same experience can become more useful when compressed into a standardized action anchor, but retrieval accuracy still does not measure procedural utility. That reinforces the radar's stage decomposition from representation to retrieval to consumer-facing reuse rather than treating 'skill memory' as one component.",
+    "limitations": [
+      "Most evidence comes from terminal/software-oriented benchmarks and a small number of agent-framework/model pairings, so transfer to other domains and long-lived users is not established.",
+      "The retrieval study uses independently evaluated embedding, explicit-selection, and execution arms; it diagnoses stages but is not one end-to-end learned retrieval pipeline.",
+      "The paper studies fixed constructed skills rather than months-long libraries whose contents, router, and governance co-evolve over time.",
+      "Stable downstream success under poor ground-truth retrieval partly reflects usefulness of non-ground-truth related skills, so standard retrieval labels may themselves be an imperfect definition of relevance."
+    ],
+    "confidence": "high"
+  }
+}
