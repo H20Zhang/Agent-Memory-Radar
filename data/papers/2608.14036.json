@@ -3,7 +3,7 @@
   "title": "Demystifying Agent Skills: Why They Work-Until They Don't",
   "authors": ["Zhiyuan Jiang", "Fangrui Huang", "Hanwen Xing", "Xander Wu", "Yipeng Gao", "Rui Cao", "Mengdi Wang", "Shilong Liu", "Yijiang Li"],
   "published": "2026-08-14",
-  "first_seen": "2026-08-17",
+  "first_seen": "2026-08-18",
   "paper_url": "https://arxiv.org/abs/2608.14036",
   "code_url": null,
   "project_url": null,
@@ -17,13 +17,13 @@
     "format": "webp",
     "generator": "gpt-image",
     "grounding": "full-paper",
-    "last_verified": "2026-08-17",
-    "blocker": "Two GPT Image attempts on 2026-08-17 ignored the grounded single-paper brief and rendered unrelated Agent Memory Radar dashboard/status UI with fabricated paper/date/count metadata. Visual QA rejected both. GitHub binary publication is available; the blocker is paper-identity/grounding failure in image generation."
+    "last_verified": "2026-08-18",
+    "blocker": "Two GPT Image attempts on 2026-08-18 ignored the grounded single-paper brief and rendered unrelated Agent Memory Radar dashboard/status UI with fabricated paper/date/count metadata. Visual QA rejected both. GitHub binary publication is available; the blocker is paper-identity/grounding failure in image generation."
   },
   "provenance": {
     "discovered_from": ["https://arxiv.org/abs/2608.14036"],
     "analyzed_from": ["https://arxiv.org/html/2608.14036"],
-    "last_verified": "2026-08-17"
+    "last_verified": "2026-08-18"
   },
   "analysis": {
     "tldr": "The paper turns agent-skill evaluation from an endpoint-success question into a stage-factorized reuse study. Holding source trajectories fixed, standardized skills outperform direct Workflow Memory and primarily act as procedural anchors; retrieval and invocation quality then become separate bottlenecks rather than reliable proxies for downstream utility.",
