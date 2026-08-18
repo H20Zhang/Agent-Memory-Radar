@@ -8,7 +8,7 @@ The taxonomy is organized by **which part of the memory lifecycle changes**, not
 | [Retrieval & Access](retrieval-access.md) | How should an agent locate, combine, and govern stored memory once representation is no longer flat? | **ReFind + RippleMem + MESA/MAP-Graph:** raw-record search is a strong control, but structure can earn its cost when it enables evidence completion, selective exposure, or admissibility. |
 | [Write, Update & Consolidation](write-update-consolidation.md) | When should memory be transformed, what must survive, and what should be forgotten? | **LycheeMemory V2 + Sleeping Agent:** consolidation frequency/granularity and field-level preservation are separate lifecycle decisions. |
 | [Memory Learning & Evolution](memory-learning-evolution.md) | Which memory decisions should be learned or evolved, and from what feedback? | **SkillEvo + ERSkill + AMD/RoMeRL:** evolution quality depends on the feedback surface, consumer compatibility, and whether adaptation changes stored content, control state, or the access program itself. |
-| [Evaluation & Analysis](evaluation-analysis.md) | What does “good memory” mean once cost, authority, procedural side effects, and persistent adaptation matter? | **Practice Makes Unsafe + Total Recall + Agent Skills:** endpoint recall/success hides lifecycle cost and state-transition failures; marginal effect needs stage-level attribution. |
+| [Evaluation & Analysis](evaluation-analysis.md) | What does “good memory” mean once representation, retrieval, reuse, cost, authority, security, and downstream behavior matter? | **Demystifying Agent Skills + Practice Makes Unsafe + Total Recall:** endpoint success hides stage-specific effects; procedural representation, retrieval/invocation, lifecycle cost, and descendant-state harm need separate attribution. |
 
 ## Cross-cutting lens
 
@@ -16,6 +16,6 @@ The radar now reasons over:
 
 `archive/representation → access program → evidence completion/selection → consumer-facing reuse → update feedback/governance → lifecycle cost/provenance`
 
-The current correction has two sides. **ReFind** says semantic preprocessing must beat a competent raw-record interface; **RippleMem** says structure can still be justified when it enables a stronger read operation under a matched memory-unit/evidence budget. **SkillEvo** and **ERSkill** then move the question downstream: self-improvement depends on what failures the system can observe and whether the retrieval policy itself is evolvable.
+The current correction has two sides. **ReFind** says semantic preprocessing must beat a competent raw-record interface; **RippleMem** says structure can still be justified when it enables a stronger read operation under a matched memory-unit/evidence budget. **Demystifying Agent Skills** extends the same discipline downstream: even with the same source experience, representation changes procedural reuse, while exact retrieval labels do not reliably predict execution utility. **SkillEvo** and **ERSkill** then move the question into adaptation: self-improvement depends on what failures the system can observe and whether the retrieval policy itself is evolvable.
 
 Orthogonal tags in [`../taxonomy.yaml`](../taxonomy.yaml) capture memory type, substrate, and application without turning them into mutually exclusive primary categories.
