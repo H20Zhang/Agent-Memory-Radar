@@ -1,0 +1,45 @@
+{
+  "id": "2608.16071",
+  "title": "Skill2Query: Exploiting Skill Structure to Generate Pseudo-Queries for Agent Skill Retrieval",
+  "authors": ["Lihui Ding", "Zihan Guo", "Bingwei Lu", "Chenyu Zhou", "Yuanjian Zhou", "Weinan Zhang", "Jianghao Lin", "Dongdong Ge"],
+  "published": "2026-08-17",
+  "first_seen": "2026-08-19",
+  "paper_url": "https://arxiv.org/abs/2608.16071",
+  "code_url": "https://github.com/MatZaharia/Skill2Query",
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["procedural", "structured", "text", "general-agent"],
+  "relevance": 0.95,
+  "importance": 3,
+  "visual_explainer": {"status": "not_required", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-19", "blocker": null},
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.16071"],
+    "analyzed_from": ["https://arxiv.org/html/2608.16071v1", "https://github.com/MatZaharia/Skill2Query"],
+    "last_verified": "2026-08-19"
+  },
+  "analysis": {
+    "tldr": "Skill2Query treats a skill document as a structured retrieval target rather than one opaque text blob: it parses capabilities, parameters, and examples into a Skill Knowledge Graph, then generates capability-grounded pseudo-queries for offline index augmentation, online query expansion, or retriever training.",
+    "problem": "Large skill libraries create an asymmetric retrieval problem: users describe goals colloquially while skill documents describe developer-facing capabilities, parameter schemas, and examples. Plain document-level pseudo-query generation can be topically related while missing the exact capability boundary or producing invalid parameters.",
+    "core_idea": "Parse each skill into a graph over capabilities, parameters, and examples; imitate user-query style from examples, generate capability-specific query templates, fill and statically validate parameter slots, then use the resulting pseudo-queries as offline index augmentation, online expansion, or supervision for a dense/reranking SkillRouter.",
+    "memory_design": {
+      "write": "Skill documents already exist as persistent procedural artifacts; Skill2Query preprocesses them into a Skill Knowledge Graph and generates validated pseudo-queries attached to specific capabilities/parameters.",
+      "organize": "Represent each skill with structured Capability, Parameter, and Example nodes so synthetic queries can be tied to a concrete functional point instead of only the full-document semantics.",
+      "read": "At retrieval time, use generated pseudo-queries through offline index expansion, online query expansion, or a retriever trained on synthetic query-skill pairs; the selected skill is then injected into the downstream agent prompt.",
+      "update_forget": "The paper does not study lifelong skill updates or forgetting; pseudo-query generation and retriever training are primarily offline/index-time operations, with online expansion as an optional query-time mode."
+    },
+    "compared_to": [
+      "plain sparse/dense skill retrieval without generated queries",
+      "Zero-shot, Few-shot, and SkillFlow-style document-level pseudo-query generation",
+      "BM25, dense SR-Emb, and two-stage SkillRouter retrieval with baseline/offline/online variants"
+    ],
+    "evidence": "Across retrieval settings the paper reports an average Recall@1 gain of 6.70 points. On ToolQA, offline Skill2Query raises SkillRouter R@1 from 35.80% to 47.34% and SR-Emb R@1 from 13.22% to 29.79%; on TheoremQA, online BM25 expansion raises R@1 from 60.37% to 65.19%, but online expansion hurts several LogicBench/ToolQA settings, showing that offline and online augmentation are not uniformly beneficial. In the generation ablation, removing the Skill Knowledge Graph drops Exec-Pass from 42.85% to 22.63% and functional coverage from 11.32% to 2.41%. A 747-instance TheoremQA case study shows the fine-tuned SkillRouter improving task success over no skill by +3.48pp (GPT-5.4), +8.57pp (DeepSeek-V4-Flash), and +3.34pp (Qwen3.6-Plus).",
+    "why_it_matters": "The paper sharpens the skill-retrieval interface: 'relevance' needs capability and parameter grounding, not just semantic similarity. It also exposes a deployment trade-off between precomputed semantic bridging and online adaptive expansion. For the radar, the important point is narrower than a new memory architecture: retrieval quality for procedural memory can be improved by exploiting the internal structure of the stored skill artifact itself.",
+    "limitations": [
+      "The end-to-end execution study is a one-step TheoremQA case study rather than long-horizon tool execution across diverse environments.",
+      "Online query expansion is inconsistent and degrades some retrieval settings, so the paper does not establish one universally superior serving mode.",
+      "Performance depends on standardized skill documentation with explicit parameters/examples; poorly documented open skill ecosystems may erase the advantage.",
+      "The work targets retrieval over an existing skill library rather than memory writing, consolidation, evolution, or lifecycle governance."
+    ],
+    "confidence": "high"
+  }
+}
