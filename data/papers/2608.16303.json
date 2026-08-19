@@ -1,0 +1,46 @@
+{
+  "id": "2608.16303",
+  "title": "FTA-Mem: Fact-Time-Affect Anchored Memory for Low-Density Long-Term Dialogue",
+  "authors": ["Chang Liu", "Shuyi Zhang", "Changsheng Ma", "Yongfeng Tao", "Minqiang Yang", "Bin Hu"],
+  "published": "2026-08-17",
+  "first_seen": "2026-08-19",
+  "paper_url": "https://arxiv.org/abs/2608.16303",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "write_update_consolidation",
+  "tags": ["episodic", "structured", "timeline", "personalization"],
+  "relevance": 0.96,
+  "importance": 3,
+  "visual_explainer": {"status": "not_required", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-19", "blocker": null},
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.16303"],
+    "analyzed_from": ["https://arxiv.org/html/2608.16303v1"],
+    "last_verified": "2026-08-19"
+  },
+  "analysis": {
+    "tldr": "FTA-Mem makes write granularity task-dependent for low-density dialogue: it segments coherent situations, preserves unresolved units across boundaries, and writes Fact-Time-Affect units that retain factual evidence, temporal validity, and affective context rather than choosing between coarse session summaries and redundant turn-pair memory.",
+    "problem": "In long-term emotional-support dialogue, useful evidence is sparse, implicit, and distributed across time. Session-level memory can erase details, while turn-level/turn-pair memory preserves local evidence at high construction cost and may split one coherent situation into redundant fragments.",
+    "core_idea": "Use boundary-preserving window segmentation to form coherent situation fragments, carry incomplete units across boundaries and fuse adjacent-fragment evidence before assigning persistent IDs, then construct Fact-Time-Affect units with temporal links. Query-time retrieval deduplicates and synthesizes selected units into structured context rather than a flat passage list.",
+    "memory_design": {
+      "write": "Segment dialogue into coherent windows; convert fragments into situation-level Fact-Time-Affect units, carrying unresolved units forward and fusing adjacent evidence before finalizing persistent IDs.",
+      "organize": "Each unit combines fact, temporal grounding, and affective/intention/relation context, with temporal links to related historical units and provenance back to source dialogue.",
+      "read": "Retrieve relevant FTA units, deduplicate linked evidence, and synthesize them into a structured context packet for grounded answer generation.",
+      "update_forget": "The construction pipeline can fuse adjacent-fragment units before persistence and add longitudinal links, but the paper does not center on explicit long-term deletion, conflict resolution, or learned forgetting."
+    },
+    "compared_to": [
+      "MemoryBank, MemGPT, MemoryOS, A-Mem, CompassMem and other long-term dialogue memory baselines",
+      "session-level memory construction",
+      "turn-pair memory construction",
+      "component ablations removing time, affect, links, or reducing units to fact-only"
+    ],
+    "evidence": "On ES-MemEval the full system reports 38.71 F1 and 66.68 BERTScore. The most useful systems comparison is granularity: session-level construction gives 31.76 F1 with 1.58M construction tokens, turn-pair gives 37.06 with 6.40M, while FTA-Mem reaches 38.71 with 4.99M. On LoCoMo, however, turn-pair is slightly better in average F1 (38.28 vs 37.35) but uses 7.04M construction tokens versus FTA-Mem's 3.39M, showing a quality-cost trade-off rather than universal superiority. Removing temporal information causes the largest component degradation; affect and links also contribute. The paper reports gains over CompassMem increasing as ES-MemEval factual density falls (r=-0.39) and implicitness rises (r=0.41), but this density relationship does not reproduce consistently on LoCoMo.",
+    "why_it_matters": "FTA-Mem provides a useful counterpoint to universal memory-unit granularity. The result says the right write unit depends on information density: situation-level construction is attractive when evidence is sparse and implicit, while denser factual dialogue may reward finer units. This makes granularity a measurable cost-quality control rather than a fixed representation choice.",
+    "limitations": [
+      "The strongest density-related advantage appears on ES-MemEval and does not reproduce consistently on LoCoMo, limiting claims of a general density law.",
+      "On LoCoMo, turn-pair memory slightly beats FTA-Mem in average F1 despite much higher construction cost; the method is therefore a trade-off, not a dominant representation.",
+      "The affect anchor is especially motivated by emotional-support dialogue, so transfer to tool logs, code agents, or non-social state streams is unproven.",
+      "The paper evaluates dialogue QA rather than long-running consequential personalized actions."
+    ],
+    "confidence": "high"
+  }
+}
