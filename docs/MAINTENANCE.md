@@ -34,6 +34,18 @@ The root `README.md` is a public research landing page. It should let a research
 
 Operational details — scheduling, prompt text, file-generation mechanics, upload paths, schema internals, and backfill queues — belong here or in the contracts above, not in README.
 
+## Researcher-first presentation
+
+The public surface should feel like a **living survey**, not a GitHub dashboard or product landing page.
+
+- Prefer restrained headings, whitespace, tables, and short argument paragraphs over cards, badges, emoji-heavy headings, or decorative status UI.
+- Research content dominates the first screen. Star/cross-radar calls to action are secondary and should not interrupt the main reading flow.
+- Use **Research take** for curator interpretation on public pages; avoid “AI take” as a visual label.
+- Use compact numeric importance (`4/5`) where researchers compare rows quickly; star glyphs are optional in prose but should not dominate tables.
+- README is the **judgment layer**; category pages are the **argument layer**; paper notes are the **evidence layer**; compactions are the **temporal synthesis layer**. Avoid repeating the same paragraph across all four.
+- Deep pages should expose a short route back to Research Map/Reading Paths and, where natural, one `Continue` link to the next adjacent research problem.
+- Aesthetic changes are successful only when they reduce time-to-comparison or time-to-evidence. Do not add decorative visuals to make the repository feel “designed.”
+
 ## Update flow
 
 For an accepted paper:
@@ -53,11 +65,13 @@ For an accepted paper:
 
 Keep the sibling-radar structure:
 
-`Latest Papers → What’s Changing → Reading Paths → Research Map → How to Read → Scope/About/Contributing`
+`Latest Papers → What’s Changing → Reading Paths → Research Map → How to Use This Radar → Scope/About/Contributing`
 
 Inside **Research Map**, place **Key Anchors** before **Research Problems**. Avoid adding another top-level section for information already represented by these surfaces.
 
 Latest Papers should stay at roughly 8–10 entries. Anchors should stay around 5–8 and should change slowly.
+
+**What’s Changing** should lead with 2–4 cross-paper research shifts before chronological compaction links. Prefer `old assumption → new evidence → research implication` over a list of weekly summaries.
 
 ## Repository discoverability
 
@@ -81,7 +95,8 @@ Avoid low-signal topics such as `agent`, `paper`, or `awesome-list` when more sp
 - repository-relative Markdown links;
 - generated visual path/embed consistency;
 - documented blockers for important papers without a generated visual;
-- README section order and bounded latest-paper/anchor counts.
+- README section order, Latest Papers count, anchor count, and public terminology;
+- category-page Research take / unresolved-question / next-evidence contracts.
 
 External URLs are not treated as a CI hard dependency because transient network failures should not break repository validation. Verify important external paper/code/project links during curation instead.
 
