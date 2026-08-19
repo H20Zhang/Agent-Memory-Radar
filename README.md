@@ -1,13 +1,13 @@
 # 🧠 Agent Memory Radar
 
 **A living research map of agent memory for LLM and multimodal agents.**  
-Track the latest agent memory papers, long-term memory systems, procedural memory, benchmarks, design anchors, visual explainers, and weekly/monthly/yearly research compactions.
+Track the latest agent memory research — long-term memory, episodic/semantic/procedural memory, retrieval and access, memory evolution, benchmarks, and field-level synthesis.
 
-**Last updated:** 2026-08-19 · [Latest papers](#-latest-papers) · [Start here](#-start-here) · [Browse by research problem](#-browse-by-research-problem) · [Research compactions](#-research-compactions)
+⭐ **Star this repo to follow new agent memory papers, research notes, and field-level synthesis.** Also tracking adaptive retrieval? See [Agentic RAG Radar](https://github.com/H20Zhang/Agentic-RAG-Radar).
+
+**Last updated:** 2026-08-19 · [Latest papers](#-latest-papers) · [What’s changing](#-whats-changing) · [Reading paths](#-reading-paths) · [Research map](#-research-map)
 
 **Current field thesis:** agent memory is not one store. The sharper systems question is **where state should remain raw, where structure should be materialized, how evidence should be selected or admitted, how selected evidence becomes current consumer state, what should evolve, and what lifecycle cost/provenance each choice creates**. Credit complexity only at the stage where it beats a matched simpler alternative.
-
-⭐ **If this radar saves you research time, star the repo to follow new papers and compactions.** Also tracking adaptive retrieval? See [Agentic RAG Radar](https://github.com/H20Zhang/Agentic-RAG-Radar).
 
 ## 🔥 Latest Papers
 
@@ -221,7 +221,41 @@ Track the latest agent memory papers, long-term memory systems, procedural memor
 
 </details>
 
-## 🚀 Start Here
+## 🧭 What’s Changing
+
+The archive deliberately becomes coarser with time: `recent month → weekly` · `recent quarter → monthly` · `all years → yearly`.
+
+### Recent Month · Weekly
+
+**[2026-W33 · Memory architecture decomposes into stage-specific controls](digests/weekly/2026-W33.md)**  
+Aug 10–16 made “best memory architecture” a weaker question. The sharper comparison is now **archive/representation → access program → evidence completion/selection → consumer-facing state/reuse → update/governance → lifecycle cost**. ReFind raises the raw-record baseline; RippleMem shows where structure still earns complexity; QCR separates retrieval from reuse; Demystifying Agent Skills separates procedural representation from retrieval/invocation; SkillEvo and ERSkill split self-improvement into feedback quality and evolvable read policy.
+
+**Suggested reading:** ReFind → RippleMem → QCR → Demystifying Agent Skills → SkillEvo.  
+[Read the W33 synthesis →](digests/weekly/2026-W33.md)
+
+**[2026-W32 · Structure only matters when control can use it](digests/weekly/2026-W32.md)**  
+Aug 3–9 established the first correction to “more structure is better”: controller↔memory coupling and consumer-compatible granularity matter, while plausible extra typing can fail to beat a simpler dynamic policy.
+
+### Recent Quarter · Monthly
+
+**[2026-08 · Rolling through Aug 19](digests/monthly/2026-08.md)**  
+The August map now separates **archive/representation → access program → evidence completion/selection → consumer-facing state/reuse → update feedback/governance → lifecycle cost/provenance**. The methodological rule is getting stricter: **credit memory complexity only at the stage where a matched simpler alternative fails.** QUMem strengthens the post-retrieval state-reconstruction boundary; Skill2Query sharpens procedural-memory retrieval supervision; FTA-Mem makes write granularity explicitly density- and cost-dependent; HyperSkill shows relational structure only matters when retrieval and maintenance actually consume it.
+
+### All Years · Yearly
+
+**[2026 · Rolling, incomplete research map](digests/yearly/2026.md)**  
+Active curation starts in August with one July backfill, so this is **not a full-year reconstruction**. Within current coverage, agent memory is becoming a multi-stage state interface whose access programs, consumer-state transforms, evolution signals, cost, and provenance need separate accounting.
+
+[Explore the August map →](digests/monthly/2026-08.md) · [Explore the 2026 map →](digests/yearly/2026.md) · [Browse all synthesis →](digests/README.md)
+
+<details>
+<summary><strong>How the time hierarchy works</strong></summary>
+
+**Weekly** preserves local changes while fresh. **Monthly** rebuilds the field map. **Yearly** keeps durable shifts, defining papers, weakened ideas, evidence standards, and open problems. Lower-level reports remain in the repository for provenance.
+
+</details>
+
+## 📚 Reading Paths
 
 | If you want to understand… | Read in this order | What you should learn |
 |---|---|---|
@@ -242,11 +276,13 @@ Together they frame a sharper question than “what is the best memory architect
 
 </details>
 
-## ⭐ Design Anchors
+## 🗺️ Research Map
+
+### Key Anchors
 
 These are **design points, not a ranking**. The set changes slowly so the radar does not become a recency leaderboard.
 
-| Work | Design point |
+| Work | Why it is a useful design point |
 |---|---|
 | **[LeanMem](papers/2026/2608.03463.md)** | Heterogeneous lifecycle contracts for different evidence types. |
 | **[V-Mem](papers/2026/2608.01543.md)** | Structural same-round access across modalities. |
@@ -268,7 +304,7 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 
 </details>
 
-## 🗂 Browse by Research Problem
+### Research Problems
 
 | Research problem | Question |
 |---|---|
@@ -343,71 +379,47 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 
 </details>
 
-<details>
-<summary><strong>Scope and ratings</strong></summary>
-
-**In scope:** persistent or managed information across interaction/reasoning steps that materially changes a language or multimodal agent's future behavior. Generic RAG, long-context modeling, KV-cache optimization, or unrelated continual learning are excluded unless memory is a central mechanism.
-
-**Importance:** ★★★★★ field-shaping · ★★★★☆ notable · ★★★☆☆ useful · ★★☆☆☆ peripheral · ★☆☆☆☆ archival. Relevance is scored separately from importance.
-
-</details>
-
 [Explore the full research map →](categories/README.md)
-
-## 🧭 Research Compactions
-
-The archive deliberately becomes coarser with time: `recent month → weekly` · `recent quarter → monthly` · `all years → yearly`.
-
-### Recent Month · Weekly
-
-**[2026-W33 · Memory architecture decomposes into stage-specific controls](digests/weekly/2026-W33.md)**  
-Aug 10–16 made “best memory architecture” a weaker question. The sharper comparison is now **archive/representation → access program → evidence completion/selection → consumer-facing state/reuse → update/governance → lifecycle cost**. ReFind raises the raw-record baseline; RippleMem shows where structure still earns complexity; QCR separates retrieval from reuse; Demystifying Agent Skills separates procedural representation from retrieval/invocation; SkillEvo and ERSkill split self-improvement into feedback quality and evolvable read policy.
-
-**Suggested reading:** ReFind → RippleMem → QCR → Demystifying Agent Skills → SkillEvo.  
-[Read the W33 synthesis →](digests/weekly/2026-W33.md)
-
-**[2026-W32 · Structure only matters when control can use it](digests/weekly/2026-W32.md)**  
-Aug 3–9 established the first correction to “more structure is better”: controller↔memory coupling and consumer-compatible granularity matter, while plausible extra typing can fail to beat a simpler dynamic policy.
-
-### Recent Quarter · Monthly
-
-**[2026-08 · Rolling through Aug 19](digests/monthly/2026-08.md)**  
-The August map now separates **archive/representation → access program → evidence completion/selection → consumer-facing state/reuse → update feedback/governance → lifecycle cost/provenance**. The methodological rule is getting stricter: **credit memory complexity only at the stage where a matched simpler alternative fails.** QUMem strengthens the post-retrieval state-reconstruction boundary; Skill2Query sharpens procedural-memory retrieval supervision; FTA-Mem makes write granularity explicitly density- and cost-dependent; HyperSkill shows relational structure only matters when retrieval and maintenance actually consume it.
-
-### All Years · Yearly
-
-**[2026 · Rolling, incomplete research map](digests/yearly/2026.md)**  
-Active curation starts in August with one July backfill, so this is **not a full-year reconstruction**. Within current coverage, agent memory is becoming a multi-stage state interface whose access programs, consumer-state transforms, evolution signals, cost, and provenance need separate accounting.
-
-[Browse all compactions →](digests/README.md)
-
-<details>
-<summary><strong>How the time hierarchy works</strong></summary>
-
-**Weekly** preserves local changes while they are fresh. **Monthly** rebuilds the field map across several weeks. **Yearly** keeps only durable shifts, corrections, unresolved trade-offs, and evidence standards that survive broader coverage.
-
-</details>
 
 ## 🖼️ How to Read a Paper Here
 
 - **30-second scan:** title, category, importance, date, AI take, and verified links.
 - **60-second expand:** problem, actual mechanism/control flow, closest comparison, one decisive result or ablation, and the open question most likely to change the importance judgment.
-- **Deep dive:** open the research note for memory design, evidence, limitations, provenance, and a verified visual explainer when available.
+- **Deep dive:** open the research note for the full memory design — write, organize, read, update/forget — plus evidence, limitations, provenance, and a verified visual explainer when available.
+
+## What Counts as Agent Memory?
+
+A work is included when **information persists or is explicitly managed across interaction/reasoning steps and materially changes a language or multimodal agent’s future behavior**.
+
+Typical in-scope work changes at least one lifecycle boundary: what gets written, how memory is organized, how it is retrieved/admitted, how it is transformed for the current consumer, how it is updated/forgotten, how memory policy evolves, or how persistent state is evaluated for cost, authority, safety, and downstream effect.
+
+Usually out of scope: ordinary fixed RAG with no persistent memory contribution, generic long-context modeling, KV-cache optimization, or unrelated continual learning. Work at the retrieval/memory boundary may also appear in [Agentic RAG Radar](https://github.com/H20Zhang/Agentic-RAG-Radar) when adaptive information acquisition is itself the research contribution.
 
 ## About the Radar
 
-This is a **curated living survey of agent memory research**, not an exhaustive keyword feed. It covers persistent state for LLM and multimodal agents across long-term memory, procedural memory, retrieval/access, write/update/consolidation, memory learning/evolution, benchmarks, cost, provenance, and safety.
+This is a **curated research map, not an exhaustive keyword feed**. Every strong entry should help answer:
 
-Every included work should help answer three questions: **what changed, compared with what, and what evidence actually isolates the claimed cause?** Negative results and baseline reversals are kept when they change the research interpretation.
+1. **What memory boundary actually changed?**
+2. **Compared with what — especially the simplest matched alternative?**
+3. **Does the evidence isolate that stage rather than crediting the whole architecture?**
+
+Negative results and baseline reversals are kept when they change the interpretation. Relevance and importance are scored separately.
+
+For reuse and citation: research notes, digests, category maps, canonical paper data, and original radar figures are available under **CC BY 4.0**; maintenance code is under **MIT**. See [LICENSE.md](LICENSE.md) and [CITATION.cff](CITATION.cff).
 
 ## 🤝 Contributing
 
-Corrections are especially welcome when they change the conclusion: a missing baseline, unfair resource budget, wrong taxonomy, broken link, unsupported claim, or a visual that implies more than the paper shows. Open an [issue](https://github.com/H20Zhang/Agent-Memory-Radar/issues) or send a pull request.
+Corrections are especially welcome when they change the conclusion: a missing baseline, wrong taxonomy/importance, incorrect benchmark number, unsupported mechanism claim, broken provenance, or a visual that implies more than the evidence supports.
 
-## 🔭 Related Radar
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the inclusion bar, evidence standard, and how to suggest papers or corrections.
 
-**[Agentic RAG Radar](https://github.com/H20Zhang/Agentic-RAG-Radar)** tracks adaptive retrieval, information-seeking agents, retrieval control, and agentic RAG. The two radars deliberately overlap at the boundary where retrieval becomes persistent memory state.
+<details>
+<summary><strong>Methodology & maintenance</strong></summary>
+
+See the [maintainer guide](docs/MAINTENANCE.md), [curation protocol](CURATION.md), [compaction protocol](COMPACTION.md), [visual grounding rules](VISUAL_POLICY.md), [taxonomy](taxonomy.yaml), and [structured paper records](data/papers/).
+
+</details>
 
 ---
 
-If this radar saves you research time, consider starring the repo.
+Found an important agent memory paper we missed? [Suggest it](https://github.com/H20Zhang/Agent-Memory-Radar/issues/new?template=suggest-paper.yml).

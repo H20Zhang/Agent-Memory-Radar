@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Agentic RAG Radar
+    url: https://github.com/H20Zhang/Agentic-RAG-Radar
+    about: Use the sibling radar when adaptive external information acquisition, rather than persistent memory, is the primary research contribution.

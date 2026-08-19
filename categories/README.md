@@ -1,5 +1,7 @@
 # Browse Agent Memory by Research Problem
 
+[← Agent Memory Radar](../README.md) · [What’s changing](../README.md#-whats-changing) · [Reading paths](../README.md#-reading-paths)
+
 The taxonomy is organized by **which part of the memory lifecycle changes**, not primarily by application domain.
 
 | Category | Research question | Current signal |

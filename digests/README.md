@@ -1,5 +1,7 @@
 # Research Compactions
 
+[← Agent Memory Radar](../README.md) · [Reading paths](../README.md#-reading-paths) · [Research map](../README.md#-research-map)
+
 Daily curation optimizes for **recall and provenance**. Compactions optimize for **attention at different time scales**.
 
 ## Current research maps
@@ -17,6 +19,8 @@ Daily curation optimizes for **recall and provenance**. Compactions optimize for
 ## What compaction means
 
 Weekly reports identify 2–4 design-space changes, ranked reading, tensions, gaps, and evidence to watch next; one-paper observations are labeled early signals. Monthly reports ask how the field map moved and what would falsify the current interpretation. Yearly maps retain only shifts that appear durable and explicitly record incomplete coverage or earlier narratives that weaken.
+
+See [`../COMPACTION.md`](../COMPACTION.md) for the synthesis contract.
 
 ## Raw daily logs
 

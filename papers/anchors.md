@@ -1,5 +1,7 @@
 # Design Anchors
 
+[← Agent Memory Radar](../README.md) · [Research Map](../README.md#-research-map) · [What’s changing](../README.md#-whats-changing)
+
 These papers are **design points, not a ranking**. The set is intentionally bounded and changes only when a new paper exposes a distinct control boundary.
 
 | Paper | Design point | Research card |
@@ -21,7 +23,7 @@ The sequence encodes the current research map:
 
 `what state exists → whether to pre-structure it → how to access it → how selected evidence is adapted to the current decision → how control state learns → whether authority/provenance survive lifecycle transforms`
 
-**ReFind** and **QCR** are the new additions. ReFind raises the baseline for representation claims: generated semantic structure should beat a competent raw-record search interface, not one-shot top-k. QCR adds a different boundary after retrieval: even the correct long trajectory can be the wrong actor-facing representation when source bindings are stale.
+**ReFind** and **QCR** are the newer additions. ReFind raises the baseline for representation claims: generated semantic structure should beat a competent raw-record search interface, not one-shot top-k. QCR adds a different boundary after retrieval: even the correct long trajectory can be the wrong actor-facing representation when source bindings are stale.
 
 ## Rotated-out but still important
 

@@ -1,0 +1,74 @@
+name: Research correction
+description: Report a correction that could change a reader's interpretation of a paper, category, or synthesis.
+title: "[Correction] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Corrections are especially useful when they change **compared with what**, the evidence strength, taxonomy/importance, provenance, or a higher-level research conclusion.
+
+  - type: input
+    id: affected
+    attributes:
+      label: Affected paper or page
+      placeholder: arXiv ID, paper title, category page, digest, or repository path
+    validations:
+      required: true
+
+  - type: dropdown
+    id: correction_type
+    attributes:
+      label: Correction type
+      options:
+        - Benchmark number / evidence
+        - Method / mechanism description
+        - Missing or stronger baseline
+        - Taxonomy / importance framing
+        - Paper version / duplicate identity
+        - Paper / code / project link
+        - Provenance / authority / safety interpretation
+        - Visual overstatement or mismatch
+        - Other research conclusion
+    validations:
+      required: true
+
+  - type: textarea
+    id: current_claim
+    attributes:
+      label: Current claim or problem
+      placeholder: The radar currently says ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Proposed correction
+      placeholder: It should instead say ...
+    validations:
+      required: true
+
+  - type: input
+    id: primary_source
+    attributes:
+      label: Primary source
+      description: Prefer the paper, official code/project page, benchmark, or other first-party evidence.
+      placeholder: https://...
+    validations:
+      required: true
+
+  - type: textarea
+    id: consequence
+    attributes:
+      label: Why does this matter?
+      description: Explain whether this changes novelty, causal attribution, importance, category placement, or a weekly/monthly/yearly thesis.
+      placeholder: This changes the conclusion because ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: uncertainty
+    attributes:
+      label: Remaining uncertainty
+      description: Optional. Separate what is verified from what is still interpretive.
+      placeholder: Verified: ... Still unclear: ...

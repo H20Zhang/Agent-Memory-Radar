@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If Agent Memory Radar helps your research, please cite this repository."
+title: "Agent Memory Radar: A Living Research Map of Memory for AI Agents"
+authors:
+  - family-names: Zhang
+    given-names: Hao
+repository-code: "https://github.com/H20Zhang/Agent-Memory-Radar"
+url: "https://github.com/H20Zhang/Agent-Memory-Radar"
+license: CC-BY-4.0
+keywords:
+  - agent memory
+  - LLM agents
+  - long-term memory
+  - procedural memory
+  - memory systems
+  - retrieval
+  - benchmarks
+  - research survey
