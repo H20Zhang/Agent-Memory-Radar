@@ -27,6 +27,17 @@ README_SECTIONS = [
     "## Contributing",
 ]
 
+LATEST_NOTE_HEADINGS = [
+    "## Problem",
+    "## Mechanism",
+    "## Compared with",
+    "## Decisive evidence",
+    "## Main caveat",
+    "## Memory lifecycle",
+    "## Why it matters",
+    "## Related reading",
+]
+
 CATEGORY_PAGES = {
     "representation_organization": "categories/representation-organization.md",
     "retrieval_access": "categories/retrieval-access.md",
@@ -36,6 +47,10 @@ CATEGORY_PAGES = {
 }
 
 MARKDOWN_LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
+LATEST_NOTE_RE = re.compile(
+    r"^### \[[^\]]+\]\((papers/\d{4}/[\d.]+\.md)\)",
+    flags=re.MULTILINE,
+)
 
 
 def error(errors: list[str], message: str) -> None:
@@ -86,6 +101,26 @@ def check_repo_relative_links(errors: list[str]) -> None:
                 error(errors, f"{doc.relative_to(ROOT)}: broken relative link: {target}")
 
 
+def validate_latest_note_style(errors: list[str], latest: str) -> None:
+    note_paths = LATEST_NOTE_RE.findall(latest)
+    for relative in note_paths:
+        path = ROOT / relative
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8")
+        if "> **Research delta.**" not in text:
+            error(errors, f"{relative}: latest paper note is missing one-line Research delta")
+        if "[← Latest Papers]" not in text or "[Research Map]" not in text:
+            error(errors, f"{relative}: latest paper note needs compact return navigation")
+        for heading in LATEST_NOTE_HEADINGS:
+            if heading not in text:
+                error(errors, f"{relative}: missing researcher-facing section {heading!r}")
+        if "AI confidence" in text:
+            error(errors, f"{relative}: use neutral 'Confidence' rather than 'AI confidence'")
+        if "## Visual status" in text:
+            error(errors, f"{relative}: maintenance-only visual status should not be on the researcher-facing note")
+
+
 def validate_readme(errors: list[str]) -> None:
     if not README.exists():
         error(errors, "README.md is missing")
@@ -112,6 +147,7 @@ def validate_readme(errors: list[str]) -> None:
             error(errors, f"README.md: Latest Papers should contain 8–10 entries, found {count}")
         if "**AI take:**" in latest:
             error(errors, "README.md: use 'Research take' rather than 'AI take' on the public research surface")
+        validate_latest_note_style(errors, latest)
 
     anchors_start = text.find("### Key Anchors")
     anchors_end = text.find("### Research Problems")
