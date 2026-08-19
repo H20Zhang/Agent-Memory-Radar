@@ -17,14 +17,14 @@ PAPERS_DIR = ROOT / "data" / "papers"
 README = ROOT / "README.md"
 
 README_SECTIONS = [
-    "## 🔥 Latest Papers",
-    "## 🧭 What’s Changing",
-    "## 📚 Reading Paths",
-    "## 🗺️ Research Map",
-    "## 🖼️ How to Read a Paper Here",
+    "## Latest Papers",
+    "## What’s Changing",
+    "## Reading Paths",
+    "## Research Map",
+    "## How to Use This Radar",
     "## What Counts as Agent Memory?",
     "## About the Radar",
-    "## 🤝 Contributing",
+    "## Contributing",
 ]
 
 CATEGORY_PAGES = {
@@ -103,23 +103,42 @@ def validate_readme(errors: list[str]) -> None:
     if len(valid_positions) == len(positions) and valid_positions != sorted(valid_positions):
         error(errors, "README.md: reader-facing sections are out of canonical order")
 
-    latest_start = text.find("## 🔥 Latest Papers")
-    latest_end = text.find("## 🧭 What’s Changing")
+    latest_start = text.find("## Latest Papers")
+    latest_end = text.find("## What’s Changing")
     if 0 <= latest_start < latest_end:
         latest = text[latest_start:latest_end]
         count = len(re.findall(r"^### \[", latest, flags=re.MULTILINE))
         if not 8 <= count <= 10:
             error(errors, f"README.md: Latest Papers should contain 8–10 entries, found {count}")
+        if "**AI take:**" in latest:
+            error(errors, "README.md: use 'Research take' rather than 'AI take' on the public research surface")
 
     anchors_start = text.find("### Key Anchors")
     anchors_end = text.find("### Research Problems")
     if 0 <= anchors_start < anchors_end:
         anchors = text[anchors_start:anchors_end]
-        count = len(re.findall(r"^\| \*\*\[", anchors, flags=re.MULTILINE))
+        count = len(re.findall(r"^\| [^|]+ \| \*\*\[", anchors, flags=re.MULTILINE))
         if not 5 <= count <= 8:
             error(errors, f"README.md: Key Anchors should contain 5–8 design points, found {count}")
     else:
         error(errors, "README.md: Research Map must contain Key Anchors before Research Problems")
+
+    if "dashboard" in text.lower() and "not a dashboard" not in text.lower():
+        error(errors, "README.md: public surface should not present itself as a dashboard")
+
+
+def validate_category_style(errors: list[str]) -> None:
+    for relative in CATEGORY_PAGES.values():
+        path = ROOT / relative
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8")
+        if "| AI take |" in text:
+            error(errors, f"{relative}: use 'Research take' rather than 'AI take'")
+        if "**Biggest unresolved question:**" not in text:
+            error(errors, f"{relative}: missing biggest unresolved question")
+        if "**Next decisive evidence:**" not in text:
+            error(errors, f"{relative}: missing next decisive evidence")
 
 
 def main() -> int:
@@ -219,6 +238,7 @@ def main() -> int:
                     error(errors, f"{path.relative_to(ROOT)}: paper note does not embed generated visual {asset.name}")
 
     validate_readme(errors)
+    validate_category_style(errors)
     check_repo_relative_links(errors)
 
     if errors:
