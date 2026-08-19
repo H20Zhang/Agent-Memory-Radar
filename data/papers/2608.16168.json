@@ -1,0 +1,54 @@
+{
+  "id": "2608.16168",
+  "title": "QUMem: Personalized Memory for Query-Conditioned User-State Inference in LLM Agents",
+  "authors": ["Heng Wang", "Yifei Li", "Lingling Zhang", "Pengyu Li", "Xinyu Che", "Xinyu Zhang", "Zesheng Yang"],
+  "published": "2026-08-17",
+  "first_seen": "2026-08-19",
+  "paper_url": "https://arxiv.org/abs/2608.16168",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "representation_organization",
+  "tags": ["semantic", "structured", "timeline", "personalization"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-19",
+    "blocker": "A QUMem-specific GPT Image attempt ignored the grounded single-paper brief and rendered unrelated Agent Memory Radar dashboard/status UI with fabricated repository and paper metadata. The same current-run identity failure had already occurred twice for HyperSkill, so further QUMem retries were stopped to avoid publishing ungrounded art. GitHub binary publication is available; blocker is image-generator paper identity/grounding."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.16168"],
+    "analyzed_from": ["https://arxiv.org/html/2608.16168v1"],
+    "last_verified": "2026-08-19"
+  },
+  "analysis": {
+    "tldr": "QUMem separates archival representation from query-time personalization: it builds semantically coherent episodes, decomposes each into independently retrievable facts, preferences/constraints, and transferable insights, then uses explicit information-need, retrieval-planning, and user-state-inference stages to construct the current task-relevant user state rather than returning top-k memories directly.",
+    "problem": "Long-term personalization fails when fixed memory boundaries split events, when multiple user signals from one episode are stored as one indivisible item, and when the current query is used as a single similarity key even though valid preferences may be distributed across time, context-dependent, or superseded by later evidence.",
+    "core_idea": "First segment dialogue history into variable-length episodes using semantic continuity, then decompose each episode into factual, preference/constraint, and transferable-insight memories with source links and temporal positions. At query time, an information-need agent specifies what historical state must be verified, a retrieval-planning agent rewrites those needs into multiple typed-store queries, and a user-state agent jointly interprets the retrieved evidence into chronological facts, currently applicable preference evolution, and transferable principles for the downstream response/action model.",
+    "memory_design": {
+      "write": "Use a lightweight semantic-continuity classifier to maintain an open episode and finalize it at event boundaries. For each finalized episode, run three type-conditioned LLM extractions to create independently retrievable factual, preference/constraint, and transferable-insight memories while retaining the source episode, supporting turns, and latest temporal position.",
+      "organize": "Keep complete source episodes for event context plus typed atomic memory stores for reusable evidence. Each atomic item has content, type, temporal position, and explicit evidence links so query-time reasoning can trace validity back to the interaction history.",
+      "read": "Separate three query-time decisions: identify information needs; plan multiple rewritten queries over selected memory types; merge/deduplicate candidates and jointly infer a query-conditioned user state containing chronological facts, preference evolution/current applicability, and transferable principles.",
+      "update_forget": "New interaction history extends episodes and creates new typed memories. The paper models temporal validity during query-time state inference but does not center on explicit deletion, revocation, or long-horizon conflict-repair operations over stored memories."
+    },
+    "compared_to": [
+      "A-MEM structured linked memory",
+      "Mem0 persistent extracted-memory management",
+      "Zep temporal knowledge-graph memory",
+      "component ablations removing episode construction, typed decomposition, or query-time user-state reconstruction"
+    ],
+    "evidence": "On PersonaMem, QUMem improves GPT-4o-mini overall accuracy from the strongest baseline's 52.99% to 61.02% and Gemini-3.5-flash from 63.29% to 70.58%. On KnowU-Bench it reaches 17.4% overall success versus 12.8% for the strongest baseline, with higher score and interaction efficiency as well. The cleanest mechanism evidence is the PersonaMem ablation: 61.02 full, 58.38 without episode construction, 57.11 without typed memory decomposition, and 54.51 without query-time user-state reconstruction, making reconstruction/planned evidence interpretation the largest contributor. Construction accounting reports 27.1 builds, 81.4 generative LLM calls, and 1,221.2 construction tokens per 100 dialogue turns/turn respectively, but excludes the local continuity-classifier cost.",
+    "why_it_matters": "QUMem strengthens a key radar distinction: the stored memory object and the consumer-facing state should not be conflated. Its largest ablation effect comes after retrieval, where distributed evidence is interpreted into a current user state. That makes personalization a state-reconstruction problem rather than simply a better top-k problem, and provides a concrete bridge from persistent memory to acting personalized agents through KnowU-Bench.",
+    "limitations": [
+      "The full package changes segmentation, persistent representation, retrieval planning, and query-time interpretation; the component ablations identify contribution but do not fully match all alternative interfaces stage by stage.",
+      "The dynamic episode boundary classifier is trained on LoCoMo data and its transfer to very different dialogue/task distributions is not independently stress-tested.",
+      "KnowU-Bench end-to-end success remains low in absolute terms, especially on hard tasks, so memory-state improvements do not solve personalized execution reliability.",
+      "Construction-cost reporting excludes the local semantic-continuity classifier and does not provide a complete end-to-end serving-cost comparison including the three query-time agents."
+    ],
+    "confidence": "high"
+  }
+}
