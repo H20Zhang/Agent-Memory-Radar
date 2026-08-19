@@ -3,7 +3,7 @@
   "title": "HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory",
   "authors": ["Ruiyao Xu", "Tiankai Yang", "Wei-Chieh Huang"],
   "published": "2026-08-17",
-  "first_seen": "2026-08-18",
+  "first_seen": "2026-08-19",
   "paper_url": "https://arxiv.org/abs/2608.16114",
   "code_url": null,
   "project_url": null,
@@ -17,13 +17,13 @@
     "format": "webp",
     "generator": "gpt-image",
     "grounding": "full-paper",
-    "last_verified": "2026-08-18",
+    "last_verified": "2026-08-19",
     "blocker": "Two isolated HyperSkill-specific GPT Image attempts ignored the grounded single-paper brief and rendered unrelated Agent Memory Radar dashboard/status UI with fabricated repository and paper metadata. Visual QA rejected both. GitHub binary publication is available; blocker is image-generator paper identity/grounding."
   },
   "provenance": {
     "discovered_from": ["https://arxiv.org/abs/2608.16114"],
     "analyzed_from": ["https://arxiv.org/html/2608.16114v1"],
-    "last_verified": "2026-08-18"
+    "last_verified": "2026-08-19"
   },
   "analysis": {
     "tldr": "HyperSkill treats a trajectory as a higher-order association among reusable subtasks, skills, and outcome rather than a flat exemplar: it stores each episode as a hyperedge, retrieves through both subtask and trajectory paths, ranks skills by co-occurrence across retrieved trajectories, and periodically prunes or merges memory using utility plus structure.",
