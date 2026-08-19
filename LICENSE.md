@@ -2,22 +2,22 @@
 
 Agent Memory Radar uses a split license so research content can be reused with attribution while maintenance code remains easy to adopt.
 
-## Research content and canonical data — CC BY 4.0
+## Research content, documentation, and canonical data — CC BY 4.0
 
 Unless otherwise noted, the following original radar material is licensed under the **Creative Commons Attribution 4.0 International License (CC BY 4.0)**:
 
-- `README.md` research prose;
+- `README.md` and researcher/maintainer documentation (`CURATION.md`, `COMPACTION.md`, `VISUAL_POLICY.md`, `CONTRIBUTING.md`, `docs/`, and `assets/README.md`);
 - `papers/` researcher-facing notes and anchor synthesis;
 - `categories/` research maps;
 - `digests/` weekly/monthly/yearly compactions;
-- `data/papers/` canonical curator-authored structured records;
+- `taxonomy.yaml` and `data/papers/` canonical curator-authored research metadata/analysis;
 - original radar figures under `assets/visuals/`.
 
 See [`LICENSE-CONTENT.md`](LICENSE-CONTENT.md).
 
-## Maintenance code — MIT
+## Maintenance code and machine-validation contracts — MIT
 
-Maintenance code under `scripts/` and `.github/workflows/` is licensed under the **MIT License**.
+Maintenance code under `scripts/` and `.github/workflows/`, together with `data/paper.schema.json`, is licensed under the **MIT License**.
 
 See [`LICENSE-CODE`](LICENSE-CODE).
 
