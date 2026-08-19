@@ -23,7 +23,7 @@ Aug 3–9 established the first correction to “more structure is better”: co
 ### Recent Quarter · Monthly
 
 **[2026-08 · Rolling through Aug 18](digests/monthly/2026-08.md)**  
-The August map now separates **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update feedback/governance → lifecycle cost/provenance**. The methodological rule is getting stricter: **credit memory complexity only at the stage where a matched simpler alternative fails.**
+The August map now separates **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update feedback/governance → lifecycle cost/provenance**. The methodological rule is getting stricter: **credit memory complexity only at the stage where a matched simpler alternative fails.** HyperSkill adds a useful refinement: relational structure is only interesting when retrieval and maintenance actually consume it.
 
 ### All Years · Yearly
 
@@ -38,7 +38,7 @@ Active curation starts in August with one July backfill, so this is **not a full
 |---|---|---|
 | **When structure actually earns its cost** | [ReFind](papers/2026/2608.12888.md) → [RippleMem](papers/2026/2608.13334.md) → [MESA](papers/2026/2608.10108.md) | A competent raw-record interface is the baseline; structure matters when it enables evidence completion or selective access that online search cannot cheaply recover. |
 | **What happens after retrieval succeeds** | [QCR](papers/2026/2608.12847.md) → [Demystifying Agent Skills](papers/2026/2608.14036.md) → [Agent Skills Can Be Harmful](papers/2026/2608.11888.md) | Selection is not reuse: representation, current bindings, invocation, and marginal procedural effect determine whether retrieved experience helps. |
-| **How memory becomes self-improving state** | [SkillEvo](papers/2026/2608.13120.md) → [ERSkill](papers/2026/2608.12720.md) → [Practice Makes Unsafe](papers/2026/2608.12851.md) | Evolution depends on the feedback surface, the policy being evolved, and governance of the persistent descendants it creates. |
+| **How memory becomes self-improving state** | [SkillEvo](papers/2026/2608.13120.md) → [ERSkill](papers/2026/2608.12720.md) → [HyperSkill](papers/2026/2608.16114.md) | Evolution depends on the feedback surface, the read policy being evolved, and whether stored structure is operational during retrieval and maintenance. |
 
 <details>
 <summary><strong>If you only read three papers</strong></summary>
@@ -54,6 +54,27 @@ Together they frame a sharper question than “what is the best memory architect
 </details>
 
 ## 🔥 Latest Papers
+
+### [HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory](papers/2026/2608.16114.md)
+`Memory Learning & Evolution` · `procedural` `structured` `graph` · **★★★★☆** · 2026-08-17
+
+**AI take:** The interesting part is not “hypergraphs beat vectors.” HyperSkill makes trajectory relations operational in **dual-path retrieval, cross-trajectory skill ranking, and maintenance**; the main caveat is that its no-hypergraph ablation also changes the access pipeline, so representation and retrieval are not fully isolated.
+
+[Paper](https://arxiv.org/abs/2608.16114) · [Research note](papers/2026/2608.16114.md)
+
+<details><summary><strong>Understand this paper in 60 seconds</strong></summary>
+
+**Problem.** Flat trajectory/skill stores lose the higher-order relation among subtasks, reusable skills, and outcomes, while growing libraries accumulate redundant or low-utility guidance.
+
+**Core mechanism.** `task → subtask decomposition + task-level retrieval → fuse trajectory hyperedges → rank skills by co-occurrence across retrieved trajectories → execute → extract new skills/lesson → prune/merge by utility + structure`.
+
+**Compared with.** No Memory, ten experiential-memory baselines including PlugMem, and an internal flat-skill ablation that removes the hypergraph/dual-path structural pipeline.
+
+**Evidence to remember.** Qwen3 success is **52.00 / 36.97 / 50.59** on xBench / GAIA / WebWalkerQA; **w/o hypergraph 41.00 / 35.76 / 44.71**, **w/o subtask retrieval 43.00 / 32.73 / 47.06**, **w/o trajectory retrieval 48.00 / 35.76 / 43.53**.
+
+**Open question.** Does a hypergraph still win against a flat or binary-graph store when the decomposition, dual-path controller, co-occurrence ranking, and maintenance budget are held fixed?
+
+</details>
 
 ### [Demystifying Agent Skills: Why They Work—Until They Don’t](papers/2026/2608.14036.md)
 `Evaluation & Analysis` · `procedural` `text` `coding` · **★★★★☆** · 2026-08-14
@@ -244,27 +265,6 @@ Together they frame a sharper question than “what is the best memory architect
 
 </details>
 
-### [Agent Skills Can Be Harmful: An Empirical Study of Skill-Induced Failures in LLM Agents](papers/2026/2608.11888.md)
-`Evaluation & Analysis` · `procedural` `text` `general-agent` · **★★★★☆** · 2026-08-12
-
-**AI take:** Topical relevance is a weak admission test for procedural memory. A matching skill can impose the wrong implementation detail or a disproportionately expensive execution path.
-
-[Paper](https://arxiv.org/abs/2608.11888) · [Research note](papers/2026/2608.11888.md)
-
-<details><summary><strong>Understand this paper in 60 seconds</strong></summary>
-
-**Problem.** Outcome comparisons confound skill effect with task/model/environment differences and can hide large efficiency regressions.
-
-**Core mechanism.** Hold task/harness/model/environment fixed → compare target skill with no skill or matched alternative → inspect paired trajectories/outcomes/cost.
-
-**Compared with.** Skill benchmarks that report endpoint success without matched mechanism-level attribution.
-
-**Evidence to remember.** Among **307 confirmed cases**, Task-Implementation Fault is **86/125** functional failures; Excessive Procedure is **114/182** efficiency failures.
-
-**Open question.** Can a selector estimate the *marginal effect* of a procedural memory before paying the execution cost?
-
-</details>
-
 ## ⭐ Design Anchors
 
 These are **design points, not a ranking**. The set changes slowly so the radar does not become a recency leaderboard.
@@ -285,7 +285,7 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 
 `what state exists → whether to pre-structure it → how to access it → how selected evidence is adapted to the current decision → how control state learns → whether authority/provenance survive lifecycle transforms`
 
-**RippleMem**, **ERSkill**, and **Demystifying Agent Skills** are important challengers but do not yet force extra anchors: RippleMem sharpens the access boundary already represented by ReFind/V-Mem; ERSkill should displace an older control-state anchor only if access-policy evolution survives broader acting-agent evaluation; Demystifying strengthens the QCR/SkillJack procedural-reuse evaluation boundary without creating a new durable control point.
+**RippleMem**, **ERSkill**, **HyperSkill**, and **Demystifying Agent Skills** are important challengers but do not yet force extra anchors: RippleMem sharpens the access boundary already represented by ReFind/V-Mem; ERSkill should displace an older control-state anchor only if access-policy evolution survives broader acting-agent evaluation; HyperSkill strengthens the case for operational structure but still needs a matched flat/binary representation with the same structural controller; Demystifying strengthens the QCR/SkillJack procedural-reuse evaluation boundary without creating a new durable control point.
 
 [See the full anchor notes →](papers/anchors.md)
 
@@ -343,13 +343,13 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 <details>
 <summary><strong>Memory Learning & Evolution — what exactly should evolve?</strong></summary>
 
-**Current anchors.** RoMeRL; current evidence from SkillEvo, ERSkill, AMD, MemoryCPT, and HyMeS.
+**Current anchors.** RoMeRL; current evidence from SkillEvo, ERSkill, HyperSkill, AMD, MemoryCPT, and HyMeS.
 
-**Strongest signal.** Evolution quality depends on both **what receives adaptive state** and **what failures the system can observe**. SkillEvo improves the feedback surface; ERSkill evolves the access program and router.
+**Strongest signal.** Evolution quality depends on **what receives adaptive state, what failures the system can observe, and whether stored relations are operational**. SkillEvo improves the feedback surface; ERSkill evolves the access program and router; HyperSkill uses higher-order trajectory structure during both retrieval and maintenance.
 
-**Biggest unresolved question.** Do evolved artifacts/policies transfer to new consumers and domains strongly enough to justify rollout/judge cost?
+**Biggest unresolved question.** Do evolved artifacts/policies/structures transfer to new consumers and domains strongly enough to justify rollout, decomposition, and maintenance cost?
 
-**Next decisive evidence.** Matched experiments that independently vary feedback richness, update rule, access-policy evolution, governance, and cross-domain transfer.
+**Next decisive evidence.** Matched experiments that independently vary feedback richness, representation (flat/binary/hypergraph), update rule, access-policy evolution, governance, and cross-domain transfer.
 
 </details>
 
