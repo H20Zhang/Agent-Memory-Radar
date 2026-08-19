@@ -1,0 +1,55 @@
+{
+  "id": "2608.08446",
+  "title": "TRACE-Memory: Public-Conditioned Retrieval and Utility-Aware Evidence Admission for Personalized Generation",
+  "authors": ["Jing Wang", "Zhu Wang", "Yifan Guo", "Yulong Yang", "Yunji Liang"],
+  "published": "2026-08-09",
+  "first_seen": "2026-08-19",
+  "paper_url": "https://arxiv.org/abs/2608.08446",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["semantic", "text", "personalization"],
+  "relevance": 0.98,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-19",
+    "blocker": "Two isolated TRACE-Memory-only GPT Image attempts on 2026-08-19 ignored the paper-specific grounded brief and rendered unrelated Agent Memory Radar repository/dashboard/status UI with fabricated repository metadata. Binary publication is available; the blocker is render grounding/paper identity."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.08446"],
+    "analyzed_from": ["https://arxiv.org/html/2608.08446"],
+    "last_verified": "2026-08-19"
+  },
+  "analysis": {
+    "tldr": "TRACE-Memory reframes personalized memory use as incremental evidence utility over a public-only response path: first retrieve for user-specific information missing from the request plus public context, then admit only a compact source-traceable subset—or no personal evidence at all—according to downstream response utility.",
+    "problem": "Request-memory relevance is an insufficient admission rule for personalization. A relevant memory may concern the wrong preference aspect, duplicate information already available publicly, or provide too little support to justify injecting personal history into the response context.",
+    "core_idea": "Use a two-stage access program. Stage 1 observes the request and public context, generates queries for missing user-specific preferences/reactions/behavioral patterns, and builds a recall-oriented candidate pool. Stage 2 segments retrieved histories into source-traceable evidence units and selects a compact subset or EMPTY according to incremental response utility relative to the exact public-only generation path. Structured SFT, stage-wise GRPO, and nested multi-sample Joint GRPO train the query and admission policies while retrieval, segmentation, compilation, and the response generator remain frozen.",
+    "memory_design": {
+      "write": "TRACE-Memory assumes an existing user-history memory bank; it does not introduce a new long-term write/consolidation pipeline for the underlying memories.",
+      "organize": "Retrieved history is converted into fine-grained evidence units that retain source identifiers, offsets, and timestamps so admitted evidence remains attributable to the original interaction.",
+      "read": "Generate public-conditioned information-gap queries, retrieve a coverage-oriented candidate set, then run utility-aware evidence admission with an explicit EMPTY action before a frozen response generator.",
+      "update_forget": "The evaluated method learns query-generation and evidence-admission policies offline; persistent memory correction, forgetting, and long-horizon update of the underlying user history are not the research focus."
+    },
+    "compared_to": [
+      "Public-only generation and using all retrieved memory",
+      "Random, BM25, and semantic-similarity memory selection",
+      "LLM query + LLM selection and rule-query + semantic-selection pipelines",
+      "Response-aware memory selection such as RUMS as the closest conceptual design point",
+      "Frontier-generator personalization pipelines using LLM query reformulation plus semantic retrieval"
+    ],
+    "evidence": "With fixed response generators, TRACE-Memory has positive signed preference advantage over random memory use in all six Controlled/Natural settings and over semantic similarity in four of six. Its public-context intervention is especially diagnostic: as public context increases from L0 to L3, the EMPTY rate rises from 7.69% to 12.53% while average reward rises from 0.31 to 0.62, showing that the policy can abstain from personalization when public information is sufficient. The Qwen3-4B Stage-1 policy reaches 91.4% useful-memory recall on Controlled and 91.7% on Natural candidate retrieval; a Qwen3-4B + Qwen3-4B policy reaches 65.29% and 51.18% evidence-admission F1 on Controlled and Natural tasks. A Qwen3-32B local generator with TRACE-Memory closes the average signed preference gap to frontier-generator personalization pipelines to 0.00 across the reported six settings.",
+    "why_it_matters": "The paper adds a distinct read-side control boundary: memory access should be conditioned on what the non-personal/public path already knows and should support abstention when personal history adds no incremental value. This is stronger than another relevance ranker because it changes the admission objective from semantic match to marginal downstream utility.",
+    "limitations": [
+      "The utility objective is trained from a target-response likelihood/entropy proxy, so the learned admission policy is only as faithful as that offline surrogate for true user utility.",
+      "The method assumes a meaningful public-context path; tasks without reliable public evidence may not exhibit the same abstention trade-off.",
+      "Evaluation centers on personalized generation rather than long-horizon acting agents where memory affects tools, plans, or environment state.",
+      "The underlying memory bank is treated as given, so write-side extraction quality, conflict repair, forgetting, and privacy governance remain outside the main experiment."
+    ],
+    "confidence": "high"
+  }
+}
