@@ -1,0 +1,54 @@
+{
+  "id": "2608.16114",
+  "title": "HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory",
+  "authors": ["Ruiyao Xu", "Tiankai Yang", "Wei-Chieh Huang"],
+  "published": "2026-08-17",
+  "first_seen": "2026-08-18",
+  "paper_url": "https://arxiv.org/abs/2608.16114",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": ["procedural", "structured", "graph", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-18",
+    "blocker": "Two isolated HyperSkill-specific GPT Image attempts ignored the grounded single-paper brief and rendered unrelated Agent Memory Radar dashboard/status UI with fabricated repository and paper metadata. Visual QA rejected both. GitHub binary publication is available; blocker is image-generator paper identity/grounding."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/abs/2608.16114"],
+    "analyzed_from": ["https://arxiv.org/html/2608.16114v1"],
+    "last_verified": "2026-08-18"
+  },
+  "analysis": {
+    "tldr": "HyperSkill treats a trajectory as a higher-order association among reusable subtasks, skills, and outcome rather than a flat exemplar: it stores each episode as a hyperedge, retrieves through both subtask and trajectory paths, ranks skills by co-occurrence across retrieved trajectories, and periodically prunes or merges memory using utility plus structure.",
+    "problem": "Experiential-memory systems usually store trajectories, workflows, or skills as isolated entries and retrieve them mainly by semantic similarity. That loses the compositional relation between which subtasks occurred together, which skills were useful in those trajectories, and what outcome followed; accumulated skill libraries can also become redundant or actively harmful.",
+    "core_idea": "Represent memory as a hypergraph with subtask nodes and reusable skill nodes, one hyperedge per trajectory, and utility tracked from retrieval outcomes. At query time, decompose the new task and retrieve trajectories both through matching subtask nodes and through task-level hyperedge similarity; fuse those trajectories, rank skills by how often they co-occur across the retrieved hyperedges, execute with the resulting skills/lessons, then update the hypergraph and periodically prune low-utility nodes or merge structurally similar useful skills.",
+    "memory_design": {
+      "write": "After each task, keep the task decomposition as subtask nodes, extract outcome-conditioned reusable skills plus a distilled lesson from the trajectory, deduplicate skills by embedding similarity, add one hyperedge binding the trajectory's subtasks and skills, and update utility for retrieved elements from success rate and step efficiency.",
+      "organize": "Maintain a hypergraph whose nodes are reusable subtask/skill units and whose trajectory hyperedges preserve n-ary co-occurrence among them together with task description, lesson, and utility. Skill nodes may be shared across many trajectories while subtask nodes preserve procedural decomposition.",
+      "read": "Use two complementary retrieval paths: match the current task decomposition to stored subtask nodes and expand to incident trajectory hyperedges, while also matching the full task to trajectory hyperedge embeddings. Fuse retrieved trajectories, collect their candidate skills, and rank skills primarily by co-occurrence frequency across those trajectories with semantic similarity as a tie-breaker.",
+      "update_forget": "Every maintenance interval, prune sufficiently observed low-utility nodes and merge semantically similar skill nodes whose quality-weighted structural embeddings indicate repeated useful co-occurrence; subtask nodes are not merged because that would corrupt decomposition structure."
+    },
+    "compared_to": [
+      "No Memory under the same agent backbone and tools",
+      "flat/vector experiential-memory baselines including ReasoningBank, ExpeL, Agent Workflow Memory, Voyager, DILU, Cheatsheet, MemP, and MemEvolve",
+      "PlugMem as a graph-structured memory baseline",
+      "an internal flat-skill ablation that removes the hypergraph/dual-path structural retrieval pipeline"
+    ],
+    "evidence": "On Qwen3-30B-A3B, HyperSkill reports success rates of 52.00 on xBench, 36.97 on GAIA, and 50.59 on WebWalkerQA. The main structural ablation drops to 41.00/35.76/44.71 without the hypergraph pipeline, 43.00/32.73/47.06 without subtask retrieval, and 48.00/35.76/43.53 without trajectory retrieval. Under GPT-4o it reaches 62.00/44.24/51.18 and improves over the second-best method by 3.00, 2.30, and 0.59 points respectively. The paper also reports the best setting at a small retrieval budget k=2 and degradation when pruning is disabled or too aggressive. The attribution caveat is important: the 'w/o hypergraph' arm replaces the whole dual-path structural pipeline with flat skill retrieval, so it does not isolate hypergraph representation alone from the retrieval procedure built on top of it.",
+    "why_it_matters": "The reusable insight is not simply 'hypergraphs beat vectors.' HyperSkill makes trajectory structure operational at both retrieval and maintenance time: compositional subtask relations determine which trajectories are reachable, repeated skill co-occurrence becomes a ranking signal, and the same structure governs consolidation. This is stronger evidence for structure than papers that only store a graph but retrieve with ordinary similarity, while still requiring a matched control before crediting the hypergraph representation itself.",
+    "limitations": [
+      "The key no-hypergraph ablation also removes the dual-path structural retrieval procedure, so representation and access-interface effects remain partially confounded.",
+      "Task decomposition, skill extraction, and merge decisions add extra LLM calls; the reported token analysis does not establish an end-to-end serving-cost advantage under all workloads.",
+      "Evaluation is concentrated on xBench, GAIA, and WebWalkerQA rather than months-long deployment or domains with very different procedural structure.",
+      "The method needs enough accumulated trajectories for higher-order co-occurrence to become informative, so low-data regimes may see limited benefit."
+    ],
+    "confidence": "high"
+  }
+}
