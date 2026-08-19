@@ -3,7 +3,7 @@
 **A living research map of memory for AI agents.**  
 Track new papers, understand what actually changed, and see how the field is moving — with skeptical research notes and weekly/monthly/yearly synthesis.
 
-**Last updated:** 2026-08-18 · [Research compactions](#-research-compactions) · [Latest papers](#-latest-papers) · [Browse by research problem](#-browse-by-research-problem)
+**Last updated:** 2026-08-19 · [Research compactions](#-research-compactions) · [Latest papers](#-latest-papers) · [Browse by research problem](#-browse-by-research-problem)
 
 ## 🧭 Research Compactions
 
@@ -12,7 +12,7 @@ The archive deliberately becomes coarser with time: `recent month → weekly` ·
 ### Recent Month · Weekly
 
 **[2026-W33 · Memory architecture decomposes into stage-specific controls](digests/weekly/2026-W33.md)**  
-Aug 10–16 made “best memory architecture” a weaker question. The sharper comparison is now **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update/governance → lifecycle cost**. ReFind raises the raw-record baseline; RippleMem shows where structure still earns complexity; QCR separates retrieval from reuse; Demystifying Agent Skills separates procedural representation from retrieval/invocation; SkillEvo and ERSkill split self-improvement into feedback quality and evolvable read policy.
+Aug 10–16 made “best memory architecture” a weaker question. The sharper comparison is now **archive/representation → access program → evidence completion/selection → consumer-facing state/reuse → update/governance → lifecycle cost**. ReFind raises the raw-record baseline; RippleMem shows where structure still earns complexity; QCR separates retrieval from reuse; Demystifying Agent Skills separates procedural representation from retrieval/invocation; SkillEvo and ERSkill split self-improvement into feedback quality and evolvable read policy.
 
 **Suggested reading:** ReFind → RippleMem → QCR → Demystifying Agent Skills → SkillEvo.  
 [Read the W33 synthesis →](digests/weekly/2026-W33.md)
@@ -22,13 +22,13 @@ Aug 3–9 established the first correction to “more structure is better”: co
 
 ### Recent Quarter · Monthly
 
-**[2026-08 · Rolling through Aug 18](digests/monthly/2026-08.md)**  
-The August map now separates **archive/representation → access program → evidence completion/selection → consumer-facing reuse → update feedback/governance → lifecycle cost/provenance**. The methodological rule is getting stricter: **credit memory complexity only at the stage where a matched simpler alternative fails.** HyperSkill adds a useful refinement: relational structure is only interesting when retrieval and maintenance actually consume it.
+**[2026-08 · Rolling through Aug 19](digests/monthly/2026-08.md)**  
+The August map now separates **archive/representation → access program → evidence completion/selection → consumer-facing state/reuse → update feedback/governance → lifecycle cost/provenance**. The methodological rule is getting stricter: **credit memory complexity only at the stage where a matched simpler alternative fails.** QUMem strengthens the post-retrieval state-reconstruction boundary; Skill2Query sharpens procedural-memory retrieval supervision; FTA-Mem makes write granularity explicitly density- and cost-dependent; HyperSkill shows relational structure only matters when retrieval and maintenance actually consume it.
 
 ### All Years · Yearly
 
 **[2026 · Rolling, incomplete research map](digests/yearly/2026.md)**  
-Active curation starts in August with one July backfill, so this is **not a full-year reconstruction**. Within current coverage, agent memory is becoming a multi-stage state interface whose access programs, reuse transforms, evolution signals, cost, and provenance need separate accounting.
+Active curation starts in August with one July backfill, so this is **not a full-year reconstruction**. Within current coverage, agent memory is becoming a multi-stage state interface whose access programs, consumer-state transforms, evolution signals, cost, and provenance need separate accounting.
 
 [Browse all compactions →](digests/README.md)
 
@@ -37,7 +37,7 @@ Active curation starts in August with one July backfill, so this is **not a full
 | If you want to understand… | Read in this order | What you should learn |
 |---|---|---|
 | **When structure actually earns its cost** | [ReFind](papers/2026/2608.12888.md) → [RippleMem](papers/2026/2608.13334.md) → [MESA](papers/2026/2608.10108.md) | A competent raw-record interface is the baseline; structure matters when it enables evidence completion or selective access that online search cannot cheaply recover. |
-| **What happens after retrieval succeeds** | [QCR](papers/2026/2608.12847.md) → [Demystifying Agent Skills](papers/2026/2608.14036.md) → [Agent Skills Can Be Harmful](papers/2026/2608.11888.md) | Selection is not reuse: representation, current bindings, invocation, and marginal procedural effect determine whether retrieved experience helps. |
+| **Why retrieval is not the final state** | [QUMem](papers/2026/2608.16168.md) → [QCR](papers/2026/2608.12847.md) → [Demystifying Agent Skills](papers/2026/2608.14036.md) | Retrieved evidence may still need current-state reconstruction, rebinding, or procedural reshaping before an actor can use it reliably. |
 | **How memory becomes self-improving state** | [SkillEvo](papers/2026/2608.13120.md) → [ERSkill](papers/2026/2608.12720.md) → [HyperSkill](papers/2026/2608.16114.md) | Evolution depends on the feedback surface, the read policy being evolved, and whether stored structure is operational during retrieval and maintenance. |
 
 <details>
@@ -47,7 +47,7 @@ Active curation starts in August with one July backfill, so this is **not a full
 
 **RippleMem** supplies the necessary counterexample: pre-built associations can still justify themselves when they turn a retrieved memory into a query for missing evidence and beat a more matched recollection control.
 
-**QCR** exposes the next bottleneck: even the correct trajectory can be the wrong actor-facing representation when source bindings are stale.
+**QUMem** exposes the next boundary from personalization: even after the right historical evidence is retrieved, the system may still need to infer the *current* user state that the evidence jointly supports.
 
 Together they frame a sharper question than “what is the best memory architecture?”: **what operation is enabled at each stage, and does it beat the simplest matched alternative?**
 
@@ -55,10 +55,31 @@ Together they frame a sharper question than “what is the best memory architect
 
 ## 🔥 Latest Papers
 
+### [QUMem: Personalized Memory for Query-Conditioned User-State Inference in LLM Agents](papers/2026/2608.16168.md)
+`Representation & Organization` · `semantic` `structured` `timeline` `personalization` · **★★★★☆** · 2026-08-17
+
+**AI take:** The important delta is not another typed store. QUMem treats retrieved history as evidence for **query-conditioned user-state reconstruction**, and that read-side reconstruction is the largest component in its ablation.
+
+[Paper](https://arxiv.org/abs/2608.16168) · [Research note](papers/2026/2608.16168.md)
+
+<details><summary><strong>Understand this paper in 60 seconds</strong></summary>
+
+**Problem.** Fixed memory boundaries and one-shot retrieval can split coherent events, bind unrelated user signals together, and miss preference evolution/contextual validity.
+
+**Core mechanism.** `history → semantic episodes → typed facts/preferences/insights → information needs → typed multi-query retrieval → user-state inference → personalized response/action`.
+
+**Compared with.** A-MEM, Mem0, Zep, plus ablations removing episode construction, typed decomposition, or user-state reconstruction.
+
+**Evidence to remember.** PersonaMem GPT-4o-mini: **61.02** overall vs **52.99** strongest baseline; ablation **61.02 full → 58.38 w/o episodes → 57.11 w/o decomposition → 54.51 w/o reconstruction**. KnowU-Bench success: **17.4% vs 12.8%** strongest baseline.
+
+**Open question.** Does explicit state reconstruction still win when retrieved evidence and synthesis budget are matched against a simpler provenance-aware alternative?
+
+</details>
+
 ### [HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory](papers/2026/2608.16114.md)
 `Memory Learning & Evolution` · `procedural` `structured` `graph` · **★★★★☆** · 2026-08-17
 
-**AI take:** The interesting part is not “hypergraphs beat vectors.” HyperSkill makes trajectory relations operational in **dual-path retrieval, cross-trajectory skill ranking, and maintenance**; the main caveat is that its no-hypergraph ablation also changes the access pipeline, so representation and retrieval are not fully isolated.
+**AI take:** The interesting part is not “hypergraphs beat vectors.” HyperSkill makes trajectory relations operational in **dual-path retrieval, cross-trajectory skill ranking, and maintenance**; the main caveat is that its no-hypergraph ablation also changes the access pipeline.
 
 [Paper](https://arxiv.org/abs/2608.16114) · [Research note](papers/2026/2608.16114.md)
 
@@ -66,13 +87,55 @@ Together they frame a sharper question than “what is the best memory architect
 
 **Problem.** Flat trajectory/skill stores lose the higher-order relation among subtasks, reusable skills, and outcomes, while growing libraries accumulate redundant or low-utility guidance.
 
-**Core mechanism.** `task → subtask decomposition + task-level retrieval → fuse trajectory hyperedges → rank skills by co-occurrence across retrieved trajectories → execute → extract new skills/lesson → prune/merge by utility + structure`.
+**Core mechanism.** `task → subtask + trajectory retrieval → fuse trajectory hyperedges → co-occurrence-ranked skills → execute → extract/update → prune/merge by utility + structure`.
 
-**Compared with.** No Memory, ten experiential-memory baselines including PlugMem, and an internal flat-skill ablation that removes the hypergraph/dual-path structural pipeline.
+**Compared with.** No Memory, experiential-memory baselines including PlugMem, and an internal flat-skill ablation that removes the hypergraph/dual-path structural pipeline.
 
 **Evidence to remember.** Qwen3 success is **52.00 / 36.97 / 50.59** on xBench / GAIA / WebWalkerQA; **w/o hypergraph 41.00 / 35.76 / 44.71**, **w/o subtask retrieval 43.00 / 32.73 / 47.06**, **w/o trajectory retrieval 48.00 / 35.76 / 43.53**.
 
-**Open question.** Does a hypergraph still win against a flat or binary-graph store when the decomposition, dual-path controller, co-occurrence ranking, and maintenance budget are held fixed?
+**Open question.** Does a hypergraph still win against a flat or binary-graph store when decomposition, the dual-path controller, co-occurrence ranking, and maintenance budget are held fixed?
+
+</details>
+
+### [Skill2Query: Exploiting Skill Structure to Generate Pseudo-Queries for Agent Skill Retrieval](papers/2026/2608.16071.md)
+`Retrieval & Access` · `procedural` `structured` `text` · **★★★☆☆** · 2026-08-17
+
+**AI take:** Procedural-memory relevance should align with **capability + parameter structure**, not just the outer skill document. The retrieval gains are real, but online query expansion is inconsistent and the end-to-end evidence is still narrow.
+
+[Paper](https://arxiv.org/abs/2608.16071) · [Code](https://github.com/MatZaharia/Skill2Query) · [Research note](papers/2026/2608.16071.md)
+
+<details><summary><strong>Understand this paper in 60 seconds</strong></summary>
+
+**Problem.** Users describe goals while skill documents describe developer-facing functions/parameters; document-level pseudo-queries can be topical but functionally invalid.
+
+**Core mechanism.** `skill → capability/parameter/example graph → style imitation → capability template → parameter filling/validation → offline augmentation / online expansion / retriever training`.
+
+**Compared with.** Zero-shot, Few-shot, SkillFlow-style pseudo-query generation and BM25/dense/SkillRouter retrieval.
+
+**Evidence to remember.** ToolQA offline SkillRouter R@1 **35.80%→47.34%**; removing the skill graph drops pseudo-query Exec-Pass **42.85%→22.63%** and functional coverage **11.32%→2.41%**. Online expansion helps some settings and hurts others.
+
+**Open question.** Can capability-grounded skill retrieval improve long-horizon tool execution once retrieval, invocation, and skill utility are measured separately?
+
+</details>
+
+### [FTA-Mem: Fact-Time-Affect Anchored Memory for Low-Density Long-Term Dialogue](papers/2026/2608.16303.md)
+`Write, Update & Consolidation` · `episodic` `structured` `timeline` `personalization` · **★★★☆☆** · 2026-08-17
+
+**AI take:** Memory-unit granularity is a workload-dependent systems parameter. Situation-level units beat coarse sessions on sparse dialogue and cost less than turn-pair memory, but turn-pair is slightly more accurate on denser LoCoMo.
+
+[Paper](https://arxiv.org/abs/2608.16303) · [Research note](papers/2026/2608.16303.md)
+
+<details><summary><strong>Understand this paper in 60 seconds</strong></summary>
+
+**Problem.** Sparse long-term dialogue makes session memory too coarse and turn-pair memory redundant/expensive.
+
+**Core mechanism.** `dialogue → boundary-preserving situation windows → Fact-Time-Affect units → carry/fuse unresolved boundary evidence → temporal links → retrieve + structured context`.
+
+**Compared with.** Standard dialogue-memory systems plus direct session-level and turn-pair construction controls.
+
+**Evidence to remember.** ES-MemEval: session **31.76 F1 / 1.58M tokens**, turn-pair **37.06 / 6.40M**, FTA-Mem **38.71 / 4.99M**. On LoCoMo, turn-pair is **38.28 vs 37.35 F1** but costs **7.04M vs 3.39M** construction tokens.
+
+**Open question.** Can a write controller adapt memory-unit granularity online as evidence density changes instead of using one global segmentation policy?
 
 </details>
 
@@ -87,9 +150,9 @@ Together they frame a sharper question than “what is the best memory architect
 
 **Problem.** Aggregate skill success conflates representation, outcome annotations, framework transfer, retrieval, invocation, and execution.
 
-**Core mechanism.** Hold prior trajectories fixed → build Workflow Memory or SKILL.md → compare matched executions → separately measure embedding retrieval, explicit selection, actual skill use, and final success → contrast trajectories to identify how the artifact changed behavior.
+**Core mechanism.** Hold prior trajectories fixed → build Workflow Memory or SKILL.md → compare matched executions → separately measure retrieval, selection, actual use, and final success.
 
-**Compared with.** Raw execution and Workflow Memory built from the same source trajectories; retrieval metrics are also separated from downstream execution rather than treated as one pipeline score.
+**Compared with.** Raw execution and Workflow Memory built from the same source trajectories.
 
 **Evidence to remember.** Skills beat Workflow Memory by **6.06 points**; **65.7%** of skill cases are procedural anchoring vs **4.5%** knowledge injection. With pool size **5→100**, actual-use precision falls **29.6%→3.3%** while downstream success remains comparatively stable.
 
@@ -100,7 +163,7 @@ Together they frame a sharper question than “what is the best memory architect
 ### [RippleMem: From Isolated Retrieval to Associative Recollection for Long-Term Agent Memory](papers/2026/2608.13334.md)
 `Retrieval & Access` · `episodic` `graph` `structured` · **★★★★☆** · 2026-08-13
 
-**AI take:** The useful result is not “graphs beat flat memory.” First-hop memories become **anchors for missing-evidence search**, and a matched RF-Mem control suggests the gain survives after holding memory units and evidence budget fixed.
+**AI take:** First-hop memories become **anchors for missing-evidence search**, and a matched RF-Mem control suggests the gain survives after holding memory units and evidence budget fixed.
 
 [Paper](https://arxiv.org/abs/2608.13334) · [Research note](papers/2026/2608.13334.md)
 
@@ -121,7 +184,7 @@ Together they frame a sharper question than “what is the best memory architect
 ### [SkillEvo: Self-Renewing Evolution Gradients from Multi-Turn Interaction Feedback](papers/2026/2608.13120.md)
 `Memory Learning & Evolution` · `procedural` `structured` · **★★★★☆** · 2026-08-13
 
-**AI take:** The strongest result is a feedback-source ablation: **multi-turn interaction keeps exposing useful defects after single-turn feedback saturates**. Governance mainly limits regression and bloat rather than driving most of the score gain.
+**AI take:** The strongest result is a feedback-source ablation: **multi-turn interaction keeps exposing useful defects after single-turn feedback saturates**. Governance mainly limits regression and bloat.
 
 [Paper](https://arxiv.org/abs/2608.13120) · [Research note](papers/2026/2608.13120.md)
 
@@ -163,7 +226,7 @@ Together they frame a sharper question than “what is the best memory architect
 ### [When Your Agent Opens the Chat App: Agent-Controlled Search over Raw Chat Logs Rivals Structured Memory](papers/2026/2608.12888.md)
 `Retrieval & Access` · `episodic` `text` `timeline` · **★★★★☆** · 2026-08-13
 
-**AI take:** The strongest current negative control for structured memory. A raw chat archive plus iterative lexical search and chat-native controls beats the compared graph/tree systems on precise refinding; the result is about **interface quality**, not “BM25 beats semantics.”
+**AI take:** The strongest current negative control for structured memory. A raw chat archive plus iterative lexical search and chat-native controls beats the compared graph/tree systems on precise refinding.
 
 [Paper](https://arxiv.org/abs/2608.12888) · [Research note](papers/2026/2608.12888.md)
 
@@ -202,69 +265,6 @@ Together they frame a sharper question than “what is the best memory architect
 
 </details>
 
-### [Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents](papers/2026/2608.12851.md)
-`Evaluation & Analysis` · `procedural` `structured` · **★★★★☆** · 2026-08-13
-
-**AI take:** Persistent adaptation has multiple safety gates. Unsafe skill authoring, later retrieval, and fresh-session harm are not the same event; governance needs attribution and revocation across the whole evolution lifecycle.
-
-[Paper](https://arxiv.org/abs/2608.12851) · [Code](https://github.com/henrymao2004/misevolve) · [Research note](papers/2026/2608.12851.md)
-
-<details><summary><strong>Understand this paper in 60 seconds</strong></summary>
-
-**Problem.** “Successful” trajectories can contain unsafe shortcuts that self-improvement turns into persistent reusable policy.
-
-**Core mechanism.** Version skill state across exposure → evolution → later retrieval → clean-session execution; SafeEvolve adds lineage-aware repair, risk-aware retrieval, attribution, and retirement.
-
-**Compared with.** No evolution, native skill-evolution methods, raw evolution, and utility-only governance conditions.
-
-**Evidence to remember.** All **21 evolved configurations** author unsafe artifacts, but only **15** cause fresh-session harm; SafeEvolve reduces unsafe retrieval **35.33%→8.67%** in the reported aggregate.
-
-**Open question.** Can lifecycle governance generalize from controlled skill libraries to implicit memory/policy updates over months of real use?
-
-</details>
-
-### [LycheeMemory V2: Efficient Long-Term Memory via Semantic Segment-Level Consolidation](papers/2026/2608.12990.md)
-`Write, Update & Consolidation` · `semantic` `structured` `timeline` · **★★★★☆** · 2026-08-13
-
-**AI take:** Consolidation granularity is a first-class systems parameter. Batching cuts write-side LLM frequency; semantic boundaries—not batching alone—preserve the quality that fixed windows lose.
-
-[Paper](https://arxiv.org/abs/2608.12990) · [Research note](papers/2026/2608.12990.md)
-
-<details><summary><strong>Understand this paper in 60 seconds</strong></summary>
-
-**Problem.** Per-turn consolidation is expensive; arbitrary batching is cheap but can split coherent events and erase temporal/reference evidence.
-
-**Core mechanism.** Online semantic boundary detection → one LLM encode per finalized segment → typed self-contained records + provenance/indexes → planned multi-route retrieval and deterministic fusion.
-
-**Compared with.** Eager per-turn construction, fixed-window batching, and standard conversational-memory systems.
-
-**Evidence to remember.** LoCoMo: **89.22 / 204.1K construction tokens** full vs **81.88 / 849.9K** eager and **82.40 / 174.7K** fixed-window.
-
-**Open question.** Do embedding-defined semantic boundaries survive tool events, conflicts, asynchronous state, and other non-conversational streams?
-
-</details>
-
-### [Total Recall at What Cost? Benchmarking the Serving Cost of Agentic Memory Systems](papers/2026/2608.11879.md)
-`Evaluation & Analysis` · `semantic` `text` `general-agent` · **★★★★☆** · 2026-08-12
-
-**AI take:** Dedicated memory is not automatically cheaper than resending history. Break-even is a workload- and architecture-dependent lifecycle property, not a consequence of smaller retrieved context.
-
-[Paper](https://arxiv.org/abs/2608.11879) · [Research note](papers/2026/2608.11879.md)
-
-<details><summary><strong>Understand this paper in 60 seconds</strong></summary>
-
-**Problem.** Answer-context size ignores ingest, reflection, consolidation, and retrieval model calls.
-
-**Core mechanism.** Replay matched conversations through multiple memory systems, rolling window, and full history; meter native lifecycle cost and compute sustained break-even.
-
-**Compared with.** Full-history resubmission and a ten-turn rolling window under matched workload/backbone settings where controllable.
-
-**Evidence to remember.** Break-even spans **0–86 turns (Mastra), 0–342 (Mem0), 60–never (Hindsight)**; a simple depth/message-size model misses memory-system cost by **18–69%**.
-
-**Open question.** What changes when memory ingest/reflection runs locally or orders of magnitude cheaper than the answer model?
-
-</details>
-
 ## ⭐ Design Anchors
 
 These are **design points, not a ranking**. The set changes slowly so the radar does not become a recency leaderboard.
@@ -283,9 +283,9 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 <details>
 <summary><strong>How these anchors fit together</strong></summary>
 
-`what state exists → whether to pre-structure it → how to access it → how selected evidence is adapted to the current decision → how control state learns → whether authority/provenance survive lifecycle transforms`
+`what state exists → whether to pre-structure it → how to access it → how selected evidence becomes current consumer state → how control state learns → whether authority/provenance survive lifecycle transforms`
 
-**RippleMem**, **ERSkill**, **HyperSkill**, and **Demystifying Agent Skills** are important challengers but do not yet force extra anchors: RippleMem sharpens the access boundary already represented by ReFind/V-Mem; ERSkill should displace an older control-state anchor only if access-policy evolution survives broader acting-agent evaluation; HyperSkill strengthens the case for operational structure but still needs a matched flat/binary representation with the same structural controller; Demystifying strengthens the QCR/SkillJack procedural-reuse evaluation boundary without creating a new durable control point.
+**QUMem, RippleMem, ERSkill, HyperSkill, and Demystifying Agent Skills** are important challengers but do not yet force extra anchors. QUMem strengthens the QCR consumer-state boundary; RippleMem sharpens the access boundary represented by ReFind/V-Mem; ERSkill should displace an older control-state anchor only if access-policy evolution survives broader acting-agent evaluation; HyperSkill strengthens the case for operational structure but still needs a matched flat/binary representation with the same structural controller; Demystifying strengthens procedural-reuse evaluation without creating a new durable control point.
 
 [See the full anchor notes →](papers/anchors.md)
 
@@ -297,46 +297,46 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 |---|---|
 | **[Representation & Organization](categories/representation-organization.md)** | What should be stored persistently, and what should actually be delivered to the current consumer? |
 | **[Retrieval & Access](categories/retrieval-access.md)** | How should the agent search, compose, and govern evidence once memory is not one flat store? |
-| **[Write, Update & Consolidation](categories/write-update-consolidation.md)** | When should memory be transformed, consolidated, corrected, or forgotten? |
+| **[Write, Update & Consolidation](categories/write-update-consolidation.md)** | What event boundary should be written, transformed, corrected, or forgotten? |
 | **[Memory Learning & Evolution](categories/memory-learning-evolution.md)** | Which memory decisions should be learned/evolved, and from what feedback? |
 | **[Evaluation & Analysis](categories/evaluation-analysis.md)** | How do we measure memory once representation, retrieval, reuse, cost, provenance, side effects, and persistence matter? |
 
 <details>
 <summary><strong>Representation & Organization — archive faithfully, or optimize for the consumer?</strong></summary>
 
-**Current anchors.** LeanMem and QCR.
+**Current anchors.** LeanMem and QCR; current evidence from QUMem.
 
-**Strongest signal.** The archival object and the actor-facing object need not be identical; representation earns complexity only when it exposes a useful downstream operation.
+**Strongest signal.** The archival object and the actor-facing state need not be identical. QUMem's largest ablation comes from removing query-time state reconstruction, while QCR shows the same selected trajectory becomes more useful after target-conditioned rebinding.
 
-**Biggest unresolved question.** Which transformations preserve enough provenance/fidelity to be safely regenerated for a new consumer months later?
+**Biggest unresolved question.** Which transformations preserve enough provenance/fidelity to infer current state safely when preferences, bindings, or constraints conflict?
 
-**Next decisive evidence.** Hold retrieval fixed and compare raw evidence, source-only summaries, and target-conditioned support across binding drift and conflicting memories.
+**Next decisive evidence.** Hold retrieval fixed and compare raw evidence, source-only summaries, target-conditioned support, and reconstructed user state under drift/conflict and matched synthesis cost.
 
 </details>
 
 <details>
 <summary><strong>Retrieval & Access — when does structure beat a competent raw archive?</strong></summary>
 
-**Current anchors.** ReFind, V-Mem, PMCoder; current challengers RippleMem, MESA, MAP-Graph.
+**Current anchors.** ReFind, V-Mem, PMCoder; current challengers RippleMem, Skill2Query, MESA, MAP-Graph.
 
-**Strongest signal.** ReFind raises the baseline, while RippleMem shows structure can still win when it enables controlled evidence completion under a matched memory-unit/evidence budget.
+**Strongest signal.** ReFind raises the raw baseline, RippleMem shows structure can still win when it enables controlled evidence completion, and Skill2Query shows procedural artifacts benefit when retrieval aligns with internal capability/parameter structure rather than document semantics.
 
-**Biggest unresolved question.** Which relations must be pre-built, and which can be reconstructed cheaply enough at query time?
+**Biggest unresolved question.** Which relations must be pre-built, which can be reconstructed online, and when should the system switch between offline semantic bridging and online adaptive expansion?
 
-**Next decisive evidence.** Raw-record agentic search vs matched associative recollection vs learned routing under equal end-to-end compute on acting tasks.
+**Next decisive evidence.** Raw-record search vs matched associative recollection vs structure-aware skill routing under equal end-to-end compute on long-horizon acting tasks.
 
 </details>
 
 <details>
-<summary><strong>Write, Update & Consolidation — what should memory spend effort preserving?</strong></summary>
+<summary><strong>Write, Update & Consolidation — what should one persistent unit be?</strong></summary>
 
-**Current anchors.** LeanMem; current evidence from LycheeMemory V2 and Sleeping Agent.
+**Current anchors.** LeanMem; current evidence from LycheeMemory V2, FTA-Mem, and Sleeping Agent.
 
-**Strongest signal.** Consolidation frequency and field-level preservation are separate controls: cheap batching can destroy evidence even when total token cost falls.
+**Strongest signal.** Boundary/granularity, transformation frequency, and field preservation are separate controls. FTA-Mem shows the best granularity can flip with evidence density; Sleeping Agent shows a compact representation can selectively erase critical fields.
 
-**Biggest unresolved question.** Can semantic boundaries and protected fields survive tool events, conflicting state, asynchronous updates, and non-conversational streams?
+**Biggest unresolved question.** Can a streaming controller adapt write granularity and preservation contracts to changing density without one expensive LLM decision per turn?
 
-**Next decisive evidence.** Streaming-agent workloads with controlled write budgets, conflicts, temporal drift, and explicit field-preservation metrics.
+**Next decisive evidence.** Sparse+dense acting-agent streams with controlled write budgets, conflicts, temporal drift, and explicit field-preservation metrics.
 
 </details>
 
@@ -345,7 +345,7 @@ These are **design points, not a ranking**. The set changes slowly so the radar 
 
 **Current anchors.** RoMeRL; current evidence from SkillEvo, ERSkill, HyperSkill, AMD, MemoryCPT, and HyMeS.
 
-**Strongest signal.** Evolution quality depends on **what receives adaptive state, what failures the system can observe, and whether stored relations are operational**. SkillEvo improves the feedback surface; ERSkill evolves the access program and router; HyperSkill uses higher-order trajectory structure during both retrieval and maintenance.
+**Strongest signal.** Evolution quality depends on **what receives adaptive state, what failures the system can observe, and whether stored relations are operational**. SkillEvo improves the feedback surface; ERSkill evolves the access program/router; HyperSkill uses higher-order trajectory structure during retrieval and maintenance.
 
 **Biggest unresolved question.** Do evolved artifacts/policies/structures transfer to new consumers and domains strongly enough to justify rollout, decomposition, and maintenance cost?
 
