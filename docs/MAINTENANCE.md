@@ -59,6 +59,18 @@ Inside **Research Map**, place **Key Anchors** before **Research Problems**. Avo
 
 Latest Papers should stay at roughly 8–10 entries. Anchors should stay around 5–8 and should change slowly.
 
+## Repository discoverability
+
+Keep GitHub About metadata concise and research-specific. The description should explain the reader value rather than say only “paper list”. A good current description is:
+
+> Track the latest agent memory research for LLM agents — papers, design anchors, benchmarks, visual explainers, and weekly/monthly/yearly research compactions.
+
+Prefer specific, high-intent GitHub topics over generic labels. Recommended topic set:
+
+`agent-memory` · `llm-agents` · `ai-agents` · `long-term-memory` · `memory-systems` · `procedural-memory` · `memory-management` · `agentic-ai` · `rag` · `retrieval-augmented-generation` · `benchmarks` · `research-papers` · `literature-review` · `multimodal-agents`
+
+Avoid low-signal topics such as `agent`, `paper`, or `awesome-list` when more specific terms are available. The Website field is intentionally optional; this radar does not depend on personal-homepage routing.
+
 ## Validation
 
 `python scripts/validate.py` checks the contracts that can be verified locally and deterministically, including:
