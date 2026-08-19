@@ -1,21 +1,23 @@
 # Write, Update & Consolidation
 
-[← Research Map](README.md) · [Home](../README.md)
+[Research Map](../README.md#research-map) · [All research problems](README.md) · [Reading Paths](../README.md#reading-paths)
 
 How memory is extracted, written, compressed, merged, corrected, forgotten, or consolidated.
 
 ## Current argument
 
-The write side now has a clearer systems decomposition: **what fields must survive, what event boundary defines one persistent unit, and how often expensive transformation should run** are separate questions. The Sleeping Agent shows a compression prompt can selectively erase temporal anchors; LycheeMemory V2 shows semantic segment boundaries can reduce consolidation frequency without paying the accuracy penalty of eager or fixed-window alternatives; **FTA-Mem** adds a density-dependent granularity result, where situation-level units dominate coarse session memory but trade a small amount of dense-benchmark quality for much lower construction cost than turn-pair memory.
+The write side is becoming a systems problem with several independent controls: **what fields must survive, what event boundary defines one persistent unit, how often expensive transformation should run, and when old state should be forgotten**. The Sleeping Agent shows that generic compression can selectively erase temporal anchors; LycheeMemory V2 shows that semantic boundaries can reduce consolidation frequency without the accuracy loss of eager or fixed-window alternatives; **FTA-Mem** adds a density-dependent granularity result, where situation-level units dominate coarse sessions but trade a little dense-benchmark quality for substantially lower construction cost than turn-pair memory. **Scrub Jay** makes forgetting itself a learned per-memory utility decision rather than a global recency rule.
 
-| Date | Paper | Tags | Importance | AI take |
+| Date | Paper | Tags | Importance | Research take |
 |---|---|---|---:|---|
-| 2026-08-17 | [FTA-Mem](../papers/2026/2608.16303.md) | `episodic` `structured` `timeline` `personalization` | ★★★☆☆ | Situation-level Fact-Time-Affect units beat session memory on sparse dialogue and use fewer construction tokens than turn-pair memory, but turn-pair is slightly stronger on denser LoCoMo. |
-| 2026-08-13 | [LycheeMemory V2](../papers/2026/2608.12990.md) | `semantic` `structured` `timeline` | ★★★★☆ | Consolidation granularity is load-bearing: semantic segment batching gets 89.22 with 204.1K construction tokens; eager is 81.88/849.9K and fixed-window 82.40/174.7K. |
-| 2026-08-12 | [The Sleeping Agent](../papers/2026/2608.11775.md) | `semantic` `text` `timeline` | ★★★☆☆ | Generic gist preserved entities/events but erased temporal anchors; explicit temporal protection raised preservation 3.05%→62.39%. |
-| 2026-08-06 | [MERIT / Causal Episodic Memory](../papers/2026/2608.05906.md) | `episodic` `structured` | ★★★☆☆ | Cross-query repair memory helps, but polarity/type structure is not reliably better than untyped dynamic retrieval. |
-| 2026-08-05 | [Scrub Jay Memory](../papers/2026/2608.04746.md) | `episodic` `structured` `timeline` | ★★★★☆ | Treat forgetting as per-memory future utility rather than one global recency heuristic. |
+| 2026-08-17 | [FTA-Mem](../papers/2026/2608.16303.md) | `episodic` `structured` `timeline` `personalization` | 3/5 | Situation-level units beat session memory on sparse dialogue and cost less to construct than turn-pair memory, while turn-pair stays slightly stronger on denser LoCoMo. |
+| 2026-08-13 | [LycheeMemory V2](../papers/2026/2608.12990.md) | `semantic` `structured` `timeline` | 4/5 | Consolidation granularity is load-bearing: semantic segment batching improves the quality-cost frontier over eager and fixed-window construction. |
+| 2026-08-12 | [The Sleeping Agent](../papers/2026/2608.11775.md) | `semantic` `text` `timeline` | 3/5 | Generic gist preserved entities/events but erased temporal anchors; preservation contracts need to be explicit. |
+| 2026-08-06 | [MERIT / Causal Episodic Memory](../papers/2026/2608.05906.md) | `episodic` `structured` | 3/5 | Cross-query repair memory helps, but extra polarity/type structure is not reliably better than a simpler dynamic policy. |
+| 2026-08-05 | [Scrub Jay Memory](../papers/2026/2608.04746.md) | `episodic` `structured` `timeline` | 4/5 | Forgetting is modeled as per-memory future utility rather than one global decay heuristic. |
 
-**Biggest unresolved question:** can a lifecycle controller jointly discover event boundaries, preservation contracts, and forgetting policy under real streaming updates without requiring one expensive LLM decision per turn—and can it adapt granularity to evidence density rather than fixing one global unit size?
+**Biggest unresolved question:** can one streaming lifecycle controller jointly discover event boundaries, preservation contracts, consolidation frequency, conflict repair, and forgetting policy without requiring an expensive model decision on every turn?
 
-**Next decisive evidence:** longitudinal acting-agent workloads that factor consolidation frequency × boundary/granularity policy × field preservation while reporting construction cost, retrieval cost, conflict repair, storage growth, and downstream action quality across both sparse and dense event streams.
+**Next decisive evidence:** longitudinal acting-agent workloads that factor consolidation frequency × memory-unit granularity × preservation contract × forgetting rule while reporting construction cost, retrieval cost, storage growth, conflict repair, and downstream action quality across sparse and dense streams.
+
+**Continue:** [Memory Learning & Evolution →](memory-learning-evolution.md)
