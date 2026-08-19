@@ -14,7 +14,7 @@ Default order:
 2. **What’s Changing** — weekly/monthly/yearly compactions; synthesis before chronology.
 3. **Reading Paths** — about three short paths plus an optional “if you only read three papers” foldout.
 4. **Research Map** — durable Key Anchors followed by Research Problems and their current arguments.
-5. **How to Read a Paper Here** — explain the 30-second / 60-second / deep-dive layers.
+5. **How to Use This Radar** — explain the 30-second / 60-second / deep-dive layers.
 6. **What Counts as Agent Memory? / About / Contributing** — compact scope, evidence standard, citation/reuse, and contribution entry points.
 
 The first screenful may include one concise current-field thesis and a light star/cross-radar call to action. Optimize discoverability naturally around terms such as agent memory, LLM agents, long-term memory, procedural memory, benchmarks, and memory systems; never turn the page into a keyword list.
@@ -25,7 +25,7 @@ Do not expose scheduling, subagent internals, schema mechanics, binary-upload de
 
 Use progressive disclosure:
 
-- visible by default: title, primary category/tags, importance, date, a 1–2 sentence **AI take**, and verified paper/code/research-note links;
+- visible by default: title, primary category/tags, importance, date, a 1–2 sentence **Research take**, and verified paper/code/research-note links;
 - inside `<details><summary><strong>Understand this paper in 60 seconds</strong></summary>`: **Problem**, **Core mechanism**, a compact memory/data/control loop when useful, **Compared with**, **Evidence to remember**, and **Open question**.
 
 Keep roughly **8–10 latest papers**. The foldout should reveal the real delta without duplicating the full research note. Prefer one decisive ablation/result and one assumption that could change the importance judgment.
@@ -88,10 +88,28 @@ For every accepted paper:
 
 1. maintain `data/papers/<id>.json` as the canonical structured record;
 2. maintain `papers/YYYY/<id>.md` as the researcher-facing note;
-3. preserve TL;DR, Problem, Core Idea, Memory Design (`write / organize / read / update-forget`), Compared to What, Evidence, Why It Matters, Limitations/Questions, and confidence;
+3. preserve Problem, Core Idea, Memory Design (`write / organize / read / update-forget`), Compared to What, Evidence, Why It Matters, Limitations/Questions, and confidence;
 4. keep relevance separate from importance;
 5. preserve provenance and add code/project links only when verified;
 6. propagate a material correction upward to category pages, anchors, README, and affected compactions.
+
+### Researcher-facing paper-note interface
+
+High-visibility notes—at minimum papers currently exposed in README Latest Papers—should read like compact mini reviews rather than archival summaries. Use this order:
+
+1. compact navigation back to Latest Papers, Research Map, and the primary category;
+2. metadata line: canonical paper link, date, importance, confidence, tags, plus verified code/project links when present;
+3. one-line **Research delta** stating the smallest claim that makes the paper worth reading;
+4. **Problem**;
+5. **Mechanism**, including a concise data/control-flow expression when useful;
+6. **Compared with**, centered on the closest causal control rather than a long baseline inventory;
+7. **Decisive evidence**, keeping only the result/ablation set needed to support the interpretation;
+8. **Main caveat**, containing the strongest alternative explanation and concrete open questions;
+9. **Memory lifecycle** table for write / organize / read / update-forget;
+10. **Why it matters** as the field-level implication;
+11. **Related reading** with 2–3 links and one sentence explaining the relationship.
+
+Do not put visual-generation failures, scheduler state, upload blockers, or other maintenance-only status on researcher-facing paper notes. Those remain in canonical JSON and daily provenance. Older archival notes may be backfilled gradually; do not rewrite them merely for cosmetic uniformity.
 
 ## Evidence discipline
 
@@ -130,7 +148,7 @@ Follow [`COMPACTION.md`](COMPACTION.md). Weekly/monthly/yearly reports are synth
 
 ## Validation and final QC
 
-Before completing a maintenance run, reason against `scripts/validate.py` and the repository contracts. Check schema/taxonomy consistency, duplicate IDs/versions, paper-note existence, relative links, visual paths/embeds, important-paper visual blockers, README section order/bounds, and due compactions.
+Before completing a maintenance run, reason against `scripts/validate.py` and the repository contracts. Check schema/taxonomy consistency, duplicate IDs/versions, paper-note existence, relative links, visual paths/embeds, important-paper visual blockers, README section order/bounds, researcher-facing paper-note structure, and due compactions.
 
 Daily provenance belongs under `runs/daily/YYYY/MM/DD.md` and should remain compact.
 
