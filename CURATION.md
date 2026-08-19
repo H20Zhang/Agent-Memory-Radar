@@ -8,16 +8,18 @@ Agent Memory Radar is maintained by a scheduled AI curator. The repository itsel
 
 ### README information architecture
 
-Keep this order unless there is a strong reader-facing reason to change it:
+Keep the public information architecture aligned with `H20Zhang/Agentic-RAG-Radar` so the two research radars feel like one product family. The default order is:
 
-1. **Research Compactions** — the highest-signal entry point, with recent-month weekly, recent-quarter monthly, and all yearly reports.
+1. **Latest Papers** — newest accepted work with a visible AI take and a collapsible 60-second explanation. The newest evidence should be the first substantive section.
 2. **Start Here** — 2–4 short reading paths plus an optional “if you only read three papers” foldout.
-3. **Latest Papers** — newest accepted work with a visible AI take and a collapsible 60-second explanation.
-4. **Design Anchors** — durable design points, explicitly not a best-paper ranking.
-5. **Browse by Research Problem** — taxonomy table plus foldouts stating current anchors, strongest signal, biggest unresolved question, and next decisive evidence.
-6. **Scope / ratings** — compact and usually folded.
+3. **Design Anchors** — durable design points, explicitly not a best-paper ranking.
+4. **Browse by Research Problem** — taxonomy table plus foldouts stating current anchors, strongest signal, biggest unresolved question, and next decisive evidence.
+5. **Research Compactions** — recent-month weekly, recent-quarter monthly, and all yearly reports. Compactions remain high-signal but should not displace new papers from the first screenful.
+6. **Reader guidance / scope / contributing** — compact explanation of how to read the radar, what is in scope, how ratings work, and how to contribute corrections.
 
-Do not add a separate “current signals” or “papers worth reading” section when the same information is already expressed more coherently through compactions, Start Here, Latest Papers, or Design Anchors. Prefer fewer stronger surfaces over duplicated summaries.
+The first screenful may include one concise **current field thesis** and a light star/cross-radar call to action. Do not turn the README into a marketing page or keyword list: discoverability text should naturally describe the research value and use domain terms such as agent memory, LLM agents, long-term memory, procedural memory, benchmarks, and research compactions only when they genuinely fit.
+
+Do not add a separate “current signals” or “papers worth reading” section when the same information is already expressed more coherently through Latest Papers, Start Here, Design Anchors, or compactions. Prefer fewer stronger surfaces over duplicated summaries.
 
 ### Research Compactions on README
 
@@ -61,7 +63,7 @@ Category views are living research arguments, not append-only paper lists. If no
 
 Do **not** expose scheduler behavior, subagent roles, schemas, validation internals, storage layout, prompt mechanics, binary-upload details, or operational provenance. Those belong in `CURATION.md`, `VISUAL_POLICY.md`, `assets/README.md`, schemas, and run logs.
 
-A useful final test is: **does this help a visitor understand agent-memory research, compare design points, or decide what to read next?** If not, it probably does not belong in README.
+A useful final test is: **does this help a visitor understand agent-memory research, compare design points, decide what to read next, or discover an adjacent radar?** If not, it probably does not belong in README.
 
 ## Daily process
 
