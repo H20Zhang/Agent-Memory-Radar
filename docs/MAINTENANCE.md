@@ -46,13 +46,23 @@ The public surface should feel like a **living survey**, not a GitHub dashboard 
 - Deep pages should expose a short route back to Research Map/Reading Paths and, where natural, one `Continue` link to the next adjacent research problem.
 - Aesthetic changes are successful only when they reduce time-to-comparison or time-to-evidence. Do not add decorative visuals to make the repository feel “designed.”
 
+## Paper-note reading contract
+
+Paper notes should read like compact mini reviews, not reformatted abstracts. For papers currently visible in README Latest Papers, keep this order:
+
+`navigation → metadata → Research delta → Problem → Mechanism → Compared with → Decisive evidence → Main caveat → Memory lifecycle → Why it matters → Related reading`
+
+The **Research delta** should state the smallest claim that makes the paper worth opening. **Compared with** should foreground the closest causal control. **Decisive evidence** should contain the minimum result/ablation set needed to support the interpretation rather than every table cell. **Main caveat** should surface the strongest alternative explanation plus concrete questions that could change the importance judgment.
+
+Keep maintenance-only visual-generation failures, scheduler state, upload blockers, and operational provenance out of researcher-facing notes; canonical JSON and run logs remain the audit surface for those details.
+
 ## Update flow
 
 For an accepted paper:
 
 1. verify canonical identity and primary sources;
 2. update/create `data/papers/<id>.json`;
-3. update/create `papers/YYYY/<id>.md`;
+3. update/create `papers/YYYY/<id>.md` using the paper-note reading contract for high-visibility work;
 4. update the relevant category argument;
 5. update README Latest Papers if the work is within the current bounded window;
 6. change Reading Paths / Key Anchors only when the design map materially changes;
@@ -96,7 +106,8 @@ Avoid low-signal topics such as `agent`, `paper`, or `awesome-list` when more sp
 - generated visual path/embed consistency;
 - documented blockers for important papers without a generated visual;
 - README section order, Latest Papers count, anchor count, and public terminology;
-- category-page Research take / unresolved-question / next-evidence contracts.
+- category-page Research take / unresolved-question / next-evidence contracts;
+- high-visibility paper-note navigation and mini-review section order.
 
 External URLs are not treated as a CI hard dependency because transient network failures should not break repository validation. Verify important external paper/code/project links during curation instead.
 
