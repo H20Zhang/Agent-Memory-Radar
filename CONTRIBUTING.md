@@ -21,7 +21,9 @@ Usually out of scope:
 
 ## Suggest a paper
 
-Use the **Suggest an Agent Memory paper** issue form. The most useful suggestions identify:
+[**Suggest an Agent Memory paper →**](https://github.com/H20Zhang/Agent-Memory-Radar/issues/new?template=suggest-paper.yml)
+
+The most useful suggestions identify:
 
 - the smallest research delta that makes the paper worth adding;
 - which memory lifecycle boundary changes (`write / organize / read / update-forget / learning-evolution / evaluation`);
@@ -33,7 +35,9 @@ A positive headline result is not required. Strong negative controls and careful
 
 ## Suggest a correction
 
-Use the **Research correction** issue form when you find something that could change a reader’s conclusion, including:
+[**Report a research correction →**](https://github.com/H20Zhang/Agent-Memory-Radar/issues/new?template=correction.yml)
+
+Use it when you find something that could change a reader’s conclusion, including:
 
 - wrong taxonomy or importance framing;
 - duplicate/canonical paper-version errors;
