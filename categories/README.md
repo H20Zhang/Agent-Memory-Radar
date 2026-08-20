@@ -1,33 +1,29 @@
 # Agent Memory Research Problems
 
-[Home](../README.md) · [Reading Paths](../README.md#reading-paths) · [What’s Changing](../README.md#whats-changing)
+**中文** | [English](README.en.md) · [返回首页](../README.md) · [Research Library](../library/README.md)
 
-The taxonomy is organized by **which memory lifecycle boundary changes**, not by application domain. Use this page to move from papers to research questions.
+这里按**哪一个 memory lifecycle boundary 被改变**组织研究问题，而不是按应用场景堆 paper。
 
-| Research problem | Core question | Current claim |
+| Research problem | 核心问题 | 当前判断 |
 |---|---|---|
-| [Representation & Organization](representation-organization.md) | What should persist, and what should reach the current consumer? | **QUMem + QCR:** archival evidence and actor-facing state are different objects; reconstruction/rebinding can matter more than another storage schema. |
-| [Retrieval & Access](retrieval-access.md) | When should memory stay raw, become structured, or be withheld? | **ReFind + RippleMem + TRACE-Memory:** strong raw-state controls are mandatory; structure earns cost through stronger operators or admission, not by being structured. |
-| [Write, Update & Consolidation](write-update-consolidation.md) | What persistent unit should be written, preserved, corrected, or forgotten? | **LycheeMemory V2 + FTA-Mem + Sleeping Agent:** granularity, transformation frequency, preservation contract, and forgetting are separate controls. |
-| [Memory Learning & Evolution](memory-learning-evolution.md) | What adaptive state should evolve, and from which feedback? | **SkillEvo + ERSkill + HyperSkill:** feedback source, read-policy evolution, representation, and maintenance should be attributed separately. |
-| [Evaluation & Analysis](evaluation-analysis.md) | What makes memory worth deploying? | **Demystifying Agent Skills + Total Recall + Practice Makes Unsafe:** retrieval quality alone misses behavioral utility, lifecycle cost, authority, and descendant effects. |
+| [Representation & Organization](zh/representation-organization.md) | 什么应该持久化？当前 consumer 最终应该看到什么？ | **QUMem + QCR：** archival evidence 与 actor-facing state 是不同对象；reconstruction / rebinding 可能比再加一层 storage schema 更关键。 |
+| [Retrieval & Access](zh/retrieval-access.md) | Memory 什么时候保留 raw、什么时候预建 structure、什么时候应该 withheld？ | **ReFind + RippleMem：** 先建立 competent raw-state control；structure 只有在提供额外 operator / admission value 时才真正赚回成本。 |
+| [Write, Update & Consolidation](zh/write-update-consolidation.md) | 一个 persistent unit 应多大？什么该保留、修改或忘掉？ | **FTA-Mem + LeanMem / LycheeMemory：** granularity、preservation contract、update frequency、forgetting 是不同控制点。 |
+| [Memory Learning & Evolution](zh/memory-learning-evolution.md) | 到底什么 adaptive state 应 evolve？依据什么 feedback？ | **SkillEvo + ERSkill + HyperSkill：** feedback、read policy、relation structure、maintenance 不能打包归因。 |
+| [Evaluation & Analysis](zh/evaluation-analysis.md) | 什么样的 memory 才值得部署？ | **Demystifying Agent Skills + authority/safety/cost work：** retrieval quality 远远不够，还要看 actual use、utility、lifecycle cost、provenance 与 descendant effects。 |
 
 ## Cross-cutting model
 
 `archive / representation → access / admission → consumer state → update / evolution → governance / cost / provenance`
 
-The strongest current correction is **stage attribution**. **ReFind** says semantic preprocessing must beat a competent raw-record interface; **RippleMem** shows structure can still be justified when it enables a stronger read operator. **TRACE-Memory** adds admission: relevant evidence can still be unnecessary. **QUMem** and **QCR** move the next boundary downstream: selected evidence is not necessarily the state an actor should consume. On the write side, **LycheeMemory V2** and **FTA-Mem** show that event-boundary choice is a measurable quality-cost parameter rather than a universal constant.
+目前最强的共同修正是 **stage attribution**：ReFind 抬高 raw access baseline；RippleMem 说明 structure 可以通过 stronger read operator 重新证明自己；QUMem/QCR 把下一道 boundary 推到 retrieved evidence 与 consumer state 之间；FTA-Mem 则说明 write-side boundary 本身是可测的 quality–cost parameter。
 
-## Researcher checklist
+## 比较两个 memory system 时先问什么
 
-When comparing two memory systems, ask what was actually held fixed:
+1. **Representation：** raw evidence 与 preservation fidelity 是否一致？
+2. **Access：** query interface、candidate/evidence budget、iteration 是否匹配？
+3. **Consumer state：** retrieved evidence 是否相同，只改变 reconstruction/rebinding？
+4. **Update：** feedback、write budget、maintenance frequency 是否一致？
+5. **Lifecycle：** construction + serving cost、provenance、authority、revocation 是否一起算？
 
-1. **Representation:** same raw evidence and preservation fidelity?
-2. **Access:** same query interface, candidate/evidence budget, and iteration?
-3. **Consumer state:** same retrieved evidence but different reconstruction/rebinding?
-4. **Update:** same feedback, write budget, and maintenance frequency?
-5. **Lifecycle:** same construction + serving cost, provenance, authority, and revocation semantics?
-
-If several stages move together, the result supports the package more strongly than any one mechanism.
-
-Orthogonal tags in [`../taxonomy.yaml`](../taxonomy.yaml) capture memory type, substrate, and application without turning them into mutually exclusive research problems.
+如果多个 stage 同时变化，实验首先支持的是**整套 package**，而不是其中某一个 mechanism。
