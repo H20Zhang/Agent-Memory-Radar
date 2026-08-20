@@ -8,29 +8,29 @@
 
 | 问题 | 入口 | 当前核心张力 |
 |---|---|---|
-| **Representation & Organization** | [进入](../categories/representation-organization.md) | archive 应该忠实保留，还是为当前 consumer 重构？ |
-| **Retrieval & Access** | [进入](../categories/retrieval-access.md) | raw-state search 能做到什么，structure 什么时候才真正赚回成本？ |
-| **Write, Update & Consolidation** | [进入](../categories/write-update-consolidation.md) | memory unit、更新频率、preservation contract、forgetting 应如何分开设计？ |
-| **Memory Learning & Evolution** | [进入](../categories/memory-learning-evolution.md) | 到底是 content、read policy、relation 还是 governance 在 evolve？ |
-| **Evaluation & Analysis** | [进入](../categories/evaluation-analysis.md) | retrieval quality 之外，utility、cost、authority、provenance 和 descendant effects 怎么测？ |
+| **Representation & Organization** | [进入](../categories/zh/representation-organization.md) | archive 应该忠实保留，还是为当前 consumer 重构？ |
+| **Retrieval & Access** | [进入](../categories/zh/retrieval-access.md) | raw-state search 能做到什么，structure 什么时候才真正赚回成本？ |
+| **Write, Update & Consolidation** | [进入](../categories/zh/write-update-consolidation.md) | memory unit、更新频率、preservation contract、forgetting 应如何分开设计？ |
+| **Memory Learning & Evolution** | [进入](../categories/zh/memory-learning-evolution.md) | 到底是 content、read policy、relation 还是 governance 在 evolve？ |
+| **Evaluation & Analysis** | [进入](../categories/zh/evaluation-analysis.md) | retrieval quality 之外，utility、cost、authority、provenance 和 descendant effects 怎么测？ |
 
 ## 按 Research Line 浏览
 
 ### 1. Raw archive → structured access → consumer-state reconstruction
 
-[ReFind](../papers/2026/2608.12888.md) → [RippleMem](../papers/2026/2608.13334.md) → [QUMem](../papers/2026/2608.16168.md) → [QCR](../papers/2026/2608.12847.md)
+[ReFind](../papers/2026/2608.12888.zh.md) → [RippleMem](../papers/2026/2608.13334.zh.md) → [QUMem](../papers/2026/2608.16168.zh.md) → [QCR](../papers/2026/2608.12847.md)
 
 **你应该带走的结论：**“要不要 structure”不是一个二元选择。先问 raw interface 能否在线恢复需要的信息，再问预建 relation 是否提供了额外 operator，最后区分 retrieved evidence 和 actor 最终消费的 state。
 
 ### 2. Static procedural memory → evolving skill → evolving read policy
 
-[Demystifying Agent Skills](../papers/2026/2608.14036.md) → [SkillEvo](../papers/2026/2608.13120.md) → [ERSkill](../papers/2026/2608.12720.md) → [HyperSkill](../papers/2026/2608.16114.md)
+[Demystifying Agent Skills](../papers/2026/2608.14036.zh.md) → [SkillEvo](../papers/2026/2608.13120.zh.md) → [ERSkill](../papers/2026/2608.12720.md) → [HyperSkill](../papers/2026/2608.16114.zh.md)
 
 **你应该带走的结论：** procedural memory 的增益不能只归因给“有 skill”。表示、feedback surface、retrieval policy、relation 和 maintenance 都可能是独立变量。
 
 ### 3. Fixed memory unit → adaptive write contract
 
-[LeanMem](../papers/2026/2608.03463.md) → [FTA-Mem](../papers/2026/2608.16303.md) → [LycheeMemory V2](../papers/2026/2608.09424.md)
+[LeanMem](../papers/2026/2608.03463.md) → [FTA-Mem](../papers/2026/2608.16303.zh.md) → [LycheeMemory V2](../papers/2026/2608.09424.md)
 
 **你应该带走的结论：** write granularity 和 preservation/update semantics 是 workload-dependent control，而不是一个可以一次定死的 schema 选择。
 
