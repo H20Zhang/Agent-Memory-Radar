@@ -36,7 +36,7 @@ This is the long-lived research index, not a weekly archive. Start here when you
 
 ### 4. Fixed memory unit → adaptive write contract
 
-[LeanMem](../papers/2026/2608.03463.md) → [FTA-Mem](../papers/2026/2608.16303.md) → [LycheeMemory V2](../papers/2026/2608.09424.md)
+[LeanMem](../papers/2026/2608.03463.md) → [FTA-Mem](../papers/2026/2608.16303.md) → [LycheeMemory V2](../papers/2026/2608.12990.md)
 
 **Takeaway:** write granularity and preservation/update semantics are workload-dependent controls, not one schema choice to freeze globally.
 
