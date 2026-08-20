@@ -22,6 +22,8 @@ For Agent Memory, use the lifecycle lens only when it adds information: `write /
 
 Keep canonical paper titles, benchmark/dataset names, model names, metrics, protocol names, and standard technical terms in English when translation would hurt literature search or precision.
 
+Chinese prose must still use Chinese sentence structure. Keep an English name or acronym as the subject or object when it is the precise term, but express ordinary actions, comparisons, and transitions with Chinese verbs and clauses. Avoid sentences made mostly of English noun phrases connected only by `的`、`与`、`在`.
+
 ## Preferred prose
 
 - Put the claim in the first sentence of the paragraph.
@@ -31,6 +33,14 @@ Keep canonical paper titles, benchmark/dataset names, model names, metrics, prot
 - Preserve negative results and budget mismatches.
 - State attribution limits directly: `这个实验更支持整套 package，而不是单独证明 X` / `the experiment supports the package more strongly than X`.
 - One paragraph should advance one research idea.
+
+## Public entry and navigation style
+
+- Treat README and Research Library pages as indexes, not method manifestos. Open with the collection's subject and direct navigation; do not add thesis blocks about how the Radar thinks or descriptions of its own workflow.
+- Navigation labels name destinations, not estimated reading times. Do not package routes as `30 sec / 5 min / 15 min` or put duration estimates in fold summaries.
+- Do not repeat the same synthesis as an introduction, table summary, and takeaway. If a table already carries the comparison, add prose only when it contributes a new inference.
+- Avoid identical labels on every entry, such as `Research delta` or `Takeaway`, when the sentence can state the claim directly.
+- Preserve folds that carry mechanism, evidence, or caveats. Give each fold a short description of its contents rather than a reading-time promise.
 
 ## AI-house-style patterns to avoid
 
@@ -48,7 +58,7 @@ The goal is not to ban words. Detect **pattern density** and rewrite only when t
 
 ## README fold contract
 
-A 60–90 second fold is a causal explanation, not a shortened paper note. It should naturally cover: surviving problem, actual change, mechanism/control flow, closest comparison, decisive evidence, and strongest caveat. Merge these into 2–4 natural paragraphs when possible; do not force six mini-headings.
+A README fold is a causal explanation, not a shortened paper note. It should naturally cover the surviving problem, actual change, mechanism/control flow, closest comparison, decisive evidence, and strongest caveat. Merge these into 2–4 natural paragraphs when possible; do not force six mini-headings.
 
 ## Epistemic language
 

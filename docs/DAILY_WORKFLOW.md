@@ -60,9 +60,11 @@ During migration, prioritize bilingual backfill in this order: current Latest/Re
 
 README order is:
 
-`Latest Papers → What’s Changing → Field Map → Reading Paths → Research Library → How to Use / Scope / About`
+`Latest Papers → What’s Changing → Field Map → Reading Paths → Research Library → Scope / Related Radars`
 
-Keep roughly 6–8 high-signal Latest entries. Importance >=4/5 or field-map-changing work may receive a 60–90 second fold. A fold is a causal compression, not copied paper-note prose.
+Keep roughly 6–8 high-signal Latest entries. Importance >=4/5 or field-map-changing work may receive a compact evidence fold. A fold is a causal compression, not copied paper-note prose.
+
+Keep the public entry surfaces index-like: use destination names rather than reading-time ladders, state entry claims without repeated `Research delta` / `Takeaway` labels, and do not add method-manifesto blocks. A table should not be preceded or followed by prose that merely paraphrases all of its rows.
 
 Field Map changes only when a design boundary changes. Reading Paths change only when a better conceptual route becomes available.
 

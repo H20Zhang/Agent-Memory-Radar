@@ -2,51 +2,51 @@
 
 **中文** | [English](README.en.md) · [返回首页](../README.md)
 
-这里不是周报归档，而是**长期可检索的研究地图**。不知道论文名、只知道自己想研究什么时，从这里开始。
+可以按研究问题、研究脉络或年份查找论文；不知道论文名时，从下面的问题入口开始。
 
-## 按 Research Problem 浏览
+## 按研究问题浏览
 
 | 问题 | 入口 | 当前核心张力 |
 |---|---|---|
-| **Representation & Organization** | [进入](../categories/zh/representation-organization.md) | archive 应该忠实保留，还是为当前 consumer 重构？ |
-| **Retrieval & Access** | [进入](../categories/zh/retrieval-access.md) | raw search、state localization 与 pre-built relation 分别什么时候值得？ |
-| **Write, Update & Consolidation** | [进入](../categories/zh/write-update-consolidation.md) | memory unit、preservation contract、update/forgetting 应如何分开？ |
-| **Memory Learning & Evolution** | [进入](../categories/zh/memory-learning-evolution.md) | artifact、writer/read policy、relation 与 promotion gate 哪个在 evolve？ |
-| **Evaluation & Analysis** | [进入](../categories/zh/evaluation-analysis.md) | stage attribution、utility、cost、provenance 与 deployment gate 怎么一起测？ |
+| **Representation & Organization** | [进入](../categories/zh/representation-organization.md) | 存档应该忠实保留来源，还是根据当前使用方重构状态？ |
+| **Retrieval & Access** | [进入](../categories/zh/retrieval-access.md) | 原始记录搜索、状态定位和预先构建的关系分别在什么条件下值得？ |
+| **Write, Update & Consolidation** | [进入](../categories/zh/write-update-consolidation.md) | 如何区分记忆单元、保留规则、更新频率和遗忘？ |
+| **Memory Learning & Evolution** | [进入](../categories/zh/memory-learning-evolution.md) | 真正发生演化的是产物、写入/读取策略、关系，还是上线门槛？ |
+| **Evaluation & Analysis** | [进入](../categories/zh/evaluation-analysis.md) | 如何同时评估阶段归因、效用、成本、溯源和部署门槛？ |
 
-## 按 Research Line 浏览
+## 按研究脉络浏览
 
-### 1. Raw archive → complementary structure → state localization → consumer-state reconstruction
+### 原始存档 → 互补结构 → 状态定位 → 面向使用方的状态重建
 
 [ReFind](../papers/2026/2608.12888.zh.md) → [CABLE](../papers/2026/2608.17911.zh.md) → [ArborMem](../papers/2026/2608.17534.zh.md) → [QUMem](../papers/2026/2608.16168.zh.md)
 
-**带走的结论：** “structured vs raw”不是二元选择。先抬高 raw interface baseline，再问 stored relation 是否改变 reachability；如果历史存在多条并行 trajectory，还要先 localize active state；最后 retrieved evidence 与 actor-facing state 仍可能不同。
+结构化记忆与原始记录不是一次性二选一。先用更强的原始记录接口作为基线，再检验预存关系是否改变可达性；历史若包含多条交错的轨迹，需要先定位当前状态；检索到的证据最后仍可能需要转换为 Agent 实际使用的状态。
 
-### 2. Static procedural memory → operational relations → learned writer → certified capability
+### 静态程序性记忆 → 可参与执行的关系 → 学得的技能编写策略 → 经认证的能力
 
 [HyperSkill](../papers/2026/2608.16114.zh.md) → [WER](../papers/2026/2608.17587.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md)
 
-**带走的结论：** procedural-memory gain 可能来自 relation structure、writer policy learning、execution feedback 或 runtime certification。把它们都叫“skill memory”会掩盖真正的 causal variable。
+程序性记忆的收益可能来自关系结构、写入策略学习、执行反馈或运行时认证。若把这些变化都称为“技能记忆”，真正的因果变量就会被掩盖。
 
-### 3. Retrieval score → stage attribution → feature-promotion evidence
+### 检索分数 → 阶段归因 → 功能上线证据
 
 [Demystifying Agent Skills](../papers/2026/2608.14036.zh.md) → [D²ACCI](../papers/2026/2608.17756.zh.md)
 
-**带走的结论：** retrieval label、actual use、downstream success 与 deployment decision 不是同一个指标。Memory feature 最终需要 paired、localized、non-regressing evidence，而不是 architecture-level score。
+检索标签、实际使用、下游成功和部署决策对应不同的评估对象。记忆功能最终需要成对、可定位且无回归的证据，架构层面的分数本身并不充分。
 
-### 4. Fixed memory unit → adaptive write contract
+### 固定记忆单元 → 自适应写入约束
 
 [LeanMem](../papers/2026/2608.03463.md) → [FTA-Mem](../papers/2026/2608.16303.zh.md) → [LycheeMemory V2](../papers/2026/2608.12990.md)
 
-**带走的结论：** write granularity 和 preservation/update semantics 更像 workload-dependent control，而不是一次定死的 schema 选择。
+写入粒度和保留/更新语义会随工作负载改变，不适合作为全局固定的 schema 选择。
 
 ## 按年份浏览
 
-- **2026：** 当前主要工作集中在 `papers/2026/`；优先从上面的 research line 或 [design anchors](../papers/anchors.md) 进入。
-- **时间趋势：** [Weekly / Monthly / Yearly synthesis](../digests/README.md) 只回答“什么发生了变化”，不承担历史检索。
+- **2026：** 当前论文主要集中在 `papers/2026/`；可先沿上面的研究脉络阅读，或从 [设计锚点](../papers/anchors.md) 进入。
+- **时间趋势：** [周度 / 月度 / 年度综合](../digests/README.md) 用于查看研究变化，不作为历史检索入口。
 
-## Cross-Radar
+## 相关 Radar
 
-- [Agent Benchmark Radar](https://github.com/H20Zhang/Agent-Benchmark-Radar)：看 Agent Memory **如何被评价、benchmark target 如何演化**。
-- [Agentic RAG Radar](https://github.com/H20Zhang/Agentic-RAG-Radar)：当核心变成 adaptive information acquisition，而不是 persistent memory lifecycle。
-- [Data Agent Radar](https://github.com/H20Zhang/Data-Agent-Radar)：当 persistent experience 被用于 data work。
+- [Agent Benchmark Radar](https://github.com/H20Zhang/Agent-Benchmark-Radar)：追踪 Agent Memory **如何被评价，以及基准目标如何演化**。
+- [Agentic RAG Radar](https://github.com/H20Zhang/Agentic-RAG-Radar)：关注自适应信息获取，而非持久记忆生命周期。
+- [Data Agent Radar](https://github.com/H20Zhang/Data-Agent-Radar)：关注持久经验在数据工作中的使用。
