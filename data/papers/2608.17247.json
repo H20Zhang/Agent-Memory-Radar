@@ -1,0 +1,54 @@
+{
+  "id": "2608.17247",
+  "title": "Explicit State Elicitation Is Not Enough: A Controlled Audit of Memory-Policy Classification",
+  "authors": ["Yihang Chen", "Pin Qian", "Su Wang", "Chong Peng", "Huan Xu", "Shuaiting Li", "Yiqi Sun"],
+  "published": "2026-08-18",
+  "first_seen": "2026-08-20",
+  "paper_url": "https://arxiv.org/abs/2608.17247",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["semantic", "structured", "personalization"],
+  "relevance": 0.94,
+  "importance": 3,
+  "visual_explainer": {
+    "status": "not_required",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-20",
+    "blocker": null
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.17247"],
+    "analyzed_from": ["https://arxiv.org/html/2608.17247"],
+    "last_verified": "2026-08-20"
+  },
+  "analysis": {
+    "tldr": "This controlled audit shows that asking a model to emit an explicit intermediate memory-state label does not by itself improve Use/Ignore/Update/Ask policy decisions: taxonomy instructions help, but structured state outputs are often non-causal label conditioning and can even hurt when richer semantic evidence is elicited.",
+    "problem": "Memory-policy systems often introduce interpretable intermediate labels and assume the explicit state causes better downstream decisions. Existing datasets can be lexically separable, lack positive Ignore examples, or make label→policy mappings deterministic, so apparent interpretability can be mistaken for mechanism.",
+    "core_idea": "Rebuild the evaluation as 40 matched four-way counterfactual families (160 examples) with byte-identical task text inside each family and rule-derived policy labels. Compare clean, taxonomy-only, state-output, forced-label, and semantic-evidence variants so the causal value of the intermediate representation can be separated from instruction/label conditioning.",
+    "memory_design": {
+      "write": "No persistent store is introduced; the audit constructs controlled counterfactual memory-policy examples.",
+      "organize": "Memory situations are categorized into four decision policies and matched families that hold task wording fixed while varying the relevant memory state.",
+      "read": "Models classify whether retrieved memory should be Used, Ignored, Updated, or trigger Ask; interventions vary whether taxonomy, explicit labels, or semantic evidence are elicited first.",
+      "update_forget": "The paper evaluates classification rather than executing store mutation, response generation, or long-running memory updates."
+    },
+    "compared_to": [
+      "Clean policy classification without intermediate state",
+      "Taxonomy-only prompting",
+      "Explicit state-output prompting",
+      "Forced correct/wrong intermediate labels and semantic-evidence elicitation"
+    ],
+    "evidence": "On the controlled 160-example set, Llama improves from 44.0 clean to 53.1 with taxonomy-only prompting, while explicit state output is 44.6 (+0.6, p=.808). GPT-OSS rises 54.8→59.8 with taxonomy and to 58.1 with explicit state (+3.3, p=.071; Holm .142). Forced labels shift predictions, but labels map deterministically to policies, showing sensitivity rather than a causal mechanism. A Llama semantic-evidence follow-up scores 55.8 versus 63.3 for policy-only prompting (-7.5; Holm .0146).",
+    "why_it_matters": "The paper is a useful negative control for agent-memory interfaces: a readable intermediate field is not automatically a useful state variable. Intermediate representations should be justified by matched downstream gains, not by interpretability or sensitivity alone.",
+    "limitations": [
+      "The study stops at policy classification and does not measure final response quality, tool actions, or actual memory mutation.",
+      "The matched set is small and synthetic by design, so deployment distributions may behave differently.",
+      "The forced-label intervention demonstrates control sensitivity but is partly tautological because labels map directly to policy classes.",
+      "The semantic-evidence follow-up is unavailable for one model due provider-side JSON validation, limiting cross-model symmetry."
+    ],
+    "confidence": "high"
+  }
+}

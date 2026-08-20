@@ -10,8 +10,8 @@ Compactions answer a different question from paper notes: **what changed in the 
 |---|---|---|
 | **Weekly** | [2026-W33 — Memory architecture decomposes into stage-specific controls](weekly/2026-W33.md) | Archive, access, consumer state/reuse, evolution, and lifecycle cost need matched controls rather than one architecture-level score. |
 | **Weekly** | [2026-W32 — Structure only matters when control can use it](weekly/2026-W32.md) | Added structure should be credited only when a downstream controller/operator actually exploits it. |
-| **Monthly** | [2026-08 — rolling through Aug 19](monthly/2026-08.md) | August separates raw vs structured access, memory admission, consumer-state reconstruction, evolvable read policy, write granularity, lifecycle economics, and provenance/governance. |
-| **Yearly** | [2026 — rolling, incomplete](yearly/2026.md) | Current evidence supports a multi-stage memory-state interface, but coverage begins in August with one July backfill and is not a full-year reconstruction. |
+| **Monthly** | [2026-08 — rolling through Aug 20](monthly/2026-08.md) | August now adds **state localization before retrieval, retriever-complementary evidence reach, paired promotion protocols, and execution-grounded skill writer/certification loops** to the existing stage-level map. |
+| **Yearly** | [2026 — rolling, incomplete](yearly/2026.md) | Current evidence supports a multi-stage memory-state interface, but coverage begins in August with limited backfill and is not a full-year reconstruction. |
 
 ## Time hierarchy
 
@@ -19,7 +19,7 @@ Compactions answer a different question from paper notes: **what changed in the 
 - **Recent 3 calendar months → monthly:** rebuild the design-space map and record which weekly claims persist or weaken.
 - **Covered years → yearly:** retain only durable shifts, field-shaping evidence, corrections, and open problems.
 
-Older lower-resolution artifacts remain in the repository for provenance even after they age out of primary navigation.
+W34 is still open, so Aug 17–20 evidence is integrated into the rolling monthly map without pretending the week is closed.
 
 ## Reading a compaction
 

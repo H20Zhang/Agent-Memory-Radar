@@ -17,17 +17,17 @@ These are **durable design points, not a ranking**. An anchor stays only while i
 
 ## How to read the anchor set
 
-`what persists → how it is accessed → what the consumer receives → what adaptive state learns → whether lifecycle trust survives`
+`what persists → which historical state is active → how evidence is accessed → what the consumer receives → what adaptive state learns → whether lifecycle trust survives`
 
-A useful sequence is **LeanMem / ReFind → V-Mem → QCR / PMCoder → RoMeRL → AuthMem-Bench / SkillJack**. The sequence is more important than individual ranking: it turns “agent memory” into a set of separable design decisions.
+A useful sequence is **LeanMem / ReFind → V-Mem → QCR / PMCoder → RoMeRL → AuthMem-Bench / SkillJack**. New work can sharpen a boundary without immediately becoming another anchor.
 
 ### Current challengers
 
+- **ArborMem** may establish **state localization** as a durable boundary before retrieval if branch/state gains survive broader non-conversational tasks and weaker models.
+- **CABLE** sharpens graph-memory attribution: stored edges should extend the host retriever's reachable evidence, not duplicate it.
 - **QUMem** strengthens the consumer-state boundary by reconstructing current user state after retrieval.
-- **RippleMem** strengthens the access boundary by using first-hop memories to search for missing evidence.
-- **ERSkill** may eventually replace an older control-state anchor if evolved read policies survive broader acting-agent evaluation.
-- **HyperSkill** strengthens the case for operational structure but still needs a representation-matched structural controller.
-- **Demystifying Agent Skills** strengthens procedural-memory evaluation without introducing a new durable control boundary.
+- **D²ACCI** is a candidate evaluation-discipline anchor if its paired promotion protocol and trace contract transfer across memory stacks.
+- **WER / TRUSS** move procedural evolution toward execution-grounded writer training and runtime certification; they challenge where adaptive/governance state should live.
 
 ### Rotated out, still important
 

@@ -1,0 +1,53 @@
+{
+  "id": "2608.17534",
+  "title": "ArborMem: Navigating Interaction States with Memory Forests",
+  "authors": ["Zongwei Lv", "Yuemeng Xu", "Yilun Yao", "Siyi Ding", "Xinyu Tan", "Yaoming Li", "Guangxiang Zhao", "Weihong Lin", "Lin Sun", "Xiangzheng Zhang", "Tong Yang"],
+  "published": "2026-08-18",
+  "first_seen": "2026-08-20",
+  "paper_url": "https://arxiv.org/abs/2608.17534",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["episodic", "hierarchical", "timeline", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-20",
+    "blocker": "A paper-specific GPT Image attempt on 2026-08-20 ignored the grounded ArborMem brief and rendered a generic Agent Memory Radar dashboard with fabricated paper metadata. Visual QA rejected the render; no image was published."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.17534"],
+    "analyzed_from": ["https://arxiv.org/html/2608.17534"],
+    "last_verified": "2026-08-20"
+  },
+  "analysis": {
+    "tldr": "ArborMem treats long conversations as a forest of interaction states and makes state localization precede evidence retrieval: the agent identifies the branch/state being resumed, restores the branch-local trajectory, then retrieves only supplemental cross-branch facts and records before committing the new state after generation.",
+    "problem": "Chronological or globally retrieved memory conflates two questions: which prior interaction state is the user resuming, and what additional evidence is needed once that state is known. Interleaved projects, backjumps, and updates can make topically similar but state-incompatible memories harmful.",
+    "core_idea": "Represent interaction history as a forest whose nodes are conversation states. A new turn takes a cue-based fast path when continuation/temporal references are explicit, otherwise retrieves candidate states and reranks them with branch summaries, node summaries, entities, and path context. After choosing a parent, ArborMem restores the branch-local root-to-parent trajectory and retrieves supplemental facts/records across branches; only after responding is the new node and derived state committed.",
+    "memory_design": {
+      "write": "After response generation, commit a new interaction-state node plus extracted facts/structured records with provenance and revision metadata; write is deliberately downstream of read/generation.",
+      "organize": "Maintain a forest of interaction-state nodes with parent/branch structure, path/node summaries, topic keys, entities, and supplemental atomic facts/records.",
+      "read": "Localize the resumed parent state first; restore the branch-local trajectory; then retrieve cross-branch supplemental facts/records needed for the current turn.",
+      "update_forget": "New turns extend a branch or create a new one and records can carry revision metadata; explicit deletion/aging and robust branch repair after misrouting are not the focus."
+    },
+    "compared_to": [
+      "Long-term memory baselines on LongMemEval, LoCoMo, BEAM100K, and BranchMemEval",
+      "A fixed LongMemEval ablation removing state localization while retaining the rest of the pipeline",
+      "Component ablations over atomic-fact retrieval and branch/state machinery"
+    ],
+    "evidence": "ArborMem reports gains over the strongest compared baseline of +9 points on LongMemEval, +10.31 on LoCoMo, +3.36 on BEAM100K, and +5 on BranchMemEval; it is also 15 points above full-context on BranchMemEval. On a fixed 50-question LongMemEval subset, removing state localization drops the 30B model from 82→70 but the 4B model only 48→46; removing atomic-fact retrieval drops the 30B setting further to 62. This supports state localization as a real but not sole contributor.",
+    "why_it_matters": "ArborMem exposes a read-side boundary that ordinary retrieval collapses: before asking which memories are relevant, an agent may need to decide which historical state is currently active. That suggests future long-horizon memory systems should evaluate state localization separately from evidence retrieval.",
+    "limitations": [
+      "The full system changes branch representation, facts/records, prompting, and retrieval together; the package evidence is stronger than attribution to the forest alone.",
+      "The state-localization ablation is model-dependent and small for the 4B setting.",
+      "BranchMemEval is small and synthetic, and many cases remain within ordinary context windows.",
+      "The single-parent state model is awkward for genuinely multi-intent turns; routing errors can also propagate into later branch structure."
+    ],
+    "confidence": "high"
+  }
+}

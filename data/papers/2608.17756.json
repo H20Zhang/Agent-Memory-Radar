@@ -1,0 +1,53 @@
+{
+  "id": "2608.17756",
+  "title": "D²ACCI: A Dual-Loop Diagnostic Protocol for Evidence-Preserving Agent Memory",
+  "authors": ["Xule Liu", "Yijun Liu", "Chao Li", "Shao Kun"],
+  "published": "2026-08-18",
+  "first_seen": "2026-08-20",
+  "paper_url": "https://arxiv.org/abs/2608.17756",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["structured", "general-agent"],
+  "relevance": 0.97,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-20",
+    "blocker": "Two isolated paper-specific GPT Image attempts in this run (CABLE and ArborMem) both ignored their grounded single-paper briefs and rendered a generic Agent Memory Radar dashboard with fabricated paper metadata. Visual QA rejected both; further required-paper retries were stopped to avoid publishing ungrounded visuals until the paper-identity failure is resolved."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.17756"],
+    "analyzed_from": ["https://arxiv.org/html/2608.17756"],
+    "last_verified": "2026-08-20"
+  },
+  "analysis": {
+    "tldr": "D²ACCI turns memory evaluation into a promotion protocol: typed stage traces feed an outer diagnostic loop that requires paired baseline/candidate evidence, protected slices, trace coverage, and deterministic accept/feature-flag/reject gates instead of promoting a memory change from an endpoint score alone.",
+    "problem": "Memory pipelines can improve an aggregate benchmark while hiding which stage changed, where regressions occur, or whether logs are sufficient to diagnose failures. Result-only evaluation therefore encourages causal over-attribution and silent regression.",
+    "core_idea": "Instrument an inner memory runtime with typed traces across ingestion, storage, retrieval, filtering, context construction, and generation. An outer loop proposes a hypothesis and protected slices, runs paired baseline/candidate artifacts, applies paired statistical tests and Diagnostic Coverage Rate (DCR), and uses deterministic gates to accept, accept-with-monitoring, feature-flag, reject, or archive the change.",
+    "memory_design": {
+      "write": "Not a new memory representation; the protocol records typed stage traces and paired candidate/baseline artifacts around memory changes.",
+      "organize": "Organize evidence by pipeline stage, protected slice, paired outcome, trace coverage, and decision-gate result so regressions remain attributable.",
+      "read": "Diagnostics consume stage traces plus paired statistics to determine whether a proposed memory change should be promoted, monitored, feature-flagged, or rejected.",
+      "update_forget": "The outer loop governs memory-system changes rather than end-user memory deletion; null/rejected interventions are retained as diagnostic priors instead of silently discarded."
+    },
+    "compared_to": [
+      "Result-only evaluation without actionable stage traces",
+      "Paired baseline/candidate feature interventions including supplement extraction, session retrieval, Forget Guard, and BM25/RRF changes",
+      "Human relabeling under enriched traces versus result-only artifacts"
+    ],
+    "evidence": "Three interventions clear the protocol with significant paired gains: supplement extraction +2.71pp (p=.0009), session retrieval +3.67pp (p=.0026), and Forget Guard +1.92pp (p=.0030). BM25/RRF changes are null on LoCoMo (-0.41, p=.4426) and LongMemEval (+1.00, p=.4583) and are feature-flagged rather than promoted. In a 60-case audit, enriched traces improve inter-rater agreement to κ=.571 fine/.619 coarse versus .258/.272 for result-only artifacts. A PersonaMem diagnosis assigns 87% of observed failures to post-retrieval stages, illustrating why retrieval-only attribution is incomplete.",
+    "why_it_matters": "D²ACCI operationalizes a principle the radar has been using editorially: a memory change should earn promotion only when paired evidence identifies benefit without protected-slice harm and the trace is rich enough to localize the cause. It also treats null results as useful deployment evidence.",
+    "limitations": [
+      "Diagnostic Coverage Rate depends on the instrumentation schema, so the contrast with result-only logging is partly built into the metric definition.",
+      "The protocol is demonstrated on one instrumented stack and does not yet establish cross-framework portability.",
+      "Statistical gates improve evaluation discipline but do not replace deployment-time user utility, privacy, or online safety monitoring.",
+      "Headline system scores mix many components; the strongest contribution is the diagnostic protocol, not a new memory architecture."
+    ],
+    "confidence": "high"
+  }
+}

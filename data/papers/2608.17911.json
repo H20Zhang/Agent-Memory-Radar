@@ -1,0 +1,54 @@
+{
+  "id": "2608.17911",
+  "title": "CABLE: Extending the Reach of Memory Retrieval via Complementary Antecedent-Based Linking and Expansion",
+  "authors": ["Zheling Tan", "Jin Gao", "Dequan Wang"],
+  "published": "2026-08-18",
+  "first_seen": "2026-08-20",
+  "paper_url": "https://arxiv.org/abs/2608.17911",
+  "code_url": "https://github.com/TanZheling/CABLE",
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["episodic", "graph", "structured", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-20",
+    "blocker": "A paper-specific GPT Image attempt on 2026-08-20 ignored the grounded CABLE brief and rendered a generic Agent Memory Radar dashboard with fabricated paper metadata. Visual QA rejected the render; no image was published."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.17911"],
+    "analyzed_from": ["https://arxiv.org/html/2608.17911", "https://github.com/TanZheling/CABLE"],
+    "last_verified": "2026-08-20"
+  },
+  "analysis": {
+    "tldr": "CABLE makes memory links complementary to a host retriever: it generates antecedent-oriented queries at write time, removes candidates already reachable by the direct semantic neighborhood, verifies the remainder, and stores sparse directed links so query-time one-hop expansion reaches evidence the host retriever is likely to miss without increasing the retrieved-entry budget.",
+    "problem": "Graph-augmented memory often links semantically nearby records that a competent base retriever would retrieve anyway, paying construction cost without extending effective retrieval reach. The useful question is whether stored relations expose evidence outside the host retriever's direct neighborhood.",
+    "core_idea": "For each new memory, retrieve a direct semantic neighborhood and a second candidate set from antecedent-oriented queries; subtract their overlap, LLM-verify only complementary candidates, and create sparse directed antecedent links. At query time, seed with the unchanged host retriever, expand one hop, novelty-filter, and replace low-ranked entries so the final evidence count stays fixed.",
+    "memory_design": {
+      "write": "For each new memory, classify/generate up to three antecedent-oriented queries, retrieve direct-neighborhood and antecedent candidates, subtract overlap, verify complementary candidates, and write sparse directed links.",
+      "organize": "Keep the host memory store plus O(|M|)-scale directed antecedent links whose construction is explicitly conditioned on what the base retriever already reaches.",
+      "read": "Run the host retriever unchanged, expand retrieved seeds by one antecedent hop, novelty-filter candidates, and use expansion to replace lower-ranked entries under the same final retrieved-entry budget.",
+      "update_forget": "Links are added incrementally with new memories; the paper does not center on aging, deletion, contradiction repair, or learned forgetting."
+    },
+    "compared_to": [
+      "The same A-MEM host retrieval with the same final retrieved-entry budget",
+      "SimpleMem with expansion activated only when its reflection judges baseline retrieval insufficient",
+      "Mem0g under the same evidence-count constraint",
+      "Ablations without direct-neighborhood subtraction, verification, or type-conditioned antecedent queries"
+    ],
+    "evidence": "With A-MEM, LoCoMo Qwen3.5 rises 71.23→74.81 (+3.58) and MA-LongMemEval Qwen rises 59.33→65.33 (+6.00); DeepSeek gains are +2.11 and GPT-4o-mini +1.00 on the corresponding settings. Removing overlap subtraction costs 0.91 points on LoCoMo and 0.67 on MA-LongMemEval, while removing verification costs 2.66 on MA-LongMemEval. Multi-session and preference slices improve strongly, but temporal reasoning drops by 1.33/2.67 points in the reported Qwen/GPT settings. Query-time expansion adds no LLM call; the extra LLM cost is paid at write time.",
+    "why_it_matters": "CABLE sharpens the criterion for graph memory: a stored edge is useful when it expands the host retriever's reachable evidence, not when it duplicates semantic neighbors. It therefore separates relation usefulness from relation plausibility and turns retriever complementarity into an explicit construction objective.",
+    "limitations": [
+      "The strongest evidence is still conversational long-term-memory QA rather than tool-acting agents or multimodal state.",
+      "Write-time type classification, query generation, and candidate verification add LLM cost that is not matched to a lifecycle-cost baseline.",
+      "Temporal-reasoning slices regress, showing that complementary expansion can add distractors or harmful relation bias.",
+      "The relation family is antecedent-specific; whether the same complementarity criterion transfers to other relation semantics is open."
+    ],
+    "confidence": "high"
+  }
+}

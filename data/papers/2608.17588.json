@@ -1,0 +1,54 @@
+{
+  "id": "2608.17588",
+  "title": "TRUSS: Towards Task-Reliable and User-Safe Automated Agent Skill Generation",
+  "authors": ["Zhibo Zhang", "Zhen Ouyang", "Ling Shi", "Kailong Wang"],
+  "published": "2026-08-18",
+  "first_seen": "2026-08-20",
+  "paper_url": "https://arxiv.org/abs/2608.17588",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": ["procedural", "structured", "general-agent"],
+  "relevance": 0.95,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-20",
+    "blocker": "Two isolated paper-specific GPT Image attempts in this run (CABLE and ArborMem) both ignored their grounded single-paper briefs and rendered a generic Agent Memory Radar dashboard with fabricated paper metadata. Visual QA rejected both; further required-paper retries were stopped to avoid publishing ungrounded visuals until the paper-identity failure is resolved."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.17588"],
+    "analyzed_from": ["https://arxiv.org/html/2608.17588"],
+    "last_verified": "2026-08-20"
+  },
+  "analysis": {
+    "tldr": "TRUSS treats generated skills as executable persistent artifacts that must pass both static obligations and shadow execution before promotion: a brokered sandbox records provenance-preserving traces, a function/safety record drives refinement, and already-satisfied obligations must remain preserved across versions.",
+    "problem": "LLM-generated skills can look plausible while making false function claims, unsafe tool calls, or hidden side effects. Text-only review misses runtime behavior, while execution-only checks may not encode explicit safety obligations or preserve evidence across iterative repairs.",
+    "core_idea": "Generate a skill package, run a static checker over functional claims and nine safety properties, then execute the skill in a controlled shadow agent with brokered tools and an intermediate breaker. Convert the trace into Function/Safety Records, refine only evidence-bearing content, version the candidate by digest, and rerun the full check while preserving obligations that already passed.",
+    "memory_design": {
+      "write": "Generate and iteratively refine versioned skill packages containing natural-language procedure and executable resources.",
+      "organize": "Track explicit function/safety obligations plus provenance-preserving runtime traces and per-version Function/Safety Records.",
+      "read": "A shadow agent executes the skill through brokered tools; static and dynamic evidence determines whether the artifact is safe/reliable enough to promote.",
+      "update_forget": "The refiner edits failed evidence-bearing content and reruns all obligations while preserving previously satisfied ones; general skill aging/deletion is outside scope."
+    },
+    "compared_to": [
+      "LLM-based skill checking",
+      "Static checking alone versus the full static + shadow-execution + refinement stack",
+      "No-skill and intermediate-generation baselines on SkillGenBench",
+      "Matched clean/injected skill pairs on SkillInject"
+    ],
+    "evidence": "On 84 matched SkillInject clean/injected pairs (168 artifacts), the LLM checker has 44.64% precision/19.05% recall, static checking reaches 81.55/94.05, and the full TRUSS check reaches 100/100. On SkillSafetyBench, attack success falls 38.71→19.35 for GPT-5.5 and 46.45→29.68 for GPT-5.4 with zero reported attack regression, but safe-task completion differs sharply by target model (52.90 vs 23.87). On SkillGenBench, effectiveness rises 17.11 no-skill→29.95 intermediate LLM→52.94 TRUSS while security rises 50.80→75.40→100; the intermediate→TRUSS delta combines checking, execution, and refinement.",
+    "why_it_matters": "TRUSS makes procedural-memory promotion a certification problem: a reusable skill is not trustworthy because its text is coherent, but because its claimed function and safety properties survive controlled execution and evidence-preserving refinement.",
+    "limitations": [
+      "The safety property set and benchmarks are controlled and may miss open-world side effects, cross-tool interactions, or organization-specific policy constraints.",
+      "The strongest generation gain attributes to the full inspection/execution/refinement package rather than one isolated component.",
+      "Safe-task completion is highly target-model-dependent, limiting claims that a certified skill transfers uniformly across executors.",
+      "The work focuses on acquisition/promotion of generated skills, not long-term library retrieval, deprecation, or descendant revocation."
+    ],
+    "confidence": "high"
+  }
+}
