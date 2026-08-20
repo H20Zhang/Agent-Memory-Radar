@@ -36,8 +36,8 @@ Chinese prose must still use Chinese sentence structure. Keep an English name or
 
 ## Public entry and navigation style
 
-- Treat README and Research Library pages as indexes, not method manifestos. Open with the collection's subject and direct navigation; do not add thesis blocks about how the Radar thinks or descriptions of its own workflow.
-- Navigation labels name destinations, not estimated reading times. Do not package routes as `30 sec / 5 min / 15 min` or put duration estimates in fold summaries.
+- Treat README and Research Library pages primarily as indexes, not method manifestos. Open with the collection's subject, one compact Radar Family sibling line, and direct navigation; keep any compatibility `How to Use` block to one compact destination guide.
+- Keep one layer-time navigation line—`30 sec Timeline / 3 min 7/30-day changes / 5 min Field Map / 15 min Reading Paths / Browse all`—so readers can choose depth quickly. Do not repeat duration estimates inside fold summaries.
 - Do not repeat the same synthesis as an introduction, table summary, and takeaway. If a table already carries the comparison, add prose only when it contributes a new inference.
 - Avoid identical labels on every entry, such as `Research delta` or `Takeaway`, when the sentence can state the claim directly.
 - Preserve folds that carry mechanism, evidence, or caveats. Give each fold a short description of its contents rather than a reading-time promise.
@@ -58,7 +58,7 @@ The goal is not to ban words. Detect **pattern density** and rewrite only when t
 
 ## README fold contract
 
-A README fold is a causal explanation, not a shortened paper note. It should naturally cover the surviving problem, actual change, mechanism/control flow, closest comparison, decisive evidence, and strongest caveat. Merge these into 2–4 natural paragraphs when possible; do not force six mini-headings.
+A README fold is a causal explanation, not a shortened paper note. In the time-first Timeline, the required Question, Evidence, Caveat, Map, and Links labels are functional scan anchors; do not wrap them in additional repeated `Research delta` or `Takeaway` labels. In narrative notes, merge the surviving problem, mechanism/control flow, closest comparison, decisive evidence, and strongest caveat into 2–4 natural paragraphs when possible rather than forcing extra mini-headings.
 
 ## Epistemic language
 

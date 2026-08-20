@@ -11,7 +11,7 @@ This page keeps repository-maintenance details out of the public reader surfaces
 - `papers/anchors.md` — durable design points.
 - `digests/` — temporal synthesis.
 - `assets/visuals/` — researcher-facing explainers.
-- `runs/daily/` — maintenance provenance.
+- `runs/README.md` — static no-public-run policy; private workflow state lives only under ignored `.radar-private/` or in ephemeral Agent memory.
 
 ## Reader architecture
 
@@ -62,7 +62,11 @@ For accepted work:
 7. propagate meaningful corrections into compactions;
 8. handle visuals under the existing visual contract;
 9. update bilingual high-visibility reader surfaces atomically;
-10. validate and write one compact daily log.
+10. validate and preserve the accepted projection in one atomic commit.
+
+## No public operational run logs
+
+Do not commit daily-run, candidate, lane, retry, or validation inventories. Canonical records, the bilingual Timeline, rolling periods, due closed digests, gated maps, and Git history are public provenance. Private operational traces belong only under ignored `.radar-private/runs/<run_id>.json` or in ephemeral Agent memory; [`../runs/README.md`](../runs/README.md) is static policy only.
 
 ## Validation
 
@@ -75,9 +79,9 @@ python scripts/validate_reading.py
 
 `validate_canonical.py` checks schema/taxonomy, record identity, paper-note existence, and visual publication invariants.
 
-`validate_reading.py` checks Chinese/English README and Library pairing, progressive-depth order, Latest identity parity, stable anchors, local links, and obvious repeated editorial skeletons.
+`validate_reading.py` checks Chinese/English README and Library pairing, progressive-depth order, canonical Timeline completeness/order/bindings, stable anchors, rolling-window metadata and support gates, public-run absence, local links, and obvious repeated editorial skeletons.
 
-The legacy `scripts/validate.py` remains only as migration history and should not be used as the authoritative public-layout validator after v1.
+`scripts/validate.py` remains the full repository, schema, visual, category, and relative-link audit and is run after the focused canonical and reading validators.
 
 ## Research Library
 

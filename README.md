@@ -4,162 +4,170 @@
 
 *面向 LLM 与多模态 Agent 的长期记忆研究地图。*
 
-[最新论文](#latest) · [最近变化](#changes) · [领域地图](#field-map) · [阅读路径](#reading-paths) · [完整资料库](#library)
+**Radar Family：** [Agent Benchmark Radar](https://github.com/H20Zhang/Agent-Benchmark-Radar) · **Agent Memory** · [Agentic RAG](https://github.com/H20Zhang/Agentic-RAG-Radar) · [Data Agent](https://github.com/H20Zhang/Data-Agent-Radar)
+
+[30 秒：最新时间线](#timeline) · [3 分钟：7/30 天变化](#periods) · [5 分钟：领域地图](#field-map) · [15 分钟：阅读路径](#reading-paths) · [浏览全部](#library)
 
 最后更新：**2026-08-20**
 
-<a id="latest-papers"></a>
-<a id="latest"></a>
-## 最新论文
+<a id="timeline"></a><a id="latest"></a><a id="latest-papers"></a>
+## Latest Timeline：最新接受的 Agent Memory 证据
 
-### [CABLE: Extending the Reach of Memory Retrieval via Complementary Antecedent-Based Linking and Expansion](papers/2026/2608.17911.md)
-`Retrieval & Access` · `episodic` `graph` · **4/5** · 2026-08-18
+> **迁移说明：** 这些现有记录没有可靠保存历史 Radar 接受时间，因此暂按论文原始发布日期排序；v2 切换后的新记录统一使用 `radar_published_at`，不得把论文日期伪装成 Radar 接受时间。
 
-只有当记忆边能到达宿主检索器原本漏掉的证据时，CABLE 才保留这条边，从而让结构成为 **retriever-complementary operator**。
+<a id="entry-2608-17911"></a>
+<details><summary><strong>2026-08-18 · CABLE</strong> · 检索与访问 <!-- timefirst:area=retrieval-access --> — 存储链接只有能触达宿主检索器遗漏的证据，才值得付出额外成本。 <!-- timefirst:delta=structure-as-retriever-complement --></summary>
 
-[论文](https://arxiv.org/abs/2608.17911) · [中文深读](papers/2026/2608.17911.zh.md) · [英文深读](papers/2026/2608.17911.md)
+**问题。** 在最终证据条数不变时，记忆中预存的链接能否找到同一宿主检索器漏掉的证据？最接近的生命周期对照沿用 A-MEM 宿主，并固定证据条数。 <!-- timefirst:question=links-reach-host-missed-evidence -->
 
-<details><summary><strong>CABLE 的互补扩展</strong></summary>
+**证据。** 在同一 A-MEM 宿主和最终证据预算下（`matched A-MEM host budget`），LoCoMo Qwen3.5 从 **71.23 升至 74.81**，MA-LongMemEval Qwen 从 **59.33 升至 65.33**。 <!-- timefirst:evidence=same-host-budget-locomo-and-ma-longmemeval-gains~matched-a-mem-host-budget -->
 
-CABLE 在写入时同时构造直接语义邻域和 antecedent-query candidates，去掉两者的重叠项，只验证余下候选并写入有向链接。查询时，系统先运行原有的宿主检索器，再从种子结果做一跳扩展；最终证据数量不变。
+**限制。** 时序推理子集（`temporal-reasoning slices`）反而下降；写入阶段额外的查询生成与验证，也未与强在线搜索对照做全生命周期成本匹配。 <!-- timefirst:caveat=temporal-regression-and-unmatched-ingestion-cost~temporal-reasoning-slices -->
 
-在 A-MEM 宿主与最终证据预算均相同的设置下，LoCoMo Qwen3.5 从 **71.23 升至 74.81**，MA-LongMemEval Qwen 从 **59.33 升至 65.33**。不过时序推理子集出现下降，而且论文尚未在全生命周期成本匹配的条件下，把写入时的查询生成/验证与强在线搜索基线比较。
+**地图。** `early_signal` — 这项结果落在组织 → 访问边界：预存关系只有改变宿主接口的证据可达性才有价值；单篇论文不改写持久地图。
 
-</details>
-
-### [D²ACCI: A Dual-Loop Diagnostic Protocol for Evidence-Preserving Agent Memory](papers/2026/2608.17756.md)
-`Evaluation & Analysis` · `structured` · **4/5** · 2026-08-18
-
-D²ACCI 不以总分上涨作为记忆功能的上线依据；成对证据、受保护子集、阶段轨迹和确定性的上线门槛必须共同支持部署决定。
-
-[论文](https://arxiv.org/abs/2608.17756) · [中文深读](papers/2026/2608.17756.zh.md) · [英文深读](papers/2026/2608.17756.md)
-
-<details><summary><strong>D²ACCI 的上线门槛</strong></summary>
-
-D²ACCI 在带监测的记忆运行时之外构建诊断循环：`typed traces → paired baseline/candidate → significance + protected slices + diagnostic coverage → accept | monitor | feature-flag | reject`。
-
-论文报告 Supplement extraction、session-memory retrieval 和 Forget Guard 均有显著的成对增益；BM25/RRF 在 LoCoMo 与 LongMemEval 上都不显著，因此只作为监控标记保留。它的主要贡献是**让阶段级归因和无回归要求成为上线约束**；DCR 指标本身居于次要位置。
+**链接。** [论文](https://arxiv.org/abs/2608.17911) · [中文深读](papers/2026/2608.17911.zh.md) · [英文深读](papers/2026/2608.17911.md)
 
 </details>
 
-### [Write, Execute, Refine: From Skill Followers to Skill Optimizers via Reinforcement Learning from Execution Feedback](papers/2026/2608.17587.md)
-`Memory Learning & Evolution` · `procedural` · **4/5** · 2026-08-18
+<a id="entry-2608-17756"></a>
+<details><summary><strong>2026-08-18 · D²ACCI</strong> · 评估与治理 <!-- timefirst:area=evaluation-governance --> — 记忆功能不再凭 aggregate score 晋级，而要同时通过 paired evidence、protected slice 与 stage-level promotion gate。 <!-- timefirst:delta=aggregate-score-to-promotion-contract --></summary>
 
-WER 根据执行结果训练**技能写入策略**；它不只让模型在推理时反思现有的技能文本。
+**问题。** 一项记忆功能应如何在阶段归因成立、受保护子集不退化时才获准上线？最接近的对照是在同一运行环境中成对比较基线与候选功能。 <!-- timefirst:question=promotion-under-stage-and-non-regression-evidence -->
 
-[论文](https://arxiv.org/abs/2608.17587) · [中文深读](papers/2026/2608.17587.zh.md) · [英文深读](papers/2026/2608.17587.md)
+**证据。** 补充信息抽取、会话记忆检索与 Forget Guard 均出现显著的成对增益；LoCoMo 和 LongMemEval 上的 `BM25/RRF null result` 仍不显著，只进入监控标记。 <!-- timefirst:evidence=paired-gains-and-bm25-rrf-null-results~bm25-rrf-null-result -->
 
-<details><summary><strong>用执行反馈学习技能编写策略</strong></summary>
+**限制。** 这组结果来自诊断协议的部署证据，并非新记忆架构的独立效果；结论仍受 `trace coverage dependence`、评估器和上线阈值约束。 <!-- timefirst:caveat=protocol-evidence-not-new-architecture~trace-coverage-dependence -->
 
-候选技能由冻结的 Agent 多次执行，程序化验证器对结果评分，再由 group-relative RL 更新优化器；同一技能/任务中成功与失败混合的轨迹会进入下一轮细化状态。
+**地图。** `early_signal` — 这项工作落在治理边界：无显著差异的结果和无回归要求开始约束功能上线，但一套协议不足以重写地图。
 
-在使用同一个 Qwen3-4B 优化器模型和同一套细化流程的比较中，BFCL v4 从 **67.28 升至 76.63**，tau2 从 **40.43 升至 50.72**。再增加一轮细化后成绩反而回落，说明“持续自我修改”并非单调更好。Rollout 成本高且依赖可靠的验证器，是这套方法的主要局限。
-
-</details>
-
-### [TRUSS: Towards Task-Reliable and User-Safe Automated Agent Skill Generation](papers/2026/2608.17588.md)
-`Memory Learning & Evolution` · `procedural` `structured` · **4/5** · 2026-08-18
-
-TRUSS 把生成的技能视为**须先认证、再持久化的可执行产物**：通过静态约束后，还要完成受控影子执行并保留溯源记录。
-
-[论文](https://arxiv.org/abs/2608.17588) · [中文深读](papers/2026/2608.17588.zh.md) · [英文深读](papers/2026/2608.17588.md)
-
-<details><summary><strong>技能持久化之前的认证</strong></summary>
-
-流程是 `generate → static function/safety checks → shadow execution → trace → function/safety record → refine → re-check → promote`。在匹配的 SkillInject 产物上，LLM 检查器为 **44.64% precision / 19.05% recall**，静态检查器为 **81.55 / 94.05**，完整 TRUSS 为 **100 / 100**。
-
-论文中的生成收益来自认证与细化的整套方案，并明显受执行器影响。现有证据支持为程序性记忆设置**上线/治理边界**，但不能把“文本看起来合理”当成可复用能力的充分条件。
+**链接。** [论文](https://arxiv.org/abs/2608.17756) · [中文深读](papers/2026/2608.17756.zh.md) · [英文深读](papers/2026/2608.17756.md)
 
 </details>
 
-### [ArborMem: Navigating Interaction States with Memory Forests](papers/2026/2608.17534.md)
-`Retrieval & Access` · `episodic` `hierarchical` · **4/5** · 2026-08-18
+<a id="entry-2608-17587"></a>
+<details><summary><strong>2026-08-18 · WER</strong> · 记忆学习与演化 <!-- timefirst:area=memory-learning-evolution --> — 执行结果用于训练 skill-writer policy，而不只是触发又一次 inference-time reflection。 <!-- timefirst:delta=execution-feedback-trains-writer-policy --></summary>
 
-ArborMem 在检索之前增加**状态定位**：先判断当前轮次接续哪条历史交互分支，恢复分支内轨迹后，再检索补充证据。
+**问题。** 程序性记忆的技能编写策略能否从冻结执行器的成功与失败轨迹中学习，而不只是反思已有技能文本？最接近的对照固定了优化器骨干和细化流程。 <!-- timefirst:question=writer-policy-learning-from-execution -->
 
-[论文](https://arxiv.org/abs/2608.17534) · [中文深读](papers/2026/2608.17534.zh.md) · [英文深读](papers/2026/2608.17534.md)
+**证据。** 在同一 Qwen3-4B 优化器和细化流程下，BFCL v4 从 **67.28 升至 76.63**，tau2 从 **40.43 升至 50.72**；额外增加一轮时出现 `extra refinement regression`。 <!-- timefirst:evidence=same-backbone-gains-then-extra-refinement-regresses~extra-refinement-regression -->
 
-<details><summary><strong>检索之前的状态定位</strong></summary>
+**限制。** 主要替代解释是更昂贵的执行采样和 `programmatic verifier cost`；可靠验证器是否可得、成本多高，决定这套编写策略学习循环能否迁移。 <!-- timefirst:caveat=rollout-and-verifier-cost~programmatic-verifier-cost -->
 
-在长期交互中，主题相关的历史记录未必属于当前要恢复的轨迹。ArborMem 把读取路径拆成 `localize parent state → restore branch trajectory → retrieve cross-branch support → answer → commit new state`。
+**地图。** `early_signal` — 这项结果落在写入 / 更新边界：学得的编写策略成为持久程序状态，但单篇论文不能建立稳定方向。
 
-在固定的 LongMemEval 子集上，30B 模型去掉状态定位后从 **82 降至 70**，4B 模型则从 **48 降至 46**，效果明显受模型规模影响。这组结果将状态定位隔离为一个独立边界，但还不能证明记忆森林表示不可替代。
-
-</details>
-
-### [QUMem: Personalized Memory for Query-Conditioned User-State Inference in LLM Agents](papers/2026/2608.16168.md)
-`Representation & Organization` · `personalization` · **4/5** · 2026-08-17
-
-QUMem 把检索到的历史作为证据，并在查询到来后重建**当前用户状态**；消融结果显示，读取端重建是贡献最大的阶段。
-
-[论文](https://arxiv.org/abs/2608.16168) · [中文深读](papers/2026/2608.16168.zh.md) · [英文深读](papers/2026/2608.16168.md)
-
-<details><summary><strong>面向查询的用户状态重建</strong></summary>
-
-QUMem 先形成 semantic episodes 和 typed facts/preferences/insights，再把当前任务拆成信息需求，按类型检索，最后联合证据重建当前用户状态。
-
-在 PersonaMem + GPT-4o-mini 上，完整系统得分为 **61.02**；去掉 episodes 后为 **58.38**，去掉 typed decomposition 后为 **57.11**，去掉 reconstruction 后为 **54.51**。下一步需要在检索证据与综合预算均匹配的条件下，验证显式状态重建是否仍然值得。
+**链接。** [论文](https://arxiv.org/abs/2608.17587) · [中文深读](papers/2026/2608.17587.zh.md) · [英文深读](papers/2026/2608.17587.md)
 
 </details>
 
-### [HyperSkill: Self-Evolving LLM Agents via Hypergraph-Structured Skill Memory](papers/2026/2608.16114.md)
-`Memory Learning & Evolution` · `procedural` `graph` · **4/5** · 2026-08-17
+<a id="entry-2608-17588"></a>
+<details><summary><strong>2026-08-18 · TRUSS</strong> · 程序性记忆治理 <!-- timefirst:area=procedural-memory-governance --> — 生成的 skill 必须成为可执行 artifact，并在持久化前通过 static 与 shadow-execution certification。 <!-- timefirst:delta=generated-text-to-certified-artifact --></summary>
 
-HyperSkill 让轨迹之间的高阶关系直接参与检索、技能排序和维护。现有证据支持整套结构化访问方案，尚不能单独证明超图表示不可替代。
+**问题。** 生成的技能在进入持久程序性记忆前，能否通过静态约束、受控影子执行和溯源记录得到可靠认证？最接近的对照是在同一批 SkillInject 产物上使用 LLM 检查器与静态检查器。 <!-- timefirst:question=certify-generated-skills-before-persistence -->
 
-[论文](https://arxiv.org/abs/2608.16114) · [中文深读](papers/2026/2608.16114.zh.md) · [英文深读](papers/2026/2608.16114.md)
+**证据。** 在同一批 SkillInject 产物上，LLM 检查器达到 **44.64% precision / 19.05% recall**，静态检查器达到 **81.55 / 94.05**，完整 TRUSS 认证达到 **100 / 100**（`full TRUSS certification`）。 <!-- timefirst:evidence=matched-skillinject-certification-results~full-truss-certification -->
 
-<details><summary><strong>访问路径中的高阶关系</strong></summary>
+**限制。** 这项增益属于整套 `executor-dependent package`，不能把结果单独归因于技能表示或某一个检查器。 <!-- timefirst:caveat=package-and-executor-confounding~executor-dependent-package -->
 
-完整系统同时检索子任务与轨迹，融合超边，再用跨轨迹关系对技能排序。Qwen3 在 xBench / GAIA / WebWalkerQA 上分别得到 **52.00 / 36.97 / 50.59**；去掉超图后分别为 **41.00 / 35.76 / 44.71**。
+**地图。** `early_signal` — 这项结果落在写入 → 上线 / 治理边界：生成出合理文本不等于获得可复用能力，现有证据不足以改写持久地图。
 
-这项消融同时改变了访问流程。下一步需要固定任务分解、双路径检索、排序和维护，只替换表示方式。
-
-</details>
-
-### [When Your Agent Opens the Chat App: Agent-Controlled Search over Raw Chat Logs Rivals Structured Memory](papers/2026/2608.12888.md)
-`Retrieval & Access` · `raw` `timeline` · **4/5** · 2026-08-13
-
-ReFind 表明，结构化记忆需要击败的原始记录对照不应只是单次 BM25 检索，而应包括具有会话、时间和局部上下文控制的有状态迭代搜索。
-
-[论文](https://arxiv.org/abs/2608.12888) · [中文深读](papers/2026/2608.12888.zh.md) · [英文深读](papers/2026/2608.12888.md)
-
-<details><summary><strong>更强的原始记录搜索对照</strong></summary>
-
-ReFind 保留带时间戳的原始对话轮次，并提供多轮改写、会话融合、局部上下文、时间过滤和已读会话状态。论文在固定的 LongMemEval-S/M 上报告 **93.2 / 89.3**；generic-agentic BM25 为 **78.7 / 82.2**，one-search 对照为 **84.7 / 68.9**。
-
-这组结果抬高了语义预处理必须击败的基线。尚未解决的问题是：在语义/行动任务上匹配在线延迟、token 和完整的全生命周期成本后，原始状态搜索是否仍占优。
+**链接。** [论文](https://arxiv.org/abs/2608.17588) · [中文深读](papers/2026/2608.17588.zh.md) · [英文深读](papers/2026/2608.17588.md)
 
 </details>
 
-<a id="whats-changing"></a>
-<a id="changes"></a>
-## 最近真正发生了什么变化
+<a id="entry-2608-17534"></a>
+<details><summary><strong>2026-08-18 · ArborMem</strong> · 状态定位 <!-- timefirst:area=state-localization --> — 读取路径先识别当前活跃的历史分支，再恢复其 trajectory，最后补充检索。 <!-- timefirst:delta=localize-state-before-retrieval --></summary>
 
-| 变化 | 新证据 | 对研究设计的含义 |
-|---|---|---|
-| **衡量结构的价值，重点正从“是否包含关系”转向“是否改变可达性”。** | ReFind 抬高了原始搜索基线；CABLE 要求预存边到达宿主检索器原本漏掉的证据。 | 评估结构时，应明确它增加了哪种操作或可达性，以及相应代价。 |
-| **记忆的读取流程被进一步拆分。** | ArborMem 把状态定位放在检索前；QUMem 把面向使用方的状态重建放在检索后。 | `定位状态 → 检索证据 → 重建使用方状态` 应作为三个可独立消融的阶段。 |
-| **程序性记忆开始同时纳入学习、认证和治理。** | WER 用执行反馈学习写入策略；TRUSS 用运行时证据控制技能上线。 | 评估技能质量时，不能只看文本或任务成功率，还要区分技能编写策略学习、执行器、认证和维护。 |
-| **评估开始约束功能上线，而不只用于架构排名。** | D²ACCI 把无显著结果、受保护子集和轨迹可定位性纳入部署门槛。 | 分数上涨不足以支持组件归因；默认实验设计还应包含阶段归因和无回归要求。 |
+**问题。** 在长期交互中，Agent 能否先定位当前轮次要接续的历史轨迹，再恢复该分支并补充检索？最接近的对照是在同一流程中移除状态定位。 <!-- timefirst:question=localize-active-trajectory-before-retrieval -->
+
+**证据。** 在固定的 LongMemEval 子集上，移除状态定位后，30B 设置从 **82 降至 70**，4B 设置只从 **48 降至 46**，说明定位效果随模型变化（`model-dependent localization effect`）。 <!-- timefirst:evidence=localization-ablation-model-dependent~model-dependent-localization-effect -->
+
+**限制。** 该消融只支持状态定位边界，不能单独证明记忆森林表示（`forest representation not isolated`）；更便宜的状态索引仍是有力替代方案。 <!-- timefirst:caveat=forest-representation-not-isolated~forest-representation-not-isolated -->
+
+**地图。** `early_signal` — 这项结果在访问之前增加了状态定位边界；一项随模型变化的结果不足以升级持久地图节点。
+
+**链接。** [论文](https://arxiv.org/abs/2608.17534) · [中文深读](papers/2026/2608.17534.zh.md) · [英文深读](papers/2026/2608.17534.md)
+
+</details>
+
+<a id="entry-2608-16168"></a>
+<details><summary><strong>2026-08-17 · QUMem</strong> · 消费端状态重建 <!-- timefirst:area=consumer-state-reconstruction --> — 检索到的历史证据还要在检索后重建 query-conditioned 的当前用户状态。 <!-- timefirst:delta=retrieval-to-consumer-state-reconstruction --></summary>
+
+**问题。** 检索到证据之后，系统是否仍需显式重建与当前查询相关的用户状态？最接近的对照是在同一套分类型检索流程中移除重建步骤。 <!-- timefirst:question=reconstruct-current-user-state-after-retrieval -->
+
+**证据。** 在 PersonaMem + GPT-4o-mini 上，完整系统为 **61.02**，去掉情景记录后为 **58.38**，去掉分类型拆解后为 **57.11**，去掉重建后为 **54.51**；重建步骤带来的降幅最大（`reconstruction largest ablation`）。 <!-- timefirst:evidence=reconstruction-largest-ablation-on-personamem~reconstruction-largest-ablation -->
+
+**限制。** 由于没有匹配证据综合预算（`matched evidence synthesis budget`），部分重建增益可能来自更多下游计算，而非独立的状态抽象。 <!-- timefirst:caveat=retrieval-and-synthesis-budget-not-matched~matched-evidence-synthesis-budget -->
+
+**地图。** `early_signal` — 这项结果落在访问 → 使用方状态边界：检索到证据不等于已经可复用，仍需独立证据才能改写地图。
+
+**链接。** [论文](https://arxiv.org/abs/2608.16168) · [中文深读](papers/2026/2608.16168.zh.md) · [英文深读](papers/2026/2608.16168.md)
+
+</details>
+
+<a id="entry-2608-16114"></a>
+<details><summary><strong>2026-08-17 · HyperSkill</strong> · 程序性记忆结构 <!-- timefirst:area=procedural-memory-structure --> — 高阶 trajectory relation 作为同一 structural access package，共同参与 retrieval、skill ranking 与 maintenance。 <!-- timefirst:delta=higher-order-relations-in-access-package --></summary>
+
+**问题。** 轨迹之间的高阶关系能否实质改变程序性记忆的检索、技能排序和维护？最接近的对照是从同一系统中移除超图访问路径。 <!-- timefirst:question=higher-order-relations-in-skill-access -->
+
+**证据。** 超图访问路径消融（`hypergraph path ablation`）显示：Qwen3 在 xBench / GAIA / WebWalkerQA 上为 **52.00 / 36.97 / 50.59**，移除该路径后为 **41.00 / 35.76 / 44.71**。 <!-- timefirst:evidence=hypergraph-path-ablation-across-three-benchmarks~hypergraph-path-ablation -->
+
+**限制。** 这项消融同时改变了表示和访问流程，存在 `representation access confounded`；只有固定任务拆解、双路径检索、排序和维护，才能把差异归因于表示方式。 <!-- timefirst:caveat=representation-and-access-pipeline-confounded~representation-access-confounded -->
+
+**地图。** `early_signal` — 这项结果落在组织 → 访问 / 维护边界：当前证据支持整套结构化访问方案，不足以证明超图本身不可替代。
+
+**链接。** [论文](https://arxiv.org/abs/2608.16114) · [中文深读](papers/2026/2608.16114.zh.md) · [英文深读](papers/2026/2608.16114.md)
+
+</details>
+
+<a id="entry-2608-12888"></a>
+<details><summary><strong>2026-08-13 · ReFind</strong> · 原始状态检索 <!-- timefirst:area=raw-state-retrieval --> — 结构化记忆必须击败对 raw log 的 stateful iterative search，而不是只胜过 single-shot BM25 稻草人对照。 <!-- timefirst:delta=stronger-raw-control-for-structure --></summary>
+
+**问题。** 结构化记忆究竟应击败怎样的原始记录对照？ReFind 给出的最强相近方案是有状态的迭代搜索，它支持会话、时间、局部上下文操作，并记录已经查看的会话。 <!-- timefirst:question=strongest-raw-control-for-structured-memory -->
+
+**证据。** 在固定的 LongMemEval-S/M 上，ReFind 得到 **93.2 / 89.3**，通用 Agent BM25 为 **78.7 / 82.2**，单次搜索对照为 **84.7 / 68.9**，形成 `stateful raw-search advantage`。 <!-- timefirst:evidence=stateful-raw-search-outperforms-weaker-controls~stateful-raw-search-advantage -->
+
+**限制。** 语义和行动任务仍缺少严格匹配的在线延迟、token 用量与 `full lifecycle cost`，因此不能断言原始记录搜索普遍优于结构化记忆。 <!-- timefirst:caveat=semantic-tasks-and-lifecycle-cost-unmatched~full-lifecycle-cost -->
+
+**地图。** `early_signal` — 这项结果抬高了访问边界的原始记录基线，并收紧结构化方案的主张；单篇论文不能建立持久结论。
+
+**链接。** [论文](https://arxiv.org/abs/2608.12888) · [中文深读](papers/2026/2608.12888.zh.md) · [英文深读](papers/2026/2608.12888.md)
+
+</details>
+
+<a id="periods"></a><a id="changes"></a><a id="whats-changing"></a>
+## 7 天 / 30 天：记忆生命周期发生了什么变化
+
+> **时间口径：** 滚动窗口只按 `radar_published_at` 判断。上方八条迁移记录没有可重建的 Radar 接受时间，因此只作为领域地图的历史上下文，不支撑当前窗口判断。
+
+<a id="last-7-days"></a>
+### 过去 7 天：2026-08-14—2026-08-20
+
+- **`no_material_change` · Radar 接受时间目前没有可归因的新方向（memory Radar acceptance time）。** 支撑：**none**；置信度：**high**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（require native v2 times for period claims）：只有具备原生 v2 Radar 接受时间的记录才能支持滚动窗口判断；CABLE、D²ACCI、WER、TRUSS、ArborMem、QUMem、HyperSkill 与 ReFind 仍是记忆生命周期地图的历史上下文。精确合成时间：`2026-08-20T00:00:00Z`。 <!-- timefirst:direction key="memory-radar-acceptance-time" state="no_material_change" supports="none" confidence="high" implication="require-native-v2-times-for-period-claims" timing="radar_published_at" synthesized="2026-08-20T00:00:00Z" prior="none" -->
+
+<a id="last-30-days"></a>
+### 过去 30 天：2026-07-22—2026-08-20
+
+- **`no_material_change` · Radar 接受时间目前没有可归因的新方向（memory Radar acceptance time）。** 支撑：**none**；置信度：**high**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（require native v2 times for period claims）：只有具备原生 v2 Radar 接受时间的记录才能支持滚动窗口判断；这八条显式迁移记录可以解释生命周期边界，却不能回填成此窗口内的接受事件。精确合成时间：`2026-08-20T00:00:00Z`。 <!-- timefirst:direction key="memory-radar-acceptance-time" state="no_material_change" supports="none" confidence="high" implication="require-native-v2-times-for-period-claims" timing="radar_published_at" synthesized="2026-08-20T00:00:00Z" prior="none" -->
 
 时间视角：[周度](digests/README.md) · [月度](digests/monthly/2026-08.md) · [年度](digests/yearly/2026.md)
 
-<a id="research-map"></a>
-<a id="field-map"></a>
+<a id="field-map"></a><a id="research-map"></a>
 ## 领域地图
 
-| 阶段 | 核心问题 | 当前信号 |
-|---|---|---|
-| **Write** | 什么值得持久化？如何生成可复用产物？ | 粒度和写入策略的选择都取决于工作负载与反馈。 |
-| **Organize** | 哪些关系值得预先计算？ | 只有关系能扩展宿主接口的可达性时，成本才可能合理。 |
-| **State localization** | 当前轮次接续哪条历史轨迹？ | 在相关性检索之前，系统可能需要先定位当前交互状态。 |
-| **Access / admission** | 哪些内容应该被检索、扩展或拒绝进入上下文？ | 原始记录搜索、图扩展和准入属于不同操作。 |
-| **Consumer state** | 下游 Agent 最终应该看到什么？ | 检索到的证据可能仍需经过重建或重新绑定。 |
-| **Evolution / forgetting** | 哪类自适应状态应根据哪些反馈改变？ | 内容、写入/读取策略、关系和反馈界面需要分别考察。 |
-| **Governance / cost** | 哪些产物或功能可以上线？ | 认证、成对证据、溯源和全生命周期成本正成为一等约束。 |
+`经验 / 原始记录 → 写入 → 组织 → 状态定位 → 访问 / 准入 → 使用方状态 → 更新 / 演化 / 遗忘 → 治理 / 成本 / 溯源`
 
-[进入完整研究问题地图 →](categories/README.md) · [看这个方向如何被评价 →](https://github.com/H20Zhang/Agent-Benchmark-Radar#agent-memory)
+| 生命周期边界 | 核心问题 | 当前信号 |
+|---|---|---|
+| **写入（Write）** | 什么值得持久化？如何生成可复用产物？ | 记忆粒度与写入策略都应随工作负载和反馈变化。 |
+| **组织（Organize）** | 哪些关系值得预先计算？ | 预存关系只有改变宿主接口的证据可达性，才能抵消维护成本。 |
+| **状态定位** | 当前轮次要恢复哪条历史轨迹？ | 在判断内容相关性之前，可能要先定位当前交互状态。 |
+| **访问 / 准入** | 什么应该检索、扩展或拒绝进入上下文？ | 原始记录搜索、图扩展和准入判断是不同操作。 |
+| **使用方状态** | 下游 Agent 最终应该看到什么？ | 检索到的证据可能仍需重建或重新绑定。 |
+| **演化 / 遗忘** | 哪类自适应状态应该改变？ | 内容、读写策略、关系和反馈入口需要分开判断。 |
+| **治理 / 成本** | 哪些产物或功能可以上线？ | 认证、成对证据、溯源与全生命周期成本正成为一等约束。 |
+
+[进入完整研究问题地图 →](categories/README.md) · [看这个方向如何被评价 →](https://github.com/H20Zhang/Agent-Benchmark-Radar#benchmark-memory)
 
 <a id="reading-paths"></a>
 ## 阅读路径
@@ -167,22 +175,27 @@ ReFind 保留带时间戳的原始对话轮次，并提供多轮改写、会话�
 | 你想回答的问题 | 建议顺序 | 应该带走什么 |
 |---|---|---|
 | **结构何时值得额外成本？** | ReFind → CABLE → ArborMem → QUMem | 从原始记录基线、互补关系读到状态定位和面向使用方的状态重建，逐层检查每个阶段是否提供了无法低成本替代的操作。 |
-| **程序性记忆如何从产物变成可治理的能力？** | HyperSkill → WER → TRUSS | 表示/关系、技能编写策略学习和运行时认证分别对应不同问题。 |
+| **程序性记忆如何成为可治理的能力？** | HyperSkill → WER → TRUSS | 表示与关系、技能编写策略学习和运行时认证分别对应不同问题。 |
 | **如何对记忆功能做因果归因？** | D²ACCI → QUMem → ReFind | 先看阶段轨迹与上线门槛，再考察状态重建和原始记录对照如何改变归因。 |
 
 <a id="library"></a>
-## 研究资料库
+## Research Library
+
+按研究问题、研究脉络或年份查找长期资料；如果只知道问题、不知道论文名，从问题索引进入：
 
 - [中文研究资料库](library/README.md)
-- [English Research Library](library/README.en.md)
+- [英文研究资料库](library/README.en.md)
 - [设计锚点](papers/anchors.md)
 
-## 收录范围与贡献
+<a id="how-to-use"></a>
+## 如何使用
 
-收录标准：信息需要跨交互/推理步骤持久存在或被显式管理，并实质改变 Agent 后续行为。普通固定 RAG、单纯的长上下文/KV-cache 优化，以及与持久 Agent 状态无关的持续学习通常不在范围内。
+先扫时间线摘要；需要判断一项工作时，原地展开问题、对照、关键证据、限制和地图状态。看近期变化用 7 天 / 30 天综合，按研究问题追踪脉络则进入领域地图、阅读路径或研究资料库。
 
-负结果、基线反转和不利的成本/归因证据，只要会改变研究结论，就会保留。
+## Scope / About / Contributing
 
-[推荐论文](https://github.com/H20Zhang/Agent-Memory-Radar/issues/new?template=suggest-paper.yml) · [报告勘误](https://github.com/H20Zhang/Agent-Memory-Radar/issues/new?template=correction.yml) · [贡献指南](CONTRIBUTING.md)
+收录标准：信息需要跨交互或推理步骤持久存在，或被系统显式管理，并实质改变 Agent 的后续行为。普通固定式 RAG、单纯的长上下文 / KV-cache 优化，以及与持久 Agent 状态无关的持续学习通常不在范围内。
 
-相关 Radar：[Agent Benchmark Radar](https://github.com/H20Zhang/Agent-Benchmark-Radar) · **Agent Memory** · [Agentic RAG](https://github.com/H20Zhang/Agentic-RAG-Radar) · [Data Agent](https://github.com/H20Zhang/Data-Agent-Radar)
+这个仓库是一张**经过筛选的研究地图，不是关键词信息流**。负结果、基线反转以及不利的成本或归因证据都会保留。
+
+[Suggest a paper](https://github.com/H20Zhang/Agent-Memory-Radar/issues/new?template=suggest-paper.yml) · [Report a correction](https://github.com/H20Zhang/Agent-Memory-Radar/issues/new?template=correction.yml) · [Contribution guide](CONTRIBUTING.md)

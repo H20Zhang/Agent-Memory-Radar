@@ -1,6 +1,6 @@
 # Curation Protocol
 
-Agent Memory Radar is maintained as a **reader-facing living survey backed by auditable structured records**. Curated updates are written directly to `main`; repository automation exists only as a consistency guardrail.
+Agent Memory Radar is maintained as a **reader-facing living survey backed by auditable structured records**. The Daily Agent defined by [`docs/RADAR_AGENT_PROTOCOL.md`](docs/RADAR_AGENT_PROTOCOL.md) and [`docs/DAILY_WORKFLOW.md`](docs/DAILY_WORKFLOW.md) is the normal editor and only writer. Research roles may return evidence, but only the orchestrator mutates repository or GitHub state. Candidates, blocked evidence, and scheduler state remain private until the evidence and skeptical-audit gates are complete.
 
 ## Public surface policy
 
@@ -10,33 +10,35 @@ Agent Memory Radar is maintained as a **reader-facing living survey backed by au
 
 Default order:
 
-1. **Latest Papers** — the newest accepted evidence is the first substantive section.
-2. **What’s Changing** — weekly/monthly/yearly compactions; synthesis before chronology.
-3. **Reading Paths** — about three short paths plus an optional “if you only read three papers” foldout.
-4. **Research Map** — durable Key Anchors followed by Research Problems and their current arguments.
-5. **How to Use This Radar** — explain the 30-second / 60-second / deep-dive layers.
-6. **What Counts as Agent Memory? / About / Contributing** — compact scope, evidence standard, citation/reuse, and contribution entry points.
+1. **Latest Timeline** — every native-v2 acceptance in the current 30-day Radar window whose `radar_published_at` is no later than the exact public synthesis cutoff shared with both rolling periods, ordered by full timestamp, followed by the fixed eight legacy compatibility entries; no fixed item cap.
+2. **7-day / 30-day synthesis** — exact rolling windows and direction-level changes before the durable map.
+3. **Field Map** — durable lifecycle/problem structure, changed only through the map gate.
+4. **Reading Paths** — about three short question-led paths.
+5. **Research Library** — complete history and alternate routes by problem, line, and year.
+6. **How to Use / Scope / About / Contributing** — compact reading-depth, scope, evidence, citation/reuse, and contribution guidance.
 
 The first screenful may include one concise current-field thesis and a light star/cross-radar call to action. Optimize discoverability naturally around terms such as agent memory, LLM agents, long-term memory, procedural memory, benchmarks, and memory systems; never turn the page into a keyword list.
 
 Do not expose scheduling, subagent internals, schema mechanics, binary-upload details, prompt text, backfill queues, or operational provenance on README.
 
-### Latest-paper presentation
+### Timeline presentation
 
-Use progressive disclosure:
+Use one `<details>` disclosure per accepted identity:
 
-- visible by default: title, primary category/tags, importance, date, a 1–2 sentence **Research take**, and verified paper/code/research-note links;
-- inside `<details><summary><strong>Understand this paper in 60 seconds</strong></summary>`: **Problem**, **Core mechanism**, a compact memory/data/control loop when useful, **Compared with**, **Evidence to remember**, and **Open question**.
+- closed summary: `displayed date · identity · lifecycle/problem label — one-sentence research delta`;
+- open body: **Question**, including the closest lifecycle-matched control; **Evidence**; **Caveat**; **Map** with `map_delta`; and verified **Links** to the primary source and local deep notes.
 
-Keep roughly **8–10 latest papers**. The foldout should reveal the real delta without duplicating the full research note. Prefer one decisive ablation/result and one assumption that could change the importance judgment.
+Timeline has no fixed count cap: show every native-v2 record whose `radar_published_at` falls in the current 30-day window and is no later than the shared exact public synthesis cutoff, then the fixed eight compatibility identities in their preserved order. Those explicit legacy records retain their honest paper publication dates under the section-level migration notice. Do not infer or fabricate `radar_published_at`, and do not silently add or remove compatibility identities.
 
-### What’s Changing / compactions
+### Period synthesis / compactions
 
-The public archive deliberately becomes coarser with time:
+The rolling 7-day and 30-day sections state exactly one visible inclusive window and the exact UTC synthesis timestamp shared with the Timeline cutoff. Native membership and support use only `radar_published_at` values no later than that same cutoff; legacy records may provide historical Field Map context but never rolling support. Every direction binds visible prose to stable bilingual metadata for its key, state, ordered canonical supports, confidence enum, implication witness, Radar timing basis, synthesis timestamp, and prior-map evidence. Every cited native support under direction key `K` must carry `K` in its canonical `direction_keys`. One bound native record permits only an `early_signal`-backed `new_signal`; `reinforced` requires two distinct in-window native records bound to the exact block key. `splits` and `retires` each require at least one bound in-window native support whose `map_delta` matches the state. Durable directions cite independent prior Field Map evidence; `no_material_change` has zero support and `prior=none`.
+
+Closed-period digests deliberately become coarser with time:
 
 `recent month → weekly` · `recent quarter → monthly` · `all years → yearly`
 
-Show every available weekly compaction from roughly the last 31 days, monthly maps from the last 3 calendar months, and all sufficiently covered yearly maps. Each entry must state a research conclusion, not merely link a file. Open months/years must be labeled rolling or incomplete.
+Show every available weekly compaction from roughly the last 31 days, monthly maps from the last 3 calendar months, and all sufficiently covered yearly maps. Each entry must state a research conclusion, not merely link a file. Rolling windows are mutable projections; closed ISO weeks and calendar months are immutable period identities. Open months/years must be labeled rolling or incomplete.
 
 ### Reading Paths and Research Map
 
@@ -69,18 +71,18 @@ Typical in-scope changes affect one or more of:
 
 Do not include generic fixed RAG, generic long-context modeling, KV-cache optimization, or unrelated continual learning unless persistent agent memory is central to the research contribution.
 
-## Multi-role daily process
+## Daily Agent research process
 
-Use independent roles when the execution environment supports them. Their judgments should be formed separately before synthesis.
+Use independent roles when the execution environment supports them. Their judgments should be formed separately before synthesis, and they never publish directly.
 
 1. **Discovery Agent** — broad overlapping recent discovery; optimize recall and search beyond the literal phrase `agent memory`.
 2. **Relevance / Taxonomy Agent** — decide semantic inclusion and assign one primary research problem plus orthogonal tags.
 3. **Research Analyst** — read the full paper deeply enough to identify the mechanism, memory lifecycle, comparison, evidence, limitations, and provenance.
 4. **Skeptical Reviewer** — challenge novelty, closest comparison, causal attribution, importance, resource matching, unsupported claims, duplicate versions, and link quality.
 5. **Visual Editor / Visual QA Reviewer** — only for required visuals; ground briefs in the full paper and reject generic or fabricated images.
-6. **Research Editor** — publish only after seeing disagreements and corrections from the independent roles.
+6. **Research Editor** — return a publication recommendation only after seeing disagreements and corrections from the independent roles; the Daily Agent orchestrator remains the writer.
 
-Relevant papers that are not sufficiently reviewed remain deferred/backfill candidates rather than being silently rejected.
+Relevant papers that are not sufficiently reviewed remain private deferred/backfill candidates rather than being silently rejected or exposed as public pending entries.
 
 ## Canonical paper contract
 
@@ -92,6 +94,8 @@ For every accepted paper:
 4. keep relevance separate from importance;
 5. preserve provenance and add code/project links only when verified;
 6. propagate a material correction upward to category pages, anchors, README, and affected compactions.
+
+For records accepted at or after the v2 cutover, distinguish `published_at` (earliest public version), `first_seen_at` (first Radar observation), and `radar_published_at` (first accepted Radar publication), and assign `time_provenance` plus `map_delta`. Native timestamps are strict UTC and preserve event order. A native-v2 record cited as rolling-period support also declares a non-empty, unique stable-token `direction_keys` list containing the exact key of every direction it supports; unsupported native records may omit it. Existing field-absent `published` / `first_seen` records remain implicit legacy. Only the fixed eight Timeline compatibility identities are explicit `legacy_unknown` records with honest `published_at` precision and null discovery/Radar times; neither kind of legacy record carries `direction_keys`, so do not expand that migration or fabricate a bulk timestamp fill.
 
 ### Researcher-facing paper-note interface
 
@@ -109,7 +113,7 @@ High-visibility notes—at minimum papers currently exposed in README Latest Pap
 10. **Why it matters** as the field-level implication;
 11. **Related reading** with 2–3 links and one sentence explaining the relationship.
 
-Do not put visual-generation failures, scheduler state, upload blockers, or other maintenance-only status on researcher-facing paper notes. Those remain in canonical JSON and daily provenance. Older archival notes may be backfilled gradually; do not rewrite them merely for cosmetic uniformity.
+Do not put visual-generation failures, scheduler state, upload blockers, or other maintenance-only status on researcher-facing paper notes. Accepted facts remain in canonical JSON; private workflow state remains only under ignored `.radar-private/` or in ephemeral Agent memory. Older archival notes may be backfilled gradually; do not rewrite them merely for cosmetic uniformity.
 
 ## Evidence discipline
 
@@ -144,13 +148,15 @@ Follow [`VISUAL_POLICY.md`](VISUAL_POLICY.md) and [`assets/README.md`](assets/RE
 
 ## Compaction
 
-Follow [`COMPACTION.md`](COMPACTION.md). Weekly/monthly/yearly reports are synthesis layers, not repeated paper summaries. A one-paper observation must be labeled an early signal.
+Follow [`COMPACTION.md`](COMPACTION.md). Rolling periods and weekly/monthly/yearly reports are synthesis layers, not repeated paper summaries. Re-read canonical records and deep notes for load-bearing claims: weekly prose may be used as an index but must never be recursively summarized into monthly evidence. A one-paper observation must be labeled an early signal.
 
 ## Validation and final QC
 
-Before completing a maintenance run, reason against `scripts/validate.py` and the repository contracts. Check schema/taxonomy consistency, duplicate IDs/versions, paper-note existence, relative links, visual paths/embeds, important-paper visual blockers, README section order/bounds, researcher-facing paper-note structure, and due compactions.
+Before completing a maintenance run, run the unit, canonical, reading, and repository validators. Check schema/taxonomy consistency, duplicate IDs/versions, paper-note existence, relative links, visual paths/embeds, important-paper visual blockers, Timeline structure and order without a fixed cap, researcher-facing paper-note structure, bilingual semantic parity, exact period windows, and due closed compactions.
 
-Daily provenance belongs under `runs/daily/YYYY/MM/DD.md` and should remain compact.
+## No public operational run logs
+
+The repository publishes no Daily Agent operational log. Accepted provenance is the canonical record, complete bilingual Timeline, rolling periods, due closed digest, gated map update, and atomic Git commit. Private scouting, candidate, lane, retry, dissent, and validation traces belong only under ignored `.radar-private/runs/<run_id>.json` or in ephemeral Agent memory; [`runs/README.md`](runs/README.md) is static policy only.
 
 ## Licensing and contributions
 
