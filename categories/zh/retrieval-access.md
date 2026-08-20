@@ -1,37 +1,33 @@
 # Retrieval & Access
 
-[← Research Map](../README.md) · [English](../retrieval-access.md) · [首页](../../README.md)
+[English](../retrieval-access.md) · [← Research Map](../README.md) · [Research Library](../../library/README.md)
 
-> **核心问题：** Memory 什么时候应保持 raw、什么时候预建 structure、什么时候即使 relevant 也不该进入当前 context？
+> **Core question：** Memory 应该先定位哪段 historical state、再取哪些 evidence；哪些 relation 必须预建，哪些在线 search 就能恢复？
 
 ## 当前判断
 
-**Structure 必须先击败 competent raw-state access。** ReFind 表明，raw chat + session/time/local-context controls + result-conditioned iteration 可以回收很多过去被归因给 semantic preprocessing 的收益。
+**Raw-state control 是起点，不是终点。** ReFind 说明 competent raw archive + stateful search 可以吃掉很多过去归因给 semantic preprocessing 的收益；CABLE 则给 structure 一个更严格的存在理由：stored edge 应改变 host retriever 的 **reachability**，而不是复制 semantic neighborhood。
 
-但这不等于 structure 没价值。RippleMem 给出相反边界：预建 association 如果让 first-hop memory 变成 missing-evidence search 的 anchor，并在 matched recollection control 下仍有剩余 gain，那么 structure 提供的是一个额外 read operator，而不只是“更像 query 的 representation”。
+ArborMem 又把 read path 向前拆了一层：当历史中存在多个 interleaved/resumable trajectories 时，系统可能必须先回答“当前 turn 接续哪条 state”，再谈 evidence relevance。
+
+因此更稳定的分解是：
+
+`state localization → host/raw retrieval → relation/expansion/admission → evidence assembly`
 
 ## Strongest signal
 
-现在更稳定的 decomposition 是：
+- **ReFind：** strong raw interface 明显强于 weak one-shot control。
+- **CABLE：** 在 fixed host/final evidence budget 下，complementary linking 仍有增益，说明 graph edge 可以通过改变 reachability 赚回一部分成本。
+- **ArborMem：** 去掉 state localization 在较强模型上造成明显下降，说明“relevant to which state?” 是独立问题。
 
-`representation × access interface × iteration × admission × evidence budget`
+## Biggest unresolved question
 
-而不是 `flat memory vs graph memory`。
+哪些关系/状态必须 write-time materialize，哪些可以 query-time 重建？如果把 **construction inference + online search + latency + context** 全部匹配，CABLE/ArborMem 这样的预建结构还剩多少优势？
 
-同样 relevant 的 memory 也未必值得注入。Admission/abstention 应单独看 marginal utility，而不能把 retrieval relevance 当作 downstream usefulness。
+## Next decisive evidence
 
-## 最大未解问题
+同一历史 substrate + 同一 model + 同一 total lifecycle budget，分别比较：
 
-哪些 relation 必须离线预建，哪些可以在线通过 search/reasoning 重构？不同 workload 下，预计算 structure 的 build/update cost 与 query-time iterative search 的 token/latency cost 如何换算？
+`raw stateful search → complementary graph expansion → state localization + raw search → state localization + structured expansion`
 
-## 下一项 decisive evidence
-
-同一 raw history、同 model、同 online latency/token/evidence budget 下比较：
-
-`raw iterative search → associative expansion → structure-aware routing → admission-aware retrieval`
-
-同时把 offline construction/update cost 纳入 lifecycle accounting。
-
-## 继续读
-
-[ReFind 中文笔记](../../papers/2026/2608.12888.zh.md) · [RippleMem 中文笔记](../../papers/2026/2608.13334.zh.md) · [Skill2Query 中文笔记](../../papers/2026/2608.16071.zh.md)
+并在 long-horizon acting tasks 上测错误 routing/edge 是否产生不可逆 side effects。
