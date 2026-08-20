@@ -20,4 +20,6 @@ jobs:
       - name: Install validation dependencies
         run: pip install -r requirements.txt
       - name: Validate canonical records
-        run: python scripts/validate.py
+        run: python scripts/validate_canonical.py
+      - name: Validate bilingual reading surfaces
+        run: python scripts/validate_reading.py
