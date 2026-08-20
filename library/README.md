@@ -36,7 +36,7 @@
 
 ### 4. Fixed memory unit → adaptive write contract
 
-[LeanMem](../papers/2026/2608.03463.md) → [FTA-Mem](../papers/2026/2608.16303.zh.md) → [LycheeMemory V2](../papers/2026/2608.09424.md)
+[LeanMem](../papers/2026/2608.03463.md) → [FTA-Mem](../papers/2026/2608.16303.zh.md) → [LycheeMemory V2](../papers/2026/2608.12990.md)
 
 **带走的结论：** write granularity 和 preservation/update semantics 更像 workload-dependent control，而不是一次定死的 schema 选择。
 
