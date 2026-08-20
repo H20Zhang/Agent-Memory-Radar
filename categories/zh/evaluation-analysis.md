@@ -1,35 +1,31 @@
 # Evaluation & Analysis
 
-[← Research Map](../README.md) · [English](../evaluation-analysis.md) · [首页](../../README.md)
+[English](../evaluation-analysis.md) · [← Research Map](../README.md) · [Research Library](../../library/README.md)
 
-> **核心问题：** 什么样的 memory 才真正值得部署？Retrieval score、task success、lifecycle cost、authority 与 safety 应如何拆开？
+> **Core question：** 什么证据足以说明一个 memory feature 真正有用，而且值得被部署？
 
 ## 当前判断
 
-**“Good memory = retrieve the right item”已经不够。** Demystifying Agent Skills 显示 exact retrieval label 与 actual use / downstream utility 可以明显脱钩；authority/provenance 与 descendant-state work 又说明，语义正确的 memory 也可能因为权限、来源或后代状态而不应该被使用。
+Endpoint accuracy / recall 太粗。**Demystifying Agent Skills** 已经说明 representation、retrieval、selection、actual use 与 downstream success 可以明显解耦；**D²ACCI** 再向工程决策推进一步：feature promotion 需要 paired evidence、protected slices、stage-localizable traces 与明确 gate，而不是“平均分涨了”。
 
-因此 deployment-facing evaluation 至少要看：
+这意味着 memory evaluation 至少要同时回答：
 
-`representation → retrieval → selection/invocation → actual use → downstream utility → lifecycle cost → provenance/authority → descendant effects`
+`哪个 stage 变了？→ gain 是否 paired/causal？→ 哪些 slice 回退？→ lifecycle cost 多大？→ evidence 是否足以 promotion？`
 
 ## Strongest signal
 
-同一 source experience 换成不同 procedural representation，最终 utility 会变化；skill pool 增长后 retrieval/use precision 快速下降，但 task success 不一定同比下降。这说明“检索到 ground-truth item”并不能充分描述 memory 对 agent 的实际作用。
+D²ACCI 中 BM25/RRF 这种直觉上合理的改动，因为 paired result 不显著而只保留为 feature flag；trace-rich audit 的 root-cause agreement 也明显高于 result-only artifact。
 
-同样，construction/indexing/write cost 与 serving/retrieval cost 如果不放进同一 horizon，短 benchmark 很容易把昂贵 memory 看成“免费”。
+这比再多一个 architecture leaderboard 更有用：**null result 与 rejected intervention 也成为可复用的研究/工程知识。**
 
-## 最大未解问题
+## Biggest unresolved question
 
-能否建立一个不把所有维度压成单一 opaque score 的 evaluation vector？特别是 long-running acting agent 里，memory 可能带来延迟效应、不可逆 action、权限变化、revocation 与 unsafe descendant state。
+Trace coverage 与 diagnostic metric 本身会奖励 instrumentation；如何证明这些 protocol 能预测真实 deployment utility，而不只是更容易解释 benchmark failure？
 
-## 下一项 decisive evidence
+## Next decisive evidence
 
-长期 acting-agent trace，使用 matched：
+在多个独立 memory stacks 上复用同一个 promotion protocol，并追踪：
 
-`no memory / raw history / alternative representation / governed memory`
+`benchmark decision → offline replay → online behavior / regression / cost`
 
-并做 stage-level attribution：retrieval、invocation、actual use、utility、cost、provenance、authority、revocation 与 downstream action。
-
-## 继续读
-
-[Demystifying Agent Skills 中文笔记](../../papers/2026/2608.14036.zh.md) · [Agent Benchmark Radar](https://github.com/H20Zhang/Agent-Benchmark-Radar)
+如果 stage-level gate 对真实 deployment failure 没有预测力，就不能把“更可解释”误当成“更可靠”。
