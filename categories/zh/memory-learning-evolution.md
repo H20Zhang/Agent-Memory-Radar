@@ -1,35 +1,31 @@
 # Memory Learning & Evolution
 
-[← Research Map](../README.md) · [English](../memory-learning-evolution.md) · [首页](../../README.md)
+[English](../memory-learning-evolution.md) · [← Research Map](../README.md) · [Research Library](../../library/README.md)
 
-> **核心问题：** 到底哪一种 persistent/adaptive state 应该 evolve？系统依据什么 feedback 知道自己该改什么？
+> **Core question：** Memory 系统到底应该让什么 evolve——persistent content、relation、writer/read policy，还是 artifact promotion/governance？
 
 ## 当前判断
 
-“Self-evolving memory”太容易把多个变量混在一起。至少要拆成：
+“Self-evolving memory” 这个标签太粗。最近的工作已经把 adaptive state 拆成至少三类：
 
-`what state evolves × feedback surface × update rule × access policy × governance × transfer`
+- **HyperSkill：** relation structure 真正进入 retrieval/ranking/maintenance。
+- **WER：** 从 execution feedback 学 **skill-writer policy**，而不是只改当前 artifact。
+- **TRUSS：** 不直接学 writer，而是用 static + runtime evidence 决定 candidate skill 是否可以被 promote 为 persistent capability。
 
-SkillEvo 主要改变 feedback surface；ERSkill 把 read policy/router 本身变成可演化 state；HyperSkill 则让 relational structure 同时进入 retrieval 和 maintenance。
+SkillEvo / ERSkill 则分别提醒：feedback surface 与 read policy evolution 也是独立变量。
 
 ## Strongest signal
 
-SkillEvo 的 matched feedback comparison 表明，multi-turn interaction 在 single-turn QA 已趋于饱和后仍能持续暴露可修复 defect。HyperSkill 又说明 representation 只有在 relation 真正参与 read/update operator 时才值得额外复杂度。
+WER 的 matched untrained-optimizer control 说明，学习 writer policy 本身能产生明显增益；TRUSS 的 detection ladder 说明，只做 LLM/static inspection 仍会漏掉 runtime behavior。两者共同表明：**artifact generation、writer learning、execution feedback、promotion gate 不应被打包成一个“skill memory”模块。**
 
-因此“多存经验 + 反复 reflection”并不是一个足够精确的 research variable。
+## Biggest unresolved question
 
-## 最大未解问题
+这些 evolved artifacts / policies 是否能跨 executor、domain 与 skill-library scale 稳定迁移？如果 verifier/rollout 很贵，learning/certification 的 break-even point 在哪里？
 
-Evolved artifact / policy / structure 是否能跨 consumer model、toolset、domain 与 workload transfer？如果只能在原 simulator/benchmark 上越调越好，那么 rollout 与 maintenance cost 很可能只是过拟合成本。
+## Next decisive evidence
 
-## 下一项 decisive evidence
+固定 executor、task distribution 与 skill format，独立变化：
 
-在同一 base memory 与 budget 上独立变化：
+`writer training × feedback richness × relation structure × runtime certification × maintenance budget`
 
-`feedback richness → representation → update rule → read-policy evolution → governance`
-
-然后做 cross-domain / cross-model transfer，并把 rollout、edit、maintenance、regression/bloat 一起计费。
-
-## 继续读
-
-[SkillEvo 中文笔记](../../papers/2026/2608.13120.zh.md) · [HyperSkill 中文笔记](../../papers/2026/2608.16114.zh.md) · [ERSkill](../../papers/2026/2608.12720.md)
+同时报告 task utility、regression、library bloat、rollout/verifier cost 与 cross-domain transfer。
