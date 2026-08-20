@@ -11,20 +11,21 @@ from urllib.parse import unquote, urlsplit
 import jsonschema
 import yaml
 
+from validate_reading import validate_memory_registry
+
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "data" / "paper.schema.json"
 PAPERS_DIR = ROOT / "data" / "papers"
 README = ROOT / "README.md"
 
 README_SECTIONS = [
-    "## Latest Papers",
-    "## What’s Changing",
-    "## Reading Paths",
-    "## Research Map",
-    "## How to Use This Radar",
-    "## What Counts as Agent Memory?",
-    "## About the Radar",
-    "## Contributing",
+    "## Latest Timeline",
+    "## 7 天 / 30 天",
+    "## 领域地图",
+    "## 阅读路径",
+    "## Research Library",
+    "## 如何使用",
+    "## Scope / About / Contributing",
 ]
 
 LATEST_NOTE_HEADINGS = [
@@ -47,9 +48,9 @@ CATEGORY_PAGES = {
 }
 
 MARKDOWN_LINK_RE = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
-LATEST_NOTE_RE = re.compile(
-    r"^### \[[^\]]+\]\((papers/\d{4}/[\d.]+\.md)\)",
-    flags=re.MULTILINE,
+ENTRY_ANCHOR_RE = re.compile(r'<a id="entry-([^"\n]+)"></a>')
+TIMELINE_NOTE_RE = re.compile(
+    r"\[[^\]]+\]\((papers/\d{4}/[\d.]+\.md)\)"
 )
 
 
@@ -101,8 +102,8 @@ def check_repo_relative_links(errors: list[str]) -> None:
                 error(errors, f"{doc.relative_to(ROOT)}: broken relative link: {target}")
 
 
-def validate_latest_note_style(errors: list[str], latest: str) -> None:
-    note_paths = LATEST_NOTE_RE.findall(latest)
+def validate_latest_note_style(errors: list[str], timeline: str) -> None:
+    note_paths = TIMELINE_NOTE_RE.findall(timeline)
     for relative in note_paths:
         path = ROOT / relative
         if not path.exists():
@@ -138,26 +139,36 @@ def validate_readme(errors: list[str]) -> None:
     if len(valid_positions) == len(positions) and valid_positions != sorted(valid_positions):
         error(errors, "README.md: reader-facing sections are out of canonical order")
 
-    latest_start = text.find("## Latest Papers")
-    latest_end = text.find("## What’s Changing")
-    if 0 <= latest_start < latest_end:
-        latest = text[latest_start:latest_end]
-        count = len(re.findall(r"^### \[", latest, flags=re.MULTILINE))
-        if not 8 <= count <= 10:
-            error(errors, f"README.md: Latest Papers should contain 8–10 entries, found {count}")
-        if "**AI take:**" in latest:
+    timeline_start = text.find('<a id="timeline"></a>')
+    timeline_end = text.find('<a id="periods"></a>')
+    if 0 <= timeline_start < timeline_end:
+        timeline = text[timeline_start:timeline_end]
+        identities = ENTRY_ANCHOR_RE.findall(timeline)
+        if not identities:
+            error(errors, "README.md: Timeline must contain at least one entry disclosure")
+        details_count = len(re.findall(r"<details(?:\s|>)", timeline, flags=re.IGNORECASE))
+        if details_count != len(identities):
+            error(
+                errors,
+                "README.md: every Timeline identity must have exactly one details disclosure",
+            )
+        if "**AI take:**" in timeline:
             error(errors, "README.md: use 'Research take' rather than 'AI take' on the public research surface")
-        validate_latest_note_style(errors, latest)
-
-    anchors_start = text.find("### Key Anchors")
-    anchors_end = text.find("### Research Problems")
-    if 0 <= anchors_start < anchors_end:
-        anchors = text[anchors_start:anchors_end]
-        count = len(re.findall(r"^\| [^|]+ \| \*\*\[", anchors, flags=re.MULTILINE))
-        if not 5 <= count <= 8:
-            error(errors, f"README.md: Key Anchors should contain 5–8 design points, found {count}")
+        validate_latest_note_style(errors, timeline)
     else:
-        error(errors, "README.md: Research Map must contain Key Anchors before Research Problems")
+        error(errors, "README.md: Timeline must precede the periods section")
+
+    field_start = text.find('<a id="field-map"></a>')
+    field_end = text.find('<a id="reading-paths"></a>')
+    if 0 <= field_start < field_end:
+        field_map = text[field_start:field_end]
+        boundary_count = len(
+            re.findall(r"^\| \*\*[^|]+\*\* \|", field_map, flags=re.MULTILINE)
+        )
+        if boundary_count < 5:
+            error(errors, "README.md: Field Map must retain the lifecycle boundary map")
+    else:
+        error(errors, "README.md: Field Map must precede Reading Paths")
 
     if "dashboard" in text.lower() and "not a dashboard" not in text.lower():
         error(errors, "README.md: public surface should not present itself as a dashboard")
@@ -210,6 +221,7 @@ def main() -> int:
     }
 
     seen_ids: set[str] = set()
+    records: list[dict[str, object]] = []
     paths = sorted(PAPERS_DIR.glob("*.json")) if PAPERS_DIR.exists() else []
 
     for path in paths:
@@ -218,6 +230,7 @@ def main() -> int:
         except Exception as exc:
             error(errors, f"{path.relative_to(ROOT)}: invalid JSON: {exc}")
             continue
+        records.append(record)
 
         record_errors = sorted(validator.iter_errors(record), key=lambda e: list(e.path))
         for exc in record_errors:
@@ -272,6 +285,9 @@ def main() -> int:
                     error(errors, f"{path.relative_to(ROOT)}: generated visual asset missing: {visual_path}")
                 if note_text and asset.name not in note_text:
                     error(errors, f"{path.relative_to(ROOT)}: paper note does not embed generated visual {asset.name}")
+
+    for item in validate_memory_registry(records):
+        error(errors, item)
 
     validate_readme(errors)
     validate_category_style(errors)

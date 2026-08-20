@@ -1,18 +1,21 @@
 # Research Compaction Protocol
 
-Agent Memory Radar treats curation as a **research-memory hierarchy**, not an append-only stream of paper summaries. Compaction should preserve disagreement, evidence status, and causal uncertainty while removing repeated detail.
+Agent Memory Radar treats curation as a **research-memory hierarchy**, not an append-only stream of paper summaries. The Daily Agent is the normal editor and only writer for rolling synthesis and closed digests. Compaction should preserve disagreement, evidence status, and causal uncertainty while removing repeated detail.
 
 ## Levels
 
 | Level | Persistent artifact | Purpose | What must not be lost |
 |---|---|---|---|
 | **L0 · Paper records** | `data/papers/*.json` + `papers/YYYY/*.md` | Canonical facts, provenance, classification, paper-level interpretation, visual publication state. | links, evidence, uncertainty, corrections |
-| **L0-log · Daily runs** | `runs/daily/YYYY/MM/DD.md` | Compact history of accepted/deferred/corrected work. | decision history, edge cases, blockers |
 | **L1 · Weekly** | `digests/weekly/YYYY-Www.md` | Identify local research deltas, disagreements, and reading priority. | negative results, competing explanations |
 | **L2 · Monthly** | `digests/monthly/YYYY-MM.md` | Rebuild the field map and causal model. | weakening claims, open problems, reinterpreted anchors |
 | **L3 · Yearly** | `digests/yearly/YYYY.md` | Preserve only durable shifts and evidence standards. | changes of mind, failed ideas, durable trade-offs |
 
 ## Public time hierarchy
+
+The README contains two mutable, exact inclusive windows: the current 7-day and 30-day syntheses. They may change on any material Daily Agent run and always state exactly one visible range plus the exact UTC synthesis timestamp shared with the Timeline cutoff. Native membership and support use only `radar_published_at` values no later than that same cutoff; legacy evidence remains context. These are reader projections, not immutable archives.
+
+Closed periods are different. On the first successful run after an ISO week or calendar month closes, the Daily Agent writes the one idempotently named digest for that complete period. Closed digests never absorb later records whose `radar_published_at` falls outside the period; corrections revise the affected evidence transparently rather than changing period identity.
 
 The reader-facing archive deliberately loses temporal resolution as work ages:
 
@@ -21,6 +24,10 @@ The reader-facing archive deliberately loses temporal resolution as work ages:
 - **All sufficiently covered years → yearly.**
 
 Lower-level files remain in the repository even after they age out of primary navigation. Active months and years may be explicitly **rolling**; never imply complete historical coverage from partial backfill.
+
+## No public operational run logs
+
+Compaction never consumes or emits a committed Daily Agent run log. Accepted outcomes persist in canonical records, the complete Timeline, rolling periods, due closed digests, gated maps, and atomic Git history. Private candidate, lane, retry, dissent, and validation traces stay only under ignored `.radar-private/` or in ephemeral Agent memory; [`runs/README.md`](runs/README.md) is static policy only.
 
 ## Editorial principle
 
@@ -32,7 +39,7 @@ The report should be shorter than its sources but harder to write. A paragraph p
 
 ## Weekly compaction
 
-After an ISO week closes, synthesize the accepted papers from that week into one research argument. The report should contain:
+After an ISO week closes, synthesize records whose `radar_published_at` falls inside that complete ISO week into one research argument. Legacy records with unknown Radar acceptance time may provide context but cannot be silently counted as new period evidence. The report should contain:
 
 1. **Week thesis** — one falsifiable statement about what changed.
 2. **2–4 design-space changes** — supported by multiple papers; a one-paper observation must be labeled **early signal**.
@@ -46,9 +53,9 @@ Adjacent papers may be used as context but must not be silently counted as part 
 
 ## Monthly compaction
 
-A monthly map operates one abstraction level higher. During an open month it may be **rolling**, but new evidence should rewrite the map rather than append another chronological paragraph.
+A monthly map operates one abstraction level higher. The README 30-day view is rolling; a monthly digest uses a closed calendar-month identity. An explicitly open historical month may be **rolling**, but new evidence should rewrite the map rather than append another chronological paragraph.
 
-Synthesize weekly compactions **plus canonical records** into:
+Re-read canonical records and deep notes in the month, using weekly compactions only as indexes. Never summarize weekly prose as evidence for a monthly claim. Synthesize the primary evidence into:
 
 - older/default assumptions → current movement;
 - persistent vs weakening themes;
@@ -57,7 +64,7 @@ Synthesize weekly compactions **plus canonical records** into:
 - concrete falsification conditions;
 - a minimal researcher reading path.
 
-Weekly reports may be used as an index only. Re-ground load-bearing claims in canonical paper records/notes.
+Weekly reports may be used as an index only. Re-ground every load-bearing claim in canonical paper records/notes; recursive summary evidence is forbidden at every compaction level.
 
 ## Yearly compaction
 
@@ -84,7 +91,7 @@ When independent roles are supported:
 | **Clusterer / Field Mapper** | Group papers by actual memory-control delta and propose a field map. | keyword similarity, fashionable naming |
 | **Evidence Auditor** | Compare baselines, evidence, ablations, calls/tokens/latency, and negative results. | causal over-attribution |
 | **Trend Skeptic** | Construct the strongest alternative explanation. | several similarly framed papers being mistaken for a durable shift |
-| **Research Editor** | Write only after seeing the independent analyses. | paper-by-paper concatenation |
+| **Research Editor** | Return a proposed synthesis after seeing the independent analyses; the Daily Agent orchestrator alone writes it. | paper-by-paper concatenation |
 
 Prefer **one important tension** over five weak trends.
 
@@ -109,7 +116,7 @@ Weekly/monthly/yearly visuals are research compression, not decorative collages.
 ## Retention and correction policy
 
 - Keep every accepted canonical paper record and useful paper note.
-- Keep daily logs as provenance, not primary browsing surfaces.
+- Keep public provenance in canonical projections, closed digests, and atomic Git history rather than a second operational-log surface.
 - Keep every weekly/monthly compaction after it ages out of homepage navigation.
 - Keep one yearly report per sufficiently covered calendar year; the current year may remain rolling.
 - Correct upward: if a paper’s evidence, importance, classification, or newly discovered baseline changes a higher-level conclusion, revise the affected compaction.

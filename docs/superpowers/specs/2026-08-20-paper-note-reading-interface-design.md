@@ -23,7 +23,7 @@ Every high-visibility paper note should use this hierarchy:
 ## Presentation principles
 
 - Prefer `Research delta`, `Research take`, and explicit comparisons over model-persona language such as `AI take`.
-- Keep visual/maintenance status, generation failures, scheduler details, and operational provenance out of researcher-facing notes; they remain in canonical JSON and run logs.
+- Keep visual/maintenance status, generation failures, scheduler details, and operational provenance out of researcher-facing notes; accepted facts remain in canonical JSON, while private workflow traces stay only under ignored `.radar-private/` or in ephemeral Agent memory. No public operational run logs are created; `runs/README.md` is static policy only.
 - Avoid restating the abstract. Mechanism and evidence should expose the paper's control boundary.
 - A note is allowed to be shorter than before if repeated architecture prose is recoverable from the paper and canonical record.
 - Exact numbers remain only when already verified from the full paper.

@@ -3,12 +3,55 @@
   "title": "Agent Memory Radar Paper",
   "type": "object",
   "required": ["id", "title", "authors", "published", "first_seen", "paper_url", "primary_category", "tags", "relevance", "importance", "visual_explainer", "analysis", "provenance"],
+  "dependentRequired": {
+    "published_at": ["first_seen_at", "radar_published_at", "time_provenance", "map_delta"],
+    "first_seen_at": ["published_at", "radar_published_at", "time_provenance", "map_delta"],
+    "radar_published_at": ["published_at", "first_seen_at", "time_provenance", "map_delta"],
+    "time_provenance": ["published_at", "first_seen_at", "radar_published_at", "map_delta"],
+    "map_delta": ["published_at", "first_seen_at", "radar_published_at", "time_provenance"],
+    "direction_keys": ["published_at", "first_seen_at", "radar_published_at", "time_provenance", "map_delta"]
+  },
+  "oneOf": [
+    {
+      "required": ["published_at", "first_seen_at", "radar_published_at", "time_provenance", "map_delta"]
+    },
+    {
+      "allOf": [
+        {"not": {"required": ["published_at"]}},
+        {"not": {"required": ["first_seen_at"]}},
+        {"not": {"required": ["radar_published_at"]}},
+        {"not": {"required": ["time_provenance"]}},
+        {"not": {"required": ["map_delta"]}}
+      ]
+    }
+  ],
+  "allOf": [
+    {
+      "if": {"required": ["direction_keys"]},
+      "then": {
+        "properties": {
+          "time_provenance": {"const": "native_v2"}
+        }
+      }
+    }
+  ],
   "properties": {
     "id": {"type": "string"},
     "title": {"type": "string"},
     "authors": {"type": "array", "items": {"type": "string"}},
     "published": {"type": "string"},
     "first_seen": {"type": "string"},
+    "published_at": {"type": "string"},
+    "first_seen_at": {"type": ["string", "null"]},
+    "radar_published_at": {"type": ["string", "null"]},
+    "time_provenance": {"enum": ["native_v2", "legacy_unknown"]},
+    "map_delta": {"enum": ["none", "early_signal", "reinforces", "revises", "splits", "retires"]},
+    "direction_keys": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"}
+    },
     "paper_url": {"type": "string"},
     "code_url": {"type": ["string", "null"]},
     "project_url": {"type": ["string", "null"]},

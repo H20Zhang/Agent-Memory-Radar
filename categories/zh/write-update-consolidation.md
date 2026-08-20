@@ -32,4 +32,4 @@ FTA-Mem 在 sparse dialogue 中用 situation-level unit 同时改善 quality/cos
 
 ## 继续读
 
-[FTA-Mem 中文笔记](../../papers/2026/2608.16303.zh.md) · [LeanMem](../../papers/2026/2608.03463.md) · [LycheeMemory V2](../../papers/2026/2608.09424.md)
+[FTA-Mem 中文笔记](../../papers/2026/2608.16303.zh.md) · [LeanMem](../../papers/2026/2608.03463.md) · [LycheeMemory V2](../../papers/2026/2608.12990.md)

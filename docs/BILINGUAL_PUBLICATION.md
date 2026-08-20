@@ -7,7 +7,7 @@ Agent Memory Radar is bilingual, with Simplified Chinese as the default reader e
 - `README.md` — default Simplified Chinese landing page.
 - `README.en.md` — complete English counterpart.
 - Reader-facing Research Library/category pages, high-value paper notes, and public weekly/monthly/yearly synthesis should have both Chinese and English forms.
-- Canonical JSON, schemas, maintenance docs, scheduler prompts, validation output, and `runs/*` remain single-source unless localization adds reader value.
+- Canonical JSON, schemas, maintenance docs, scheduler prompts, and validation output remain single-source unless localization adds reader value.
 
 ## One judgment, two editorial projections
 
@@ -16,6 +16,8 @@ Chinese and English must derive from the same semantic research record: paper id
 Chinese is the primary editorial surface. English must preserve the same information depth rather than becoming a shortened translation. Neither language may introduce a factual or causal claim absent from the shared research judgment.
 
 Material changes must update both public language variants in one maintenance transaction. Drift on high-visibility facts or interpretation is a correctness failure.
+
+Rolling directions carry the same stable metadata in both languages: direction key, state, ordered canonical supports, confidence enum, implication witness, `radar_published_at` timing basis, the exact UTC synthesis timestamp shared with the Timeline cutoff, and prior-map evidence. Native support must be accepted no later than that cutoff and must include the block's exact key in its canonical `direction_keys`. Every value also appears in visible reader-facing prose; HTML comments never substitute for a visible route, field, support, or witness.
 
 ## Terminology
 
@@ -26,3 +28,7 @@ Keep paper titles, benchmark/dataset names, model names, metrics, APIs, system n
 Chinese should use natural technical Chinese rather than translated English syntax. Prefer direct sentences, concrete operations, and explicit comparison/evidence. Warn on repeated empty transitions and recurring templates such as `真正重要的是……`, `关键不在于……而在于……`, `值得注意的是……` when they become house style.
 
 English follows the same Research Radar Editor standard: concrete verbs/nouns, comparison before praise, explicit attribution boundaries, and no repetitive LLM sentence skeletons.
+
+## No public operational run logs
+
+Bilingual publication never creates a public run log. Public provenance is the atomic canonical/Timeline/period/digest projection plus Git history. Private scouting, candidate, lane, retry, and validation traces remain only under ignored `.radar-private/` or in ephemeral Agent memory; [`../runs/README.md`](../runs/README.md) is static policy only.

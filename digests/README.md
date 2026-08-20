@@ -30,4 +30,4 @@ A useful compaction is not a list of paper summaries. It should tell you:
 3. **Where papers disagree or attribution remains confounded.**
 4. **What next experiment would most decisively change the current view.**
 
-See [`../COMPACTION.md`](../COMPACTION.md) for the full synthesis contract. Raw daily provenance lives under [`../runs/daily/`](../runs/daily/) and is intentionally not a primary reading surface.
+See [`../COMPACTION.md`](../COMPACTION.md) for the full synthesis contract and [`../runs/README.md`](../runs/README.md) for the no-public-run policy. Accepted provenance lives in canonical projections, due closed digests, and atomic Git history; private workflow state is never a reader surface.

@@ -8,6 +8,8 @@ from pathlib import Path
 import jsonschema
 import yaml
 
+from validate_reading import validate_memory_registry
+
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = ROOT / "data" / "paper.schema.json"
 RECORDS = ROOT / "data" / "papers"
@@ -30,6 +32,7 @@ def main() -> int:
     valid_tags = {v for values in taxonomy.get("tag_axes", {}).values() for v in values}
 
     seen: set[str] = set()
+    records: list[dict[str, object]] = []
     paths = sorted(RECORDS.glob("*.json"))
     for path in paths:
         try:
@@ -37,6 +40,7 @@ def main() -> int:
         except Exception as exc:
             errors.append(f"{path.relative_to(ROOT)}: invalid JSON: {exc}")
             continue
+        records.append(record)
 
         for exc in sorted(validator.iter_errors(record), key=lambda e: list(e.path)):
             where = ".".join(str(x) for x in exc.path) or "<root>"
@@ -84,6 +88,8 @@ def main() -> int:
                     if asset.suffix.lower() != ".webp": errors.append(f"{rid}: final visual must be WebP")
                     if not asset.exists(): errors.append(f"{rid}: missing visual asset {rel}")
                     if note_text and asset.name not in note_text: errors.append(f"{rid}: paper note does not embed {asset.name}")
+
+    errors.extend(validate_memory_registry(records))
 
     if errors:
         for e in errors: print("ERROR", e)
