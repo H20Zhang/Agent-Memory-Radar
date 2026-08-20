@@ -1,0 +1,54 @@
+{
+  "id": "2608.17587",
+  "title": "Write, Execute, Refine: From Skill Followers to Skill Optimizers via Reinforcement Learning from Execution Feedback",
+  "authors": ["Kang Peng", "Zhiwei Zhang", "Yichen Zhang", "Zezhong Wang", "Yiming Du", "Geng Tu", "Baojun Wang", "Bin Liang", "Ruifeng Xu", "Kam-Fai Wong"],
+  "published": "2026-08-18",
+  "first_seen": "2026-08-20",
+  "paper_url": "https://arxiv.org/abs/2608.17587",
+  "code_url": "https://github.com/littlepkk/WER4skill-optimizer-training",
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": ["procedural", "text", "general-agent"],
+  "relevance": 0.98,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-20",
+    "blocker": "Two isolated paper-specific GPT Image attempts in this run (CABLE and ArborMem) both ignored their grounded single-paper briefs and rendered a generic Agent Memory Radar dashboard with fabricated paper metadata. Visual QA rejected both; further required-paper retries were stopped to avoid publishing ungrounded visuals until the paper-identity failure is resolved."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.17587"],
+    "analyzed_from": ["https://arxiv.org/html/2608.17587", "https://github.com/littlepkk/WER4skill-optimizer-training"],
+    "last_verified": "2026-08-20"
+  },
+  "analysis": {
+    "tldr": "WER learns a persistent skill-writer policy from execution consequences rather than treating skill refinement as prompt-only reflection: candidate skill documents are executed by a frozen agent, scored by programmatic verifiers, and used for group-relative RL, while mixed success/failure trajectories bootstrap the next refinement state.",
+    "problem": "Static skills and reflection-based rewriting receive weak supervision about whether a procedural edit actually improves tool execution. A skill can sound better yet make the frozen executor worse, and repeated refinement can overfit or drift without consequence-grounded training.",
+    "core_idea": "Place a trainable Skill Optimizer outside a frozen executor. Given the current skill, task context, history, and execution evidence, sample candidate skill documents; execute each multiple times with the same frozen agent/tool environment; score outcomes with programmatic verifiers; update the optimizer with group-relative RL. For multi-stage refinement, retain mixed-outcome cases so successful and failed executions of the same skill/task become the next phase's diagnostic state.",
+    "memory_design": {
+      "write": "The optimizer writes/refines natural-language skill artifacts; candidate skills are versioned through iterative training phases.",
+      "organize": "Persistent procedural state is the skill document plus execution histories used to condition later refinements.",
+      "read": "A frozen downstream agent consumes the current skill during tool execution; the optimizer consumes matched execution evidence when producing the next skill.",
+      "update_forget": "Execution-scored RL updates the skill-writer policy and repeated refinement updates the artifact; deeper refinement is stopped when gains saturate, but long-term skill deletion/governance is not studied."
+    },
+    "compared_to": [
+      "No Skill and the seed skill under the same frozen executor",
+      "An untrained Qwen3-4B optimizer under the same refinement workflow",
+      "General-purpose optimizer models including GPT-5.5 under the same workflow",
+      "Refinement-depth checkpoints"
+    ],
+    "evidence": "On BFCL v4, No Skill scores 68.83, the seed skill 67.28, the untrained Qwen3-4B optimizer 67.28, and WER-trained 4B reaches 76.63: +9.35 over the same untrained optimizer. On tau2, untrained is 40.43 and WER is 50.72 (+10.29). BFCL checkpoints rise 69.35→71.29→76.63 across phases; an extra refinement step falls to 75.33, so more editing is not monotonically beneficial. The trained 4B optimizer also exceeds GPT-5.5's 74.75 in the reported same-workflow BFCL comparison.",
+    "why_it_matters": "WER moves procedural-memory evolution from 'rewrite a skill' to 'learn the writer from the downstream consequences of its own revisions.' That makes execution feedback a training signal for the state-transition policy itself rather than only a post-hoc evaluator.",
+    "limitations": [
+      "Training is rollout- and verifier-intensive and assumes programmatic success signals in stateful tool environments.",
+      "The final protocol uses a stronger model to merge domain skills, so the end package is not produced solely by the learned 4B optimizer.",
+      "Evaluation covers two tool-agent benchmark families rather than long-running deployment or open-ended skill libraries.",
+      "Repeated refinement saturates and can regress, so an online stopping/governance policy remains necessary."
+    ],
+    "confidence": "high"
+  }
+}
