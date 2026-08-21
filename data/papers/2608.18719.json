@@ -1,0 +1,59 @@
+{
+  "id": "2608.18719",
+  "title": "Competence, Not Accuracy: A Diagnostic for Reference-Free Judge Gates in Skill Optimization",
+  "authors": ["Chenle Chen", "Yangbo Wei", "Chao Yao", "Shaoqiang Lu", "Junhong Qian", "Chen Wu", "Lei He"],
+  "published": "2026-08-19",
+  "first_seen": "2026-08-21",
+  "published_at": "2026-08-19T09:19:23Z",
+  "first_seen_at": "2026-08-21T00:45:10Z",
+  "radar_published_at": "2026-08-21T01:18:00Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["judge-gate-discriminability"],
+  "paper_url": "https://arxiv.org/abs/2608.18719",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["procedural", "text", "structured", "general-agent"],
+  "relevance": 0.96,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-21",
+    "blocker": "No paper-specific visual is published until a grounded diagnostic figure passes visual-policy review; the verified deep note carries the evidence meanwhile."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.AI/new", "https://arxiv.org/abs/2608.18719"],
+    "analyzed_from": ["https://arxiv.org/html/2608.18719v1"],
+    "last_verified": "2026-08-21"
+  },
+  "analysis": {
+    "tldr": "Before a reference-free LLM judge is allowed to admit persistent skill edits, this work tests whether its scores discriminate correct from incorrect answers within the same question; marginal benchmark accuracy can substantially overstate that competence.",
+    "problem": "Text-space skill optimizers need an admission gate, but automatic verifiers do not exist for many tasks. Substituting an LLM judge can silently commit harmful skill versions if the judge cannot distinguish correct from incorrect candidates on the actual optimization distribution.",
+    "core_idea": "Treat the judge as a latent solver, derive a competence floor for useful discrimination, and run a non-intervening probe on genuine optimization traces. Estimate within-question ROC-AUC so item difficulty cannot masquerade as judging ability before the gate is placed in the update loop.",
+    "memory_design": {
+      "write": "The surrounding optimizer proposes revised natural-language skill documents from task experience.",
+      "organize": "Candidate and accepted skill versions form persistent procedural state; the diagnostic does not introduce a new storage representation.",
+      "read": "A reference-free judge scores candidate outputs during a shadow probe, while frozen verifier labels provide retrospective correctness for analysis.",
+      "update_forget": "Only candidates passing the chosen gate are committed; the work diagnoses admission quality but does not study long-horizon rollback, lineage, or retirement."
+    },
+    "compared_to": [
+      "Marginal ROC-AUC versus within-question ROC-AUC on the same genuine SkillOpt runs",
+      "Reference-free judge scores against frozen verifier correctness labels",
+      "Closed-loop verifier, judge-gate, and random-gate conditions"
+    ],
+    "evidence": "Research-math marginal/within-question AUC is 0.457/0.489, while factual QA falls from 0.855 marginal to 0.735 within-question, exposing a 0.12 difficulty confound. A GPQA headline of 0.840 falls to 0.626 when empty answers are included and to 0.547 under a matched proxy. Cross-provider tests repeat the near-floor-competence/near-random-gate pattern; the closed-loop screen predicts the type of admission error more reliably than final aggregate performance.",
+    "why_it_matters": "A persistent skill gate should be qualified on the exact candidate distribution before it is trusted to change future behavior. Judge accuracy on an easier benchmark is not a substitute for within-question discriminability at the promotion boundary.",
+    "limitations": [
+      "Competence above the theoretical floor is necessary, not sufficient, for a useful closed-loop gate.",
+      "The probe needs repeated positive and negative attempts for the same questions and retrospective verifier labels for evaluation.",
+      "Tasks have a single gold answer; open-ended rubric judging and multi-valid-solution domains remain untested.",
+      "An early bare-answer-letter probe produced a false null, showing that the diagnostic itself is sensitive to measurement design."
+    ],
+    "confidence": "high"
+  }
+}

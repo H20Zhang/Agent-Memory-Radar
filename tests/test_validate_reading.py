@@ -21,6 +21,10 @@ TIMELINE_SUMMARY_RE = re.compile(
 )
 CJK_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
 EXPECTED_TIMELINE_TITLES = {
+    "2608-18704": "2026-08-21 · MemFuse",
+    "2608-18719": "2026-08-21 · Competence, Not Accuracy",
+    "2608-18852": "2026-08-21 · SkillGate",
+    "2608-19013": "2026-08-21 · Harness Continual Learning",
     "2608-17911": "2026-08-18 · CABLE",
     "2608-17756": "2026-08-18 · D²ACCI",
     "2608-17587": "2026-08-18 · WER",
@@ -49,8 +53,8 @@ class MemoryReadingContractTest(unittest.TestCase):
             for path in sorted((ROOT / "data" / "papers").glob("*.json"))
         ]
 
-        self.assertEqual(8, len(zh_summaries))
-        self.assertEqual(8, len(en_summaries))
+        self.assertEqual(len(EXPECTED_TIMELINE_TITLES), len(zh_summaries))
+        self.assertEqual(len(EXPECTED_TIMELINE_TITLES), len(en_summaries))
         semantic_fields = ("identity", "title", "area_key", "delta_key")
         self.assertEqual(
             [tuple(item[field] for field in semantic_fields) for item in en_summaries],

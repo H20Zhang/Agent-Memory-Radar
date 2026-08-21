@@ -16,21 +16,21 @@
 
 ## 按研究脉络浏览
 
-### 原始存档 → 互补结构 → 状态定位 → 面向使用方的状态重建
+### 原始存档 → 互补 / 多源访问 → 状态定位 → 面向使用方的状态重建
 
-[ReFind](../papers/2026/2608.12888.zh.md) → [CABLE](../papers/2026/2608.17911.zh.md) → [ArborMem](../papers/2026/2608.17534.zh.md) → [QUMem](../papers/2026/2608.16168.zh.md)
+[ReFind](../papers/2026/2608.12888.zh.md) → [CABLE](../papers/2026/2608.17911.zh.md) / [MemFuse](../papers/2026/2608.18704.zh.md) → [ArborMem](../papers/2026/2608.17534.zh.md) → [QUMem](../papers/2026/2608.16168.zh.md)
 
 结构化记忆与原始记录不是一次性二选一。先用更强的原始记录接口作为基线，再检验预存关系是否改变可达性；历史若包含多条交错的轨迹，需要先定位当前状态；检索到的证据最后仍可能需要转换为 Agent 实际使用的状态。
 
-### 静态程序性记忆 → 可参与执行的关系 → 学得的技能编写策略 → 经认证的能力
+### 学得访问 / 编写策略 → 经认证的产物 → 受守护的 Harness 提交
 
-[HyperSkill](../papers/2026/2608.16114.zh.md) → [WER](../papers/2026/2608.17587.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md)
+[SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) → [Harness Continual Learning](../papers/2026/2608.19013.zh.md)
 
 程序性记忆的收益可能来自关系结构、写入策略学习、执行反馈或运行时认证。若把这些变化都称为“技能记忆”，真正的因果变量就会被掩盖。
 
-### 检索分数 → 阶段归因 → 功能上线证据
+### 检索分数 → 阶段归因 → Gate 资格 → 功能上线证据
 
-[Demystifying Agent Skills](../papers/2026/2608.14036.zh.md) → [D²ACCI](../papers/2026/2608.17756.zh.md)
+[Demystifying Agent Skills](../papers/2026/2608.14036.zh.md) → [Competence, Not Accuracy](../papers/2026/2608.18719.zh.md) → [D²ACCI](../papers/2026/2608.17756.zh.md)
 
 检索标签、实际使用、下游成功和部署决策对应不同的评估对象。记忆功能最终需要成对、可定位且无回归的证据，架构层面的分数本身并不充分。
 

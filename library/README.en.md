@@ -16,21 +16,21 @@ Browse by research problem, research line, or year. If you know the question but
 
 ## Browse by Research Line
 
-### Raw archive → complementary structure → state localization → consumer-state reconstruction
+### Raw archive → complementary/multi-source access → state localization → consumer-state reconstruction
 
-[ReFind](../papers/2026/2608.12888.md) → [CABLE](../papers/2026/2608.17911.md) → [ArborMem](../papers/2026/2608.17534.md) → [QUMem](../papers/2026/2608.16168.md)
+[ReFind](../papers/2026/2608.12888.md) → [CABLE](../papers/2026/2608.17911.md) / [MemFuse](../papers/2026/2608.18704.md) → [ArborMem](../papers/2026/2608.17534.md) → [QUMem](../papers/2026/2608.16168.md)
 
 “Structured vs raw” is not one decision. Start with a stronger raw-interface baseline, then test whether stored relations change reachability. If history contains interleaved trajectories, localize the active state; retrieved evidence may still need to be converted into actor-facing state.
 
-### Static procedural memory → operational relations → learned writer → certified capability
+### Learned access/writer → certified artifact → guarded harness commit
 
-[HyperSkill](../papers/2026/2608.16114.md) → [WER](../papers/2026/2608.17587.md) → [TRUSS](../papers/2026/2608.17588.md)
+[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) → [TRUSS](../papers/2026/2608.17588.md) → [Harness Continual Learning](../papers/2026/2608.19013.md)
 
 Procedural-memory gains can come from relational structure, writer-policy learning, execution feedback, or runtime certification. Treating all of these changes as “skill memory” hides the causal variable.
 
-### Retrieval score → stage attribution → feature-promotion evidence
+### Retrieval score → stage attribution → gate qualification → feature-promotion evidence
 
-[Demystifying Agent Skills](../papers/2026/2608.14036.md) → [D²ACCI](../papers/2026/2608.17756.md)
+[Demystifying Agent Skills](../papers/2026/2608.14036.md) → [Competence, Not Accuracy](../papers/2026/2608.18719.md) → [D²ACCI](../papers/2026/2608.17756.md)
 
 Retrieval labels, actual use, downstream success, and deployment decisions are different evaluation objects. A memory feature ultimately needs paired, localized, non-regressing evidence; an architecture-level score alone is insufficient.
 

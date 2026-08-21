@@ -59,12 +59,12 @@ def make_pair(count: int) -> tuple[str, str]:
 <a id="last-7-days"></a>
 ### 过去 7 天
 
-2026-08-14—2026-08-20
+2026-08-15—2026-08-21
 
 <a id="last-30-days"></a>
 ### 过去 30 天
 
-2026-07-22—2026-08-20
+2026-07-23—2026-08-21
 
 <a id="field-map"></a>
 ## 领域地图
@@ -86,12 +86,12 @@ def make_pair(count: int) -> tuple[str, str]:
 <a id="last-7-days"></a>
 ### Last 7 days
 
-2026-08-14—2026-08-20
+2026-08-15—2026-08-21
 
 <a id="last-30-days"></a>
 ### Last 30 days
 
-2026-07-22—2026-08-20
+2026-07-23—2026-08-21
 
 <a id="field-map"></a>
 ## Field Map
@@ -369,8 +369,8 @@ class TimeFirstContractTest(unittest.TestCase):
 
     def test_period_window_drift_is_rejected(self):
         mutations = (
-            ("2026-08-14—2026-08-20", "2026-08-13—2026-08-20", "last-7-days"),
-            ("2026-07-22—2026-08-20", "2026-07-21—2026-08-20", "last-30-days"),
+            ("2026-08-15—2026-08-21", "2026-08-13—2026-08-20", "last-7-days"),
+            ("2026-07-23—2026-08-21", "2026-07-21—2026-08-20", "last-30-days"),
         )
         for old, new, expected in mutations:
             with self.subTest(expected=expected):
@@ -385,16 +385,16 @@ class TimeFirstContractTest(unittest.TestCase):
 
     def test_period_windows_have_exact_inclusive_cardinality(self):
         zh, en = make_pair(1)
-        zh = zh.replace("2026-08-14—2026-08-20", "2026-08-13—2026-08-20", 1)
-        en = en.replace("2026-08-14—2026-08-20", "2026-08-13—2026-08-20", 1)
+        zh = zh.replace("2026-08-15—2026-08-21", "2026-08-13—2026-08-20", 1)
+        en = en.replace("2026-08-15—2026-08-21", "2026-08-13—2026-08-20", 1)
         self.assertTrue(
             any("exactly 7 inclusive days" in error for error in validate_pair(zh, en))
         )
 
     def test_period_windows_share_one_synthesis_endpoint(self):
         zh, en = make_pair(1)
-        zh = zh.replace("2026-08-14—2026-08-20", "2026-08-13—2026-08-19", 1)
-        en = en.replace("2026-08-14—2026-08-20", "2026-08-13—2026-08-19", 1)
+        zh = zh.replace("2026-08-15—2026-08-21", "2026-08-13—2026-08-19", 1)
+        en = en.replace("2026-08-15—2026-08-21", "2026-08-13—2026-08-19", 1)
         self.assertTrue(
             any("same synthesis endpoint" in error for error in validate_pair(zh, en))
         )
@@ -403,12 +403,12 @@ class TimeFirstContractTest(unittest.TestCase):
         fixtures = (
             (
                 "last-7-days",
-                "2026-08-14—2026-08-20",
+                "2026-08-15—2026-08-21",
                 "2026-08-13—2026-08-19",
             ),
             (
                 "last-30-days",
-                "2026-07-22—2026-08-20",
+                "2026-07-23—2026-08-21",
                 "2026-07-21—2026-08-19",
             ),
         )

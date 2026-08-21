@@ -1,0 +1,60 @@
+{
+  "id": "2608.18852",
+  "title": "SkillGate: Training In-Policy Skill Selection in Long-Horizon Agents",
+  "authors": ["Qingyao Li", "Wenxiang Jiao", "Shuai Shao", "Kangning Zhang", "Yuan Lu", "Yi Guo", "Weiwen Liu", "Weinan Zhang", "Yong Yu"],
+  "published": "2026-08-19",
+  "first_seen": "2026-08-21",
+  "published_at": "2026-08-19T12:24:03Z",
+  "first_seen_at": "2026-08-21T00:45:10Z",
+  "radar_published_at": "2026-08-21T01:18:00Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["selector-local-credit"],
+  "paper_url": "https://arxiv.org/abs/2608.18852",
+  "code_url": "https://github.com/DeepExperience/SkillGate",
+  "project_url": "https://huggingface.co/simonlqy/SkillGate-9B",
+  "primary_category": "retrieval_access",
+  "tags": ["procedural", "text", "general-agent"],
+  "relevance": 0.98,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-21",
+    "blocker": "No paper-specific visual is published until a grounded credit-partition figure passes visual-policy review; the verified deep note carries the evidence meanwhile."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.AI/new", "https://arxiv.org/abs/2608.18852"],
+    "analyzed_from": ["https://arxiv.org/html/2608.18852v1", "https://github.com/DeepExperience/SkillGate", "https://huggingface.co/simonlqy/SkillGate-9B"],
+    "last_verified": "2026-08-21"
+  },
+  "analysis": {
+    "tldr": "SkillGate adds an oracle-supervised, token-local selector channel, removes read-call tokens from task loss, and renormalizes sparse selector mass; in one 9B training run this changes skill exposure and trial success relative to an outcome-only run, but the gain cannot be assigned to credit location alone.",
+    "problem": "A fixed skill library is useless if the policy cannot select the right artifact. In long trajectories, the few tokens naming a skill receive almost none of the sequence loss weight and inherit failure credit from later execution, even when the read itself was correct.",
+    "core_idea": "Partition one GRPO update into disjoint token supports: outcome advantage trains execution tokens, while a group-centered oracle-supervised advantage trains skill-identity tokens; remove the read call from task loss and give the sparse selector channel length-invariant loss mass.",
+    "memory_design": {
+      "write": "The skill library is fixed; SkillGate does not author or revise procedural artifacts.",
+      "organize": "Each task exposes a candidate slate of named skill files with descriptions, including oracle and misleading alternatives.",
+      "read": "The policy decides during the episode whether and which skill to read; only identity tokens receive selector-local credit.",
+      "update_forget": "Training updates the parametric read policy, not the skill contents; library growth, retirement, and multi-skill composition are outside the evaluated lifecycle."
+    },
+    "compared_to": [
+      "SkillRL outcome-only training with identical model initialization, data, 100-step budget, and hyperparameters but without oracle-local supervision, read-call masking, or selector-mass renormalization",
+      "Credit-placement and single-read ablations",
+      "Selection behavior cloning, DPO, skill-free RL, and external-router controls"
+    ],
+    "evidence": "Across 385 trials on five benchmarks, SkillGate reaches 53.2% success versus 47.0% for outcome-only SkillRL and 40.8% for SFT. Oracle exposure rises 54.3% to 83.9%, while misleading exposure falls 69.6% to 21.8%. The pooled repeated-task difference is +7.9 points with a task-clustered 95% interval of +2.1 to +14.3, but the pass@4 interval and every individual-benchmark interval cross zero. The audit finds identity tokens at a median 0.14% of loss weight, consistent with dilution but not by itself causal.",
+    "why_it_matters": "Procedural memory availability and learned access are separate stages. The study is evidence that an explicitly supervised local selector channel can change exposure and success, not that gradient location alone is sufficient.",
+    "limitations": [
+      "Every training configuration is a single 16-H800 run; bootstrap intervals over tasks do not replace independent training seeds.",
+      "Training assumes a verified oracle skill identity and synthesized hard negatives.",
+      "Relative to outcome-only training, the method jointly adds privileged oracle utility, masks the read call from task loss, and renormalizes selector loss mass.",
+      "The positive local signal requires a clean single-oracle read, so compositional multi-skill tasks are not covered.",
+      "Pass@4 and individual-benchmark confidence intervals cross zero; the work does not evaluate writing, maintenance, provenance, or retirement."
+    ],
+    "confidence": "high"
+  }
+}

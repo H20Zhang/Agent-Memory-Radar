@@ -10,7 +10,7 @@ Compactions answer a different question from paper notes: **what changed in the 
 |---|---|---|
 | **Weekly** | [2026-W33 — Memory architecture decomposes into stage-specific controls](weekly/2026-W33.md) | Archive, access, consumer state/reuse, evolution, and lifecycle cost need matched controls rather than one architecture-level score. |
 | **Weekly** | [2026-W32 — Structure only matters when control can use it](weekly/2026-W32.md) | Added structure should be credited only when a downstream controller/operator actually exploits it. |
-| **Monthly** | [2026-08 — rolling through Aug 20](monthly/2026-08.md) | August now adds **state localization before retrieval, retriever-complementary evidence reach, paired promotion protocols, and execution-grounded skill writer/certification loops** to the existing stage-level map. |
+| **Monthly** | [2026-08 — rolling through Aug 21](monthly/2026-08.md) | August now adds **multi-source evidence completion, an oracle-local skill selector signal, judge-gate qualification, and guarded harness commits** without promoting any one-paper signal into the durable map. |
 | **Yearly** | [2026 — rolling, incomplete](yearly/2026.md) | Current evidence supports a multi-stage memory-state interface, but coverage begins in August with limited backfill and is not a full-year reconstruction. |
 
 ## Time hierarchy

@@ -14,6 +14,18 @@ import validate_reading
 
 
 class NoPublicRunLogContractTest(unittest.TestCase):
+    def test_public_digests_do_not_expose_candidate_or_visual_workflow_state(self):
+        forbidden_markers = (
+            "## Backfill queue",
+            "remain deferred pending complete adversarial review",
+            "## Visual status",
+        )
+        for path in sorted((ROOT / "digests").glob("**/*.md")):
+            with self.subTest(path=path.relative_to(ROOT)):
+                text = path.read_text(encoding="utf-8")
+                for marker in forbidden_markers:
+                    self.assertNotIn(marker, text)
+
     def test_repository_has_no_public_daily_run_files(self):
         errors = validate_reading.validate_no_public_run_files(
             validate_reading.PUBLIC_OPERATIONAL_RUN_PATHS

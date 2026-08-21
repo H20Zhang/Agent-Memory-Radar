@@ -6,28 +6,32 @@
 
 ## 当前判断
 
-**Raw-state control 是起点，不是终点。** ReFind 说明 competent raw archive + stateful search 可以吃掉很多过去归因给 semantic preprocessing 的收益；CABLE 则给 structure 一个更严格的存在理由：stored edge 应改变 host retriever 的 **reachability**，而不是复制 semantic neighborhood。
+**Raw-state control 是起点，不是终点。** ReFind 说明 competent raw archive + stateful search 可以吃掉很多过去归因给 semantic preprocessing 的收益；CABLE 则要求 stored edge 改变 host retriever 的 **reachability**。MemFuse 进一步提醒：多源 graph/fusion 与 query-time evidence completion 必须分开归因，当前最大消融属于后者。
 
 ArborMem 又把 read path 向前拆了一层：当历史中存在多个 interleaved/resumable trajectories 时，系统可能必须先回答“当前 turn 接续哪条 state”，再谈 evidence relevance。
 
+SkillGate 把 procedural memory 的访问单独拉出来：skill library 已经存在，也不代表 outcome-only training 已充分训练早期 read action；但现有方法同时改变 Oracle utility、read-call masking 与 selector-mass normalization，尚未隔离 credit placement。
+
 因此更稳定的分解是：
 
-`state localization → host/raw retrieval → relation/expansion/admission → evidence assembly`
+`state localization → host/raw retrieval / skill selection → relation/expansion/admission → evidence assembly`
 
 ## Strongest signal
 
 - **ReFind：** strong raw interface 明显强于 weak one-shot control。
 - **CABLE：** 在 fixed host/final evidence budget 下，complementary linking 仍有增益，说明 graph edge 可以通过改变 reachability 赚回一部分成本。
+- **MemFuse：** 多源持久组织保留 atomic provenance，但总体 gain 主要由 iterative constrained retrieval 驱动。
+- **SkillGate：** 带 Oracle 监督的局部 selector package 改变 skill exposure，但 single-seed 结果尚未隔离 credit location。
 - **ArborMem：** 去掉 state localization 在较强模型上造成明显下降，说明“relevant to which state?” 是独立问题。
 
 ## Biggest unresolved question
 
-哪些关系/状态必须 write-time materialize，哪些可以 query-time 重建？如果把 **construction inference + online search + latency + context** 全部匹配，CABLE/ArborMem 这样的预建结构还剩多少优势？
+哪些关系/状态必须 write-time materialize，哪些可以 query-time 重建？稀疏 read action 又应如何得到局部 credit？如果把 **construction/training inference + online search + latency + context** 全部匹配，预建结构和 learned selector 还剩多少优势？
 
 ## Next decisive evidence
 
 同一历史 substrate + 同一 model + 同一 total lifecycle budget，分别比较：
 
-`raw stateful search → complementary graph expansion → state localization + raw search → state localization + structured expansion`
+`raw stateful search → fused/complementary expansion → state localization + raw search → supervised selector package → structured expansion/admission`
 
 并在 long-horizon acting tasks 上测错误 routing/edge 是否产生不可逆 side effects。

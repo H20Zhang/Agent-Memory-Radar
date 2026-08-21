@@ -8,12 +8,72 @@
 
 [30 秒：最新时间线](#timeline) · [3 分钟：7/30 天变化](#periods) · [5 分钟：领域地图](#field-map) · [15 分钟：阅读路径](#reading-paths) · [浏览全部](#library)
 
-最后更新：**2026-08-20**
+最后更新：**2026-08-21**
 
 <a id="timeline"></a><a id="latest"></a><a id="latest-papers"></a>
 ## Latest Timeline：最新接受的 Agent Memory 证据
 
 > **迁移说明：** 这些现有记录没有可靠保存历史 Radar 接受时间，因此暂按论文原始发布日期排序；v2 切换后的新记录统一使用 `radar_published_at`，不得把论文日期伪装成 Radar 接受时间。
+
+<a id="entry-2608-18704"></a>
+<details><summary><strong>2026-08-21 · MemFuse</strong> · 多源证据访问 <!-- timefirst:area=multi-source-evidence-access --> — 保留来源的融合记忆，只有配合补全碎片证据的访问循环才产生价值。 <!-- timefirst:delta=provenance-plus-evidence-completion --></summary>
+
+**问题。** 记忆能否拼合分散在多源中的信息，同时返回原始支撑？最近的有界对照使用同一事件流和读取模型，并把最终证据限制为 20 条。 <!-- timefirst:question=fuse-fragments-with-source-traceability -->
+
+**证据。** 总体得分达到 **0.4659 / 0.4574 / 0.4698**，但 `agentic retrieval ablation` 会损失 **0.1036**，明显大于移除 graph/fusion 的总体影响。 <!-- timefirst:evidence=overall-gain-dominated-by-agentic-access~agentic-retrieval-ablation -->
+
+**限制。** 基准为合成数据，且 `Qwen ingestion tokens 达 93.27M`；Gemini 设置仍由 long context 胜出，也没有生命周期匹配的 `stateful raw-search control`。 <!-- timefirst:caveat=synthetic-benchmark-and-high-ingestion-cost~qwen-ingestion-tokens -->
+
+**地图。** `early_signal` — 该结果把来源保真的组织与证据补全访问拆成两个阶段；单套 package 不足以建立持久的 graph-memory 方向。
+
+**链接。** [论文](https://arxiv.org/abs/2608.18704) · [中文深读](papers/2026/2608.18704.zh.md) · [英文深读](papers/2026/2608.18704.md)
+
+</details>
+
+<a id="entry-2608-18719"></a>
+<details><summary><strong>2026-08-21 · Competence, Not Accuracy</strong> · 技能更新治理 <!-- timefirst:area=skill-update-governance --> — 技能准入的 Judge gate 在提交持久 edit 前，必须证明同题判别能力。 <!-- timefirst:delta=benchmark-accuracy-to-gate-discriminability --></summary>
+
+**问题。** 一个不看参考答案的 judge 能否在自己将要治理的候选分布上区分正确与错误尝试？最近的对照在同一批 SkillOpt 轨迹上比较边际 AUC 与同题 AUC。 <!-- timefirst:question=qualify-judge-before-skill-commit -->
+
+**证据。** 去除题目难度混杂后，Factual-QA AUC 从 **0.855 降至 0.735**；`research math within-question AUC` 为接近随机的 **0.489**。 <!-- timefirst:evidence=within-question-audit-reveals-difficulty-confound~research-math-within-question -->
+
+**限制。** 能力超过 floor 只是必要条件；`open ended judge transfer` 尚未验证，早期 bare-letter probe 还曾制造 false null。 <!-- timefirst:caveat=diagnostic-sensitive-and-open-tasks-untested~open-ended-judge-transfer -->
+
+**地图。** `early_signal` — 准入边界新增了部署前诊断，但单个 gate study 不改写持久治理结论。
+
+**链接。** [论文](https://arxiv.org/abs/2608.18719) · [中文深读](papers/2026/2608.18719.zh.md) · [英文深读](papers/2026/2608.18719.md)
+
+</details>
+
+<a id="entry-2608-18852"></a>
+<details><summary><strong>2026-08-21 · SkillGate</strong> · 程序性记忆访问 <!-- timefirst:area=procedural-memory-access --> — 带 Oracle 监督的局部选择通道改变 episode 中途暴露哪个固定 skill。 <!-- timefirst:delta=outcome-only-to-oracle-local-selector-channel --></summary>
+
+**问题。** 带 Oracle 监督的局部选择通道能否比 outcome-only training 更好地训练早期 skill-read 动作？最近的运行固定初始化、数据、100 步与超参数，但同时改变三项 loss design。 <!-- timefirst:question=test-oracle-local-selector-supervision -->
+
+**证据。** 成功率从 **47.0% 升至 53.2%**，oracle exposure 从 **54.3% 升至 83.9%**，misleading exposure 从 **69.6% 降至 21.8%**；`oracle local selector channel` 同时包含特权 utility、read-call masking 与 selector-mass normalization。 <!-- timefirst:evidence=oracle-channel-changes-skill-exposure~oracle-local-selector-channel -->
+
+**限制。** 每个设置只有一次 16-H800 run；`verified single oracle identity` 不能代表开放、持续变化或组合式 skill library。 <!-- timefirst:caveat=single-run-and-oracle-dependent-training~verified-single-oracle -->
+
+**地图。** `early_signal` — 技能是否存在与受监督 access policy 是否会用它是不同阶段；单次训练不能建立趋势，也不能单独归因 credit location。
+
+**链接。** [论文](https://arxiv.org/abs/2608.18852) · [中文深读](papers/2026/2608.18852.zh.md) · [英文深读](papers/2026/2608.18852.md)
+
+</details>
+
+<a id="entry-2608-19013"></a>
+<details><summary><strong>2026-08-21 · Harness Continual Learning</strong> · 持续 Harness 状态演化 <!-- timefirst:area=harness-state-evolution --> — 候选 harness 只有通过当前收益、历史保留与 validity 检查才会提交。 <!-- timefirst:delta=unbounded-updates-to-guarded-harness-commit --></summary>
+
+**问题。** 冻结模型的 Agent 如何更新 memory、interface、capability map 与 router，又不静默遗忘旧行为？最近的治理对照扫描 historical-loss bound。 <!-- timefirst:question=guard-nonparametric-agent-state-commit -->
+
+**证据。** 无限制 commit 最终为 **60.13**，低于 `b=1` 的 **63.46**；`memory update ablation` 为 **62.28 / 0.83 forgetting**，Full HCL 为 **63.41 / 0.45**。 <!-- timefirst:evidence=retention-bound-and-memory-stage-witness~memory-update-ablation -->
+
+**限制。** 四个 harness component 共同适应，因此 `package gain not memory gain`；historical anchors 不完备，也未报告完整 lifecycle cost。 <!-- timefirst:caveat=coadaptive-package-and-incomplete-anchors~package-gain-not-memory -->
+
+**地图。** `early_signal` — 提交边界已超出 memory store，但单套 packaged system 不足以建立持久 evolution architecture。
+
+**链接。** [论文](https://arxiv.org/abs/2608.19013) · [中文深读](papers/2026/2608.19013.zh.md) · [英文深读](papers/2026/2608.19013.md)
+
+</details>
 
 <a id="entry-2608-17911"></a>
 <details><summary><strong>2026-08-18 · CABLE</strong> · 检索与访问 <!-- timefirst:area=retrieval-access --> — 存储链接只有能触达宿主检索器遗漏的证据，才值得付出额外成本。 <!-- timefirst:delta=structure-as-retriever-complement --></summary>
@@ -141,14 +201,26 @@
 > **时间口径：** 滚动窗口只按 `radar_published_at` 判断。上方八条迁移记录没有可重建的 Radar 接受时间，因此只作为领域地图的历史上下文，不支撑当前窗口判断。
 
 <a id="last-7-days"></a>
-### 过去 7 天：2026-08-14—2026-08-20
+### 过去 7 天：2026-08-15—2026-08-21
 
-- **`no_material_change` · Radar 接受时间目前没有可归因的新方向（memory Radar acceptance time）。** 支撑：**none**；置信度：**high**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（require native v2 times for period claims）：只有具备原生 v2 Radar 接受时间的记录才能支持滚动窗口判断；CABLE、D²ACCI、WER、TRUSS、ArborMem、QUMem、HyperSkill 与 ReFind 仍是记忆生命周期地图的历史上下文。精确合成时间：`2026-08-20T00:00:00Z`。 <!-- timefirst:direction key="memory-radar-acceptance-time" state="no_material_change" supports="none" confidence="high" implication="require-native-v2-times-for-period-claims" timing="radar_published_at" synthesized="2026-08-20T00:00:00Z" prior="none" -->
+- **`new_signal` · 多源证据补全（multi source evidence completion）把组织与访问拆开。** 支撑：[2608.18704](#entry-2608-18704)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate organization from evidence completing access）：在匹配完整生命周期成本后，分别归因 fused representation 与 answer-time search。精确合成时间：`2026-08-21T01:18:00Z`。 <!-- timefirst:direction key="multi-source-evidence-completion" state="new_signal" supports="2608.18704" confidence="medium" implication="separate-organization-from-evidence-completing-access" timing="radar_published_at" synthesized="2026-08-21T01:18:00Z" prior="none" -->
+
+- **`new_signal` · Judge gate 判别力（judge gate discriminability）应先于持久技能准入。** 支撑：[2608.18719](#entry-2608-18719)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（qualify judge on candidate distribution）：先在真实 optimization traces 上做同题判别，再让 judge 控制 commit。精确合成时间：`2026-08-21T01:18:00Z`。 <!-- timefirst:direction key="judge-gate-discriminability" state="new_signal" supports="2608.18719" confidence="medium" implication="qualify-judge-on-candidate-distribution" timing="radar_published_at" synthesized="2026-08-21T01:18:00Z" prior="none" -->
+
+- **`new_signal` · Selector local credit 让技能访问成为可学习阶段。** 支撑：[2608.18852](#entry-2608-18852)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（credit sparse memory actions locally）：分别报告特权 selector supervision、loss masking、skill exposure 与 downstream execution。精确合成时间：`2026-08-21T01:18:00Z`。 <!-- timefirst:direction key="selector-local-credit" state="new_signal" supports="2608.18852" confidence="medium" implication="credit-sparse-memory-actions-locally" timing="radar_published_at" synthesized="2026-08-21T01:18:00Z" prior="none" -->
+
+- **`new_signal` · 受约束的 Harness 演化（guarded harness evolution）把 commit 视为持续状态边界。** 支撑：[2608.19013](#entry-2608-19013)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（guard harness state before commit）：同时检查当前效用、历史保留与 validity，并分别归因共同适应的组件。精确合成时间：`2026-08-21T01:18:00Z`。 <!-- timefirst:direction key="guarded-harness-evolution" state="new_signal" supports="2608.19013" confidence="medium" implication="guard-harness-state-before-commit" timing="radar_published_at" synthesized="2026-08-21T01:18:00Z" prior="none" -->
 
 <a id="last-30-days"></a>
-### 过去 30 天：2026-07-22—2026-08-20
+### 过去 30 天：2026-07-23—2026-08-21
 
-- **`no_material_change` · Radar 接受时间目前没有可归因的新方向（memory Radar acceptance time）。** 支撑：**none**；置信度：**high**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（require native v2 times for period claims）：只有具备原生 v2 Radar 接受时间的记录才能支持滚动窗口判断；这八条显式迁移记录可以解释生命周期边界，却不能回填成此窗口内的接受事件。精确合成时间：`2026-08-20T00:00:00Z`。 <!-- timefirst:direction key="memory-radar-acceptance-time" state="no_material_change" supports="none" confidence="high" implication="require-native-v2-times-for-period-claims" timing="radar_published_at" synthesized="2026-08-20T00:00:00Z" prior="none" -->
+- **`new_signal` · 多源证据补全（multi source evidence completion）把组织与访问拆开。** 支撑：[2608.18704](#entry-2608-18704)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate organization from evidence completing access）：在匹配完整生命周期成本后，分别归因 fused representation 与 answer-time search。精确合成时间：`2026-08-21T01:18:00Z`。 <!-- timefirst:direction key="multi-source-evidence-completion" state="new_signal" supports="2608.18704" confidence="medium" implication="separate-organization-from-evidence-completing-access" timing="radar_published_at" synthesized="2026-08-21T01:18:00Z" prior="none" -->
+
+- **`new_signal` · Judge gate 判别力（judge gate discriminability）应先于持久技能准入。** 支撑：[2608.18719](#entry-2608-18719)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（qualify judge on candidate distribution）：先在真实 optimization traces 上做同题判别，再让 judge 控制 commit。精确合成时间：`2026-08-21T01:18:00Z`。 <!-- timefirst:direction key="judge-gate-discriminability" state="new_signal" supports="2608.18719" confidence="medium" implication="qualify-judge-on-candidate-distribution" timing="radar_published_at" synthesized="2026-08-21T01:18:00Z" prior="none" -->
+
+- **`new_signal` · Selector local credit 让技能访问成为可学习阶段。** 支撑：[2608.18852](#entry-2608-18852)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（credit sparse memory actions locally）：分别报告特权 selector supervision、loss masking、skill exposure 与 downstream execution。精确合成时间：`2026-08-21T01:18:00Z`。 <!-- timefirst:direction key="selector-local-credit" state="new_signal" supports="2608.18852" confidence="medium" implication="credit-sparse-memory-actions-locally" timing="radar_published_at" synthesized="2026-08-21T01:18:00Z" prior="none" -->
+
+- **`new_signal` · 受约束的 Harness 演化（guarded harness evolution）把 commit 视为持续状态边界。** 支撑：[2608.19013](#entry-2608-19013)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（guard harness state before commit）：同时检查当前效用、历史保留与 validity，并分别归因共同适应的组件。精确合成时间：`2026-08-21T01:18:00Z`。 <!-- timefirst:direction key="guarded-harness-evolution" state="new_signal" supports="2608.19013" confidence="medium" implication="guard-harness-state-before-commit" timing="radar_published_at" synthesized="2026-08-21T01:18:00Z" prior="none" -->
 
 时间视角：[周度](digests/README.md) · [月度](digests/monthly/2026-08.md) · [年度](digests/yearly/2026.md)
 

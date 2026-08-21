@@ -1,0 +1,59 @@
+{
+  "id": "2608.19013",
+  "title": "Harness Continual Learning: Continual Adaptation Beyond Model Parameters",
+  "authors": ["Borui Kang", "Jinrui Gu", "Junhan Lv", "Wenbin Li", "Lei Wang", "Yang Gao"],
+  "published": "2026-08-19",
+  "first_seen": "2026-08-21",
+  "published_at": "2026-08-19T15:12:31Z",
+  "first_seen_at": "2026-08-21T00:45:10Z",
+  "radar_published_at": "2026-08-21T01:18:00Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["guarded-harness-evolution"],
+  "paper_url": "https://arxiv.org/abs/2608.19013",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": ["episodic", "procedural", "structured", "general-agent"],
+  "relevance": 0.98,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-21",
+    "blocker": "No paper-specific visual is published until a grounded state-commit figure passes visual-policy review; the verified deep note carries the evidence meanwhile."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.AI/new", "https://arxiv.org/abs/2608.19013"],
+    "analyzed_from": ["https://arxiv.org/html/2608.19013v1"],
+    "last_verified": "2026-08-21"
+  },
+  "analysis": {
+    "tldr": "Harness Continual Learning treats prompts, experience memory, capability maps, and routing rules as jointly versioned adaptive state around a frozen model, then separates candidate generation from commitment through current-task, historical-retention, and validity checks.",
+    "problem": "An agent can forget earlier behavior even when model weights are frozen because updates to prompts, memories, tools, skills, or routing change what later executions see and do. Continual-learning controls therefore have to cover the harness state itself.",
+    "core_idea": "Evolve an execution-facing Task Interface, Experience Memory, Capability Map, and Adaptive Router as one candidate harness, evaluate current improvement and historical anchors, and commit only candidates that satisfy validity and a configurable retention bound.",
+    "memory_design": {
+      "write": "Post-execution feedback produces raw and abstract experiences plus candidate changes to the interface, capability map, and router.",
+      "organize": "Version the four harness components jointly so a candidate state and its provenance can be evaluated before commitment.",
+      "read": "The task interface, experience memory, capability map, and adaptive router jointly condition action selection by the frozen foundation model.",
+      "update_forget": "A continual evaluator tests current utility, historical retention, and validity before atomic commit; explicit retention bounds expose harness-level forgetting."
+    },
+    "compared_to": [
+      "Static Harness, RAG, MemP, and MemRL under a unified execution stack",
+      "Full HCL versus removal of the Experience Memory update",
+      "Controlled historical-loss tolerance sweeps from strict retention to unrestricted commitment"
+    ],
+    "evidence": "On ALFWorld, RAG reaches 55.56 final average, Stability-HCL 61.74, and Plasticity-HCL 62.98, but the plastic setting incurs 10.94 forgetting. In the retention sweep, unrestricted commitment ends at 60.13 versus 63.46 at b=1. Removing memory update yields 62.28/0.83 forgetting versus 63.41/0.45 for Full HCL, a narrow memory-stage witness inside a broader interacting package.",
+    "why_it_matters": "The persistent state of an agent extends beyond a memory store. Treating harness changes as versioned, testable commits makes stability-plasticity and rollback boundaries explicit without pretending that frozen weights imply frozen behavior.",
+    "limitations": [
+      "The system jointly changes four harness components; headline gains belong to the evolving package, not the memory component alone.",
+      "The memory ablation remains inside a co-adaptive system and may contain interaction effects.",
+      "Historical anchors and validity checks are benchmark-specific and may not cover latent deployment regressions.",
+      "The paper does not report a complete construction, evaluation, storage, and serving lifecycle cost or public code."
+    ],
+    "confidence": "high"
+  }
+}

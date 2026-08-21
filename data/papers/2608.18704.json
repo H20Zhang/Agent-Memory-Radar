@@ -1,0 +1,59 @@
+{
+  "id": "2608.18704",
+  "title": "MemFuse: Multi-Source Memory Fusion from Fragmented Observations",
+  "authors": ["Chao Li", "Yuanfa Li", "Wenhao Wu", "Xule Liu", "Zhi Wang", "Kun Shao"],
+  "published": "2026-08-19",
+  "first_seen": "2026-08-21",
+  "published_at": "2026-08-19T09:04:07Z",
+  "first_seen_at": "2026-08-21T00:45:10Z",
+  "radar_published_at": "2026-08-21T01:18:00Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["multi-source-evidence-completion"],
+  "paper_url": "https://arxiv.org/abs/2608.18704",
+  "code_url": "https://github.com/Darwin-Agent/Mi-Memory/tree/master/MemFuse",
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["episodic", "graph", "structured", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-21",
+    "blocker": "No paper-specific visual is published until a grounded mechanism figure passes visual-policy review; the verified deep note carries the evidence meanwhile."
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/new", "https://arxiv.org/abs/2608.18704"],
+    "analyzed_from": ["https://arxiv.org/html/2608.18704v1", "https://github.com/Darwin-Agent/Mi-Memory/tree/master/MemFuse"],
+    "last_verified": "2026-08-21"
+  },
+  "analysis": {
+    "tldr": "MemFuse preserves immutable source events beneath fused cluster memories and a causal graph, then uses iterative constrained retrieval to assemble a traceable top-20 evidence set; its own ablations show that the answer-time access loop, not the graph alone, explains most of the overall gain.",
+    "problem": "Evidence needed for a later answer can be fragmented across devices, applications, users, and time. A useful system must join those observations without losing source provenance or confusing a plausible fusion with the original evidence.",
+    "core_idea": "Keep source-tagged atomic events immutable, organize related events into fused cluster memories and typed causal links, and answer through an agentic loop that retrieves seeds, applies constraints, expands related evidence, reranks, and returns the original atomic support.",
+    "memory_design": {
+      "write": "Ingest source-tagged observations as immutable atomic events and construct candidate fused memories through a planned and validated fusion process.",
+      "organize": "Maintain a two-layer store: atomic provenance-bearing events plus cluster-level fused memories connected by a causal fusion graph.",
+      "read": "Use iterative constrained retrieval, typed expansion, and reranking to assemble a fixed top-20 atomic evidence context while retaining links back to sources.",
+      "update_forget": "New observations can extend or revise fused clusters while atomic evidence remains preserved; deletion, aging, and contradiction retirement are not the central evaluated contribution."
+    },
+    "compared_to": [
+      "Naive RAG, Mem0, A-MEM, and EverMemOS on the same event stream, reader setting, and top-20 evidence budget",
+      "Long-context access as a raw-history competence reference",
+      "Ablations without graph, fusion, agentic retrieval, or retrieval constraints"
+    ],
+    "evidence": "Overall scores are 0.4659/0.4574/0.4698 across Qwen, GPT-4.1-mini, and Gemini settings. Against the strongest memory baseline, the reported margin ranges from 0.0024 to 0.1461, but long context still wins in the Gemini setting. Removing agentic retrieval costs 0.1036 overall and removing retrieval constraints 0.0513, while graph/fusion ablations are smaller overall and more category-specific. Ingestion reaches 93.27M tokens in the Qwen setting and inference 10.31M, far above several simpler baselines.",
+    "why_it_matters": "Multi-source memory needs two separate guarantees: provenance-preserving organization and an access policy that completes dispersed evidence. MemFuse is useful precisely because its ablations prevent the graph representation from taking credit for the whole package.",
+    "limitations": [
+      "MemFuseBench is synthetic: 357 questions over 7,823 generated events, with only about one fifth manually inspected and corrected.",
+      "The main overall effect is dominated by iterative constrained retrieval, so it cannot be attributed to the fused representation or causal graph alone.",
+      "The GPT-4.1-mini margin over EverMemOS is only 0.0024, and long context remains stronger in the Gemini setting.",
+      "Ingestion and answer-time token costs are high and are not compared with a fully matched stateful raw-search system."
+    ],
+    "confidence": "high"
+  }
+}
