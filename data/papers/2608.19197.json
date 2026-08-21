@@ -1,0 +1,60 @@
+{
+  "id": "2608.19197",
+  "title": "SPADE: Self-Play in Adaptive Synthetic Executable Environments",
+  "authors": ["Bo Liu", "Simon Yu", "Yiding Jiang", "Ao Qu", "Andrew Zhao", "Zichen Liu", "Junsu Kim", "Zijian Zhou", "Seungone Kim", "Tongzheng Ren", "Mickel Liu", "Hanfei Yu", "Zhaorun Chen", "Weiyan Shi", "Paul Pu Liang", "Luke Zettlemoyer", "Yejin Choi", "Natasha Jaques"],
+  "published": "2026-08-19",
+  "first_seen": "2026-08-21",
+  "published_at": "2026-08-19T17:58:56Z",
+  "first_seen_at": "2026-08-21T01:23:59Z",
+  "radar_published_at": "2026-08-21T01:54:03Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["training-side-environment-memory"],
+  "paper_url": "https://arxiv.org/abs/2608.19197",
+  "code_url": "https://github.com/spade-rl/spade",
+  "project_url": "https://spade-rl.github.io/",
+  "primary_category": "memory_learning_evolution",
+  "tags": ["procedural", "structured", "general-agent"],
+  "relevance": 0.86,
+  "importance": 3,
+  "visual_explainer": {
+    "status": "not_required",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-21",
+    "blocker": null
+  },
+  "provenance": {
+    "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.19197"],
+    "analyzed_from": ["https://arxiv.org/html/2608.19197v1", "https://github.com/spade-rl/spade", "https://spade-rl.github.io/"],
+    "last_verified": "2026-08-21"
+  },
+  "analysis": {
+    "tldr": "SPADE stores generated environments and regret metadata across training episodes, then retrieves a few skill-matched examples into later Environment Designer prompts. A command-level no-memory run scores 53.2 versus 58.3 for the full package, but one run, suite-selected checkpoints, and unmatched demonstration tokens prevent attribution to regret retrieval, FIFO retention, or memory alone.",
+    "problem": "A self-improving agent needs training environments near its current capability frontier. A stateless designer may repeatedly generate redundant, too-easy, or too-hard tasks instead of learning from earlier environment outcomes.",
+    "core_idea": "Maintain a bounded environment buffer containing executable code, skill tags, win rate, regret, and rollout identity. Before generating a new environment, retrieve two skill-matched high-regret examples and one too-easy or too-hard negative; the generated environments then train the Reasoning Agent with GRPO.",
+    "memory_design": {
+      "write": "Accepted generated environments are appended with code, skill, win rate, regret, and rollout metadata.",
+      "organize": "A flat skill-tagged buffer is capped at 200 records and evicts the oldest record first.",
+      "read": "The Environment Designer receives up to two 2,000-character high-regret snippets plus one extreme negative descriptor for the same skill.",
+      "update_forget": "New environment outcomes append records and FIFO eviction bounds the buffer; the deployed Reasoning Agent does not use this memory at inference time."
+    },
+    "compared_to": [
+      "A NO_ENV_MEMORY command-level ablation that preserves the 30B launcher, corpus grounding, designer training, GRPO recipe, rollout count, and regeneration schedule",
+      "A no-corpus ablation and a fixed GPT-5.5 Environment Designer with memory",
+      "Hint-regret versus EMA learning-potential reward"
+    ],
+    "evidence": "Across the eight reported game benchmarks, the selected full checkpoint averages 58.3 versus 53.2 without environment memory. The largest gaps are on Reasoning-Gym Math, Algorithmic, and Cognition, while AIME 2026 falls 75.0 to 74.4. Memory does not improve the reported diversity metric: Vendi/n is 0.68 full versus 0.69 without memory. The command ablation supports a package-level training-memory signal, not the specific regret/FIFO policy.",
+    "why_it_matters": "Persistent agent state can guide the generation of future learning experiences even when the final actor has no inference-time memory. Training-side memory should therefore be evaluated separately from deployed memory and from the broader self-play package.",
+    "limitations": [
+      "Each ablation is a single training run with no confidence interval or independent seed replication.",
+      "Every variant selects its best checkpoint on the same eight-benchmark suite used for the headline comparison.",
+      "Removing memory also removes several thousand characters of retrieved demonstrations; no token-matched static, random, or score-shuffled replay control is reported.",
+      "The released memory sampler is not passed an explicit seed, and public artifacts do not identify the exact no-memory run behind the table.",
+      "GPU-hours, generated tokens, wall time, dollars, energy, and validation-retry cost are unreported."
+    ],
+    "confidence": "medium"
+  }
+}

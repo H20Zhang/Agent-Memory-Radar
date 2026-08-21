@@ -85,7 +85,7 @@ def direction_line(
     confidence: str = "high",
     implication: str = "require-native-v2-times-for-period-claims",
     timing: str = "radar_published_at",
-    synthesized: str = "2026-08-21T01:18:00Z",
+    synthesized: str = "2026-08-21T01:54:03Z",
     prior: str = "none",
     visible_supports: tuple[str, ...] | None = None,
 ) -> str:
@@ -301,7 +301,7 @@ class CanonicalMemoryTimeContractTest(unittest.TestCase):
             "id": "legacy",
             "published": "2026-08",
             "published_at": "2026-08",
-            "first_seen_at": "2026-08-21T01:18:00Z",
+            "first_seen_at": "2026-08-21T01:54:03Z",
             "radar_published_at": None,
             "time_provenance": "legacy_unknown",
             "map_delta": "early_signal",
@@ -410,8 +410,8 @@ class CanonicalMemoryTimeContractTest(unittest.TestCase):
         native = deepcopy(explicit_legacy)
         native.update(
             published_at="2026-08-18T00:00:00Z",
-            first_seen_at="2026-08-21T01:18:00Z",
-            radar_published_at="2026-08-21T01:18:00Z",
+            first_seen_at="2026-08-21T01:54:03Z",
+            radar_published_at="2026-08-21T01:54:03Z",
             time_provenance="native_v2",
             direction_keys=["memory-radar-acceptance-time"],
         )
@@ -778,13 +778,13 @@ class MemoryProjectionContractTest(unittest.TestCase):
             "synthesis": direction_line("zh", synthesized="2026-08-20"),
             "synthesis-laundering": direction_line("zh")
             .replace(
-                "精确合成时间：`2026-08-21T01:18:00Z`",
+                "精确合成时间：`2026-08-21T01:54:03Z`",
                 "精确合成时间：`2026-08-20`",
                 1,
             )
             .replace(
                 "仅原生接受时间可以支持窗口判断。",
-                "仅原生接受时间可以支持窗口判断。旁注：`2026-08-21T01:18:00Z`。",
+                "仅原生接受时间可以支持窗口判断。旁注：`2026-08-21T01:54:03Z`。",
                 1,
             ),
             "prior-visible": direction_line("zh").replace(
@@ -816,7 +816,7 @@ class MemoryProjectionContractTest(unittest.TestCase):
                 "supports": "旁注：支撑：**none**；",
                 "confidence": "旁注：置信度：**high**；",
                 "timing basis": "旁注：时间依据：`radar_published_at`；",
-                "synthesis": "旁注：精确合成时间：`2026-08-21T01:18:00Z`。",
+                "synthesis": "旁注：精确合成时间：`2026-08-21T01:54:03Z`。",
                 "implication": (
                     "旁注：研究设计含义（require native v2 times for period claims）：重复。"
                 ),
@@ -827,7 +827,7 @@ class MemoryProjectionContractTest(unittest.TestCase):
                 "supports": "Aside: Supports: **none**;",
                 "confidence": "Aside: confidence: **high**;",
                 "timing basis": "Aside: timing basis: `radar_published_at`;",
-                "synthesis": "Aside: Exact synthesis time: `2026-08-21T01:18:00Z`.",
+                "synthesis": "Aside: Exact synthesis time: `2026-08-21T01:54:03Z`.",
                 "implication": (
                     "Aside: Research-design implication "
                     "(require native v2 times for period claims): duplicate."
@@ -975,9 +975,9 @@ class MemoryProjectionContractTest(unittest.TestCase):
                 ),
                 (
                     "synthesis",
-                    "精确合成时间：`2026-08-21T01:18:00Z`。",
+                    "精确合成时间：`2026-08-21T01:54:03Z`。",
                     "精确合成时间缺少结构。旁注：精确合成时间："
-                    "`2026-08-21T01:18:00Z`。",
+                    "`2026-08-21T01:54:03Z`。",
                 ),
             ),
             "en": (
@@ -1012,9 +1012,9 @@ class MemoryProjectionContractTest(unittest.TestCase):
                 ),
                 (
                     "synthesis",
-                    "Exact synthesis time: `2026-08-21T01:18:00Z`.",
+                    "Exact synthesis time: `2026-08-21T01:54:03Z`.",
                     "Exact synthesis time lacks structure. Aside: Exact synthesis time: "
-                    "`2026-08-21T01:18:00Z`.",
+                    "`2026-08-21T01:54:03Z`.",
                 ),
             ),
         }
@@ -1508,7 +1508,7 @@ class MemoryProjectionContractTest(unittest.TestCase):
                     ),
                     (identity,),
                     "field-map",
-                    "accepted after direction synthesized=2026-08-21T01:18:00Z",
+                    "accepted after direction synthesized=2026-08-21T01:54:03Z",
                 ),
                 "incompatible-map-delta": (
                     native_record(

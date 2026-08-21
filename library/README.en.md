@@ -22,11 +22,11 @@ Browse by research problem, research line, or year. If you know the question but
 
 “Structured vs raw” is not one decision. Start with a stronger raw-interface baseline, then test whether stored relations change reachability. If history contains interleaved trajectories, localize the active state; retrieved evidence may still need to be converted into actor-facing state.
 
-### Learned access/writer → certified artifact → guarded harness commit
+### Learned access/writer/curriculum → certified artifact → guarded harness commit
 
-[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) → [TRUSS](../papers/2026/2608.17588.md) → [Harness Continual Learning](../papers/2026/2608.19013.md)
+[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [TRUSS](../papers/2026/2608.17588.md) → [Harness Continual Learning](../papers/2026/2608.19013.md)
 
-Procedural-memory gains can come from relational structure, writer-policy learning, execution feedback, or runtime certification. Treating all of these changes as “skill memory” hides the causal variable.
+Procedural-learning gains can come from relational structure, writer-policy learning, training-side experience memory, execution feedback, or runtime certification. Treating all of these changes as “memory” hides the causal variable.
 
 ### Retrieval score → stage attribution → gate qualification → feature-promotion evidence
 

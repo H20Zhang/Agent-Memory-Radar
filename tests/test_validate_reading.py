@@ -21,6 +21,7 @@ TIMELINE_SUMMARY_RE = re.compile(
 )
 CJK_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
 EXPECTED_TIMELINE_TITLES = {
+    "2608-19197": "2026-08-21 · SPADE",
     "2608-18704": "2026-08-21 · MemFuse",
     "2608-18719": "2026-08-21 · Competence, Not Accuracy",
     "2608-18852": "2026-08-21 · SkillGate",

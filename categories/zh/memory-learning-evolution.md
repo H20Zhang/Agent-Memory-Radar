@@ -11,22 +11,23 @@
 - **HyperSkill：** relation structure 真正进入 retrieval/ranking/maintenance。
 - **WER：** 从 execution feedback 学 **skill-writer policy**，而不是只改当前 artifact。
 - **TRUSS：** 不直接学 writer，而是用 static + runtime evidence 决定 candidate skill 是否可以被 promote 为 persistent capability。
+- **SPADE：** 用跨 episode 的 environment buffer 条件化后续训练课程，但 no-memory 消融仍混入 demonstration token 与 checkpoint selection 差异。
 - **Harness Continual Learning：** 把 memory、interface、capability map 与 router 作为联合 version 的 harness state，并在 commit 前检查 retention。
 
 SkillEvo / ERSkill 则分别提醒：feedback surface 与 read policy evolution 也是独立变量。
 
 ## Strongest signal
 
-WER 的 matched untrained-optimizer control 说明，学习 writer policy 本身能产生明显增益；TRUSS 的 detection ladder 说明，只做 LLM/static inspection 仍会漏掉 runtime behavior。HCL 又把 whole-harness commit 加入边界。它们共同表明：**artifact generation、writer learning、execution feedback、promotion gate 与 harness update 不应被打包成一个“skill memory”模块。**
+WER 的 matched untrained-optimizer control 说明，学习 writer policy 本身能产生明显增益；SPADE 的 no-memory run 则提示训练经验生成器也可能拥有跨 episode 状态，但单次 suite-selected comparison 只能支持 package-level signal。TRUSS 的 detection ladder 说明，只做 LLM/static inspection 仍会漏掉 runtime behavior；HCL 又把 whole-harness commit 加入边界。它们共同表明：**training-experience memory、artifact generation、writer learning、execution feedback、promotion gate 与 harness update 不应被打包成一个“self-improvement”模块。**
 
 ## Biggest unresolved question
 
-这些 evolved artifacts / policies 是否能跨 executor、domain、code version 与更长 state stream 稳定迁移？如果 synthesis、verifier、rollout、historical replay 很贵，break-even point 在哪里？
+这些 evolved artifacts / policies / curricula 是否能跨 executor、domain、code version 与更长 state stream 稳定迁移？如果 synthesis、environment generation、verifier、rollout、historical replay 很贵，break-even point 在哪里？
 
 ## Next decisive evidence
 
 固定 executor、task distribution 与 skill format，独立变化：
 
-`writer training × feedback richness × read policy × commit certification × retention budget`
+`writer training × feedback richness × token-matched curriculum memory × read policy × commit certification × retention budget`
 
 同时报告 task utility、regression、library bloat、rollout/verifier cost 与 cross-domain transfer。
