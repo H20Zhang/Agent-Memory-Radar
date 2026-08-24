@@ -1,0 +1,60 @@
+{
+  "id": "2608.19564",
+  "title": "Remember, Verify, or Ask? Cross-Family Evaluation of Memory Commitment in LLM Agents",
+  "authors": ["Baichuan Li", "Junyi Yao", "Zihao Zheng"],
+  "published": "2026-08-20",
+  "first_seen": "2026-08-24",
+  "published_at": "2026-08-20T02:11:03Z",
+  "first_seen_at": "2026-08-24T00:39:07Z",
+  "radar_published_at": "2026-08-24T00:54:00Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["memory-commitment-governance"],
+  "paper_url": "https://arxiv.org/abs/2608.19564",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["semantic", "text", "personalization", "general-agent"],
+  "relevance": 0.97,
+  "importance": 3,
+  "visual_explainer": {
+    "status": "not_required",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-24",
+    "blocker": null
+  },
+  "provenance": {
+    "discovered_from": ["https://export.arxiv.org/api/query?id_list=2608.19564", "https://arxiv.org/abs/2608.19564"],
+    "analyzed_from": ["https://arxiv.org/pdf/2608.19564"],
+    "last_verified": "2026-08-24"
+  },
+  "analysis": {
+    "tldr": "MCB evaluates whether candidate information should be persisted, used ephemerally, verified against the world, or clarified with the user. Paired prompts change commitment choices, and label decisions diverge sharply from structured tool selection, but no write is executed and no later task outcome is measured.",
+    "problem": "A memory agent must decide whether interaction-derived information has enough authority, durability, and scope to influence future behavior. Retrieval benchmarks do not test this candidate-commitment boundary.",
+    "core_idea": "Present an acquired candidate update and a later reuse context, then score four authority-aware actions. MCB uses audited held-out labels, behavior-specific over-memory and clarification metrics, paired prompt interventions, and a structured-call mode using memory_write, use_now, check_source, or ask_user.",
+    "memory_design": {
+      "write": "The evaluated decision selects durable persistence, ephemeral use, world verification, or user clarification; MCB does not execute the selected operation.",
+      "organize": "Scenarios are organized by commitment ambiguity, while the four labels encode authority and scope rather than topic.",
+      "read": "Each item supplies the candidate update and later reuse context directly; there is no retrieval system or persistent store.",
+      "update_forget": "The benchmark tests the decision before an update is committed. It does not measure correction, expiry, retrieval, or downstream forgetting."
+    },
+    "compared_to": [
+      "Same-model, same-item bare prompts versus an explicit five-rule commitment policy and four development demonstrations",
+      "Bare action-label selection versus structured tool-call selection on the same 70 held-out items",
+      "Always-Persist as a lifecycle-specific negative reference, not a functioning memory-system baseline"
+    ],
+    "evidence": "On Qwen, few-shot prompting raises held-out accuracy from 0.557 to 0.771 (Holm-adjusted exact McNemar p=0.002) but clarification recall reaches only 0.333. The policy prompt reduces erroneous persistence from 0.243 to 0.100 (p=0.038) without a significant accuracy gain. Label-tool agreement is 0.571 for each Claude model and 0.229 for Qwen; Qwen accuracy falls 0.557 to 0.343 in structured-call mode (p=0.047).",
+    "why_it_matters": "Memory governance begins before storage: the agent must identify who can authorize an update and whether its scope is durable. Evaluation should test operational commitment actions, not only recall or a verbal storage label.",
+    "limitations": [
+      "MCB measures selected commitment actions, not executed writes, later retrieval, user/source responses, or downstream utility.",
+      "The held-out test has 70 synthetic English scenarios; ten-item category cells and eight lexical traps support qualitative analysis only.",
+      "Scenarios and rules are author-written, development demonstrations retain author labels, and the contrast set is closely aligned with the rules.",
+      "Act mode tests only the bare prompt, one checkpoint per family, and one quantized 9B Qwen configuration.",
+      "The paper reports no aggregate token, latency, hardware, dollar, energy, or lifecycle cost, and the promised artifact has no primary-source locator."
+    ],
+    "confidence": "medium"
+  }
+}

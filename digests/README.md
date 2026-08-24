@@ -1,5 +1,7 @@
 # Research Compactions
 
+[中文](README.zh.md) | **English**
+
 [Home](../README.md) · [What’s Changing](../README.md#whats-changing) · [Reading Paths](../README.md#reading-paths) · [Research Map](../README.md#research-map)
 
 Compactions answer a different question from paper notes: **what changed in the field, how strong is the evidence, and what should a researcher update in their mental model?**
@@ -8,9 +10,10 @@ Compactions answer a different question from paper notes: **what changed in the 
 
 | Horizon | Report | Research takeaway |
 |---|---|---|
+| **Weekly** | [2026-W34 — Persistent state needs qualified access, selection, and commit gates](weekly/2026-W34.md) ([中文](weekly/2026-W34.zh.md)) | Five separate early signals sharpen evidence completion, skill selection, judge qualification, guarded harness commits, and training-side experience reuse; none is yet a trend. |
 | **Weekly** | [2026-W33 — Memory architecture decomposes into stage-specific controls](weekly/2026-W33.md) | Archive, access, consumer state/reuse, evolution, and lifecycle cost need matched controls rather than one architecture-level score. |
 | **Weekly** | [2026-W32 — Structure only matters when control can use it](weekly/2026-W32.md) | Added structure should be credited only when a downstream controller/operator actually exploits it. |
-| **Monthly** | [2026-08 — rolling through Aug 21](monthly/2026-08.md) | August now adds **multi-source evidence completion, an oracle-local skill selector signal, judge-gate qualification, guarded harness commits, and training-side environment memory** without promoting any one-paper signal into the durable map. |
+| **Monthly** | [2026-08 — rolling through Aug 24](monthly/2026-08.md) | August now also separates candidate commitment, state supersession, and post-retrieval applicability; all remain one-paper signals without a durable map edit. |
 | **Yearly** | [2026 — rolling, incomplete](yearly/2026.md) | Current evidence supports a multi-stage memory-state interface, but coverage begins in August with limited backfill and is not a full-year reconstruction. |
 
 ## Time hierarchy
@@ -19,7 +22,7 @@ Compactions answer a different question from paper notes: **what changed in the 
 - **Recent 3 calendar months → monthly:** rebuild the design-space map and record which weekly claims persist or weaken.
 - **Covered years → yearly:** retain only durable shifts, field-shaping evidence, corrections, and open problems.
 
-W34 is still open, so Aug 17–20 evidence is integrated into the rolling monthly map without pretending the week is closed.
+W34 is closed and immutable. Papers accepted after 2026-08-23 remain in the rolling 7/30-day and monthly views; they are not backdated into the weekly digest by source publication date.
 
 ## Reading a compaction
 

@@ -1,0 +1,60 @@
+{
+  "id": "2608.19652",
+  "title": "Can Agent Memory Systems Track Evolving State?",
+  "authors": ["Xinyi Fan", "Miri Liu", "Ruozhen Yang", "Siru Ouyang", "Jiawei Han"],
+  "published": "2026-08-20",
+  "first_seen": "2026-08-24",
+  "published_at": "2026-08-20T05:41:23Z",
+  "first_seen_at": "2026-08-24T00:39:07Z",
+  "radar_published_at": "2026-08-24T00:54:01Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["state-supersession-resolution"],
+  "paper_url": "https://arxiv.org/abs/2608.19652",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "write_update_consolidation",
+  "tags": ["semantic", "structured", "timeline", "general-agent"],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-24",
+    "blocker": "Mechanism visual deferred until a paper-grounded figure can distinguish persistent StateMem from the answer-time full-transcript wrapper without identity or causal-stage bleed."
+  },
+  "provenance": {
+    "discovered_from": ["https://export.arxiv.org/api/query?id_list=2608.19652", "https://arxiv.org/abs/2608.19652"],
+    "analyzed_from": ["https://arxiv.org/pdf/2608.19652"],
+    "last_verified": "2026-08-24"
+  },
+  "analysis": {
+    "tldr": "StateMem keeps superseded values for audit, marks them inactive, flags dependent state for recomputation, and changes later current-state answers. Supersession and recompute guidance carry most of the observed package gain; dependency propagation is unstable, and the strongest matched wrapper evidence comes from answer-time full-transcript tracing rather than persistent storage.",
+    "problem": "A memory system can retrieve every relevant fact yet answer from a superseded value or fail to recompute a dependent decision. Recall metrics do not separate current operative state from stale state.",
+    "core_idea": "StateMemBench creates multi-session programs with mechanically known current and stale answers. StateMem writes sourced state units, retires superseded units, flags dependencies, and renders active state for query-time recomputation. A separate wrapper tests query-conditioned state tracing over the full transcript under a matched generic-summary control.",
+    "memory_design": {
+      "write": "A TurnEncoder makes one LLM call per conversational turn and writes sourced state units with priority, dates, and typed dependencies.",
+      "organize": "Active, superseded, and needs_recheck units remain auditable in a structured StateStore; superseded units are withheld from answering.",
+      "read": "The persistent system renders active state and stale triggers for one answer call; the separate wrapper instead reads the full numbered transcript plus unchanged retrieved chunks.",
+      "update_forget": "Explicit supersession retires old units without deleting audit history. A deterministic O(|E|) rechecker flags dependents, and the answerer recomputes current values."
+    },
+    "compared_to": [
+      "Persistent staged ablations: extraction-only, extraction plus supersession, full minus dependency propagation, and full minus recomputation guidance",
+      "Same-backbone long context, retrieval, graph-RAG, and released memory-system baselines on 322 StateMemBench probes",
+      "StateMemWrapper versus a same-context, same-call, same-250-word-budget generic summary control"
+    ],
+    "evidence": "On DeepSeek-V4-Flash, persistent StateMem scores 0.363 versus 0.205 for Dense and 0.199 for A-Mem; extraction-only is 0.174, adding supersession reaches 0.298, and removing recompute guidance falls to 0.301. Removing dependency propagation instead improves 0.363 to 0.373. On Qwen, StateMem is 0.233 versus Mem0 0.149 but statistically level with GraphRAG 0.224. Across six backends, the answer-time wrapper adds 15.0 to 31.7 points over a matched generic-summary control on StateMemBench, but it reads the full transcript and is not persistent memory.",
+    "why_it_matters": "Current-state resolution is a distinct lifecycle boundary: retrieved history must be reconciled with supersession, standing rules, and dependent values before the actor consumes it. Benchmarks should score stale answers separately from retrieval failure.",
+    "limitations": [
+      "StateMemBench is synthetic and filtered around the same supersession/recomputation policy family StateMem implements, so own-benchmark margins are an in-distribution upper bound.",
+      "Dependency propagation is not globally beneficial: removing it improves DeepSeek overall and avoids a 12.5-point Set-B anti-trap penalty.",
+      "The strongest wrapper result uses full-transcript answer-time tracing, not persistent storage, and adds about 350 tokens beyond its control.",
+      "All configurations are single runs under one fixed DeepSeek-family judge; frontier answerers and executed agent actions are untested.",
+      "Persistent StateMem costs roughly 165–600 ingestion LLM calls per scenario, while aggregate tokens, latency, dollars, store growth, maintenance, and amortization are unreported."
+    ],
+    "confidence": "medium"
+  }
+}

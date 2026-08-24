@@ -22,6 +22,12 @@
 
 结构化记忆与原始记录不是一次性二选一。先用更强的原始记录接口作为基线，再检验预存关系是否改变可达性；历史若包含多条交错的轨迹，需要先定位当前状态；检索到的证据最后仍可能需要转换为 Agent 实际使用的状态。
 
+### Candidate 承诺 → 状态取代 → 面向当前使用方的适用性判断
+
+[Remember, Verify, or Ask?](../papers/2026/2608.19564.zh.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.zh.md) → [MemTrapBench](../papers/2026/2608.20202.zh.md)
+
+持久状态需要三种不同决策：candidate information 是否有 authority 进入 memory，哪些旧状态被它取代，以及 retrieval 后的历史是否适用于当前 consumer。现有证据仍受 benchmark 限制，还没有在一条真实执行的 lifecycle 中把三个阶段连起来。
+
 ### 学得访问 / 编写 / 课程策略 → 经认证的产物 → 受守护的 Harness 提交
 
 [SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) / [SPADE](../papers/2026/2608.19197.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) → [Harness Continual Learning](../papers/2026/2608.19013.zh.md)

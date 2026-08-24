@@ -22,6 +22,12 @@ Browse by research problem, research line, or year. If you know the question but
 
 “Structured vs raw” is not one decision. Start with a stronger raw-interface baseline, then test whether stored relations change reachability. If history contains interleaved trajectories, localize the active state; retrieved evidence may still need to be converted into actor-facing state.
 
+### Candidate commitment → supersession → applicability-aware consumption
+
+[Remember, Verify, or Ask?](../papers/2026/2608.19564.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.md) → [MemTrapBench](../papers/2026/2608.20202.md)
+
+Persistent state needs three different decisions: whether candidate information is authorized to enter memory, which older state it supersedes, and whether the resulting retrieved history is applicable to the current consumer. Current evidence is benchmark-bounded and does not yet join these stages in one executed lifecycle.
+
 ### Learned access/writer/curriculum → certified artifact → guarded harness commit
 
 [SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [TRUSS](../papers/2026/2608.17588.md) → [Harness Continual Learning](../papers/2026/2608.19013.md)

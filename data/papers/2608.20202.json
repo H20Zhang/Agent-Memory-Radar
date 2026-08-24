@@ -1,0 +1,60 @@
+{
+  "id": "2608.20202",
+  "title": "MemTrapBench: Benchmarking Cognitive Traps in LLM Memory Use",
+  "authors": ["Mengru Wang", "Haozhe Luo", "Zhenqian Xu", "Zhixiang Cui", "Haoming Xu", "Qu Yang", "Jizhan Fang", "Junfeng Fang", "Ningyu Zhang"],
+  "published": "2026-08-20",
+  "first_seen": "2026-08-24",
+  "published_at": "2026-08-20T16:00:17Z",
+  "first_seen_at": "2026-08-24T00:39:07Z",
+  "radar_published_at": "2026-08-24T00:54:02Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["memory-consumption-harm"],
+  "paper_url": "https://arxiv.org/abs/2608.20202",
+  "code_url": "https://github.com/zjunlp/MemTrapBench",
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["episodic", "semantic", "text", "general-agent"],
+  "relevance": 0.99,
+  "importance": 3,
+  "visual_explainer": {
+    "status": "not_required",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-24",
+    "blocker": null
+  },
+  "provenance": {
+    "discovered_from": ["https://export.arxiv.org/api/query?id_list=2608.20202", "https://arxiv.org/abs/2608.20202"],
+    "analyzed_from": ["https://arxiv.org/pdf/2608.20202", "https://github.com/zjunlp/MemTrapBench"],
+    "last_verified": "2026-08-24"
+  },
+  "analysis": {
+    "tldr": "MemTrapBench constructs 1,050 cases where related prior history can fixate reasoning or distort beliefs. Every tested memory/context package trails no-memory on the aggregate stress-test score, but the benchmark deliberately makes the current query independently solvable and plants a trap; it measures conditional susceptibility, not memory's net real-world utility.",
+    "problem": "Even accurate and relevant retrieved memories can be inapplicable or cognitively anchoring for the current task. Existing benchmarks emphasize extraction and recall rather than the downstream harm of using memory.",
+    "core_idea": "Generate long histories containing Task Boundary, Cognitive Bias, Trauma, or Safety traps, compare the same model with and without memory, and add limited trap-free controls. AdaptiveMem is a query-time system prompt that asks the consumer to check current applicability before using retrieved history.",
+    "memory_design": {
+      "write": "The benchmark supplies generated interaction histories to FullText or four memory frameworks; it does not isolate their write mechanisms.",
+      "organize": "LightMem, MemOS, SimpleMem, and EverMemOS use different compression and organization packages whose configurations and budgets are not matched.",
+      "read": "Retrieved or full-history memory is supplied before the same final query. AdaptiveMem adds a taxonomy-matched applicability check at answer time.",
+      "update_forget": "No evolving update, expiry, conflict repair, or forgetting policy is evaluated; the measured boundary is admission after retrieval."
+    },
+    "compared_to": [
+      "The same answer model with no history, on final queries deliberately designed to be independently solvable",
+      "Trap-inducing versus limited trap-free history controls for Task Boundary and Trauma",
+      "The same FullText, LightMem, or EverMemOS framework with versus without the AdaptiveMem system prompt"
+    ],
+    "evidence": "On Gemini, no-memory averages 85.16 while the strongest memory arm, EverMemOS, reaches 71.17; on Qwen, no-memory is 81.83 and the strongest memory/context arm is FullText at 70.99, with LightMem at 70.13. In limited matched controls, Task Boundary scores 92.29 no-memory, 94.39 trap-free, and 31.05 with the trap; Trauma is 86.73, 84.33, and 69.43. AdaptiveMem adds 11.8/14.9/11.3 points on Gemini and 4.2/2.5/2.6 on Qwen across three memory arms, without uncertainty estimates.",
+    "why_it_matters": "Successful retrieval is not sufficient: an actor needs a read-time applicability or admission decision that preserves useful memory while rejecting misleading prior context. Harm should be measured at the consumer behavior, not inferred from stored content alone.",
+    "limitations": [
+      "This is an adversarial synthetic stress test in which every final query is solvable without history and prior dialogue is generated to plant a trap; it does not estimate trap prevalence or memory's net utility.",
+      "Trap-free controls cover only Task Boundary and Trauma, with incomplete subset, model, and framework reporting.",
+      "Headline percentages average four LLM-judged dimensions; Table 1 has no confidence intervals, paired tests, or repeated-run variance, and judge absolute scores differ materially.",
+      "Framework versions, configurations, retrieval budgets, and full ingestion/access/maintenance costs are unreported; the linked repository was an empty placeholder when verified.",
+      "AdaptiveMem explicitly names the benchmark's four trap types and uses random 200-item slices without uncertainty or a length-matched neutral prompt, so it supports benchmark-aligned mitigation only."
+    ],
+    "confidence": "medium"
+  }
+}
