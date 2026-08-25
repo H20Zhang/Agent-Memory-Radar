@@ -10,6 +10,7 @@ How memory content, writer policy, retrieval policy, structural relations, or fe
 
 | Date | Paper | Tags | Importance | Research take |
 |---|---|---|---:|---|
+| 2026-08-20 | [Break It Down, Pass It On](../papers/2026/2608.20274.md) | `procedural` `text` `structured` `general-agent` | 4/5 | Whole-task skills reduce average success while subtask skills add small average gains; heterogeneous cells and unmatched lifecycle cost prevent a universal granularity claim. |
 | 2026-08-19 | [Harness Continual Learning](../papers/2026/2608.19013.md) | `episodic` `procedural` `structured` `general-agent` | 4/5 | Jointly versions four harness components and gates commits on current utility, retention, and validity; package gains cannot be assigned to memory alone. |
 | 2026-08-19 | [SPADE](../papers/2026/2608.19197.md) | `procedural` `structured` `general-agent` | 3/5 | A bounded environment buffer conditions later curriculum prompts; one no-memory run supports the package path, not regret retrieval or FIFO as isolated causes. |
 | 2026-08-18 | [WER](../papers/2026/2608.17587.md) | `procedural` `text` `general-agent` | 4/5 | Same optimizer backbone/workflow gains 9.35/10.29 points after training from execution feedback; deeper refinement can regress. |

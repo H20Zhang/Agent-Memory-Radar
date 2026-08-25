@@ -1,0 +1,53 @@
+{
+  "id": "2608.20664",
+  "title": "DreamBench-SWE: A Multi-Session Memory-Hygiene Benchmark for Software Agents",
+  "authors": ["Sarthak Singh"],
+  "published": "2026-08-21",
+  "first_seen": "2026-08-25",
+  "published_at": "2026-08-21T01:48:57Z",
+  "first_seen_at": "2026-08-25T00:28:29Z",
+  "radar_published_at": "2026-08-25T00:44:05Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["executable-memory-hygiene"],
+  "paper_url": "https://arxiv.org/abs/2608.20664",
+  "code_url": "https://github.com/iroiro147/dreambench-swe",
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["episodic", "semantic", "procedural", "structured", "coding"],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-25",
+    "blocker": "No paper-grounded mechanism figure was available; the record remains text-only rather than publishing an unverified synthesis."
+  },
+  "provenance": {
+    "discovered_from": ["https://export.arxiv.org/api/query?id_list=2608.20664", "https://arxiv.org/abs/2608.20664"],
+    "analyzed_from": ["https://arxiv.org/pdf/2608.20664", "https://github.com/iroiro147/dreambench-swe/releases/tag/v2.0.5", "https://github.com/iroiro147/dreambench-swe/releases/tag/v2.1.0"],
+    "last_verified": "2026-08-25"
+  },
+  "analysis": {
+    "tldr": "DreamBench-SWE provides executable evidence that retained project state changes later patches, but its preregistered comparisons do not show that typed consolidation or sleep beats a verbatim store. The benchmark is stronger than its reference memory mechanism.",
+    "problem": "Multi-session software work needs an executable test of whether earlier arbitrary project state survives, remains in scope, resolves contradictions, and changes a later patch.",
+    "core_idea": "Inject non-inferable evidence in S1/S2, require it in S3, and grade the resulting repository with a hidden oracle while comparing no external memory, verbatim storage, typed/raw/hybrid reference probes, and literal-storage Mem0.",
+    "memory_design": {
+      "write": "The reference probe preserves immutable raw episodes and derives typed episodic, semantic, procedural, failure, feedback, constraint, contradiction, and dream records.",
+      "organize": "Sleep consolidates types, extracts failure, replays counterfactuals, repairs contradictions, and suppresses stale records.",
+      "read": "Broad retrieval is gated by status, scope, validity, supersession, risk, staleness, provenance, and type under a fixed context budget.",
+      "update_forget": "Logical forgetting suppresses stale state while raw episodes remain immutable; the later wake actor edits the repo from admitted memory."
+    },
+    "compared_to": [
+      "No external memory versus deterministic verbatim storage under the same GPT-5.5 wake task and tools",
+      "Hybrid typed/raw reference probe versus verbatim, raw-only, and typed-only probes",
+      "A matched factorial consolidation control with equal sleep compute is missing"
+    ],
+    "evidence": "In v2.1, no memory scores 21/180 (.1167), verbatim 82/180 (.4556), hybrid 83/180 (.4611), and Mem0 literal storage 97/180 (.5389). Persistent evidence clearly changes later executable patches, but hybrid-versus-verbatim, raw-only, and typed-only preregistered tests all fail to reject. Contradiction records appear in 0/180 hybrid/raw reads.",
+    "why_it_matters": "A memory benchmark should grade later actions and expose hygiene failures, while refusing to attribute an end-to-end gain to typed organization when a matched verbatim archive performs the same.",
+    "limitations": [
+      "Synthetic fixture repositories and arbitrary exact tokens dominate; 18 of 22 historical traps are recall-verbatim and favor literal storage.",
+      "Only one feasible hosted wake model remains; native Mem0 and Supermemory fail conformance, and the reference-probe ablations do not isolate its intended mechanisms.",
+      "Hybrid uses 174.205M tokens and 12,655 judge calls versus 2.209M tokens for verbatim storage; storage, production latency, service price, and energy remain incomplete."
+    ],
+    "confidence": "medium"
+  }
+}

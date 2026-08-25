@@ -1,0 +1,53 @@
+{
+  "id": "2608.19993",
+  "title": "Optimal Skill Selection for LLM Agents with Provable Bicriteria Guarantees",
+  "authors": ["Yu Chen", "Ruishuo Chen", "Xun Wang", "Zhuoran Li", "Longbo Huang"],
+  "published": "2026-08-20",
+  "first_seen": "2026-08-25",
+  "published_at": "2026-08-20T13:08:17Z",
+  "first_seen_at": "2026-08-25T00:28:29Z",
+  "radar_published_at": "2026-08-25T00:44:02Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["budgeted-skill-set-selection"],
+  "paper_url": "https://arxiv.org/abs/2608.19993",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["procedural", "text", "structured", "general-agent"],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-25",
+    "blocker": "No paper-grounded mechanism figure was available; the record remains text-only rather than publishing an unverified synthesis."
+  },
+  "provenance": {
+    "discovered_from": ["https://export.arxiv.org/api/query?id_list=2608.19993", "https://arxiv.org/abs/2608.19993"],
+    "analyzed_from": ["https://arxiv.org/pdf/2608.19993"],
+    "last_verified": "2026-08-25"
+  },
+  "analysis": {
+    "tldr": "BPS selects a complementary set of persistent skill documents under a token penalty rather than routing each skill independently. Direct interventions show complementarity and overload, but the benchmark is filtered to tasks where single skills fail and does not establish general online routing.",
+    "problem": "Independent top-k skill retrieval ignores complementarities, redundancies, and the context cost of exposing several procedural documents together.",
+    "core_idea": "Fit nonnegative task demand and skill supply from historical executions, optimize a submodular benefit-minus-token objective, and expose the selected skill set to a frozen executor.",
+    "memory_design": {
+      "write": "A fixed library of skill documents and historical execution outcomes is supplied; skill authoring is outside scope.",
+      "organize": "Historical records estimate query demand and skill capability vectors under a nonnegative factorization.",
+      "read": "Budgeted set selection jointly chooses complementary skills before their documents enter the frozen actor context.",
+      "update_forget": "No online library update, forgetting, or policy adaptation after deployment is evaluated."
+    },
+    "compared_to": [
+      "Same frozen executor with no skill, one skill, complementary pairs, redundant skills, and irrelevant skills",
+      "Deployed similarity/neural routers under the same task library",
+      "An unfiltered task distribution and online cold-start control are missing"
+    ],
+    "evidence": "A controlled capability case moves from 0% with either one skill to 93% with the complementary pair; adding a redundant 225-token skill gives 94%, while an irrelevant 385-token skill drops success to 56%. End-to-end BPS reaches .73 versus deployed routers .20–.52 and uses 28% fewer tokens than the strongest router, over 63,596 Qwen3-32B executions.",
+    "why_it_matters": "Skill access is a budgeted set decision: marginal utility depends on what is already exposed, and extra relevant-looking procedure can be actively harmful.",
+    "limitations": [
+      "Tasks are admitted only when the standard solution and every one-capability hybrid fail, making no-skill success zero by construction and amplifying complementarity.",
+      "The lookup is tied to fixed tasks, the theorem applies to a surrogate, and there is no released artifact, error bars, or independent reproduction.",
+      "Training/inference latency, tokens by stage, GPU-hours, dollars, storage, cold-start maintenance, and energy are unreported."
+    ],
+    "confidence": "medium"
+  }
+}

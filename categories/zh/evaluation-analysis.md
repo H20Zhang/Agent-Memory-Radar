@@ -8,6 +8,8 @@
 
 Endpoint accuracy / recall 太粗。**Demystifying Agent Skills** 已经说明 representation、retrieval、selection、actual use 与 downstream success 可以明显解耦；**D²ACCI** 把 paired evidence、protected slices 与 stage-localizable traces 带到 feature promotion。**Competence, Not Accuracy** 又把 reference-free gate 自身当作被审计对象：marginal accuracy 可能被题目难度抬高，真正相关的是同题判别能力。**Remember, Verify, or Ask?** 把 authority check 移到写入之前；**MemTrapBench** 则在 retrieval 之后直接测 memory use 是否伤害当前 consumer。两者都是 synthetic early signal：前者不执行 commitment action，后者专门构造无需历史即可回答、但 prior history 含 trap 的压力测试。
 
+**Utility Under Attack** 把 provenance ranking 变成双边 utility test：既测 poison suppression，也测 untrusted channel 中的正确证据是否被误删。**DreamBench-SWE** 则要求先前 session 的状态改变后续 executable patch；它支持 persistent state，却没有让 typed sleep 在 preregistered test 中胜过 verbatim archive。
+
 这意味着 memory evaluation 至少要同时回答：
 
 `哪个 stage 变了？→ commitment 是否有 authority？→ gate 在实际候选上能否判别？→ memory use 是否保留有用信息并拒绝 trap？→ 哪些 slice 回退？→ lifecycle cost 多大？→ evidence 是否足以 promotion？`

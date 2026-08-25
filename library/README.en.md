@@ -40,6 +40,18 @@ Procedural-learning gains can come from relational structure, writer-policy lear
 
 Retrieval labels, actual use, downstream success, and deployment decisions are different evaluation objects. A memory feature ultimately needs paired, localized, non-regressing evidence; an architecture-level score alone is insufficient.
 
+### Write granularity → active retention / skill-set selection → later execution
+
+[Break It Down, Pass It On](../papers/2026/2608.20274.md) → [Weighted Memory Tree](../papers/2026/2608.20631.md) / [Optimal Skill Selection](../papers/2026/2608.19993.md)
+
+The unit written, the state kept active, and the set exposed are separate policies. Current evidence shows direct later behavior but remains package-level, heterogeneous, or dependent on expensive supervision.
+
+### Verbatim persistence → executable hygiene → provenance utility frontier
+
+[DreamBench-SWE](../papers/2026/2608.20664.md) → [Utility Under Attack](../papers/2026/2608.21230.md)
+
+First require earlier state to change an executable outcome and beat a verbatim archive; then test whether provenance defenses retain useful evidence as well as suppressing poison.
+
 ### Fixed memory unit → adaptive write contract
 
 [LeanMem](../papers/2026/2608.03463.md) → [FTA-Mem](../papers/2026/2608.16303.md) → [LycheeMemory V2](../papers/2026/2608.12990.md)

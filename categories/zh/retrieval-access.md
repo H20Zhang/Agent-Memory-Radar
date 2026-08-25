@@ -12,6 +12,8 @@ ArborMem 又把 read path 向前拆了一层：当历史中存在多个 interlea
 
 SkillGate 把 procedural memory 的访问单独拉出来：skill library 已经存在，也不代表 outcome-only training 已充分训练早期 read action；但现有方法同时改变 Oracle utility、read-call masking 与 selector-mass normalization，尚未隔离 credit placement。
 
+**Weighted Memory Tree** 在这条链之前增加 within-episode active retention，但没有测 cross-session persistence；**Optimal Skill Selection** 则说明 skill selection 需要按整个 set 的 complementarity、redundancy 与 token cost 计值，而非逐项 top-k。两者仍分别受 package attribution 与 unmatched supervision 限制。
+
 因此更稳定的分解是：
 
 `state localization → host/raw retrieval / skill selection → relation/expansion/admission → evidence assembly`

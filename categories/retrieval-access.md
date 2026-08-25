@@ -14,6 +14,8 @@ The useful decomposition is now:
 
 | Date | Paper | Tags | Importance | Research take |
 |---|---|---|---:|---|
+| 2026-08-21 | [Weighted Memory Tree](../papers/2026/2608.20631.md) | `episodic` `hierarchical` `structured` `general-agent` | 3/5 | A coupled task-tree package regulates which within-episode state remains active; cross-session persistence and individual retention rules remain untested. |
+| 2026-08-20 | [Optimal Skill Selection](../papers/2026/2608.19993.md) | `procedural` `text` `structured` `general-agent` | 4/5 | Complementarity and overload make skill access a budgeted set decision, but the selector uses unmatched supervision on capability-gated tasks. |
 | 2026-08-19 | [SkillGate](../papers/2026/2608.18852.md) | `procedural` `text` `general-agent` | 4/5 | A single-seed oracle-local selector package raises trial success and changes exposure, but it does not isolate credit location. |
 | 2026-08-19 | [MemFuse](../papers/2026/2608.18704.md) | `episodic` `graph` `structured` `general-agent` | 4/5 | Multi-source fusion preserves atomic provenance, but the largest ablation belongs to iterative constrained retrieval rather than graph structure. |
 | 2026-08-18 | [CABLE](../papers/2026/2608.17911.md) | `episodic` `graph` `structured` `general-agent` | 4/5 | Link construction subtracts direct semantic neighbors before verification, so stored edges are designed to extend host-retriever reach rather than duplicate it. |

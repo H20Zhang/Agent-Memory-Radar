@@ -1,0 +1,53 @@
+{
+  "id": "2608.21230",
+  "title": "Utility Under Attack: Agent Memory Poisoning and the Limits of Content Screening and Provenance Ranking",
+  "authors": ["Arulnidhi Karunanidhi"],
+  "published": "2026-08-21",
+  "first_seen": "2026-08-25",
+  "published_at": "2026-08-21T15:37:35Z",
+  "first_seen_at": "2026-08-25T00:28:29Z",
+  "radar_published_at": "2026-08-25T00:44:06Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["provenance-ranking-utility-frontier"],
+  "paper_url": "https://arxiv.org/abs/2608.21230",
+  "code_url": "https://github.com/quantifylabs/aegis-memory",
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": ["semantic", "structured", "general-agent"],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-25",
+    "blocker": "No paper-grounded mechanism figure was available; the record remains text-only rather than publishing an unverified synthesis."
+  },
+  "provenance": {
+    "discovered_from": ["https://export.arxiv.org/api/query?id_list=2608.21230", "https://arxiv.org/abs/2608.21230"],
+    "analyzed_from": ["https://arxiv.org/pdf/2608.21230", "https://github.com/quantifylabs/aegis-memory/tree/6d2863083361f7a5c8e12b4512346c94cb453c2c"],
+    "last_verified": "2026-08-25"
+  },
+  "analysis": {
+    "tldr": "A fixed Aegis pipeline shows that additive provenance priors can neither suppress semantically stronger poison nor preserve genuine evidence when source labels correlate badly with truth. The causal claim is about this ranking family, not provenance metadata in general.",
+    "problem": "Origin-based trust signals can help rank persistent memory, but an additive bonus may be too weak against query-shaped poison and too strong against legitimate low-trust evidence.",
+    "core_idea": "Hold corpus, semantic retriever, top-k, reader, and judge fixed while varying provenance-weight strength; then stress the same policy with benign untrusted distractors and with answer-bearing evidence from untrusted sources.",
+    "memory_design": {
+      "write": "A four-stage screen admits stored memories and attaches source-channel provenance; all 360 ordinary false statements pass.",
+      "organize": "Memories retain provenance and effectiveness/decay fields; trust denotes channel origin, not factual truth.",
+      "read": "Semantic over-fetch is additively re-ranked by similarity, trust prior, effectiveness, decay, and provenance before top-15 context reaches the reader.",
+      "update_forget": "No repair, deletion, source relabeling, or implemented bounded-occupancy remedy is evaluated."
+    },
+    "compared_to": [
+      "The same Aegis corpus, retriever, top-k, reader, and judge with provenance weighting disabled",
+      "Shipped versus stronger additive provenance weights on mixed benign-untrusted and all-evidence-untrusted corpora",
+      "An implemented equal-budget bounded source-occupancy control is missing"
+    ],
+    "evidence": "On 120 poisoned LongMemEval_S questions, clean accuracy is .850, poison/no-defense .300, shipped weighting .317, and stronger weighting .475; poison remains rank 1 in 87% under shipped weights. In the all-answer-evidence-untrusted corpus, stronger weighting drives genuine-evidence recall 99.17% to 0% and accuracy .8583 to .0417. All 360 false writes pass screening.",
+    "why_it_matters": "Governance cannot stop at provenance labels: the access rule must be evaluated jointly for attack resistance and useful-evidence exclusion at the downstream answer.",
+    "limitations": [
+      "One implementation, embedder, retriever, reader, 120-question attack subset, correct source labels, and non-adaptive query-shaped poison limit generality.",
+      "The proposed bounded source-occupancy remedy is not implemented, so the paper diagnoses additive scoring rather than validating a replacement.",
+      "All four mixed arms cost $11.2202 in measured API use; storage, indexing, write latency, reranking overhead, repair, operator labeling, and energy remain unreported."
+    ],
+    "confidence": "medium"
+  }
+}

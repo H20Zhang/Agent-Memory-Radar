@@ -1,0 +1,53 @@
+{
+  "id": "2608.20274",
+  "title": "Break It Down, Pass It On: Cross-Task Skill Transfer in LLM Agents",
+  "authors": ["Yiyang Feng", "Biddut Sarker Bijoy", "Niranjan Balasubramanian", "Jiawei Zhou"],
+  "published": "2026-08-20",
+  "first_seen": "2026-08-25",
+  "published_at": "2026-08-20T17:12:08Z",
+  "first_seen_at": "2026-08-25T00:28:29Z",
+  "radar_published_at": "2026-08-25T00:44:03Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["skill-granularity-transfer"],
+  "paper_url": "https://arxiv.org/abs/2608.20274",
+  "code_url": "https://github.com/Zesearch/skill-transfer-llm-agents",
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": ["procedural", "text", "structured", "general-agent"],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-25",
+    "blocker": "No paper-grounded mechanism figure was available; the record remains text-only rather than publishing an unverified synthesis."
+  },
+  "provenance": {
+    "discovered_from": ["https://export.arxiv.org/api/query?id_list=2608.20274", "https://arxiv.org/abs/2608.20274"],
+    "analyzed_from": ["https://arxiv.org/pdf/2608.20274", "https://github.com/Zesearch/skill-transfer-llm-agents"],
+    "last_verified": "2026-08-25"
+  },
+  "analysis": {
+    "tldr": "Persistent skills distilled per subtask transfer more reliably than whole-task skills on average, while whole-task text and code memories can reduce success. The evidence supports granularity as a consumer-dependent policy, not a universal subtask advantage.",
+    "problem": "A skill written from an entire trajectory can bind incidental task details; finer subtask units may transfer better, but also increase writes, retrieval calls, and path dependence.",
+    "core_idea": "Induce text or executable-code skills after each task or subtask, retrieve top-5 descriptions on later distinct tasks, inject or load them into the actor, and compare matched no-memory variants across three agent environments.",
+    "memory_design": {
+      "write": "One LLM call turns each completed task or subtask trajectory into a persistent text workflow or Python function.",
+      "organize": "Descriptions drive embedding retrieval; text may merge, code may overwrite/deduplicate, and unloadable code triggers cascading dependent pruning.",
+      "read": "Task agents query once and subtask agents query per subtask; top-5 skills enter context and code functions enter the execution namespace.",
+      "update_forget": "Condition-specific libraries evolve from earlier behavior, with merge, overwrite, deduplication, and failure-driven pruning."
+    },
+    "compared_to": [
+      "Task-level text/code memory versus the same task agent without memory",
+      "Subtask-level text/code memory versus the same subtask agent without memory",
+      "A frozen subtask library replayed into the task actor for a consumer-matched granularity check"
+    ],
+    "evidence": "Across 11 models and 809 tasks, task no-memory is 22.1%, Task+Text 20.9%, and Task+Code 18.0%; subtask no-memory is 24.8%, Subtask+Text 26.7%, and Subtask+Code 25.3%. A two-model frozen-library replay reports task actors using subtask skills +9.9pp on average, but primary confidence intervals overlap and many model/domain slices reverse.",
+    "why_it_matters": "Procedural memory needs a write-unit policy matched to the later consumer; more elaborate or executable artifacts are not automatically more reusable.",
+    "limitations": [
+      "Task and subtask agents differ in planner, summarizer, query frequency, write count, and condition-specific source trajectories; format also changes execution affordance.",
+      "No task-order randomization, replicated seeds, or paired primary test is reported; the claimed repository contains no code or data when verified.",
+      "Induction, embeddings, context injection, dependency loading, merge/prune, tokens, dollars, storage, and energy are not fully accounted."
+    ],
+    "confidence": "medium"
+  }
+}

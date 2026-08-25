@@ -8,12 +8,87 @@
 
 [30 秒：最新时间线](#timeline) · [3 分钟：7/30 天变化](#periods) · [5 分钟：领域地图](#field-map) · [15 分钟：阅读路径](#reading-paths) · [浏览全部](#library)
 
-最后更新：**2026-08-24**
+最后更新：**2026-08-25**
 
 <a id="timeline"></a><a id="latest"></a><a id="latest-papers"></a>
 ## Latest Timeline：最新接受的 Agent Memory 证据
 
 > **迁移说明：** 这些现有记录没有可靠保存历史 Radar 接受时间，因此暂按论文原始发布日期排序；v2 切换后的新记录统一使用 `radar_published_at`，不得把论文日期伪装成 Radar 接受时间。
+
+<a id="entry-2608-21230"></a>
+<details><summary><strong>2026-08-25 · Utility Under Attack</strong> · 来源排序的效用边界 <!-- timefirst:area=provenance-ranking-utility-frontier --> — 来源权重必须在抵抗污染的同时保留低信任渠道中的合法证据。 <!-- timefirst:delta=source-trust-to-measured-utility-frontier --></summary>
+
+**问题。** 加法式 provenance weight 能否压制持久 poison，同时保留 untrusted channel 中的 answer-bearing evidence？ <!-- timefirst:question=preserve-useful-evidence-while-suppressing-poison -->
+
+**证据。** 这组污染使 clean accuracy **.850→.300**；shipped weight 仅到 **.317**，stronger weight 恢复到 **.475**，却令`genuine untrusted evidence recall` **99.17%→0%**、accuracy **.8583→.0417**。 <!-- timefirst:evidence=ranking-weight-changes-later-answers-and-evidence-recall~genuine-untrusted-evidence-recall -->
+
+**限制。** 攻击针对具体 query，label 被假设为正确，且 `bounded source occupancy is proposed but not tested`；单一 stack 与两个权重不能证明 provenance 普遍失效。 <!-- timefirst:caveat=targeted-attack-and-constructed-provenance-extremes~bounded-source-occupancy-is-proposed-but-not-tested -->
+
+**地图。** `early_signal` — 来源排序形成可测的检索效用边界，但单一实现不足以修改长期地图。
+
+**链接。** [论文](https://arxiv.org/abs/2608.21230) · [中文深读](papers/2026/2608.21230.zh.md) · [英文深读](papers/2026/2608.21230.md)
+
+</details>
+
+<a id="entry-2608-20664"></a>
+<details><summary><strong>2026-08-25 · DreamBench-SWE</strong> · 可执行的记忆卫生 <!-- timefirst:area=executable-memory-hygiene --> — 在给 hygiene mechanism 记功前，早期项目状态必须改变后续可执行 patch。 <!-- timefirst:delta=memory-score-to-executable-later-behavior --></summary>
+
+**问题。** 持久项目状态是否改变后续软件行为？Typed consolidation 与 sleep 能否击败强 verbatim archive？ <!-- timefirst:question=test-executable-memory-and-mechanism-attribution -->
+
+**证据。** 结果显示，no-memory 通过 **21/180**、verbatim **82/180**、hybrid **83/180**、literal Mem0 **97/180**；持久状态有效，但 `all preregistered hybrid versus verbatim raw typed tests fail to reject`。 <!-- timefirst:evidence=earlier-state-changes-executable-patches-with-null-mechanism-tests~all-preregistered-hybrid-versus-verbatim-raw-typed-tests-fail-to-reject -->
+
+**限制。** 这套评测主要由人工样例与精确回忆任务构成；维护开销悬殊（`hybrid consumes 174.205m vs 2.209m tokens`），外部系统的机制对照又因合规检查失败无法运行。 <!-- timefirst:caveat=authored-recall-fixtures-and-null-mechanism-attribution~hybrid-consumes-174.205m-vs-2.209m-tokens -->
+
+**地图。** `early_signal` — 可执行行为提高了评估门槛，但这套参考方案尚未获得长期机制归因。
+
+**链接。** [论文](https://arxiv.org/abs/2608.20664) · [中文深读](papers/2026/2608.20664.zh.md) · [英文深读](papers/2026/2608.20664.md)
+
+</details>
+
+<a id="entry-2608-20631"></a>
+<details><summary><strong>2026-08-25 · Weighted Memory Tree</strong> · 选择驱动的工作记忆 <!-- timefirst:area=selection-driven-working-memory --> — 后续行动之前，保留策略决定哪些实时执行分支继续活跃。 <!-- timefirst:delta=linear-history-to-active-retention-control --></summary>
+
+**问题。** 任务树能否比线性执行历史更有效地选择、折叠、衰减与抑制工作状态？ <!-- timefirst:question=select-active-execution-state-before-later-actions -->
+
+**证据。** 三个模型上，`coupled package reports` GAIA-Text 平均 **+9.97pp** accuracy、**−32.8%** prompt tokens；stored view 会改变 episode 内后续行动。 <!-- timefirst:evidence=package-improves-gaia-and-reduces-prompt-tokens~coupled-package-reports -->
+
+**限制。** 每道题都新建 tree，组件未被隔离，ablation 会反转，且 `cross session persistence is not evaluated`；没有 seed、uncertainty 或 artifact。 <!-- timefirst:caveat=within-task-package-only-and-missing-uncertainty~cross-session-persistence-is-not-evaluated -->
+
+**地图。** `early_signal` — 在单次任务内，活跃保留可能先于检索，但这项 3/5 的整套结果不足以增加长期记忆节点。
+
+**链接。** [论文](https://arxiv.org/abs/2608.20631) · [中文深读](papers/2026/2608.20631.zh.md) · [英文深读](papers/2026/2608.20631.md)
+
+</details>
+
+<a id="entry-2608-20274"></a>
+<details><summary><strong>2026-08-25 · Break It Down, Pass It On</strong> · 技能粒度与迁移 <!-- timefirst:area=skill-granularity-transfer --> — 当写入单元匹配后续复用时，程序性记忆可从平均伤害转为小幅收益。 <!-- timefirst:delta=whole-task-skills-to-subtask-transfer-units --></summary>
+
+**问题。** 按子任务写入持久技能，是否比整任务级的文本或代码记忆更稳定地迁移？ <!-- timefirst:question=match-skill-write-granularity-to-later-consumer -->
+
+**证据。** 结果显示，任务级 no-memory/text/code 为 **22.1/20.9/18.0%**，子任务级为 **24.8/26.7/25.3%**；`two model frozen library replay` 报告子任务技能 **+9.9pp**。 <!-- timefirst:evidence=subtask-skills-change-later-task-success~two-model-frozen-library-replay -->
+
+**限制。** 两类架构的写入次数、查询次数与来源轨迹不同；许多模型和领域切片反转，区间也重叠，且 `full induction and maintenance cost is missing`。 <!-- timefirst:caveat=heterogeneous-effects-and-coupled-agent-architectures~full-induction-and-maintenance-cost-is-missing -->
+
+**地图。** `early_signal` — 写入粒度是因果设计问题，但一项异质研究无法建立普遍的子任务优势。
+
+**链接。** [论文](https://arxiv.org/abs/2608.20274) · [中文深读](papers/2026/2608.20274.zh.md) · [英文深读](papers/2026/2608.20274.md)
+
+</details>
+
+<a id="entry-2608-19993"></a>
+<details><summary><strong>2026-08-25 · Optimal Skill Selection</strong> · 有预算的技能集合选择 <!-- timefirst:area=budgeted-skill-set-selection --> — 技能访问是受上下文成本约束的集合效用，而不是彼此独立的 top-k relevance。 <!-- timefirst:delta=independent-skill-ranking-to-budgeted-set-value --></summary>
+
+**问题。** 选择器能否在固定 token budget 下刻画互补、冗余与有害的技能组合？ <!-- timefirst:question=select-complementary-skill-sets-under-budget -->
+
+**证据。** 受控实验从 `controlled case moves` **0% single skill→93% complementary pair→56% 加入 irrelevant procedure**；BPS 达到 **.73**，released alternative 为 **.20–.52**，且少用 28% tokens。 <!-- timefirst:evidence=skill-set-composition-causally-changes-execution~controlled-case-moves -->
+
+**限制。** 任务经过筛选，所有单能力组合都必须失败；BPS 从 **63,596 次执行**中学习，对照方法却没有配平监督，且 `training cost may dominate saved context`。 <!-- timefirst:caveat=capability-gated-benchmark-and-unmatched-supervision~training-cost-may-dominate-saved-context -->
+
+**地图。** `early_signal` — 集合效用不同于单项相关性，但单一、强监督的固定代码库不会改变领域地图。
+
+**链接。** [论文](https://arxiv.org/abs/2608.19993) · [中文深读](papers/2026/2608.19993.zh.md) · [英文深读](papers/2026/2608.19993.md)
+
+</details>
 
 <a id="entry-2608-20202"></a>
 <details><summary><strong>2026-08-24 · MemTrapBench</strong> · 使用方记忆伤害 <!-- timefirst:area=consumer-side-memory-harm --> — 相关历史在进入当前 Actor 前，仍可能需要适用性 Gate。 <!-- timefirst:delta=relevant-memory-to-applicability-gated-use --></summary>
@@ -258,45 +333,65 @@
 <a id="periods"></a><a id="changes"></a><a id="whats-changing"></a>
 ## 7 天 / 30 天：记忆生命周期发生了什么变化
 
-> **时间口径：** 滚动窗口只按 `radar_published_at` 判断。上方八条迁移记录没有可重建的 Radar 接受时间，因此只作为领域地图的历史上下文，不支撑当前窗口判断。
+> **时间口径：** 滚动窗口只按 `radar_published_at` 判断。时间线中的八条迁移记录没有可重建的 Radar 接受时间，因此只作为领域地图的历史上下文，不支撑当前窗口判断。
 
 <a id="last-7-days"></a>
-### 过去 7 天：2026-08-18—2026-08-24
+### 过去 7 天：2026-08-19—2026-08-25
 
-- **`new_signal` · 记忆使用伤害（memory consumption harm）让 applicability 成为 retrieval 后的独立判断。** 支撑：[2608.20202](#entry-2608-20202)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（test useful retention beside trap rejection）：用同时包含 memory-required、neutral 与 adversarial case 的 workload，在匹配 context 与 lifecycle cost 后测试拒绝 trap 是否误伤有用记忆。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="memory-consumption-harm" state="new_signal" supports="2608.20202" confidence="medium" implication="test-useful-retention-beside-trap-rejection" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · Provenance ranking utility frontier：来源排序的效用边界。** 支撑：[2608.21230](#entry-2608-21230)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（measure poison rejection beside useful evidence retention）：在相同 context 下同时报告 attack suppression 与 trusted/untrusted answer-evidence recall。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="provenance-ranking-utility-frontier" state="new_signal" supports="2608.21230" confidence="medium" implication="measure-poison-rejection-beside-useful-evidence-retention" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · 状态取代解析（state supersession resolution）把 current state 与 retrieved history 分开。** 支撑：[2608.19652](#entry-2608-19652)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate persistent updates from answer time resolution）：匹配 ingestion 与 transcript access，再独立改变 retirement、dependency check 与 recomputation。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="state-supersession-resolution" state="new_signal" supports="2608.19652" confidence="medium" implication="separate-persistent-updates-from-answer-time-resolution" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · Executable memory hygiene：可执行记忆卫生。** 支撑：[2608.20664](#entry-2608-20664)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（require later executable behavior and a strong verbatim control）：在给 typed consolidation 记功前配平 sleep compute。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="executable-memory-hygiene" state="new_signal" supports="2608.20664" confidence="medium" implication="require-later-executable-behavior-and-a-strong-verbatim-control" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · 记忆承诺治理（memory commitment governance）位于持久写入之前。** 支撑：[2608.19564](#entry-2608-19564)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（execute commitment choices before claiming utility）：真实执行 write、check 与 clarification，并跟踪 later retrieval、task outcome 与 authority-aware cost。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="memory-commitment-governance" state="new_signal" supports="2608.19564" confidence="medium" implication="execute-commitment-choices-before-claiming-utility" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · Selection driven working memory：选择驱动的工作记忆。** 支撑：[2608.20631](#entry-2608-20631)；置信度：**low**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate active retention from long term persistence）：在 token-matched control 下分别隔离 scoring、decay、folding 与 suppression。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="selection-driven-working-memory" state="new_signal" supports="2608.20631" confidence="low" implication="separate-active-retention-from-long-term-persistence" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · 多源证据补全（multi source evidence completion）把组织与访问拆开。** 支撑：[2608.18704](#entry-2608-18704)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate organization from evidence completing access）：在匹配完整生命周期成本后，分别归因 fused representation 与 answer-time search。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="multi-source-evidence-completion" state="new_signal" supports="2608.18704" confidence="medium" implication="separate-organization-from-evidence-completing-access" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · Skill granularity transfer：Skill 粒度与迁移。** 支撑：[2608.20274](#entry-2608-20274)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（match write units to the same later consumer）：固定 source trajectory、actor、retrieval call 与 lifecycle cost 后再比较 task/subtask skill。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="skill-granularity-transfer" state="new_signal" supports="2608.20274" confidence="medium" implication="match-write-units-to-the-same-later-consumer" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · Judge gate 判别力（judge gate discriminability）应先于持久技能准入。** 支撑：[2608.18719](#entry-2608-18719)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（qualify judge on candidate distribution）：先在真实 optimization traces 上做同题判别，再让 judge 控制 commit。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="judge-gate-discriminability" state="new_signal" supports="2608.18719" confidence="medium" implication="qualify-judge-on-candidate-distribution" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · Budgeted skill set selection：有预算的 skill set 选择。** 支撑：[2608.19993](#entry-2608-19993)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（match selector supervision and full training cost）：在未筛选任务上测试 complementarity，并用 outcome-data collection 抵扣 saved context。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="budgeted-skill-set-selection" state="new_signal" supports="2608.19993" confidence="medium" implication="match-selector-supervision-and-full-training-cost" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · Selector local credit 让技能访问成为可学习阶段。** 支撑：[2608.18852](#entry-2608-18852)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（credit sparse memory actions locally）：分别报告特权 selector supervision、loss masking、skill exposure 与 downstream execution。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="selector-local-credit" state="new_signal" supports="2608.18852" confidence="medium" implication="credit-sparse-memory-actions-locally" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · 记忆使用伤害（memory consumption harm）让 applicability 成为 retrieval 后的独立判断。** 支撑：[2608.20202](#entry-2608-20202)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（test useful retention beside trap rejection）：用同时包含 memory-required、neutral 与 adversarial case 的 workload，在匹配 context 与 lifecycle cost 后测试拒绝 trap 是否误伤有用记忆。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="memory-consumption-harm" state="new_signal" supports="2608.20202" confidence="medium" implication="test-useful-retention-beside-trap-rejection" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · 受约束的 Harness 演化（guarded harness evolution）把 commit 视为持续状态边界。** 支撑：[2608.19013](#entry-2608-19013)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（guard harness state before commit）：同时检查当前效用、历史保留与 validity，并分别归因共同适应的组件。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="guarded-harness-evolution" state="new_signal" supports="2608.19013" confidence="medium" implication="guard-harness-state-before-commit" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · 状态取代解析（state supersession resolution）把 current state 与 retrieved history 分开。** 支撑：[2608.19652](#entry-2608-19652)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate persistent updates from answer time resolution）：匹配 ingestion 与 transcript access，再独立改变 retirement、dependency check 与 recomputation。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="state-supersession-resolution" state="new_signal" supports="2608.19652" confidence="medium" implication="separate-persistent-updates-from-answer-time-resolution" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · 训练侧环境记忆（training side environment memory）开始引导后续课程生成。** 支撑：[2608.19197](#entry-2608-19197)；置信度：**low**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（match retrieved training memory to static replay）：在归因 memory policy 前，用 token-matched static、random 与 score-shuffled example 对照 retrieved history。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="training-side-environment-memory" state="new_signal" supports="2608.19197" confidence="low" implication="match-retrieved-training-memory-to-static-replay" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · 记忆承诺治理（memory commitment governance）位于持久写入之前。** 支撑：[2608.19564](#entry-2608-19564)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（execute commitment choices before claiming utility）：真实执行 write、check 与 clarification，并跟踪 later retrieval、task outcome 与 authority-aware cost。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="memory-commitment-governance" state="new_signal" supports="2608.19564" confidence="medium" implication="execute-commitment-choices-before-claiming-utility" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
+
+- **`new_signal` · 多源证据补全（multi source evidence completion）把组织与访问拆开。** 支撑：[2608.18704](#entry-2608-18704)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate organization from evidence completing access）：在匹配完整生命周期成本后，分别归因 fused representation 与 answer-time search。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="multi-source-evidence-completion" state="new_signal" supports="2608.18704" confidence="medium" implication="separate-organization-from-evidence-completing-access" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
+
+- **`new_signal` · Judge gate 判别力（judge gate discriminability）应先于持久技能准入。** 支撑：[2608.18719](#entry-2608-18719)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（qualify judge on candidate distribution）：先在真实 optimization traces 上做同题判别，再让 judge 控制 commit。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="judge-gate-discriminability" state="new_signal" supports="2608.18719" confidence="medium" implication="qualify-judge-on-candidate-distribution" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
+
+- **`new_signal` · Selector local credit 让技能访问成为可学习阶段。** 支撑：[2608.18852](#entry-2608-18852)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（credit sparse memory actions locally）：分别报告特权 selector supervision、loss masking、skill exposure 与 downstream execution。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="selector-local-credit" state="new_signal" supports="2608.18852" confidence="medium" implication="credit-sparse-memory-actions-locally" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
+
+- **`new_signal` · 受约束的 Harness 演化（guarded harness evolution）把 commit 视为持续状态边界。** 支撑：[2608.19013](#entry-2608-19013)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（guard harness state before commit）：同时检查当前效用、历史保留与 validity，并分别归因共同适应的组件。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="guarded-harness-evolution" state="new_signal" supports="2608.19013" confidence="medium" implication="guard-harness-state-before-commit" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
+
+- **`new_signal` · 训练侧环境记忆（training side environment memory）开始引导后续课程生成。** 支撑：[2608.19197](#entry-2608-19197)；置信度：**low**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（match retrieved training memory to static replay）：在归因 memory policy 前，用 token-matched static、random 与 score-shuffled example 对照 retrieved history。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="training-side-environment-memory" state="new_signal" supports="2608.19197" confidence="low" implication="match-retrieved-training-memory-to-static-replay" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
 <a id="last-30-days"></a>
-### 过去 30 天：2026-07-26—2026-08-24
+### 过去 30 天：2026-07-27—2026-08-25
 
-- **`new_signal` · 记忆使用伤害（memory consumption harm）让 applicability 成为 retrieval 后的独立判断。** 支撑：[2608.20202](#entry-2608-20202)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（test useful retention beside trap rejection）：用同时包含 memory-required、neutral 与 adversarial case 的 workload，在匹配 context 与 lifecycle cost 后测试拒绝 trap 是否误伤有用记忆。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="memory-consumption-harm" state="new_signal" supports="2608.20202" confidence="medium" implication="test-useful-retention-beside-trap-rejection" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · Provenance ranking utility frontier：来源排序的效用边界。** 支撑：[2608.21230](#entry-2608-21230)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（measure poison rejection beside useful evidence retention）：在相同 context 下同时报告 attack suppression 与 trusted/untrusted answer-evidence recall。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="provenance-ranking-utility-frontier" state="new_signal" supports="2608.21230" confidence="medium" implication="measure-poison-rejection-beside-useful-evidence-retention" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · 状态取代解析（state supersession resolution）把 current state 与 retrieved history 分开。** 支撑：[2608.19652](#entry-2608-19652)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate persistent updates from answer time resolution）：匹配 ingestion 与 transcript access，再独立改变 retirement、dependency check 与 recomputation。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="state-supersession-resolution" state="new_signal" supports="2608.19652" confidence="medium" implication="separate-persistent-updates-from-answer-time-resolution" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · Executable memory hygiene：可执行记忆卫生。** 支撑：[2608.20664](#entry-2608-20664)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（require later executable behavior and a strong verbatim control）：在给 typed consolidation 记功前配平 sleep compute。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="executable-memory-hygiene" state="new_signal" supports="2608.20664" confidence="medium" implication="require-later-executable-behavior-and-a-strong-verbatim-control" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · 记忆承诺治理（memory commitment governance）位于持久写入之前。** 支撑：[2608.19564](#entry-2608-19564)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（execute commitment choices before claiming utility）：真实执行 write、check 与 clarification，并跟踪 later retrieval、task outcome 与 authority-aware cost。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="memory-commitment-governance" state="new_signal" supports="2608.19564" confidence="medium" implication="execute-commitment-choices-before-claiming-utility" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · Selection driven working memory：选择驱动的工作记忆。** 支撑：[2608.20631](#entry-2608-20631)；置信度：**low**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate active retention from long term persistence）：在 token-matched control 下分别隔离 scoring、decay、folding 与 suppression。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="selection-driven-working-memory" state="new_signal" supports="2608.20631" confidence="low" implication="separate-active-retention-from-long-term-persistence" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · 多源证据补全（multi source evidence completion）把组织与访问拆开。** 支撑：[2608.18704](#entry-2608-18704)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate organization from evidence completing access）：在匹配完整生命周期成本后，分别归因 fused representation 与 answer-time search。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="multi-source-evidence-completion" state="new_signal" supports="2608.18704" confidence="medium" implication="separate-organization-from-evidence-completing-access" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · Skill granularity transfer：Skill 粒度与迁移。** 支撑：[2608.20274](#entry-2608-20274)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（match write units to the same later consumer）：固定 source trajectory、actor、retrieval call 与 lifecycle cost 后再比较 task/subtask skill。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="skill-granularity-transfer" state="new_signal" supports="2608.20274" confidence="medium" implication="match-write-units-to-the-same-later-consumer" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · Judge gate 判别力（judge gate discriminability）应先于持久技能准入。** 支撑：[2608.18719](#entry-2608-18719)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（qualify judge on candidate distribution）：先在真实 optimization traces 上做同题判别，再让 judge 控制 commit。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="judge-gate-discriminability" state="new_signal" supports="2608.18719" confidence="medium" implication="qualify-judge-on-candidate-distribution" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · Budgeted skill set selection：有预算的 skill set 选择。** 支撑：[2608.19993](#entry-2608-19993)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（match selector supervision and full training cost）：在未筛选任务上测试 complementarity，并用 outcome-data collection 抵扣 saved context。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="budgeted-skill-set-selection" state="new_signal" supports="2608.19993" confidence="medium" implication="match-selector-supervision-and-full-training-cost" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · Selector local credit 让技能访问成为可学习阶段。** 支撑：[2608.18852](#entry-2608-18852)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（credit sparse memory actions locally）：分别报告特权 selector supervision、loss masking、skill exposure 与 downstream execution。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="selector-local-credit" state="new_signal" supports="2608.18852" confidence="medium" implication="credit-sparse-memory-actions-locally" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · 记忆使用伤害（memory consumption harm）让 applicability 成为 retrieval 后的独立判断。** 支撑：[2608.20202](#entry-2608-20202)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（test useful retention beside trap rejection）：用同时包含 memory-required、neutral 与 adversarial case 的 workload，在匹配 context 与 lifecycle cost 后测试拒绝 trap 是否误伤有用记忆。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="memory-consumption-harm" state="new_signal" supports="2608.20202" confidence="medium" implication="test-useful-retention-beside-trap-rejection" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · 受约束的 Harness 演化（guarded harness evolution）把 commit 视为持续状态边界。** 支撑：[2608.19013](#entry-2608-19013)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（guard harness state before commit）：同时检查当前效用、历史保留与 validity，并分别归因共同适应的组件。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="guarded-harness-evolution" state="new_signal" supports="2608.19013" confidence="medium" implication="guard-harness-state-before-commit" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · 状态取代解析（state supersession resolution）把 current state 与 retrieved history 分开。** 支撑：[2608.19652](#entry-2608-19652)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate persistent updates from answer time resolution）：匹配 ingestion 与 transcript access，再独立改变 retirement、dependency check 与 recomputation。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="state-supersession-resolution" state="new_signal" supports="2608.19652" confidence="medium" implication="separate-persistent-updates-from-answer-time-resolution" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
-- **`new_signal` · 训练侧环境记忆（training side environment memory）开始引导后续课程生成。** 支撑：[2608.19197](#entry-2608-19197)；置信度：**low**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（match retrieved training memory to static replay）：在归因 memory policy 前，用 token-matched static、random 与 score-shuffled example 对照 retrieved history。精确合成时间：`2026-08-24T00:57:56Z`。 <!-- timefirst:direction key="training-side-environment-memory" state="new_signal" supports="2608.19197" confidence="low" implication="match-retrieved-training-memory-to-static-replay" timing="radar_published_at" synthesized="2026-08-24T00:57:56Z" prior="none" -->
+- **`new_signal` · 记忆承诺治理（memory commitment governance）位于持久写入之前。** 支撑：[2608.19564](#entry-2608-19564)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（execute commitment choices before claiming utility）：真实执行 write、check 与 clarification，并跟踪 later retrieval、task outcome 与 authority-aware cost。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="memory-commitment-governance" state="new_signal" supports="2608.19564" confidence="medium" implication="execute-commitment-choices-before-claiming-utility" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
+
+- **`new_signal` · 多源证据补全（multi source evidence completion）把组织与访问拆开。** 支撑：[2608.18704](#entry-2608-18704)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate organization from evidence completing access）：在匹配完整生命周期成本后，分别归因 fused representation 与 answer-time search。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="multi-source-evidence-completion" state="new_signal" supports="2608.18704" confidence="medium" implication="separate-organization-from-evidence-completing-access" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
+
+- **`new_signal` · Judge gate 判别力（judge gate discriminability）应先于持久技能准入。** 支撑：[2608.18719](#entry-2608-18719)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（qualify judge on candidate distribution）：先在真实 optimization traces 上做同题判别，再让 judge 控制 commit。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="judge-gate-discriminability" state="new_signal" supports="2608.18719" confidence="medium" implication="qualify-judge-on-candidate-distribution" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
+
+- **`new_signal` · Selector local credit 让技能访问成为可学习阶段。** 支撑：[2608.18852](#entry-2608-18852)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（credit sparse memory actions locally）：分别报告特权 selector supervision、loss masking、skill exposure 与 downstream execution。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="selector-local-credit" state="new_signal" supports="2608.18852" confidence="medium" implication="credit-sparse-memory-actions-locally" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
+
+- **`new_signal` · 受约束的 Harness 演化（guarded harness evolution）把 commit 视为持续状态边界。** 支撑：[2608.19013](#entry-2608-19013)；置信度：**medium**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（guard harness state before commit）：同时检查当前效用、历史保留与 validity，并分别归因共同适应的组件。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="guarded-harness-evolution" state="new_signal" supports="2608.19013" confidence="medium" implication="guard-harness-state-before-commit" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
+
+- **`new_signal` · 训练侧环境记忆（training side environment memory）开始引导后续课程生成。** 支撑：[2608.19197](#entry-2608-19197)；置信度：**low**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（match retrieved training memory to static replay）：在归因 memory policy 前，用 token-matched static、random 与 score-shuffled example 对照 retrieved history。精确合成时间：`2026-08-25T00:45:00Z`。 <!-- timefirst:direction key="training-side-environment-memory" state="new_signal" supports="2608.19197" confidence="low" implication="match-retrieved-training-memory-to-static-replay" timing="radar_published_at" synthesized="2026-08-25T00:45:00Z" prior="none" -->
 
 时间视角：[周度](digests/README.zh.md) · [月度](digests/monthly/2026-08.zh.md) · [年度](digests/yearly/2026.zh.md)
 

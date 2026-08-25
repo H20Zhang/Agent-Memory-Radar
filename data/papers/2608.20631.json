@@ -1,0 +1,52 @@
+{
+  "id": "2608.20631",
+  "title": "Weighted Memory Tree: Remembering What Matters for Long-Horizon LLM Agents",
+  "authors": ["Quang Dao", "Purvi Kathalkar", "Kenneth Eaton"],
+  "published": "2026-08-21",
+  "first_seen": "2026-08-25",
+  "published_at": "2026-08-21T00:14:38Z",
+  "first_seen_at": "2026-08-25T00:28:29Z",
+  "radar_published_at": "2026-08-25T00:44:04Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": ["selection-driven-working-memory"],
+  "paper_url": "https://arxiv.org/abs/2608.20631",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": ["episodic", "hierarchical", "structured", "general-agent"],
+  "relevance": 0.98,
+  "importance": 3,
+  "visual_explainer": {
+    "status": "not_required", "path": null, "format": "webp", "generator": "gpt-image", "grounding": "full-paper", "last_verified": "2026-08-25", "blocker": null
+  },
+  "provenance": {
+    "discovered_from": ["https://export.arxiv.org/api/query?id_list=2608.20631", "https://arxiv.org/abs/2608.20631"],
+    "analyzed_from": ["https://arxiv.org/pdf/2608.20631"],
+    "last_verified": "2026-08-25"
+  },
+  "analysis": {
+    "tldr": "Weighted Memory Tree makes active-retention priority a stage before retrieval: a task tree scores, decays, folds, and suppresses branches before selected state reaches the actor. GAIA gains support the package, not any individual weighting or decay rule.",
+    "problem": "Linear action history grows with task length and gives the actor little control over which subtask state remains active.",
+    "core_idea": "Represent task, subtask, and action state as a tree; combine event importance, decay, branch priority, folding, and suppression to assemble a compact prompt for the next action.",
+    "memory_design": {
+      "write": "Task, subtask, action, observation, and event nodes are appended during one agent run.",
+      "organize": "The hierarchy carries weights, decay, and branch state; low-priority branches can be folded or suppressed from active context.",
+      "read": "A selected tree view is serialized into the later prompt and changes subsequent GAIA actions.",
+      "update_forget": "Scores and active visibility evolve, but records are not durably deleted; this is active-context retention rather than demonstrated long-term forgetting."
+    },
+    "compared_to": [
+      "The same GAIA agent with linear history",
+      "Tree plus selection plus summary package ablations",
+      "A token-matched flat priority queue and isolated decay/folding controls are missing"
+    ],
+    "evidence": "Across three models on GAIA-Text, the full package averages +9.97 percentage points over linear history while reducing prompt tokens 32.8%. The unweighted tree can be worse, and component effects vary by model and task, so only the combined active-retention package is supported.",
+    "why_it_matters": "Before asking which memory to retrieve, an agent may need an explicit policy for which live task branches deserve scarce context.",
+    "limitations": [
+      "No cross-session or cross-task persistence is tested, and active suppression is not durable forgetting.",
+      "No component has a fully matched factorial control; gains are model- and task-dependent without uncertainty estimates.",
+      "The study reports 6,132 executions, 2.391B prompt tokens, and eight RTX 6000 GPUs, but not GPU-hours, wall time, dollars, storage, or energy."
+    ],
+    "confidence": "low"
+  }
+}

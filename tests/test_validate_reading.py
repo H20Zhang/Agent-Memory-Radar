@@ -21,6 +21,11 @@ TIMELINE_SUMMARY_RE = re.compile(
 )
 CJK_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
 EXPECTED_TIMELINE_TITLES = {
+    "2608-21230": "2026-08-25 · Utility Under Attack",
+    "2608-20664": "2026-08-25 · DreamBench-SWE",
+    "2608-20631": "2026-08-25 · Weighted Memory Tree",
+    "2608-20274": "2026-08-25 · Break It Down, Pass It On",
+    "2608-19993": "2026-08-25 · Optimal Skill Selection",
     "2608-20202": "2026-08-24 · MemTrapBench",
     "2608-19652": "2026-08-24 · StateMemBench / StateMem",
     "2608-19564": "2026-08-24 · Remember, Verify, or Ask?",

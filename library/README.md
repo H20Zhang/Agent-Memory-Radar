@@ -40,6 +40,18 @@
 
 检索标签、实际使用、下游成功和部署决策对应不同的评估对象。记忆功能最终需要成对、可定位且无回归的证据，架构层面的分数本身并不充分。
 
+### 写入粒度 → 活跃保留 / Skill Set 选择 → 后续执行
+
+[Break It Down, Pass It On](../papers/2026/2608.20274.zh.md) → [Weighted Memory Tree](../papers/2026/2608.20631.zh.md) / [Optimal Skill Selection](../papers/2026/2608.19993.zh.md)
+
+被写入的单元、保持活跃的状态以及最终暴露的集合是三种不同 policy。现有研究能测到后续行为改变，但仍受 package attribution、异质结果或高监督成本限制。
+
+### Verbatim Persistence → 可执行记忆卫生 → Provenance 效用边界
+
+[DreamBench-SWE](../papers/2026/2608.20664.zh.md) → [Utility Under Attack](../papers/2026/2608.21230.zh.md)
+
+先要求早期状态改变可执行结果并击败 verbatim archive，再检验 provenance defense 在 suppress poison 的同时是否保留 useful evidence。
+
 ### 固定记忆单元 → 自适应写入约束
 
 [LeanMem](../papers/2026/2608.03463.md) → [FTA-Mem](../papers/2026/2608.16303.zh.md) → [LycheeMemory V2](../papers/2026/2608.12990.md)
