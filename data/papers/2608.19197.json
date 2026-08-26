@@ -28,8 +28,8 @@
   },
   "provenance": {
     "discovered_from": ["https://arxiv.org/list/cs.CL/recent", "https://arxiv.org/abs/2608.19197"],
-    "analyzed_from": ["https://arxiv.org/html/2608.19197v1", "https://github.com/spade-rl/spade", "https://spade-rl.github.io/"],
-    "last_verified": "2026-08-21"
+    "analyzed_from": ["https://arxiv.org/html/2608.19197v2", "https://github.com/spade-rl/spade", "https://spade-rl.github.io/"],
+    "last_verified": "2026-08-26"
   },
   "analysis": {
     "tldr": "SPADE stores generated environments and regret metadata across training episodes, then retrieves a few skill-matched examples into later Environment Designer prompts. A command-level no-memory run scores 53.2 versus 58.3 for the full package, but one run, suite-selected checkpoints, and unmatched demonstration tokens prevent attribution to regret retrieval, FIFO retention, or memory alone.",
@@ -46,14 +46,15 @@
       "A no-corpus ablation and a fixed GPT-5.5 Environment Designer with memory",
       "Hint-regret versus EMA learning-potential reward"
     ],
-    "evidence": "Across the eight reported game benchmarks, the selected full checkpoint averages 58.3 versus 53.2 without environment memory. The largest gaps are on Reasoning-Gym Math, Algorithmic, and Cognition, while AIME 2026 falls 75.0 to 74.4. Memory does not improve the reported diversity metric: Vendi/n is 0.68 full versus 0.69 without memory. The command ablation supports a package-level training-memory signal, not the specific regret/FIFO policy.",
+    "evidence": "Across the eight reported game benchmarks, the selected full checkpoint averages 58.3 versus 53.2 without environment memory. The largest gaps are on Reasoning-Gym Math, Algorithmic, and Cognition, while AIME 2026 falls 75.0 to 74.4. Version 2 adds full-package tool-use gains of 5.7 points on BFCL-v4 MT and 13.9 on ACEBench-Agent, but no memory-specific tool-use ablation. The revision broadens package external validity without isolating regret retrieval or FIFO retention.",
     "why_it_matters": "Persistent agent state can guide the generation of future learning experiences even when the final actor has no inference-time memory. Training-side memory should therefore be evaluated separately from deployed memory and from the broader self-play package.",
     "limitations": [
       "Each ablation is a single training run with no confidence interval or independent seed replication.",
       "Every variant selects its best checkpoint on the same eight-benchmark suite used for the headline comparison.",
       "Removing memory also removes several thousand characters of retrieved demonstrations; no token-matched static, random, or score-shuffled replay control is reported.",
       "The released memory sampler is not passed an explicit seed, and public artifacts do not identify the exact no-memory run behind the table.",
-      "GPU-hours, generated tokens, wall time, dollars, energy, and validation-retry cost are unreported."
+      "GPU-hours, generated tokens, wall time, dollars, energy, and validation-retry cost are unreported.",
+      "The v2 tool-use results compare the full package with external systems, not the same training pipeline with environment memory disabled."
     ],
     "confidence": "medium"
   }

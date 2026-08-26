@@ -6,6 +6,8 @@
 
 ## 当前判断
 
+**CONTRAMEM** 用异构 outcome contrast 与局部 curation 构建 frozen procedural bank；**BASM** 在 skill retrieval 后增加 validity boundary。前者不能称为 online self-evolution，后者也没有隔离 failed-trajectory admission、checker 与 repair；两者都只细化研究问题。
+
 “Self-evolving memory” 这个标签太粗。最近的工作已经把 adaptive state 拆成至少三类：
 
 - **HyperSkill：** relation structure 真正进入 retrieval/ranking/maintenance。

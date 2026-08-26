@@ -1,0 +1,22 @@
+{
+  "id": "2608.22752", "title": "The Compaction Cliff in Long-Running AI Agent Memory",
+  "authors": ["Saber Zerhoudi", "Jelena Mitrovic", "Michael Granitzer"],
+  "published": "2026-08-24", "first_seen": "2026-08-26",
+  "published_at": "2026-08-24T03:21:56Z", "first_seen_at": "2026-08-26T00:12:39Z", "radar_published_at": "2026-08-26T00:26:39Z",
+  "time_provenance": "native_v2", "map_delta": "early_signal", "direction_keys": ["constraint-preserving-compaction"],
+  "paper_url": "https://arxiv.org/abs/2608.22752", "code_url": "https://github.com/searchsim-org/cikm26-knowledge-triage", "project_url": "https://doi.org/10.1145/3799682.3840567",
+  "primary_category": "write_update_consolidation", "tags": ["semantic", "text", "structured", "general-agent"], "relevance": 1.0, "importance": 4,
+  "visual_explainer": {"status":"blocked","path":null,"format":"webp","generator":"gpt-image","grounding":"full-paper","last_verified":"2026-08-26","blocker":"No paper-grounded mechanism figure was available; the record remains text-only rather than publishing an unverified synthesis."},
+  "provenance": {"discovered_from":["https://arxiv.org/abs/2608.22752"],"analyzed_from":["https://arxiv.org/html/2608.22752v1","https://github.com/searchsim-org/cikm26-knowledge-triage"],"last_verified":"2026-08-26"},
+  "analysis": {
+    "tldr":"Type-aware compaction can preserve exact constraints under compression, but the closest source-fidelity control nearly ties at 50%, is absent from behavioral tests, and upstream classification cost is excluded.",
+    "problem":"Uniform summarization treats safety rules, preferences, facts, and episodic logs alike even though their acceptable distortions differ.",
+    "core_idea":"Classify knowledge by type, then apply per-type compaction, decomposition, or retrieval policies that pin in-scope constraints.",
+    "memory_design":{"write":"An upstream classifier assigns each knowledge item a type.","organize":"TypeCompact preserves or rewrites by fidelity contract; TypeDecompose replicates applicable constraints across partitions.","read":"TypeRetrieve pins applicable rules before relevance-ranked items.","update_forget":"Repeated compaction is evaluated, but classification repair, deletion, and long-running audit are not."},
+    "compared_to":["MaRS-FL reimplementation, the closest source-fidelity compaction operator","Type-blind LLM compactors at the same output ratio","Sonnet and hierarchical truncation on downstream behavior; MaRS-FL is missing there"],
+    "evidence":"On 20 configurations, TypeCompact constraint recall is .96 after five 50% rounds versus Sonnet .10. At 50/25/10%, TypeCompact is 1.00/.95/.80 and MaRS-FL .99/.75/.43. Retail pass is 37.7% versus full 28.6% and hierarchical 29.2%, but output tokens are mismatched.",
+    "why_it_matters":"Compaction should expose preservation contracts and test them beside downstream behavior, not report context shrinkage alone.",
+    "limitations":["The five-class classifier has kappa .45; its calls, tokens, latency, dollars, and errors are outside the deterministic operator cost.","MaRS-FL nearly ties at 50% and is not included in behavioral comparisons.","Retail context is 1,136 versus 669 tokens for baselines; worst decomposition overhead is +219%, with no energy or online maintenance audit."],
+    "confidence":"medium"
+  }
+}

@@ -14,6 +14,7 @@ The useful decomposition is now:
 
 | Date | Paper | Tags | Importance | Research take |
 |---|---|---|---:|---|
+| 2026-08-24 | [EARM](../papers/2026/2608.22767.md) | `semantic` `structured` `general-agent` | 3/5 | Reusing sparse relevance history reduces reranker calls, but fixed ordering, a small clean completion increment, and missing maintenance cost keep it a low-confidence signal. |
 | 2026-08-21 | [Weighted Memory Tree](../papers/2026/2608.20631.md) | `episodic` `hierarchical` `structured` `general-agent` | 3/5 | A coupled task-tree package regulates which within-episode state remains active; cross-session persistence and individual retention rules remain untested. |
 | 2026-08-20 | [Optimal Skill Selection](../papers/2026/2608.19993.md) | `procedural` `text` `structured` `general-agent` | 4/5 | Complementarity and overload make skill access a budgeted set decision, but the selector uses unmatched supervision on capability-gated tasks. |
 | 2026-08-19 | [SkillGate](../papers/2026/2608.18852.md) | `procedural` `text` `general-agent` | 4/5 | A single-seed oracle-local selector package raises trial success and changes exposure, but it does not isolate credit location. |

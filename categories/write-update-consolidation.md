@@ -10,6 +10,8 @@ The write side is becoming a systems problem with several independent controls: 
 
 | Date | Paper | Tags | Importance | Research take |
 |---|---|---|---:|---|
+| 2026-08-24 | [The Compaction Cliff](../papers/2026/2608.22752.md) | `semantic` `text` `structured` `general-agent` | 4/5 | Typed retention preserves exact constraints across repeated compression, but the closest source-fidelity control nearly ties at 50% and is absent from behavioral tests. |
+| 2026-08-22 | [MemGuard](../papers/2026/2608.21867.md) | `procedural` `structured` `general-agent` | 4/5 | Persistent verifier descriptors govern later retrieval and maintenance; the verifier-only contrast favors the package but lacks a significance test. |
 | 2026-08-20 | [StateMemBench / StateMem](../papers/2026/2608.19652.md) | `semantic` `structured` `timeline` `general-agent` | 4/5 | Explicit supersession and recomputation improve current-state answers, but dependency propagation is unstable and the persistent store's ingest cost is not lifecycle-matched. |
 | 2026-08-17 | [FTA-Mem](../papers/2026/2608.16303.md) | `episodic` `structured` `timeline` `personalization` | 3/5 | Situation-level units beat session memory on sparse dialogue and cost less to construct than turn-pair memory, while turn-pair stays slightly stronger on denser LoCoMo. |
 | 2026-08-13 | [LycheeMemory V2](../papers/2026/2608.12990.md) | `semantic` `structured` `timeline` | 4/5 | Consolidation granularity is load-bearing: semantic segment batching improves the quality-cost frontier over eager and fixed-window construction. |

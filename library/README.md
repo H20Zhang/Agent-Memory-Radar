@@ -16,6 +16,24 @@
 
 ## 按研究脉络浏览
 
+### 统一压缩 → Typed preservation → 持久生命周期证据
+
+[The Compaction Cliff](../papers/2026/2608.22752.zh.md) → [MemGuard](../papers/2026/2608.21867.zh.md)
+
+先判断哪些 memory type 必须精确保留，再判断 reliability evidence 是否在 admission 后继续控制 access 与 maintenance。两者都只有单篇证据，上游与治理成本仍未解决。
+
+### Stateless access → 记住 relevance → Applicability-gated use
+
+[EARM](../papers/2026/2608.22767.zh.md) → [BASM](../papers/2026/2608.22339.zh.md)
+
+Access policy 可以积累 relevance experience，但 retrieved procedure 仍需要 current-state validity boundary。应在被打乱、可增长的 store 上配平 context 与生命周期成本。
+
+### Outcome contrast → Curated procedure → 对抗式持久写入
+
+[CONTRAMEM](../papers/2026/2608.22533.zh.md) → [InjecMEM](../papers/2026/2608.23471.zh.md)
+
+Outcome diversity 可能帮助 procedure construction，普通 write path 也形成持久攻击面；需要分开 useful transfer、harmful steering、coverage 与 construction compute。
+
 ### 原始存档 → 互补 / 多源访问 → 状态定位 → 面向使用方的状态重建
 
 [ReFind](../papers/2026/2608.12888.zh.md) → [CABLE](../papers/2026/2608.17911.zh.md) / [MemFuse](../papers/2026/2608.18704.zh.md) → [ArborMem](../papers/2026/2608.17534.zh.md) → [QUMem](../papers/2026/2608.16168.zh.md)

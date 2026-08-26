@@ -10,6 +10,7 @@ Memory evaluation is moving from **endpoint score â†’ promotion evidence**. **DÂ
 
 | Date | Paper | Tags | Importance | Research take |
 |---|---|---|---:|---|
+| 2026-08-24 | [InjecMEM](../papers/2026/2608.23471.md) | `episodic` `text` `general-agent` | 4/5 | One ordinary interaction can later steer retrieved responses, but joint success is 35.6%, transfer is family-bound, and attacker compute is unreported. |
 | 2026-08-21 | [Utility Under Attack](../papers/2026/2608.21230.md) | `semantic` `structured` `general-agent` | 4/5 | Additive provenance weighting is inert against query-shaped poison at shipped strength and excludes genuine untrusted evidence at stronger weight; the proposed quota is untested. |
 | 2026-08-21 | [DreamBench-SWE](../papers/2026/2608.20664.md) | `episodic` `semantic` `procedural` `structured` `coding` | 4/5 | Earlier state changes later executable patches, but typed consolidation and sleep do not beat a strong verbatim archive in preregistered tests. |
 | 2026-08-20 | [MemTrapBench](../papers/2026/2608.20202.md) | `episodic` `semantic` `text` `general-agent` | 3/5 | Related prior history can causally harm later answers in adversarial stress tests; this supports an applicability gate, not a claim that memory is net harmful. |

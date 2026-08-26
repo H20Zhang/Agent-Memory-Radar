@@ -6,6 +6,8 @@
 
 ## 当前判断
 
+**EARM** 把历史 query–memory relevance score 变成 persistent access-policy state，并显著减少 reranker call；但其 store、ID 与问题顺序固定，completion 的净增量较小，维护与删除成本缺失，因此保持 3/5 低置信度信号。
+
 **Raw-state control 是起点，不是终点。** ReFind 说明 competent raw archive + stateful search 可以吃掉很多过去归因给 semantic preprocessing 的收益；CABLE 则要求 stored edge 改变 host retriever 的 **reachability**。MemFuse 进一步提醒：多源 graph/fusion 与 query-time evidence completion 必须分开归因，当前最大消融属于后者。
 
 ArborMem 又把 read path 向前拆了一层：当历史中存在多个 interleaved/resumable trajectories 时，系统可能必须先回答“当前 turn 接续哪条 state”，再谈 evidence relevance。

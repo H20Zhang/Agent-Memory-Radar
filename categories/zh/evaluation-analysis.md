@@ -6,6 +6,8 @@
 
 ## 当前判断
 
+**InjecMEM** 把一次普通 write、later retrieval 与 consumer steering 串成端到端安全测试。MemoryOS joint success 为 35.6%，且 strongest setting white-box、跨 held-out family transfer 失败；它证明攻击面存在，不代表部署中的普遍成功率。
+
 Endpoint accuracy / recall 太粗。**Demystifying Agent Skills** 已经说明 representation、retrieval、selection、actual use 与 downstream success 可以明显解耦；**D²ACCI** 把 paired evidence、protected slices 与 stage-localizable traces 带到 feature promotion。**Competence, Not Accuracy** 又把 reference-free gate 自身当作被审计对象：marginal accuracy 可能被题目难度抬高，真正相关的是同题判别能力。**Remember, Verify, or Ask?** 把 authority check 移到写入之前；**MemTrapBench** 则在 retrieval 之后直接测 memory use 是否伤害当前 consumer。两者都是 synthetic early signal：前者不执行 commitment action，后者专门构造无需历史即可回答、但 prior history 含 trap 的压力测试。
 
 **Utility Under Attack** 把 provenance ranking 变成双边 utility test：既测 poison suppression，也测 untrusted channel 中的正确证据是否被误删。**DreamBench-SWE** 则要求先前 session 的状态改变后续 executable patch；它支持 persistent state，却没有让 typed sleep 在 preregistered test 中胜过 verbatim archive。

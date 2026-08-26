@@ -16,6 +16,24 @@ Browse by research problem, research line, or year. If you know the question but
 
 ## Browse by Research Line
 
+### Uniform compaction → typed preservation → persistent lifecycle evidence
+
+[The Compaction Cliff](../papers/2026/2608.22752.md) → [MemGuard](../papers/2026/2608.21867.md)
+
+First ask which memory types require exact retention, then whether reliability evidence survives admission to govern later access and maintenance. Both are one-paper signals with unresolved upstream and governance cost.
+
+### Stateless access → remembered relevance → applicability-gated use
+
+[EARM](../papers/2026/2608.22767.md) → [BASM](../papers/2026/2608.22339.md)
+
+Access can accumulate relevance experience, but a retrieved procedure still needs a current-state validity boundary. Test both on shuffled, growing stores under matched context and lifecycle cost.
+
+### Outcome contrast → curated procedures → adversarial persistent write
+
+[CONTRAMEM](../papers/2026/2608.22533.md) → [InjecMEM](../papers/2026/2608.23471.md)
+
+Procedural construction benefits from outcome diversity, while ordinary write paths also create a persistent attack surface. Separate useful transfer, harmful steering, coverage, and construction compute.
+
 ### Raw archive → complementary/multi-source access → state localization → consumer-state reconstruction
 
 [ReFind](../papers/2026/2608.12888.md) → [CABLE](../papers/2026/2608.17911.md) / [MemFuse](../papers/2026/2608.18704.md) → [ArborMem](../papers/2026/2608.17534.md) → [QUMem](../papers/2026/2608.16168.md)

@@ -6,6 +6,8 @@
 
 ## 当前判断
 
+**The Compaction Cliff** 将 preservation contract 变成可测对象，但最强 source-fidelity 对照在 50% 压缩时几乎打平，且没有进入行为实验。**MemGuard** 则让 verifier descriptor 跨过 admission 持续控制 retrieval、merge、summary 与 archival；相对 verifier-only 的均值一致为正，却没有匹配的显著性检验。两者都是单篇 early signal。
+
 Write side 至少包含四个不同 control：
 
 `boundary / granularity × preservation contract × transformation frequency × forgetting`

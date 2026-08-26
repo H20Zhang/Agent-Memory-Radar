@@ -21,6 +21,12 @@ TIMELINE_SUMMARY_RE = re.compile(
 )
 CJK_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
 EXPECTED_TIMELINE_TITLES = {
+    "2608-23471": "2026-08-26 · InjecMEM",
+    "2608-22767": "2026-08-26 · EARM",
+    "2608-22752": "2026-08-26 · The Compaction Cliff",
+    "2608-22533": "2026-08-26 · CONTRAMEM",
+    "2608-22339": "2026-08-26 · BASM",
+    "2608-21867": "2026-08-26 · MemGuard",
     "2608-21230": "2026-08-25 · Utility Under Attack",
     "2608-20664": "2026-08-25 · DreamBench-SWE",
     "2608-20631": "2026-08-25 · Weighted Memory Tree",
