@@ -46,12 +46,26 @@ jobs:
               text = text.replace(old, new, count)
               p.write_text(text, encoding='utf-8')
 
-          replace(
-              'README.md',
-              '**问题。** Persistent skill-memory evolution 的增益，能否在配平 skill library 与 retry budget 后仍归因到 state/control 和跨任务 patch？',
-              '**问题。** 持久 skill memory 的增益，能否在配平 skill library 与 retry budget 后，仍归因于 state/control 和跨任务 patch？',
-              1,
-          )
+          zh_fixes = [
+              (
+                  '**问题。** Persistent skill-memory evolution 的增益，能否在配平 skill library 与 retry budget 后仍归因到 state/control 和跨任务 patch？',
+                  '**问题。** 持久 skill memory 的增益，能否在配平 skill library 与 retry budget 后，仍归因于 state/control 和跨任务 patch？',
+              ),
+              (
+                  '— verified working state 决定 persistent skill 何时进入 actor，structured trace 再定位后续 patch。',
+                  '— 经过验证的 working state 决定 persistent skill 何时进入 actor，structured trace 再定位后续 patch。',
+              ),
+              (
+                  '**证据。** tau2-Retail 为 **58.1 Base / 82.0 WM-only / 65.6 same-library model-controlled / 83.6 Recuris**；evolved package 跨模型把 GPT-5.6 Sol **58.33→76.10**、Claude Opus 5 **72.37→87.94**。',
+                  '**证据。** 在 tau2-Retail 上，结果为 **58.1 Base / 82.0 WM-only / 65.6 same-library model-controlled / 83.6 Recuris**；evolved package 跨模型把 GPT-5.6 Sol **58.33→76.10**、Claude Opus 5 **72.37→87.94**。',
+              ),
+              (
+                  '**限制。** Terminal-Bench 在配平四次尝试后只有 **58.6→60.9，p=.774**；SkillFlow 没有 held-out task split，dev gate 功效有限，且 `full evolution lifecycle cost is incomplete`。',
+                  '**限制。** 在 Terminal-Bench 上，配平四次尝试后只有 **58.6→60.9，p=.774**；SkillFlow 没有 held-out task split，dev gate 功效有限，且 `full evolution lifecycle cost is incomplete`。',
+              ),
+          ]
+          for old, new in zh_fixes:
+              replace('README.md', old, new, 1)
 
           p = Path('tests/test_memory_v2_contract.py')
           text = p.read_text(encoding='utf-8')
@@ -59,6 +73,7 @@ jobs:
               '2026-08-26T00:27:00Z': '2026-08-27T00:34:29Z',
               '2026-08-20—2026-08-26': '2026-08-21—2026-08-27',
               '2026-07-28—2026-08-26': '2026-07-29—2026-08-27',
+              '2026-08-26T01:00:00Z': '2026-08-27T01:00:00Z',
           }
           for old, new in replacements.items():
               if old not in text:
