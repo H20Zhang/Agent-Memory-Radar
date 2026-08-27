@@ -46,11 +46,11 @@ Outcome diversity 可能帮助 procedure construction，普通 write path 也形
 
 持久状态需要三种不同决策：candidate information 是否有 authority 进入 memory，哪些旧状态被它取代，以及 retrieval 后的历史是否适用于当前 consumer。现有证据仍受 benchmark 限制，还没有在一条真实执行的 lifecycle 中把三个阶段连起来。
 
-### 学得访问 / 编写 / 课程策略 → 经认证的产物 → 受守护的 Harness 提交
+### 学得访问 / 编写 / 课程策略 → 状态落地与定位式演化 → 经认证产物 / Harness 提交
 
-[SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) / [SPADE](../papers/2026/2608.19197.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) → [Harness Continual Learning](../papers/2026/2608.19013.zh.md)
+[SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) / [SPADE](../papers/2026/2608.19197.zh.md) → [Recuris](../papers/2026/2608.24876.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) / [Harness Continual Learning](../papers/2026/2608.19013.zh.md)
 
-程序性学习的收益可能来自关系结构、写入策略学习、训练侧经验记忆、执行反馈或运行时认证。若把这些变化都称为“记忆”，真正的因果变量就会被掩盖。
+程序性学习的收益可能来自 read/write policy、training-side experience、verified working state、invocation control、failure localization 或 promotion gate。Recuris 的 same-library 与 retry-matched 对照进一步说明：先定位真正改变 later behavior 的控制层，再讨论“self-improving memory”。
 
 ### 检索分数 → 阶段归因 → Gate 资格 → 功能上线证据
 

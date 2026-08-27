@@ -46,11 +46,11 @@ Procedural construction benefits from outcome diversity, while ordinary write pa
 
 Persistent state needs three different decisions: whether candidate information is authorized to enter memory, which older state it supersedes, and whether the resulting retrieved history is applicable to the current consumer. Current evidence is benchmark-bounded and does not yet join these stages in one executed lifecycle.
 
-### Learned access/writer/curriculum → certified artifact → guarded harness commit
+### Learned access/writer/curriculum → state-grounded localized evolution → certified artifact / harness commit
 
-[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [TRUSS](../papers/2026/2608.17588.md) → [Harness Continual Learning](../papers/2026/2608.19013.md)
+[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [Recuris](../papers/2026/2608.24876.md) → [TRUSS](../papers/2026/2608.17588.md) / [Harness Continual Learning](../papers/2026/2608.19013.md)
 
-Procedural-learning gains can come from relational structure, writer-policy learning, training-side experience memory, execution feedback, or runtime certification. Treating all of these changes as “memory” hides the causal variable.
+Procedural-learning gains can come from read/write policy, training-side experience, verified working state, invocation control, failure localization, or promotion gates. Recuris adds same-library and retry-matched controls that make the credit location more explicit before the package is called “self-improving memory.”
 
 ### Retrieval score → stage attribution → gate qualification → feature-promotion evidence
 

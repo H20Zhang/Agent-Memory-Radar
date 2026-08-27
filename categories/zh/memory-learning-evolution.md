@@ -6,10 +6,11 @@
 
 ## 当前判断
 
-**CONTRAMEM** 用异构 outcome contrast 与局部 curation 构建 frozen procedural bank；**BASM** 在 skill retrieval 后增加 validity boundary。前者不能称为 online self-evolution，后者也没有隔离 failed-trajectory admission、checker 与 repair；两者都只细化研究问题。
+**Recuris** 把新的关键边界暴露出来：persistent skill 和“当前状态决定何时调用 skill”不是一回事。其 same-library control 显示 verified working state / invocation control 承担了最清楚的增益；跨任务 localized patch 能迁移，但 retry-matched Terminal-Bench adaptation 仍是 null。**CONTRAMEM** 与 **BASM** 则分别补充 outcome contrast 和 validity boundary，它们共同把 procedural memory 拆成 artifact、state、access 与 update policy。
 
 “Self-evolving memory” 这个标签太粗。最近的工作已经把 adaptive state 拆成至少三类：
 
+- **Recuris：** verified working state 进入 skill invocation，并把 structured trace 转成 component-local、gate-controlled memory patch。
 - **HyperSkill：** relation structure 真正进入 retrieval/ranking/maintenance。
 - **WER：** 从 execution feedback 学 **skill-writer policy**，而不是只改当前 artifact。
 - **TRUSS：** 不直接学 writer，而是用 static + runtime evidence 决定 candidate skill 是否可以被 promote 为 persistent capability。

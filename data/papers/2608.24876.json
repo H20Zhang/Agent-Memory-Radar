@@ -1,0 +1,83 @@
+{
+  "id": "2608.24876",
+  "title": "Recursive Experiential-Working Memory Evolution for Long-Horizon Agent Harnesses",
+  "authors": [
+    "Zhaochen Yu",
+    "Yingcheng Wu",
+    "Zhenfei Yin",
+    "Kaiyuan Chen",
+    "Zhe Zhao",
+    "Mengdi Wang",
+    "Shuicheng Yan",
+    "Ling Yang"
+  ],
+  "published": "2026-08-25",
+  "first_seen": "2026-08-27",
+  "published_at": "2026-08-25T17:56:35Z",
+  "first_seen_at": "2026-08-27T00:25:27Z",
+  "radar_published_at": "2026-08-27T00:34:29Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "state-grounded-memory-evolution"
+  ],
+  "paper_url": "https://arxiv.org/abs/2608.24876",
+  "code_url": "https://github.com/Gen-Verse/Recuris",
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": [
+    "procedural",
+    "working",
+    "structured",
+    "general-agent"
+  ],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-27",
+    "blocker": "A paper-specific mechanism figure exists, but no generated WebP is published until a grounded visual passes VISUAL_POLICY.md review; the verified deep note carries the mechanism and controls meanwhile."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/list/cs.AI/recent",
+      "https://arxiv.org/abs/2608.24876"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/pdf/2608.24876",
+      "https://arxiv.org/abs/2608.24876",
+      "https://github.com/Gen-Verse/Recuris"
+    ],
+    "last_verified": "2026-08-27"
+  },
+  "analysis": {
+    "tldr": "The clearest causal result is that verified working state and state-grounded invocation—not merely a standing skill library—drive long-horizon gains; cross-task memory evolution transfers on tau2-Retail, while matched-budget Terminal-Bench adaptation adds no significant gain beyond retries.",
+    "problem": "Long-horizon agents accumulate histories that obscure current task state, invoke persistent skills at the wrong time, and make later self-improvement hard to localize to a specific memory component.",
+    "core_idea": "Maintain Skill Memory as experiential skills, a working-state schema, an invocation policy, and checkers; use verified working state to select skills during execution, then convert structured traces into component-localized, held-out-gated memory patches across tasks.",
+    "memory_design": {
+      "write": "Across tasks, a fixed Meta-Agent converts localized failures into candidate edits to skills, working-state logic, invocation policy, or checkers; a held-out development gate admits only non-regressing repairs.",
+      "organize": "Persistent Skill Memory is factored as experiential skills E, working-state schema W, invocation policy rho, and checkers C rather than one monolithic prompt or case bank.",
+      "read": "Within a task, verified working state tracks current progress and unresolved goals; that state grounds which experiential skills are exposed to the actor instead of injecting the whole library or matching against growing chat history.",
+      "update_forget": "Structured traces localize failures to a memory component and support scoped add/update/delete-style patches across tasks; the paper evaluates gated evolution but not a separate long-term deletion, privacy, or governance policy."
+    },
+    "compared_to": [
+      "Base agent with neither experiential nor working memory",
+      "Working-memory-only, experiential-memory-only, and model-controlled invocation with the same ten-skill library on tau2-Retail",
+      "Frozen initial memory versus evolved memory on a held-out 86-task tau2-Retail split and cross-model transfer",
+      "Seed memory plus the same four-attempt retry budget versus test-time memory adaptation on Terminal-Bench 2.1"
+    ],
+    "evidence": "On tau2-Retail, success is 58.1% Base, 82.0% working-memory-only, 65.6% model-controlled invocation, and 83.6% full Recuris; the last two use the same ten skills, while tokens per success are about 147k versus 101k. A package evolved from 16 failures raises a frozen 86-task split by 9–17pp when its repairs are actually invoked, and transfers GPT-5.6 Sol from 58.33% to 76.10% and Claude Opus 5 from 72.37% to 87.94%. By contrast, Terminal-Bench retry-matched success is 58.6% with seed memory plus retries versus 60.9% with adaptation (p=.774), so the within-task adaptation headline is not isolated from extra attempts.",
+    "why_it_matters": "Memory self-improvement should be decomposed into current-state control, skill invocation, failure attribution, and persistent patch promotion. Recuris provides unusually strong evidence that the control layer can matter more than the skill library itself, while also showing how retry budgets can erase an apparent adaptation effect.",
+    "limitations": [
+      "The strongest recursive-evolution evidence comes from one tau2-Retail evolution lineage; SkillFlow does not provide a held-out task split, so its template selection is in-sample with respect to task family.",
+      "The development gate can be underpowered: in the small Retail gate, some rejected candidates later improve the larger held-out split, so the gate is conservative rather than a reliable good-versus-bad separator.",
+      "Terminal-Bench 2.1 shows no significant incremental task-success gain from adaptation after matching the retry budget; retrying explains most of that headline improvement.",
+      "Per-turn rendered memory tokens, dollar/energy cost, and full cross-task evolution cost are incomplete, so lifecycle break-even is not established."
+    ],
+    "confidence": "high"
+  }
+}
