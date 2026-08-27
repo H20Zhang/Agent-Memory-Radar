@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   apply:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Recover staged transaction script
+      - name: Recover and apply staged transaction
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -32,6 +33,46 @@ jobs:
           PY
           python /tmp/apply_radar.py
           rm -f .github/workflows/radar-runner.yml
+      - name: Repair date-bound test fixtures and Chinese scan layer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace(path, old, new, count=-1):
+              p = Path(path)
+              text = p.read_text(encoding='utf-8')
+              if old not in text:
+                  raise SystemExit(f'missing replacement anchor in {path}: {old!r}')
+              text = text.replace(old, new, count)
+              p.write_text(text, encoding='utf-8')
+
+          replace(
+              'README.md',
+              '**问题。** Persistent skill-memory evolution 的增益，能否在配平 skill library 与 retry budget 后仍归因到 state/control 和跨任务 patch？',
+              '**问题。** 持久 skill memory 的增益，能否在配平 skill library 与 retry budget 后，仍归因于 state/control 和跨任务 patch？',
+              1,
+          )
+
+          p = Path('tests/test_memory_v2_contract.py')
+          text = p.read_text(encoding='utf-8')
+          replacements = {
+              '2026-08-26T00:27:00Z': '2026-08-27T00:34:29Z',
+              '2026-08-20—2026-08-26': '2026-08-21—2026-08-27',
+              '2026-07-28—2026-08-26': '2026-07-29—2026-08-27',
+          }
+          for old, new in replacements.items():
+              if old not in text:
+                  raise SystemExit(f'missing test fixture anchor: {old}')
+              text = text.replace(old, new)
+          p.write_text(text, encoding='utf-8')
+
+          replace(
+              'tests/test_validate_reading.py',
+              'EXPECTED_TIMELINE_TITLES = {\n    "2608-23471": "2026-08-26 · InjecMEM",',
+              'EXPECTED_TIMELINE_TITLES = {\n    "2608-24876": "2026-08-27 · Recuris",\n    "2608-23471": "2026-08-26 · InjecMEM",',
+              1,
+          )
+          PY
       - name: Install validation dependencies
         run: pip install -r requirements.txt
       - name: Run binding repository validators
