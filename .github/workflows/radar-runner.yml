@@ -61,7 +61,7 @@ jobs:
               ),
               (
                   '**限制。** Terminal-Bench 在配平四次尝试后只有 **58.6→60.9，p=.774**；SkillFlow 没有 held-out task split，dev gate 功效有限，且 `full evolution lifecycle cost is incomplete`。',
-                  '**限制。** 在 Terminal-Bench 上，配平四次尝试后只有 **58.6→60.9，p=.774**；SkillFlow 没有 held-out task split，dev gate 功效有限，且 `full evolution lifecycle cost is incomplete`。',
+                  '**限制。** 在 Terminal-Bench 上，配平四次尝试后只有 **58.6→60.9，p=.774**；SkillFlow 没有未见任务划分，小型 dev gate 的统计功效有限，且 `full evolution lifecycle cost is incomplete`。',
               ),
           ]
           for old, new in zh_fixes:
