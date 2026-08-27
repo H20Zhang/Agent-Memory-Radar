@@ -1,0 +1,297 @@
+name: Apply staged Agent Memory radar update
+
+on:
+  push:
+    branches: [research-radar-reading-v1]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research-radar-reading-v1
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply Recuris radar transaction
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          ROOT = Path('.')
+          FIRST_SEEN = '2026-08-27T00:25:27Z'
+          RADAR_TS = '2026-08-27T00:34:29Z'
+
+          def read(path):
+              return (ROOT / path).read_text(encoding='utf-8')
+
+          def write(path, text):
+              p = ROOT / path
+              p.parent.mkdir(parents=True, exist_ok=True)
+              p.write_text(text, encoding='utf-8')
+
+          def replace(path, old, new, count=-1):
+              text = read(path)
+              if old not in text:
+                  raise RuntimeError(f'{path}: replacement anchor missing: {old[:120]!r}')
+              text = text.replace(old, new, count)
+              write(path, text)
+
+          paper = {
+            'id': '2608.24876',
+            'title': 'Recursive Experiential-Working Memory Evolution for Long-Horizon Agent Harnesses',
+            'authors': ['Zhaochen Yu','Yingcheng Wu','Zhenfei Yin','Kaiyuan Chen','Zhe Zhao','Mengdi Wang','Shuicheng Yan','Ling Yang'],
+            'published': '2026-08-25',
+            'first_seen': '2026-08-27',
+            'published_at': '2026-08-25T17:56:35Z',
+            'first_seen_at': FIRST_SEEN,
+            'radar_published_at': RADAR_TS,
+            'time_provenance': 'native_v2',
+            'map_delta': 'early_signal',
+            'direction_keys': ['state-grounded-memory-evolution'],
+            'paper_url': 'https://arxiv.org/abs/2608.24876',
+            'code_url': 'https://github.com/Gen-Verse/Recuris',
+            'project_url': None,
+            'primary_category': 'memory_learning_evolution',
+            'tags': ['procedural','working','structured','general-agent'],
+            'relevance': 1.0,
+            'importance': 4,
+            'visual_explainer': {
+              'status': 'blocked', 'path': None, 'format': 'webp', 'generator': 'gpt-image',
+              'grounding': 'full-paper', 'last_verified': '2026-08-27',
+              'blocker': 'A paper-specific mechanism figure exists, but no generated WebP is published until a grounded visual passes VISUAL_POLICY.md review; the verified deep note carries the mechanism and controls meanwhile.'
+            },
+            'provenance': {
+              'discovered_from': ['https://arxiv.org/list/cs.AI/recent','https://arxiv.org/abs/2608.24876'],
+              'analyzed_from': ['https://arxiv.org/pdf/2608.24876','https://arxiv.org/abs/2608.24876','https://github.com/Gen-Verse/Recuris'],
+              'last_verified': '2026-08-27'
+            },
+            'analysis': {
+              'tldr': 'The clearest causal result is that verified working state and state-grounded invocation—not merely a standing skill library—drive long-horizon gains; cross-task memory evolution transfers on tau2-Retail, while matched-budget Terminal-Bench adaptation adds no significant gain beyond retries.',
+              'problem': 'Long-horizon agents accumulate histories that obscure current task state, invoke persistent skills at the wrong time, and make later self-improvement hard to localize to a specific memory component.',
+              'core_idea': 'Maintain Skill Memory as experiential skills, a working-state schema, an invocation policy, and checkers; use verified working state to select skills during execution, then convert structured traces into component-localized, held-out-gated memory patches across tasks.',
+              'memory_design': {
+                'write': 'Across tasks, a fixed Meta-Agent converts localized failures into candidate edits to skills, working-state logic, invocation policy, or checkers; a held-out development gate admits only non-regressing repairs.',
+                'organize': 'Persistent Skill Memory is factored as experiential skills E, working-state schema W, invocation policy rho, and checkers C rather than one monolithic prompt or case bank.',
+                'read': 'Within a task, verified working state tracks current progress and unresolved goals; that state grounds which experiential skills are exposed to the actor instead of injecting the whole library or matching against growing chat history.',
+                'update_forget': 'Structured traces localize failures to a memory component and support scoped add/update/delete-style patches across tasks; the paper evaluates gated evolution but not a separate long-term deletion, privacy, or governance policy.'
+              },
+              'compared_to': [
+                'Base agent with neither experiential nor working memory',
+                'Working-memory-only, experiential-memory-only, and model-controlled invocation with the same ten-skill library on tau2-Retail',
+                'Frozen initial memory versus evolved memory on a held-out 86-task tau2-Retail split and cross-model transfer',
+                'Seed memory plus the same four-attempt retry budget versus test-time memory adaptation on Terminal-Bench 2.1'
+              ],
+              'evidence': 'On tau2-Retail, success is 58.1% Base, 82.0% working-memory-only, 65.6% model-controlled invocation, and 83.6% full Recuris; the last two use the same ten skills, while tokens per success are about 147k versus 101k. A package evolved from 16 failures raises a frozen 86-task split by 9–17pp when its repairs are actually invoked, and transfers GPT-5.6 Sol from 58.33% to 76.10% and Claude Opus 5 from 72.37% to 87.94%. By contrast, Terminal-Bench retry-matched success is 58.6% with seed memory plus retries versus 60.9% with adaptation (p=.774), so the within-task adaptation headline is not isolated from extra attempts.',
+              'why_it_matters': 'Memory self-improvement should be decomposed into current-state control, skill invocation, failure attribution, and persistent patch promotion. Recuris provides unusually strong evidence that the control layer can matter more than the skill library itself, while also showing how retry budgets can erase an apparent adaptation effect.',
+              'limitations': [
+                'The strongest recursive-evolution evidence comes from one tau2-Retail evolution lineage; SkillFlow does not provide a held-out task split, so its template selection is in-sample with respect to task family.',
+                'The development gate can be underpowered: in the small Retail gate, some rejected candidates later improve the larger held-out split, so the gate is conservative rather than a reliable good-versus-bad separator.',
+                'Terminal-Bench 2.1 shows no significant incremental task-success gain from adaptation after matching the retry budget; retrying explains most of that headline improvement.',
+                'Per-turn rendered memory tokens, dollar/energy cost, and full cross-task evolution cost are incomplete, so lifecycle break-even is not established.'
+              ],
+              'confidence': 'high'
+            }
+          }
+          write('data/papers/2608.24876.json', json.dumps(paper, ensure_ascii=False, indent=2) + '\n')
+
+          en_note = '''# Recursive Experiential-Working Memory Evolution for Long-Horizon Agent Harnesses
+
+[← Latest Papers](../../README.en.md#latest-papers) · [Research Map](../../README.en.md#field-map) · [Memory Learning & Evolution](../../categories/memory-learning-evolution.md) · [中文](2608.24876.zh.md)
+
+**Paper:** [arXiv:2608.24876](https://arxiv.org/abs/2608.24876) · **Published:** 2026-08-25 · **Importance:** 4/5 · **Confidence:** High · **Artifact:** [Code](https://github.com/Gen-Verse/Recuris)
+
+> **Research delta.** Recuris separates a persistent skill library from the control state that decides when those skills are useful. On tau2-Retail, verified working state explains most of the gain; cross-task localized memory patches transfer, while retry-matched Terminal-Bench adaptation is statistically null.
+
+## Problem
+
+Long-horizon histories bury current task state, persistent skills can be invoked at the wrong moment, and an outcome-only self-improvement loop cannot tell whether the failure came from the skill artifact, state tracking, invocation, or verification.
+
+## Mechanism
+
+Recuris factors Skill Memory as `M=(E,W,rho,C)`: experiential skills, a working-state schema, an invocation policy, and checkers. Within a task, verified working state tracks progress and unresolved goals, then grounds which skills enter context. Across tasks, structured `(working state, exposed skills, action, observation)` traces localize a failure to one component; a fixed Meta-Agent proposes a scoped patch and a held-out gate decides whether it is promoted.
+
+## Compared with
+
+The cleanest tau2-Retail controls are Base, experiential-memory-only, working-memory-only, and model-controlled invocation. The last model-controlled arm uses the same ten-skill library as Recuris but leaves invocation to the model, separating skill availability from state-grounded control. Cross-task evolution is compared with the same frozen initial memory on a held-out split. Terminal-Bench additionally matches the four-attempt retry budget to separate adaptation from extra attempts.
+
+## Decisive evidence
+
+On tau2-Retail, task success is **58.1% Base / 60.1% EM-only / 82.0% WM-only / 65.6% model-controlled / 83.6% Recuris**. The same-library model-controlled arm needs about **147k tokens per success** versus **101k** for Recuris. This makes working-state and invocation control the load-bearing causal result, not simply the existence of a skill bank.
+
+A memory package evolved from 16 failures raises success on a frozen 86-task split by **9–17pp** when the resulting repairs are actually invoked. The same package transfers on tau2-Retail from **58.33→76.10** for GPT-5.6 Sol and **72.37→87.94** for Claude Opus 5. The important negative result is Terminal-Bench 2.1: seed memory + four retries reaches **58.6%**, while test-time adaptation reaches **60.9% (p=.774)**. Most of that headline improvement is retry budget, not isolated memory learning.
+
+## Main caveat
+
+The recursive-evolution evidence is strongest on one tau2-Retail lineage. SkillFlow has no held-out task split, the small development gate can reject candidates that later help the larger test split, and full evolution cost is incomplete. Terminal-Bench should be read as a direction for adaptation, not evidence of an adaptation effect after retry matching.
+
+## Memory lifecycle
+
+| Stage | Design |
+|---|---|
+| Write | Localized failures become candidate edits to skills, state logic, invocation, or checkers; a held-out gate controls promotion. |
+| Organize | Persistent memory is factored into `E`, `W`, `rho`, and `C` so failures and patches have an explicit target. |
+| Read | Verified working state selects which experiential skills are exposed to the frozen actor. |
+| Update / forget | Cross-task patches can add, revise, or remove memory-control artifacts; long-term deletion, privacy, and lifecycle governance are not separately evaluated. |
+
+## Why it matters
+
+The paper narrows “self-improving memory” into four separable questions: what current state is represented, how persistent experience is invoked, how failure is attributed, and which patch survives promotion. For systems work, the strongest lesson is that the state/control layer can dominate the stored artifact, and that compute-equivalent retry controls are mandatory before crediting online adaptation.
+
+## Related reading
+
+- [Harness Continual Learning](2608.19013.md) — also treats non-parametric harness state as versioned and commit-gated, but changes several harness components jointly.
+- [BASM](2608.22339.md) — adds validity boundaries around retrieved skills; Recuris more directly isolates current-state-grounded invocation with a same-library control.
+- [WER](2608.17587.md) — learns a writer policy from execution feedback rather than localizing and patching a factored memory-control package.
+'''
+          write('papers/2026/2608.24876.md', en_note)
+
+          zh_note = '''# Recuris：长 Horizon Agent 的经验-工作记忆递归演化
+
+[English](2608.24876.md) · [← 最新论文](../../README.md#latest) · [记忆学习与演化](../../categories/zh/memory-learning-evolution.md)
+
+**Paper:** [arXiv:2608.24876](https://arxiv.org/abs/2608.24876) · **Importance:** 4/5 · **Confidence:** High · **Code:** [Gen-Verse/Recuris](https://github.com/Gen-Verse/Recuris)
+
+> **Research delta.** 这篇最重要的不是“又一个 self-improving memory”。最干净的对照显示：**verified working state + state-grounded invocation 比持久 skill library 本身更关键**；跨任务局部 patch 能迁移，但 Terminal-Bench 在配平 retry budget 后并没有显著 adaptation gain。
+
+## 研究问题
+
+长轨迹会把当前状态淹没在历史里；skill 即使被持久保存，也可能在错误状态被调用。更麻烦的是，只看最终 reward 的 self-improvement loop 无法判断错误来自 skill、working state、invocation policy 还是 checker。
+
+## Mechanism
+
+Recuris 把 Skill Memory 拆成 `M=(E,W,rho,C)`：经验 skill、working-state schema、invocation policy 和 checker。任务内，working memory 维护经过验证的当前进度与未解决目标，再据此选择要暴露的 skill；任务间，结构化 trace 把失败定位到具体 component，固定 Meta-Agent 只 patch 该处，再由 held-out dev gate 决定是否 commit。
+
+## 最近的公平比较
+
+tau2-Retail 的关键对照是 Base、EM-only、WM-only、model-controlled invocation 和完整 Recuris。后两者使用**完全相同的 10 个 skill**，因此能把“有 skill”与“基于当前状态正确调用 skill”分开。跨任务演化则从同一个冻结初始 memory 出发；Terminal-Bench 另外加入相同四次尝试预算的 retry control。
+
+## 决定性证据
+
+Retail task success 为 **58.1% Base / 60.1% EM-only / 82.0% WM-only / 65.6% model-controlled / 83.6% Recuris**。同一 skill library 下，model-controlled 每成功约 **147k tokens**，Recuris 约 **101k**。所以 load-bearing mechanism 首先是 state/control，而不是 skill bank 的容量。
+
+用 16 个 failure 演化出的 package，在冻结的 86-task held-out split 上，当 patch 真正被调用时可带来 **9–17pp** 提升；同一 package 在 Retail 上把 GPT-5.6 Sol **58.33→76.10**、Claude Opus 5 **72.37→87.94**。但 Terminal-Bench 的 matched control 是关键反证：seed memory + retries 已到 **58.6%**，test-time adaptation 只有 **60.9%，p=.774**，大部分 headline gain 来自更多尝试。
+
+## 仍未证明什么
+
+最强 recursive-evolution 证据集中在一条 tau2-Retail 演化链；SkillFlow 没有 held-out task split。Retail 的小 dev gate 统计功效有限，曾拒绝后来在 86-task test 上更好的 candidate。论文也没有完整报告每轮注入 memory token、美元/能耗和完整 evolution cost，因此 lifecycle break-even 还未知。
+
+## 生命周期边界
+
+`execution → verified working state → state-grounded skill invocation → structured failure trace → component-local patch → held-out gate → persistent Skill Memory → future execution`
+
+## 对领域地图的影响
+
+这是 **state-grounded memory evolution 的 early signal**，不是 durable trend。它把“self-improving memory”进一步拆成 current-state control、persistent experience access、failure attribution 和 patch promotion 四个可独立验证的阶段；下一步最需要的是把 evolution compute、retry budget 与长期维护成本完全配平。
+'''
+          write('papers/2026/2608.24876.zh.md', zh_note)
+
+          # Category surfaces.
+          cat = 'categories/memory-learning-evolution.md'
+          replace(cat,
+            '“Self-improving memory” hides several adaptive states. **SkillEvo** improves the feedback surface; **WER** trains the skill-writer policy; **SPADE** lets a bounded environment buffer condition future curriculum generation; **TRUSS** certifies candidate artifacts; **ERSkill** evolves the read policy; **HyperSkill** operationalizes relations. **Harness Continual Learning** then widens the boundary to jointly version memory, interface, capability map, and router under a commit gate. The question is **what state changes, from which evidence, and under what promotion/governance rule**.',
+            '“Self-improving memory” hides several adaptive states. **SkillEvo** improves the feedback surface; **WER** trains the skill-writer policy; **SPADE** lets a bounded environment buffer condition future curriculum generation; **TRUSS** certifies candidate artifacts; **ERSkill** evolves the read policy; **HyperSkill** operationalizes relations. **Recuris** now separates persistent skills from verified working state and state-grounded invocation, then uses structured traces for component-local evolution. **Harness Continual Learning** widens the boundary further to jointly version memory, interface, capability map, and router under a commit gate. The question is **what state changes, from which evidence, and under what promotion/governance rule**.' )
+          replace(cat,
+            '|---|---|---|---:|---|\n',
+            '|---|---|---|---:|---|\n| 2026-08-25 | [Recuris](../papers/2026/2608.24876.md) | `procedural` `working` `structured` `general-agent` | 4/5 | Same-library controls make verified working state and state-grounded invocation the clearest gain; cross-task patches transfer, while retry-matched Terminal-Bench adaptation is null. |\n', 1)
+
+          zhcat = 'categories/zh/memory-learning-evolution.md'
+          replace(zhcat,
+            '**CONTRAMEM** 用异构 outcome contrast 与局部 curation 构建 frozen procedural bank；**BASM** 在 skill retrieval 后增加 validity boundary。前者不能称为 online self-evolution，后者也没有隔离 failed-trajectory admission、checker 与 repair；两者都只细化研究问题。',
+            '**Recuris** 把新的关键边界暴露出来：persistent skill 和“当前状态决定何时调用 skill”不是一回事。其 same-library control 显示 verified working state / invocation control 承担了最清楚的增益；跨任务 localized patch 能迁移，但 retry-matched Terminal-Bench adaptation 仍是 null。**CONTRAMEM** 与 **BASM** 则分别补充 outcome contrast 和 validity boundary，它们共同把 procedural memory 拆成 artifact、state、access 与 update policy。')
+          replace(zhcat,
+            '- **HyperSkill：** relation structure 真正进入 retrieval/ranking/maintenance。\n',
+            '- **Recuris：** verified working state 进入 skill invocation，并把 structured trace 转成 component-local、gate-controlled memory patch。\n- **HyperSkill：** relation structure 真正进入 retrieval/ranking/maintenance。\n', 1)
+
+          # Library research line.
+          replace('library/README.md',
+            '### 学得访问 / 编写 / 课程策略 → 经认证的产物 → 受守护的 Harness 提交\n\n[SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) / [SPADE](../papers/2026/2608.19197.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) → [Harness Continual Learning](../papers/2026/2608.19013.zh.md)\n\n程序性学习的收益可能来自关系结构、写入策略学习、训练侧经验记忆、执行反馈或运行时认证。若把这些变化都称为“记忆”，真正的因果变量就会被掩盖。',
+            '### 学得访问 / 编写 / 课程策略 → 状态落地与定位式演化 → 经认证产物 / Harness 提交\n\n[SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) / [SPADE](../papers/2026/2608.19197.zh.md) → [Recuris](../papers/2026/2608.24876.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) / [Harness Continual Learning](../papers/2026/2608.19013.zh.md)\n\n程序性学习的收益可能来自 read/write policy、training-side experience、verified working state、invocation control、failure localization 或 promotion gate。Recuris 的 same-library 与 retry-matched 对照进一步说明：先定位真正改变 later behavior 的控制层，再讨论“self-improving memory”。')
+          replace('library/README.en.md',
+            '### Learned access/writer/curriculum → certified artifact → guarded harness commit\n\n[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [TRUSS](../papers/2026/2608.17588.md) → [Harness Continual Learning](../papers/2026/2608.19013.md)\n\nProcedural-learning gains can come from relational structure, writer-policy learning, training-side experience memory, execution feedback, or runtime certification. Treating all of these changes as “memory” hides the causal variable.',
+            '### Learned access/writer/curriculum → state-grounded localized evolution → certified artifact / harness commit\n\n[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [Recuris](../papers/2026/2608.24876.md) → [TRUSS](../papers/2026/2608.17588.md) / [Harness Continual Learning](../papers/2026/2608.19013.md)\n\nProcedural-learning gains can come from read/write policy, training-side experience, verified working state, invocation control, failure localization, or promotion gates. Recuris adds same-library and retry-matched controls that make the credit location more explicit before the package is called “self-improving memory.”')
+
+          zh_entry = '''<a id="entry-2608-24876"></a>
+<details><summary><strong>2026-08-27 · Recuris</strong> · 状态落地的记忆演化 <!-- timefirst:area=state-grounded-memory-evolution --> — verified working state 决定 persistent skill 何时进入 actor，structured trace 再定位后续 patch。 <!-- timefirst:delta=standing-skill-library-to-state-grounded-localized-evolution --></summary>
+
+**问题。** Persistent skill-memory evolution 的增益，能否在配平 skill library 与 retry budget 后仍归因到 state/control 和跨任务 patch？ <!-- timefirst:question=separate-state-control-and-evolution-from-skill-availability-and-retries -->
+
+**证据。** tau2-Retail 为 **58.1 Base / 82.0 WM-only / 65.6 same-library model-controlled / 83.6 Recuris**；evolved package 跨模型把 GPT-5.6 Sol **58.33→76.10**、Claude Opus 5 **72.37→87.94**。 <!-- timefirst:evidence=same-library-control-and-cross-model-transfer~same-library-model-controlled -->
+
+**限制。** Terminal-Bench 在配平四次尝试后只有 **58.6→60.9，p=.774**；SkillFlow 没有 held-out task split，dev gate 功效有限，且 `full evolution lifecycle cost is incomplete`。 <!-- timefirst:caveat=retry-matched-null-and-incomplete-evolution-cost~full-evolution-lifecycle-cost-is-incomplete -->
+
+**地图。** `early_signal` — 一篇论文不足以建立 durable self-evolving-memory 方向。
+
+**链接。** [论文](https://arxiv.org/abs/2608.24876) · [中文深读](papers/2026/2608.24876.zh.md) · [英文深读](papers/2026/2608.24876.md) · [代码](https://github.com/Gen-Verse/Recuris)
+
+</details>
+
+'''
+          en_entry = '''<a id="entry-2608-24876"></a>
+<details><summary><strong>2026-08-27 · Recuris</strong> · State-Grounded Memory Evolution <!-- timefirst:area=state-grounded-memory-evolution --> — Verified working state decides when persistent skills reach the actor, while structured traces localize later patches. <!-- timefirst:delta=standing-skill-library-to-state-grounded-localized-evolution --></summary>
+
+**Question.** Does persistent skill-memory evolution add beyond matched skill availability, state/control, and retry budget? <!-- timefirst:question=separate-state-control-and-evolution-from-skill-availability-and-retries -->
+
+**Evidence.** tau2-Retail is **58.1 Base / 82.0 WM-only / 65.6 same-library model-controlled / 83.6 Recuris**; the evolved package transfers GPT-5.6 Sol **58.33→76.10** and Claude Opus 5 **72.37→87.94**. <!-- timefirst:evidence=same-library-control-and-cross-model-transfer~same-library-model-controlled -->
+
+**Caveat.** Terminal-Bench is only **58.6→60.9, p=.774** after matching four attempts; SkillFlow lacks a held-out task split, the dev gate is small, and `full evolution lifecycle cost is incomplete`. <!-- timefirst:caveat=retry-matched-null-and-incomplete-evolution-cost~full-evolution-lifecycle-cost-is-incomplete -->
+
+**Map.** `early_signal` — One paper does not establish a durable self-evolving-memory direction.
+
+**Links.** [Paper](https://arxiv.org/abs/2608.24876) · [中文深读](papers/2026/2608.24876.zh.md) · [English note](papers/2026/2608.24876.md) · [Code](https://github.com/Gen-Verse/Recuris)
+
+</details>
+
+'''
+          replace('README.md', '最后更新：**2026-08-26**', '最后更新：**2026-08-27**', 1)
+          replace('README.md', '<a id="entry-2608-23471"></a>', zh_entry + '<a id="entry-2608-23471"></a>', 1)
+          replace('README.en.md', 'Last updated: **2026-08-26**', 'Last updated: **2026-08-27**', 1)
+          replace('README.en.md', '<a id="entry-2608-23471"></a>', en_entry + '<a id="entry-2608-23471"></a>', 1)
+
+          for path in ('README.md','README.en.md'):
+              replace(path, '2026-08-26T00:27:00Z', RADAR_TS)
+          replace('README.md', '### 过去 7 天：2026-08-20—2026-08-26\n\n', '### 过去 7 天：2026-08-21—2026-08-27\n\n', 1)
+          replace('README.md', '### 过去 30 天：2026-07-28—2026-08-26\n\n', '### 过去 30 天：2026-07-29—2026-08-27\n\n', 1)
+          replace('README.en.md', '### Last 7 days: 2026-08-20—2026-08-26\n\n', '### Last 7 days: 2026-08-21—2026-08-27\n\n', 1)
+          replace('README.en.md', '### Last 30 days: 2026-07-28—2026-08-26\n\n', '### Last 30 days: 2026-07-29—2026-08-27\n\n', 1)
+
+          zh_bullet = f'''- **`new_signal` · State grounded memory evolution：状态落地的记忆演化。** 支撑：[2608.24876](#entry-2608-24876)；置信度：**high**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate state control invocation and evolution from retries）：固定 skill library 与 retry budget，分别归因 working state、invocation、localized patch 与完整 evolution lifecycle cost。精确合成时间：`{RADAR_TS}`。 <!-- timefirst:direction key="state-grounded-memory-evolution" state="new_signal" supports="2608.24876" confidence="high" implication="separate-state-control-invocation-and-evolution-from-retries" timing="radar_published_at" synthesized="{RADAR_TS}" prior="none" -->\n\n'''
+          en_bullet = f'''- **`new_signal` · State grounded memory evolution.** Supports: [2608.24876](#entry-2608-24876); confidence: **high**; timing basis: `radar_published_at`; prior map evidence: `none`. Research-design implication (separate state control invocation and evolution from retries): freeze the skill library and retry budget, then attribute working state, invocation, localized patches, and full evolution lifecycle cost separately. Exact synthesis time: `{RADAR_TS}`. <!-- timefirst:direction key="state-grounded-memory-evolution" state="new_signal" supports="2608.24876" confidence="high" implication="separate-state-control-invocation-and-evolution-from-retries" timing="radar_published_at" synthesized="{RADAR_TS}" prior="none" -->\n\n'''
+          replace('README.md', '### 过去 7 天：2026-08-21—2026-08-27\n\n', '### 过去 7 天：2026-08-21—2026-08-27\n\n' + zh_bullet, 1)
+          replace('README.md', '### 过去 30 天：2026-07-29—2026-08-27\n\n', '### 过去 30 天：2026-07-29—2026-08-27\n\n' + zh_bullet, 1)
+          replace('README.en.md', '### Last 7 days: 2026-08-21—2026-08-27\n\n', '### Last 7 days: 2026-08-21—2026-08-27\n\n' + en_bullet, 1)
+          replace('README.en.md', '### Last 30 days: 2026-07-29—2026-08-27\n\n', '### Last 30 days: 2026-07-29—2026-08-27\n\n' + en_bullet, 1)
+
+          # The bilingual validator deliberately binds the current rolling-window contract.
+          vr = 'scripts/validate_reading.py'
+          replace(vr, 'SYNTHESIS_TIMESTAMP = "2026-08-26T00:27:00Z"', f'SYNTHESIS_TIMESTAMP = "{RADAR_TS}"', 1)
+          replace(vr,
+            '"last-7-days": (date(2026, 8, 20), date(2026, 8, 26)),\n    "last-30-days": (date(2026, 7, 28), date(2026, 8, 26)),',
+            '"last-7-days": (date(2026, 8, 21), date(2026, 8, 27)),\n    "last-30-days": (date(2026, 7, 29), date(2026, 8, 27)),', 1)
+
+          # Final tree must not contain this staging helper.
+          Path('.github/workflows/radar-staged-apply.yml').unlink()
+          PY
+      - name: Install validation dependencies
+        run: pip install -r requirements.txt
+      - name: Run binding repository validators
+        run: |
+          python -m unittest discover -s tests -v
+          python scripts/validate_canonical.py
+          python scripts/validate_reading.py
+          python scripts/validate.py
+      - name: Commit validated transaction to staging branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "Stage Recuris memory evolution signal"
+          git push origin HEAD:research-radar-reading-v1
