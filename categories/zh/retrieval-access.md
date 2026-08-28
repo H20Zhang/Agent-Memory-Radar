@@ -6,6 +6,8 @@
 
 ## 当前判断
 
+**CaSKG 把 graph access 本身拆成“有结构”和“可信结构”。** 在同一 frozen Skill1000 与同一 downstream loop 下，calibrated graph 击败 GoS；错误 edge 会放大错误 relevance，因此 relation quality 是一等 access-policy 变量。
+
 **EARM** 把历史 query–memory relevance score 变成 persistent access-policy state，并显著减少 reranker call；但其 store、ID 与问题顺序固定，completion 的净增量较小，维护与删除成本缺失，因此保持 3/5 低置信度信号。
 
 **Raw-state control 是起点，不是终点。** ReFind 说明 competent raw archive + stateful search 可以吃掉很多过去归因给 semantic preprocessing 的收益；CABLE 则要求 stored edge 改变 host retriever 的 **reachability**。MemFuse 进一步提醒：多源 graph/fusion 与 query-time evidence completion 必须分开归因，当前最大消融属于后者。

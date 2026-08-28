@@ -1,0 +1,341 @@
+=== unittest ===
+test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) ... 
+  test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=1) ... FAIL
+  test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=2) ... FAIL
+  test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=3) ... FAIL
+  test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=4) ... FAIL
+  test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=5) ... FAIL
+  test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=6) ... FAIL
+test_fast_layer_navigation_and_family_line_precede_timeline (test_chinese_timeline_style.ChineseTimelineStyleTest.test_fast_layer_navigation_and_family_line_precede_timeline) ... ok
+test_any_v2_field_requires_the_complete_contract (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_any_v2_field_requires_the_complete_contract) ... ok
+test_canonical_validator_enforces_the_time_contract (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_canonical_validator_enforces_the_time_contract) ... ok
+test_direction_keys_require_native_v2_and_forbid_explicit_legacy (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_direction_keys_require_native_v2_and_forbid_explicit_legacy) ... ok
+test_explicit_legacy_forbids_fabricated_discovery_or_radar_time (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_explicit_legacy_forbids_fabricated_discovery_or_radar_time) ... ok
+test_explicit_legacy_outside_fixed_set_is_rejected (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_explicit_legacy_outside_fixed_set_is_rejected) ... ok
+test_explicit_legacy_preserves_honest_published_precision (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_explicit_legacy_preserves_honest_published_precision) ... ok
+test_invalid_map_delta_is_rejected_for_native_and_explicit_legacy (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_invalid_map_delta_is_rejected_for_native_and_explicit_legacy) ... ok
+test_native_direction_keys_are_unique_stable_tokens_when_declared (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_native_direction_keys_are_unique_stable_tokens_when_declared) ... ok
+test_native_v2_radar_time_cannot_predate_cutover (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_native_v2_radar_time_cannot_predate_cutover) ... ok
+test_native_v2_requires_event_order (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_native_v2_requires_event_order) ... FAIL
+test_native_v2_requires_strict_utc_timestamps (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_native_v2_requires_strict_utc_timestamps) ... ok
+test_only_fixed_timeline_records_are_explicitly_migrated (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_only_fixed_timeline_records_are_explicitly_migrated) ... ok
+test_reading_validator_loads_and_checks_the_canonical_registry (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_reading_validator_loads_and_checks_the_canonical_registry) ... ok
+test_repository_validator_enforces_the_time_contract (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_repository_validator_enforces_the_time_contract) ... ok
+test_schema_encodes_optional_native_direction_keys (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_schema_encodes_optional_native_direction_keys) ... ok
+test_schema_encodes_v2_fields_as_all_or_none_while_allowing_implicit_legacy (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_schema_encodes_v2_fields_as_all_or_none_while_allowing_implicit_legacy) ... ok
+test_schema_rejects_null_provenance_map_and_published_time (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_schema_rejects_null_provenance_map_and_published_time) ... ok
+test_untouched_legacy_record_remains_field_absent_compatible (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_untouched_legacy_record_remains_field_absent_compatible) ... ok
+test_adjacent_visible_direction_items_remain_distinct_block_boundaries (test_memory_v2_contract.MemoryProjectionContractTest.test_adjacent_visible_direction_items_remain_distinct_block_boundaries) ... ok
+test_comment_hidden_family_route_does_not_count_as_visible_navigation (test_memory_v2_contract.MemoryProjectionContractTest.test_comment_hidden_family_route_does_not_count_as_visible_navigation) ... ok
+test_direction_metadata_at_continuation_end_stays_in_visible_item_block (test_memory_v2_contract.MemoryProjectionContractTest.test_direction_metadata_at_continuation_end_stays_in_visible_item_block) ... ok
+test_malformed_primary_fields_cannot_be_laundered_by_valid_labeled_asides (test_memory_v2_contract.MemoryProjectionContractTest.test_malformed_primary_fields_cannot_be_laundered_by_valid_labeled_asides) ... ok
+test_memory_aliases_are_visible_comment_stripped_and_cardinality_bound (test_memory_v2_contract.MemoryProjectionContractTest.test_memory_aliases_are_visible_comment_stripped_and_cardinality_bound) ... ok
+test_memory_projection_contract_is_exposed (test_memory_v2_contract.MemoryProjectionContractTest.test_memory_projection_contract_is_exposed) ... ok
+test_metadata_only_continuation_stays_in_visible_direction_item (test_memory_v2_contract.MemoryProjectionContractTest.test_metadata_only_continuation_stays_in_visible_direction_item) ... ok
+test_native_timeline_rejects_acceptance_after_public_synthesis_cutoff (test_memory_v2_contract.MemoryProjectionContractTest.test_native_timeline_rejects_acceptance_after_public_synthesis_cutoff) ... ok
+test_native_timeline_uses_full_timestamp_then_identity_order_before_legacy (test_memory_v2_contract.MemoryProjectionContractTest.test_native_timeline_uses_full_timestamp_then_identity_order_before_legacy) ... FAIL
+test_next_period_and_field_map_prose_are_outside_direction_blocks (test_memory_v2_contract.MemoryProjectionContractTest.test_next_period_and_field_map_prose_are_outside_direction_blocks) ... 
+  test_next_period_and_field_map_prose_are_outside_direction_blocks (test_memory_v2_contract.MemoryProjectionContractTest.test_next_period_and_field_map_prose_are_outside_direction_blocks) (marker='<a id="last-30-days"></a>') ... FAIL
+  test_next_period_and_field_map_prose_are_outside_direction_blocks (test_memory_v2_contract.MemoryProjectionContractTest.test_next_period_and_field_map_prose_are_outside_direction_blocks) (marker='<a id="field-map"></a>') ... FAIL
+test_no_material_change_requires_zero_support_and_radar_basis (test_memory_v2_contract.MemoryProjectionContractTest.test_no_material_change_requires_zero_support_and_radar_basis) ... ok
+test_one_paper_signal_and_two_paper_reinforcement_can_pass_the_gates (test_memory_v2_contract.MemoryProjectionContractTest.test_one_paper_signal_and_two_paper_reinforcement_can_pass_the_gates) ... FAIL
+test_one_paper_signal_rejects_trend_in_continuations_and_attached_paragraphs (test_memory_v2_contract.MemoryProjectionContractTest.test_one_paper_signal_rejects_trend_in_continuations_and_attached_paragraphs) ... ok
+test_period_direction_blocks_require_exactly_one_of_each_visible_field (test_memory_v2_contract.MemoryProjectionContractTest.test_period_direction_blocks_require_exactly_one_of_each_visible_field) ... ok
+test_period_direction_fields_may_live_on_continuation_lines (test_memory_v2_contract.MemoryProjectionContractTest.test_period_direction_fields_may_live_on_continuation_lines) ... ok
+test_period_direction_requires_its_language_specific_visible_labels (test_memory_v2_contract.MemoryProjectionContractTest.test_period_direction_requires_its_language_specific_visible_labels) ... ok
+test_period_metadata_and_visible_bindings_are_complete_and_bilingual (test_memory_v2_contract.MemoryProjectionContractTest.test_period_metadata_and_visible_bindings_are_complete_and_bilingual) ... ok
+test_period_support_is_visible_native_in_window_and_state_gated (test_memory_v2_contract.MemoryProjectionContractTest.test_period_support_is_visible_native_in_window_and_state_gated) ... ok
+test_period_support_membership_uses_radar_acceptance_time_only (test_memory_v2_contract.MemoryProjectionContractTest.test_period_support_membership_uses_radar_acceptance_time_only) ... ok
+test_periods_require_exact_windows_and_one_visible_range (test_memory_v2_contract.MemoryProjectionContractTest.test_periods_require_exact_windows_and_one_visible_range) ... ok
+test_reading_validator_enforces_memory_projection (test_memory_v2_contract.MemoryProjectionContractTest.test_reading_validator_enforces_memory_projection) ... ok
+test_reinforced_supports_must_share_the_declared_direction_key (test_memory_v2_contract.MemoryProjectionContractTest.test_reinforced_supports_must_share_the_declared_direction_key) ... ok
+test_reverse_timeline_rejects_missing_duplicate_and_unexpected_identities (test_memory_v2_contract.MemoryProjectionContractTest.test_reverse_timeline_rejects_missing_duplicate_and_unexpected_identities) ... ok
+test_same_direction_reinforcement_with_two_bound_supports_can_pass (test_memory_v2_contract.MemoryProjectionContractTest.test_same_direction_reinforcement_with_two_bound_supports_can_pass) ... FAIL
+test_split_and_retirement_direction_gates_reject_invalid_evidence (test_memory_v2_contract.MemoryProjectionContractTest.test_split_and_retirement_direction_gates_reject_invalid_evidence) ... ok
+test_split_and_retirement_directions_with_bound_map_evidence_can_pass (test_memory_v2_contract.MemoryProjectionContractTest.test_split_and_retirement_directions_with_bound_map_evidence_can_pass) ... 
+  test_split_and_retirement_directions_with_bound_map_evidence_can_pass (test_memory_v2_contract.MemoryProjectionContractTest.test_split_and_retirement_directions_with_bound_map_evidence_can_pass) (state='splits') ... FAIL
+  test_split_and_retirement_directions_with_bound_map_evidence_can_pass (test_memory_v2_contract.MemoryProjectionContractTest.test_split_and_retirement_directions_with_bound_map_evidence_can_pass) (state='retires') ... FAIL
+test_split_retirement_state_drift_is_rejected_as_bilingual_parity (test_memory_v2_contract.MemoryProjectionContractTest.test_split_retirement_state_drift_is_rejected_as_bilingual_parity) ... ok
+test_support_at_0100_cannot_backdate_a_0000_direction_synthesis (test_memory_v2_contract.MemoryProjectionContractTest.test_support_at_0100_cannot_backdate_a_0000_direction_synthesis) ... ok
+test_timeline_binds_date_map_primary_and_paired_deep_notes (test_memory_v2_contract.MemoryProjectionContractTest.test_timeline_binds_date_map_primary_and_paired_deep_notes) ... ok
+test_true_duplicate_metadata_on_continuation_is_rejected (test_memory_v2_contract.MemoryProjectionContractTest.test_true_duplicate_metadata_on_continuation_is_rejected) ... ok
+test_valid_projection_pair_passes (test_memory_v2_contract.MemoryProjectionContractTest.test_valid_projection_pair_passes) ... ok
+test_zero_support_visible_field_is_exact_not_an_aside_prefix (test_memory_v2_contract.MemoryProjectionContractTest.test_zero_support_visible_field_is_exact_not_an_aside_prefix) ... ok
+test_any_file_under_public_run_path_is_rejected (test_run_log_contract.NoPublicRunLogContractTest.test_any_file_under_public_run_path_is_rejected) ... ok
+test_broken_symlink_cannot_hide_a_public_run_artifact (test_run_log_contract.NoPublicRunLogContractTest.test_broken_symlink_cannot_hide_a_public_run_artifact) ... ok
+test_private_run_state_directory_is_git_ignored (test_run_log_contract.NoPublicRunLogContractTest.test_private_run_state_directory_is_git_ignored) ... ok
+test_public_digests_do_not_expose_candidate_or_visual_workflow_state (test_run_log_contract.NoPublicRunLogContractTest.test_public_digests_do_not_expose_candidate_or_visual_workflow_state) ... ok
+test_public_run_path_cannot_itself_be_a_file (test_run_log_contract.NoPublicRunLogContractTest.test_public_run_path_cannot_itself_be_a_file) ... ok
+test_reading_validator_runs_the_absence_guard (test_run_log_contract.NoPublicRunLogContractTest.test_reading_validator_runs_the_absence_guard) ... ok
+test_repository_has_no_public_daily_run_files (test_run_log_contract.NoPublicRunLogContractTest.test_repository_has_no_public_daily_run_files) ... ok
+test_static_policy_and_authoritative_guidance_share_boundary (test_run_log_contract.NoPublicRunLogContractTest.test_static_policy_and_authoritative_guidance_share_boundary) ... ok
+test_contract_does_not_impose_a_fixed_latest_cap (test_timefirst_contract.TimeFirstContractTest.test_contract_does_not_impose_a_fixed_latest_cap) ... ok
+test_domain_pair_without_benchmark_aliases_is_valid (test_timefirst_contract.TimeFirstContractTest.test_domain_pair_without_benchmark_aliases_is_valid) ... ok
+test_duplicate_common_anchor_is_rejected (test_timefirst_contract.TimeFirstContractTest.test_duplicate_common_anchor_is_rejected) ... ok
+test_each_period_section_requires_exactly_one_visible_date_range (test_timefirst_contract.TimeFirstContractTest.test_each_period_section_requires_exactly_one_visible_date_range) ... ok
+test_empty_labeled_field_is_rejected (test_timefirst_contract.TimeFirstContractTest.test_empty_labeled_field_is_rejected) ... ok
+test_evidence_and_caveat_scope_drift_is_rejected (test_timefirst_contract.TimeFirstContractTest.test_evidence_and_caveat_scope_drift_is_rejected) ... ok
+test_generic_contract_boilerplate_is_not_a_distinctive_witness (test_timefirst_contract.TimeFirstContractTest.test_generic_contract_boilerplate_is_not_a_distinctive_witness) ... ok
+test_hidden_anchor_decoy_does_not_duplicate_legitimate_visible_anchor (test_timefirst_contract.TimeFirstContractTest.test_hidden_anchor_decoy_does_not_duplicate_legitimate_visible_anchor) ... ok
+test_html_commented_common_anchor_does_not_satisfy_required_anchor (test_timefirst_contract.TimeFirstContractTest.test_html_commented_common_anchor_does_not_satisfy_required_anchor) ... ok
+test_html_commented_field_label_cannot_launder_a_hidden_field (test_timefirst_contract.TimeFirstContractTest.test_html_commented_field_label_cannot_launder_a_hidden_field) ... ok
+test_html_comments_cannot_mask_visible_link_drift (test_timefirst_contract.TimeFirstContractTest.test_html_comments_cannot_mask_visible_link_drift) ... ok
+test_html_comments_cannot_override_a_visible_map_token (test_timefirst_contract.TimeFirstContractTest.test_html_comments_cannot_override_a_visible_map_token) ... ok
+test_language_identity_or_date_order_drift_is_rejected (test_timefirst_contract.TimeFirstContractTest.test_language_identity_or_date_order_drift_is_rejected) ... ok
+test_missing_common_anchor_is_rejected (test_timefirst_contract.TimeFirstContractTest.test_missing_common_anchor_is_rejected) ... ok
+test_missing_evidence_or_caveat_is_rejected (test_timefirst_contract.TimeFirstContractTest.test_missing_evidence_or_caveat_is_rejected) ... ok
+test_period_window_drift_is_rejected (test_timefirst_contract.TimeFirstContractTest.test_period_window_drift_is_rejected) ... ok
+test_period_windows_have_exact_inclusive_cardinality (test_timefirst_contract.TimeFirstContractTest.test_period_windows_have_exact_inclusive_cardinality) ... ok
+test_period_windows_share_one_synthesis_endpoint (test_timefirst_contract.TimeFirstContractTest.test_period_windows_share_one_synthesis_endpoint) ... ok
+test_primary_and_local_link_drift_is_rejected (test_timefirst_contract.TimeFirstContractTest.test_primary_and_local_link_drift_is_rejected) ... ok
+test_repository_readmes_satisfy_contract (test_timefirst_contract.TimeFirstContractTest.test_repository_readmes_satisfy_contract) ... FAIL
+test_title_area_and_delta_semantic_drift_is_rejected (test_timefirst_contract.TimeFirstContractTest.test_title_area_and_delta_semantic_drift_is_rejected) ... ok
+test_visible_evidence_and_caveat_must_carry_contract_witness (test_timefirst_contract.TimeFirstContractTest.test_visible_evidence_and_caveat_must_carry_contract_witness) ... ok
+test_whitespace_only_link_target_is_rejected (test_timefirst_contract.TimeFirstContractTest.test_whitespace_only_link_target_is_rejected) ... ok
+test_witness_must_match_a_bounded_visible_phrase (test_timefirst_contract.TimeFirstContractTest.test_witness_must_match_a_bounded_visible_phrase) ... ok
+test_witness_requires_a_distinctive_phrase (test_timefirst_contract.TimeFirstContractTest.test_witness_requires_a_distinctive_phrase) ... ok
+test_chinese_timeline_scan_layer_is_localized_and_semantically_bound (test_validate_reading.MemoryReadingContractTest.test_chinese_timeline_scan_layer_is_localized_and_semantically_bound) ... FAIL
+test_mismatched_deep_note_identity_is_rejected (test_validate_reading.MemoryReadingContractTest.test_mismatched_deep_note_identity_is_rejected) ... ok
+test_removing_both_deep_note_links_is_rejected (test_validate_reading.MemoryReadingContractTest.test_removing_both_deep_note_links_is_rejected) ... ok
+test_repository_entries_have_corresponding_bilingual_deep_notes (test_validate_reading.MemoryReadingContractTest.test_repository_entries_have_corresponding_bilingual_deep_notes) ... ok
+
+======================================================================
+FAIL: test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_chinese_timeline_style.py", line 81, in test_chinese_timeline_expansion_uses_chinese_sentence_structure
+    self.assertIsNone(ENGLISH_CLAUSE_RE.search(prose), (label, prose))
+AssertionError: <re.Match object; span=(24, 45), match='downstream actor loop'> is not None : ('问题', '在同一个 frozen Skill1000 和 downstream actor loop 下，校准 graph edge 是否比已有 graph retriever 更能改善后续执行？')
+
+======================================================================
+FAIL: test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_chinese_timeline_style.py", line 79, in test_chinese_timeline_expansion_uses_chinese_sentence_structure
+    self.assertRegex(prose, r"^[\u3400-\u4dbf\u4e00-\u9fff]")
+AssertionError: Regex didn't match: '^[\\u3400-\\u4dbf\\u4e00-\\u9fff]' not found in 'Memory-management policy 本身是否需要持久化的 shared 与 persona-local state；distribution shift 时到底是哪一层起作用？'
+
+======================================================================
+FAIL: test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_chinese_timeline_style.py", line 81, in test_chinese_timeline_expansion_uses_chinese_sentence_structure
+    self.assertIsNone(ENGLISH_CLAUSE_RE.search(prose), (label, prose))
+AssertionError: <re.Match object; span=(4, 34), match='two-record verification budget'> is not None : ('问题', '在相同 two-record verification budget 下，stale-memory harm 来自 reasoning failure，还是 verification budget 花错了地方？')
+
+======================================================================
+FAIL: test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_chinese_timeline_style.py", line 79, in test_chinese_timeline_expansion_uses_chinese_sentence_structure
+    self.assertRegex(prose, r"^[\u3400-\u4dbf\u4e00-\u9fff]")
+AssertionError: Regex didn't match: '^[\\u3400-\\u4dbf\\u4e00-\\u9fff]' not found in 'Foundation model 与 workflow 固定时，decision→outcome graph memory 是否在 context construction 之外改变后续 kernel execution？'
+
+======================================================================
+FAIL: test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_chinese_timeline_style.py", line 79, in test_chinese_timeline_expansion_uses_chinese_sentence_structure
+    self.assertRegex(prose, r"^[\u3400-\u4dbf\u4e00-\u9fff]")
+AssertionError: Regex didn't match: '^[\\u3400-\\u4dbf\\u4e00-\\u9fff]' not found in 'Staged ablation 为 26.2 standard RAG → 43.4 fixed-token direct → 55.5 semantic-drift direct → 74.2 full TSIM；三个 answer backend 上 TSIM 比各自最强 baseline 高 5.6–17.6 points。'
+
+======================================================================
+FAIL: test_chinese_timeline_expansion_uses_chinese_sentence_structure (test_chinese_timeline_style.ChineseTimelineStyleTest.test_chinese_timeline_expansion_uses_chinese_sentence_structure) (entry=6)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_chinese_timeline_style.py", line 79, in test_chinese_timeline_expansion_uses_chinese_sentence_structure
+    self.assertRegex(prose, r"^[\u3400-\u4dbf\u4e00-\u9fff]")
+AssertionError: Regex didn't match: '^[\\u3400-\\u4dbf\\u4e00-\\u9fff]' not found in 'Thin upper organization/routing layer 能否跨 interchangeable backend 改善 persistent conversational memory，同时满足 real-time retrieval budget？'
+
+======================================================================
+FAIL: test_native_v2_requires_event_order (test_memory_v2_contract.CanonicalMemoryTimeContractTest.test_native_v2_requires_event_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_memory_v2_contract.py", line 241, in test_native_v2_requires_event_order
+    self.assertTrue(
+AssertionError: False is not true : []
+
+======================================================================
+FAIL: test_native_timeline_uses_full_timestamp_then_identity_order_before_legacy (test_memory_v2_contract.MemoryProjectionContractTest.test_native_timeline_uses_full_timestamp_then_identity_order_before_legacy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_memory_v2_contract.py", line 684, in test_native_timeline_uses_full_timestamp_then_identity_order_before_legacy
+    self.assertEqual(
+AssertionError: Lists differ: [] != ['README.md: Timeline violates full Radar [118 chars]der']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'README.md: Timeline violates full Radar timestamp order or fixed legacy order'
+
+- []
++ ['README.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order',
++  'README.en.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order']
+
+======================================================================
+FAIL: test_next_period_and_field_map_prose_are_outside_direction_blocks (test_memory_v2_contract.MemoryProjectionContractTest.test_next_period_and_field_map_prose_are_outside_direction_blocks) (marker='<a id="last-30-days"></a>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_memory_v2_contract.py", line 1179, in test_next_period_and_field_map_prose_are_outside_direction_blocks
+    self.assertEqual(
+AssertionError: Lists differ: [] != ['README.md: Timeline violates full Radar [118 chars]der']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'README.md: Timeline violates full Radar timestamp order or fixed legacy order'
+
+- []
++ ['README.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order',
++  'README.en.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order']
+
+======================================================================
+FAIL: test_next_period_and_field_map_prose_are_outside_direction_blocks (test_memory_v2_contract.MemoryProjectionContractTest.test_next_period_and_field_map_prose_are_outside_direction_blocks) (marker='<a id="field-map"></a>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_memory_v2_contract.py", line 1179, in test_next_period_and_field_map_prose_are_outside_direction_blocks
+    self.assertEqual(
+AssertionError: Lists differ: [] != ['README.md: Timeline violates full Radar [118 chars]der']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'README.md: Timeline violates full Radar timestamp order or fixed legacy order'
+
+- []
++ ['README.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order',
++  'README.en.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order']
+
+======================================================================
+FAIL: test_one_paper_signal_and_two_paper_reinforcement_can_pass_the_gates (test_memory_v2_contract.MemoryProjectionContractTest.test_one_paper_signal_and_two_paper_reinforcement_can_pass_the_gates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_memory_v2_contract.py", line 1597, in test_one_paper_signal_and_two_paper_reinforcement_can_pass_the_gates
+    self.assertEqual(
+AssertionError: Lists differ: [] != ['README.md: Timeline violates full Radar [118 chars]der']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'README.md: Timeline violates full Radar timestamp order or fixed legacy order'
+
+- []
++ ['README.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order',
++  'README.en.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order']
+
+======================================================================
+FAIL: test_same_direction_reinforcement_with_two_bound_supports_can_pass (test_memory_v2_contract.MemoryProjectionContractTest.test_same_direction_reinforcement_with_two_bound_supports_can_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_memory_v2_contract.py", line 1392, in test_same_direction_reinforcement_with_two_bound_supports_can_pass
+    self.assertEqual(
+AssertionError: Lists differ: [] != ['README.md: Timeline violates full Radar [118 chars]der']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'README.md: Timeline violates full Radar timestamp order or fixed legacy order'
+
+- []
++ ['README.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order',
++  'README.en.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order']
+
+======================================================================
+FAIL: test_split_and_retirement_directions_with_bound_map_evidence_can_pass (test_memory_v2_contract.MemoryProjectionContractTest.test_split_and_retirement_directions_with_bound_map_evidence_can_pass) (state='splits')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_memory_v2_contract.py", line 1432, in test_split_and_retirement_directions_with_bound_map_evidence_can_pass
+    self.assertEqual(
+AssertionError: Lists differ: [] != ['README.md: Timeline violates full Radar [118 chars]der']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'README.md: Timeline violates full Radar timestamp order or fixed legacy order'
+
+- []
++ ['README.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order',
++  'README.en.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order']
+
+======================================================================
+FAIL: test_split_and_retirement_directions_with_bound_map_evidence_can_pass (test_memory_v2_contract.MemoryProjectionContractTest.test_split_and_retirement_directions_with_bound_map_evidence_can_pass) (state='retires')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_memory_v2_contract.py", line 1432, in test_split_and_retirement_directions_with_bound_map_evidence_can_pass
+    self.assertEqual(
+AssertionError: Lists differ: [] != ['README.md: Timeline violates full Radar [118 chars]der']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'README.md: Timeline violates full Radar timestamp order or fixed legacy order'
+
+- []
++ ['README.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order',
++  'README.en.md: Timeline violates full Radar timestamp order or fixed legacy '
++  'order']
+
+======================================================================
+FAIL: test_repository_readmes_satisfy_contract (test_timefirst_contract.TimeFirstContractTest.test_repository_readmes_satisfy_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_timefirst_contract.py", line 114, in test_repository_readmes_satisfy_contract
+    self.assertEqual([], errors)
+AssertionError: Lists differ: [] != ['Chinese: entry identity 2608-25655 visib[197 chars]sim']
+
+Second list contains 2 additional elements.
+First extra element 0:
+'Chinese: entry identity 2608-25655 visible evidence does not carry contract witness semantic-drift-direct-to-full-tsim'
+
+- []
++ ['Chinese: entry identity 2608-25655 visible evidence does not carry contract '
++  'witness semantic-drift-direct-to-full-tsim',
++  'English: entry identity 2608-25655 visible evidence does not carry contract '
++  'witness semantic-drift-direct-to-full-tsim']
+
+======================================================================
+FAIL: test_chinese_timeline_scan_layer_is_localized_and_semantically_bound (test_validate_reading.MemoryReadingContractTest.test_chinese_timeline_scan_layer_is_localized_and_semantically_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/Agent-Memory-Radar/Agent-Memory-Radar/tests/test_validate_reading.py", line 72, in test_chinese_timeline_scan_layer_is_localized_and_semantically_bound
+    self.assertEqual(len(EXPECTED_TIMELINE_TITLES), len(zh_summaries))
+AssertionError: 28 != 34
+
+----------------------------------------------------------------------
+Ran 89 tests in 1.013s
+
+FAILED (failures=16)
+=== canonical ===
+Validated 67 canonical Agent Memory records.
+=== reading ===
+ERROR Chinese: entry identity 2608-25655 visible evidence does not carry contract witness semantic-drift-direct-to-full-tsim
+ERROR English: entry identity 2608-25655 visible evidence does not carry contract witness semantic-drift-direct-to-full-tsim
+ERROR README.en.md: last-7-days direction at line 34 requires exactly one visible confidence field
+ERROR README.en.md: last-7-days direction at line 34 visible confidence and stable metadata drift
+ERROR README.en.md: last-30-days direction at line 46 requires exactly one visible confidence field
+ERROR README.en.md: last-30-days direction at line 46 visible confidence and stable metadata drift
+Reading-surface validation failed with 6 error(s).
+=== repository ===
+Validation failed with 15 error(s):
+ERROR papers/2026/2608.25329.md: latest paper note is missing one-line Research delta
+ERROR papers/2026/2608.25329.md: latest paper note needs compact return navigation
+ERROR papers/2026/2608.25329.md: missing researcher-facing section '## Compared with'
+ERROR papers/2026/2608.25553.md: latest paper note is missing one-line Research delta
+ERROR papers/2026/2608.25553.md: latest paper note needs compact return navigation
+ERROR papers/2026/2608.25553.md: missing researcher-facing section '## Compared with'
+ERROR papers/2026/2608.25570.md: latest paper note is missing one-line Research delta
+ERROR papers/2026/2608.25570.md: latest paper note needs compact return navigation
+ERROR papers/2026/2608.25570.md: missing researcher-facing section '## Compared with'
+ERROR papers/2026/2608.25655.md: latest paper note is missing one-line Research delta
+ERROR papers/2026/2608.25655.md: latest paper note needs compact return navigation
+ERROR papers/2026/2608.25655.md: missing researcher-facing section '## Compared with'
+ERROR papers/2026/2608.26005.md: latest paper note is missing one-line Research delta
+ERROR papers/2026/2608.26005.md: latest paper note needs compact return navigation
+ERROR papers/2026/2608.26005.md: missing researcher-facing section '## Compared with'
+statuses: 1 0 1 1

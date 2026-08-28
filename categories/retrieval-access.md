@@ -6,6 +6,8 @@ How an agent localizes active state, locates evidence, expands beyond first-hop 
 
 ## Current argument
 
+**CaSKG adds an important structured-control result:** with the same frozen skill library and downstream actor, edge-confidence calibration beats an existing graph retriever; the graph is an amplifying access policy, not free context.
+
 The read side is no longer one operation called retrieval. **ReFind** establishes a competent raw-record/search control. **ArborMem** moves one boundary earlier by localizing which interaction state is being resumed before retrieving support. **CABLE** asks whether pre-built relations expose evidence outside the host retriever's direct neighborhood, while **MemFuse** separates provenance-preserving multi-source organization from the iterative access loop that drives most of its measured gain. **RippleMem** continues after first-hop recall by searching for missing evidence. **SkillGate** asks whether an oracle-supervised local selector package can change exposure beyond outcome-only training; its coupled loss changes do not isolate credit placement. **TRACE-Memory** adds the final admission decision.
 
 The useful decomposition is now:
@@ -14,6 +16,7 @@ The useful decomposition is now:
 
 | Date | Paper | Tags | Importance | Research take |
 |---|---|---|---:|---|
+| 2026-08-26 | [CaSKG](../papers/2026/2608.25500.md) | `procedural` `graph` `structured` `general-agent` | 4/5 | Edge-confidence calibration beats GoS under a frozen skill library and unchanged actor loop; construction/serving cost and statistical uncertainty remain incomplete. |
 | 2026-08-24 | [EARM](../papers/2026/2608.22767.md) | `semantic` `structured` `general-agent` | 3/5 | Reusing sparse relevance history reduces reranker calls, but fixed ordering, a small clean completion increment, and missing maintenance cost keep it a low-confidence signal. |
 | 2026-08-21 | [Weighted Memory Tree](../papers/2026/2608.20631.md) | `episodic` `hierarchical` `structured` `general-agent` | 3/5 | A coupled task-tree package regulates which within-episode state remains active; cross-session persistence and individual retention rules remain untested. |
 | 2026-08-20 | [Optimal Skill Selection](../papers/2026/2608.19993.md) | `procedural` `text` `structured` `general-agent` | 4/5 | Complementarity and overload make skill access a budgeted set decision, but the selector uses unmatched supervision on capability-gated tasks. |

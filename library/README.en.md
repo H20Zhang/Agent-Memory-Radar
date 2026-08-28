@@ -28,6 +28,12 @@ First ask which memory types require exact retention, then whether reliability e
 
 Access can accumulate relevance experience, but a retrieved procedure still needs a current-state validity boundary. Test both on shuffled, growing stores under matched context and lifecycle cost.
 
+### Full library / vector → graph propagation → edge-confidence calibration
+
+[Optimal Skill Selection](../papers/2026/2608.19993.md) / [SkillGate](../papers/2026/2608.18852.md) → [CaSKG](../papers/2026/2608.25500.md)
+
+Procedural-memory access is not only which skill is relevant. Set complementarity, learned exposure, and relation propagation are distinct mechanisms. CaSKG shows graph retrieval can underperform full-library exposure, so propagating edges should be treated as risky access decisions and compared under full lifecycle cost.
+
 ### Outcome contrast → curated procedures → adversarial persistent write
 
 [CONTRAMEM](../papers/2026/2608.22533.md) → [InjecMEM](../papers/2026/2608.23471.md)

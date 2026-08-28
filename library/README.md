@@ -28,6 +28,12 @@
 
 Access policy 可以积累 relevance experience，但 retrieved procedure 仍需要 current-state validity boundary。应在被打乱、可增长的 store 上配平 context 与生命周期成本。
 
+### Full library / Vector → Graph propagation → Edge-confidence calibration
+
+[Optimal Skill Selection](../papers/2026/2608.19993.zh.md) / [SkillGate](../papers/2026/2608.18852.zh.md) → [CaSKG](../papers/2026/2608.25500.zh.md)
+
+Procedural-memory access 不只是“召回哪一个 skill”。集合互补性、learned exposure 与 relation propagation 是不同机制。CaSKG 说明 graph retrieval 甚至可能差于 full-library exposure，因此 propagating edge 应作为有风险的 access decision，并在完整 lifecycle cost 下比较。
+
 ### Outcome contrast → Curated procedure → 对抗式持久写入
 
 [CONTRAMEM](../papers/2026/2608.22533.zh.md) → [InjecMEM](../papers/2026/2608.23471.zh.md)
