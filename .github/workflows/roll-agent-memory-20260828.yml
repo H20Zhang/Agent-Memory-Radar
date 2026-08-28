@@ -1,0 +1,41 @@
+name: Roll Agent Memory Daily Projection
+
+on:
+  push:
+    branches: [agent-memory-daily-20260828]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  roll-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Roll time-first public projection
+        run: |
+          python .github/roll_agent_memory_20260828.py
+          sed -i 's/-->><\/summary>/--><\/summary>/g' README.md README.en.md
+      - name: Install validation dependencies
+        run: pip install -r requirements.txt
+      - name: Test time-first contract
+        run: python -m unittest discover -s tests -v
+      - name: Validate canonical records
+        run: python scripts/validate_canonical.py
+      - name: Validate bilingual reading surfaces
+        run: python scripts/validate_reading.py
+      - name: Validate repository contracts
+        run: python scripts/validate.py
+      - name: Commit validated projection
+        run: |
+          git config user.name 'Agent Memory Radar'
+          git config user.email 'actions@users.noreply.github.com'
+          git add README.md README.en.md categories/retrieval-access.md categories/zh/retrieval-access.md library/README.md library/README.en.md scripts/validate_reading.py tests/test_memory_v2_contract.py tests/test_validate_reading.py
+          if ! git diff --cached --quiet; then
+            git commit -m 'Roll Agent Memory projection to 2026-08-28'
+            git push origin HEAD:agent-memory-daily-20260828
+          fi

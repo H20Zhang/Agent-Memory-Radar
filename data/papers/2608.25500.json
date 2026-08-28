@@ -1,0 +1,82 @@
+{
+  "id": "2608.25500",
+  "title": "CaSKG: Counterfactual-Causal Skill Graphs for Scalable Agent Skill Retrieval",
+  "authors": [
+    "Zhiyuan Li",
+    "Linyuan Gao",
+    "Xuechun Ding",
+    "Hongwei Chen",
+    "Yuan Wu",
+    "Yi Chang"
+  ],
+  "published": "2026-08-26",
+  "first_seen": "2026-08-28",
+  "published_at": "2026-08-26T08:12:41Z",
+  "first_seen_at": "2026-08-28T00:41:52Z",
+  "radar_published_at": "2026-08-28T00:46:58Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "skill-edge-confidence-calibration"
+  ],
+  "paper_url": "https://arxiv.org/abs/2608.25500",
+  "code_url": "https://github.com/ZhiyuanLi218/Caskg",
+  "project_url": null,
+  "primary_category": "retrieval_access",
+  "tags": [
+    "procedural",
+    "graph",
+    "structured",
+    "general-agent"
+  ],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-28",
+    "blocker": "A paper-specific mechanism figure exists, but no generated WebP is published until a grounded visual passes VISUAL_POLICY.md review; the verified deep note carries the mechanism and controls meanwhile."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/list/cs.AI/recent",
+      "https://arxiv.org/abs/2608.25500"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/pdf/2608.25500",
+      "https://arxiv.org/abs/2608.25500",
+      "https://github.com/ZhiyuanLi218/Caskg"
+    ],
+    "last_verified": "2026-08-28"
+  },
+  "analysis": {
+    "tldr": "With the same frozen Skill1000 library and downstream interaction loop, CaSKG improves over Graph-of-Skills across all twelve model-by-benchmark cells by calibrating which procedural edges may propagate query relevance; however, token, latency, and graph-construction costs and statistical uncertainty are not reported, so the evidence supports calibrated graph access rather than a general causal-graph claim.",
+    "problem": "Large procedural-memory libraries create an access dilemma: full-library exposure preserves coverage at high context cost, independent vector retrieval misses inter-skill dependencies, and graph propagation can amplify plausible but operationally wrong relations.",
+    "core_idea": "Build a high-recall directed skill graph offline from lexical, semantic, input/output, and structural evidence; spend a bounded budget on direction-conditioned textual counterfactual probes, aggregate support with Bayesian smoothing, publish only state-filtered weighted edges, and expand query seeds through the resulting graph at runtime.",
+    "memory_design": {
+      "write": "The evaluated Skill1000 library is frozen; CaSKG does not write new skills during an episode. Offline construction derives candidate relations and counterfactual evidence over existing procedural artifacts.",
+      "organize": "Skills are nodes in a directed weighted graph whose candidate edges combine multiple evidence channels and whose publication state reflects counterfactual support and Bayesian smoothing.",
+      "read": "Lexical and semantic query matches seed personalized-PageRank-style expansion over the published graph, exposing a compact bundle of related skills to an otherwise unchanged downstream agent.",
+      "update_forget": "During evaluation the graph is frozen. Edge states can confirm, downweight, reject, or leave low-weight scaffold relations during offline construction, but online skill revision, deletion, drift, and long-term maintenance are not evaluated."
+    },
+    "compared_to": [
+      "Vanilla Skills full-catalog exposure with the same frozen Skill1000 library",
+      "Vector Skills independent embedding retrieval",
+      "Graph-of-Skills (GoS), the closest lifecycle-matched dependency-graph retrieval baseline",
+      "Semantic-only, no-LLM-judge, and publish-all-candidate construction ablations"
+    ],
+    "evidence": "Against GoS, the six-model macro average rises from 80.01% to 86.79% ALFWorld success and from 72.62 to 80.50 ScienceWorld official score; CaSKG also uses fewer mean environment steps than GoS in all twelve model-by-benchmark cells. On GPT-5.6-Luna ALFWorld, full-library exposure scores 72.86%, Vector 55.00%, GoS 60.71%, and CaSKG 75.71%, showing that relational retrieval can hurt when propagation follows weak edges. In the MiniMax-M2.7 ALFWorld construction ablation, full CaSKG reaches 73.57% versus 71.43% when all 9,937 candidates are published, 71.43% without the optional LLM judge, and 67.14% with semantic-only candidate induction.",
+    "why_it_matters": "Procedural-memory structure should be treated as an access policy, not free context. A graph can amplify wrong relations as easily as useful dependencies; the strongest contribution is therefore a matched demonstration that edge-confidence calibration changes later agent behavior while the skill library and downstream execution loop remain fixed.",
+    "limitations": [
+      "The paper reports environment steps but omits token usage, wall-clock latency, retrieval latency, graph-construction cost, dollars, and energy, so lifecycle break-even against full-library, vector, or GoS access is unknown.",
+      "Counterfactual probes are LLM-simulated textual judgments rather than environment interventions, so the evidence supports edge-confidence calibration more directly than a causal interpretation of the graph.",
+      "The publish-all and full configurations differ in validation compute as well as publication state; component results do not isolate one counterfactual probe or Bayesian rule as the sole cause.",
+      "Main results report no repeated seeds, confidence intervals, or significance tests, limiting uncertainty claims despite consistency across backbones.",
+      "The linked official GitHub repository existed at verification time but contained no released implementation, reducing reproducibility of the construction pipeline."
+    ],
+    "confidence": "medium"
+  }
+}
