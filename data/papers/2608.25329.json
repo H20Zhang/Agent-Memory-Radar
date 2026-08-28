@@ -1,0 +1,77 @@
+{
+  "id": "2608.25329",
+  "title": "Learning What to Share and What to Personalize: Hierarchical Strategy Co-Evolution for Agent Memory",
+  "authors": [
+    "Yupeng Han",
+    "Shuochen Liu",
+    "Kai Zhang",
+    "Ze Liu",
+    "Zhihong Pan",
+    "Xianquan Wang"
+  ],
+  "published": "2026-08-26",
+  "first_seen": "2026-08-28",
+  "published_at": "2026-08-26T03:24:52Z",
+  "first_seen_at": "2026-08-28T00:11:01Z",
+  "radar_published_at": "2026-08-28T00:20:27Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "personalized-memory-policy-evolution"
+  ],
+  "paper_url": "https://arxiv.org/abs/2608.25329",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": [
+    "procedural",
+    "structured",
+    "personalization"
+  ],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-28",
+    "blocker": "A paper-specific mechanism figure has not yet passed grounded VISUAL_POLICY.md review; the verified bilingual deep note carries the mechanism, controls, and lifecycle caveats meanwhile."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/list/cs.AI/recent",
+      "https://arxiv.org/abs/2608.25329"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/abs/2608.25329"
+    ],
+    "last_verified": "2026-08-28"
+  },
+  "analysis": {
+    "tldr": "HiPS makes memory-management policy itself hierarchical state—a shared rule layer plus persona-specific deltas—and its strongest evidence is not the heterogeneous leaderboard but ablations and cross-model transfer showing that rule flow/gating materially changes OOD personalized behavior.",
+    "problem": "Static one-size-fits-all memory writers must decide what to retain, compress, or discard for users whose preferences and interaction patterns diverge; optimizing one global memory policy can erase useful shared structure or overfit persona-specific exceptions.",
+    "core_idea": "Distill a Universal Strategy from cross-persona trajectories, create Persona Delta rules only when persona-specific predictive gain warrants them, and move rules between shared and personal tiers through Cross-Level Rule Flow; inject a budgeted subset of management rules while policy training and memory strategy co-evolve from outcome evidence.",
+    "memory_design": {
+      "write": "Universal Strategy Distillation extracts shared management rules from cross-persona outcomes; Persona Delta Distillation adds user-specific management rules only for divergent personas rather than storing every observed fact as a policy exception.",
+      "organize": "Memory-management policy is decomposed into a global shared rule set plus persona-local deltas, with evidence levels and cross-level promotion/demotion controlling where a rule belongs.",
+      "read": "At each step a budgeted submodular selector injects the relevant shared and persona-specific management rules that govern what profile evidence is retained or transformed.",
+      "update_forget": "Cross-Level Rule Flow promotes recurring personal rules to the universal tier and specializes contradicted global rules back toward persona-local state; the paper evolves policy rules, not a fully specified privacy/deletion lifecycle for underlying user facts."
+    },
+    "compared_to": [
+      "Static/global memory-management strategies and published memory baselines",
+      "Ablations without Cross-Level Rule Flow, persona gating, Universal Strategy Distillation, persona grouping, or Persona Delta Distillation",
+      "Universal-only strategy versus universal-plus-persona-delta transfer to different foundation models without policy RL"
+    ],
+    "evidence": "On PersonaMem, full HiPS reports 73.49/62.01 versus 64.45/55.37 for MemSkill, but baseline backbones are not fully matched. More diagnostic ablations show full PERMA scores 66.95/56.56/63.83/56.30 versus 45.39/40.87/43.12/36.50 without Cross-Level Rule Flow and 51.63/44.99/52.62/46.79 without persona gating. Learned universal+delta rules also transfer across Qwen, GPT-4o-mini, Gemini 2.5 Flash, and GPT-5 without carrying the original RL policy, supporting an external policy-state effect rather than only parameter training.",
+    "why_it_matters": "Memory evolution is not only about adding/removing memories: the policy that decides what becomes memory can itself need shared and personalized state. HiPS suggests the highest-leverage boundary may be deciding which memory-management rules should generalize and which should remain user-local.",
+    "limitations": [
+      "The headline cross-system table mixes different model backbones/checkpoints for some baselines, so it is not a clean component-level superiority test.",
+      "The full package jointly changes strategy distillation, persona gating, rule flow, rule selection, and policy optimization; causal credit belongs to the matched ablations rather than the total gain.",
+      "Reported evolution time grows from roughly 140 seconds at 4K dialogue context to roughly 1,700 seconds at 128K, while full dollar/energy and continual maintenance costs are not reported.",
+      "Experiments are English-centric and do not establish years-long preference drift, privacy deletion, or adversarial persona-update behavior."
+    ],
+    "confidence": "high"
+  }
+}
