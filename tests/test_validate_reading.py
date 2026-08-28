@@ -21,6 +21,11 @@ TIMELINE_SUMMARY_RE = re.compile(
 )
 CJK_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
 EXPECTED_TIMELINE_TITLES = {
+    "2608-25329": "2026-08-28 · HiPS",
+    "2608-25553": "2026-08-28 · When Stale Constraints Go Unchecked",
+    "2608-25570": "2026-08-28 · KOPE",
+    "2608-25655": "2026-08-28 · SCALE-QA / TSIM",
+    "2608-26005": "2026-08-28 · VoiceMem",
     "2608-24876": "2026-08-27 · Recuris",
     "2608-23471": "2026-08-26 · InjecMEM",
     "2608-22767": "2026-08-26 · EARM",

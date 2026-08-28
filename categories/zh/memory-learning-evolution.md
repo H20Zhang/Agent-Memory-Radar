@@ -8,9 +8,13 @@
 
 **Recuris** 把新的关键边界暴露出来：persistent skill 和“当前状态决定何时调用 skill”不是一回事。其 same-library control 显示 verified working state / invocation control 承担了最清楚的增益；跨任务 localized patch 能迁移，但 retry-matched Terminal-Bench adaptation 仍是 null。**CONTRAMEM** 与 **BASM** 则分别补充 outcome contrast 和 validity boundary，它们共同把 procedural memory 拆成 artifact、state、access 与 update policy。
 
+HiPS 与 KOPE 又把 adaptive state 推到两个不同层面：前者是“哪些 memory-management rule 应共享或个性化”，后者是“哪些 execution outcome 应持久化并在以后重新进入决策”。两者都支持外部状态会改变 later behavior，但都还不足以把 package gain 归因给单一 memory component。
+
 “Self-evolving memory” 这个标签太粗。最近的工作已经把 adaptive state 拆成至少三类：
 
 - **Recuris：** verified working state 进入 skill invocation，并把 structured trace 转成 component-local、gate-controlled memory patch。
+- **HiPS：** memory-management policy 本身拆成 shared rule 与 persona delta；matched ablation 表明 Cross-Level Rule Flow / gating 在 OOD 下是 load-bearing control。
+- **KOPE：** compile/test/profile outcome 被持久化为 execution-grounded experience state；固定模型下会改变后续 kernel decision，但 graph 与 active-context packaging 仍部分耦合。
 - **HyperSkill：** relation structure 真正进入 retrieval/ranking/maintenance。
 - **WER：** 从 execution feedback 学 **skill-writer policy**，而不是只改当前 artifact。
 - **TRUSS：** 不直接学 writer，而是用 static + runtime evidence 决定 candidate skill 是否可以被 promote 为 persistent capability。

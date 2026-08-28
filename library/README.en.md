@@ -42,13 +42,13 @@ Procedural construction benefits from outcome diversity, while ordinary write pa
 
 ### Candidate commitment → supersession → applicability-aware consumption
 
-[Remember, Verify, or Ask?](../papers/2026/2608.19564.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.md) → [MemTrapBench](../papers/2026/2608.20202.md)
+[Remember, Verify, or Ask?](../papers/2026/2608.19564.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.md) → [When Stale Constraints Go Unchecked](../papers/2026/2608.25553.md) → [MemTrapBench](../papers/2026/2608.20202.md)
 
 Persistent state needs three different decisions: whether candidate information is authorized to enter memory, which older state it supersedes, and whether the resulting retrieved history is applicable to the current consumer. Current evidence is benchmark-bounded and does not yet join these stages in one executed lifecycle.
 
 ### Learned access/writer/curriculum → state-grounded localized evolution → certified artifact / harness commit
 
-[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [Recuris](../papers/2026/2608.24876.md) → [TRUSS](../papers/2026/2608.17588.md) / [Harness Continual Learning](../papers/2026/2608.19013.md)
+[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [Recuris](../papers/2026/2608.24876.md) / [HiPS](../papers/2026/2608.25329.md) / [KOPE](../papers/2026/2608.25570.md) → [TRUSS](../papers/2026/2608.17588.md) / [Harness Continual Learning](../papers/2026/2608.19013.md)
 
 Procedural-learning gains can come from read/write policy, training-side experience, verified working state, invocation control, failure localization, or promotion gates. Recuris adds same-library and retry-matched controls that make the credit location more explicit before the package is called “self-improving memory.”
 
@@ -75,6 +75,12 @@ First require earlier state to change an executable outcome and beat a verbatim 
 [LeanMem](../papers/2026/2608.03463.md) → [FTA-Mem](../papers/2026/2608.16303.md) → [LycheeMemory V2](../papers/2026/2608.12990.md)
 
 Write granularity and preservation/update semantics vary with the workload and should not be frozen as one global schema choice.
+
+### Flat interleaved history → episode reconstruction → streaming state contracts
+
+[SCALE-QA / TSIM](../papers/2026/2608.25655.md) → [VoiceMem](../papers/2026/2608.26005.md)
+
+First identify which coherent episode the current query continues, then ask whether factual/entity state and affect/persona state need different runtime contracts. TSIM still bundles segmentation/summary/hierarchy, while VoiceMem's low-latency figure covers retrieval rather than the full streaming lifecycle; both need matched lifecycle-cost controls.
 
 ## Browse by Year
 
