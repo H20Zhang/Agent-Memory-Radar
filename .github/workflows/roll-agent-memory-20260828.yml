@@ -22,20 +22,31 @@ jobs:
           sed -i 's/-->><\/summary>/--><\/summary>/g' README.md README.en.md
       - name: Install validation dependencies
         run: pip install -r requirements.txt
-      - name: Test time-first contract
-        run: python -m unittest discover -s tests -v
-      - name: Validate canonical records
-        run: python scripts/validate_canonical.py
-      - name: Validate bilingual reading surfaces
-        run: python scripts/validate_reading.py
-      - name: Validate repository contracts
-        run: python scripts/validate.py
-      - name: Commit validated projection
+      - name: Validate and preserve diagnostics
+        shell: bash
         run: |
+          set +e
+          {
+            echo '=== unittest ==='
+            python -m unittest discover -s tests -v
+            s1=$?
+            echo '=== canonical ==='
+            python scripts/validate_canonical.py
+            s2=$?
+            echo '=== reading ==='
+            python scripts/validate_reading.py
+            s3=$?
+            echo '=== repository ==='
+            python scripts/validate.py
+            s4=$?
+            echo "statuses: $s1 $s2 $s3 $s4"
+          } 2>&1 | tee .github/validation-output.txt
+          test_status=${PIPESTATUS[0]}
           git config user.name 'Agent Memory Radar'
           git config user.email 'actions@users.noreply.github.com'
-          git add README.md README.en.md categories/retrieval-access.md categories/zh/retrieval-access.md library/README.md library/README.en.md scripts/validate_reading.py tests/test_memory_v2_contract.py tests/test_validate_reading.py
+          git add README.md README.en.md categories/retrieval-access.md categories/zh/retrieval-access.md library/README.md library/README.en.md scripts/validate_reading.py tests/test_memory_v2_contract.py tests/test_validate_reading.py .github/validation-output.txt
           if ! git diff --cached --quiet; then
             git commit -m 'Roll Agent Memory projection to 2026-08-28'
             git push origin HEAD:agent-memory-daily-20260828
           fi
+          exit $test_status
