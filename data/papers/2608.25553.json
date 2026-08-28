@@ -1,0 +1,73 @@
+{
+  "id": "2608.25553",
+  "title": "When Stale Constraints Go Unchecked: Budgeted Verification Failures in Inherited Agent Memory",
+  "authors": [
+    "Kazuki Nakayashiki"
+  ],
+  "published": "2026-08-26",
+  "first_seen": "2026-08-28",
+  "published_at": "2026-08-26T09:04:21Z",
+  "first_seen_at": "2026-08-28T00:11:01Z",
+  "radar_published_at": "2026-08-28T00:20:27Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "stale-memory-verification-allocation"
+  ],
+  "paper_url": "https://arxiv.org/abs/2608.25553",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": [
+    "semantic",
+    "structured",
+    "general-agent"
+  ],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-28",
+    "blocker": "A paper-specific mechanism figure has not yet passed grounded VISUAL_POLICY.md review; the verified bilingual deep note carries the mechanism, controls, and lifecycle caveats meanwhile."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/list/cs.AI/recent",
+      "https://arxiv.org/abs/2608.25553"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/abs/2608.25553"
+    ],
+    "last_verified": "2026-08-28"
+  },
+  "analysis": {
+    "tldr": "At a fixed two-record verification budget, stale inherited constraints persist mainly because agents spend verification elsewhere: reallocating one existing slot to the critical provenance path raises current-record-consistent decisions by 61.3–74.0 points across preregistered/replicated settings without helping when the memory is still valid.",
+    "problem": "Persistent memories can retain historically correct provenance while becoming behaviorally stale after a newer authoritative record supersedes their content; under a scarce audit budget, provenance availability does not guarantee that the agent will inspect the path that can invalidate a decision-relevant constraint.",
+    "core_idea": "Hold the memory form, world state, and two-record verification budget fixed, then randomize only which record one verification slot reaches: native agent allocation, experimenter-forced critical provenance, or a noncritical record. This isolates verification allocation from reasoning and added compute.",
+    "memory_design": {
+      "write": "A one-line inherited belief is consolidated from source record S0 at t0; in superseded worlds a later authoritative S1 withdraws the constraint while the stored belief itself is intentionally not reconsolidated.",
+      "organize": "Historical provenance M→S0 stays immutable, while the archive separately records supersession S0→S1 and current-record status; freshness is therefore a relation between memory content and the current authoritative record, not a rewrite of provenance.",
+      "read": "At decision time the agent chooses at most two memory provenance paths to inspect. A single request on the critical path returns S0, its current/superseded status, and S1 when present.",
+      "update_forget": "The experiment diagnoses a missing freshness/supersession verification policy rather than proposing a deployable reconsolidation or forgetting mechanism; the memory remains stale unless the consumer spends budget on its provenance path."
+    },
+    "compared_to": [
+      "Native agent allocation under the same k=2 verification budget",
+      "Forced-critical allocation that replaces one native slot with the target provenance path while holding budget fixed",
+      "Forced-noncritical same-budget control",
+      "Valid-world controls where the source record agrees with the inherited memory"
+    ],
+    "evidence": "With a stated constraint, native agents inspect its provenance path in 20.1% of primary and 23.1% of fresh-wording episodes. In superseded worlds native decisions follow the stale memory in 77.3%, 74.7%, and 74.7% across primary, replication, and held-out domains. Forced-critical allocation changes current-record-consistent decisions from 34/150→145/150 (+74.0pp), 38/150→147/150 (+72.7pp), and 38/150→130/150 (+61.3pp); a corrected held-out robustness run gives 36/150→146/150 (+73.3pp). When the record still agrees with memory, the same intervention changes outcomes by only 0–2.0pp.",
+    "why_it_matters": "This cleanly separates freshness verification from retrieval relevance: a memory can be highly decision-relevant and provenance-rich yet remain harmful if the consumer does not allocate scarce verification to the belief most costly to leave unchecked. The result is a causal allocation diagnosis, not another memory architecture leaderboard.",
+    "limitations": [
+      "The forced-critical arm uses experimenter knowledge of the critical path and is an identification instrument, not a deployable verification scheduler.",
+      "The archive makes supersession discoverable in one request; real stores may require multi-hop search, authority resolution, or provenance reconstruction.",
+      "The study does not measure how often stale stated constraints occur in deployed memory stores or why native policies under-verify them.",
+      "Full storage, index-maintenance, write/reconsolidation, dollar, and energy costs of maintaining freshness metadata are outside the experiment."
+    ],
+    "confidence": "high"
+  }
+}
