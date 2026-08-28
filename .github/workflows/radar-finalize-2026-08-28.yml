@@ -1,0 +1,387 @@
+name: Finalize Aug 28 Agent Memory radar transaction
+
+on:
+  push:
+    branches: [research-radar-reading-v1]
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research-radar-reading-v1
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Finalize bilingual public transaction
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          ROOT = Path('.')
+          OLD_SYNTH = '2026-08-27T00:34:29Z'
+          NEW_SYNTH = '2026-08-28T01:07:50Z'
+
+          def read(path):
+              return (ROOT / path).read_text(encoding='utf-8')
+
+          def write(path, text):
+              (ROOT / path).write_text(text, encoding='utf-8')
+
+          def must_replace(text, old, new, label, count=-1):
+              if old not in text:
+                  raise RuntimeError(f'{label}: missing replacement anchor: {old[:120]!r}')
+              return text.replace(old, new, count)
+
+          zh_entries = r'''<a id="entry-2608-25329"></a>
+          <details><summary><strong>2026-08-28 · HiPS</strong> · 分层个性化记忆策略 <!-- timefirst:area=personalized-memory-policy-evolution --> — 把 memory-management policy 拆成共享规则与 persona delta，并允许规则跨层迁移。 <!-- timefirst:delta=global-memory-policy-to-shared-plus-persona-specific-policy-state --></summary>
+
+          **问题。** 个性化记忆管理的收益来自用户专属 policy state，还是 backbone / 联合训练 package？ <!-- timefirst:question=isolate-personalized-memory-policy-state-from-backbone-and-package -->
+
+          **证据。** PERMA matched ablation 中 full HiPS 为 **66.95/56.56/63.83/56.30**，去掉 Cross-Level Rule Flow 后降至 **45.39/40.87/43.12/36.50**；learned universal+delta rules 还能在 Qwen、GPT-4o-mini、Gemini 2.5 Flash 与 GPT-5 间迁移，不携带原 RL policy。 <!-- timefirst:evidence=matched-rule-flow-ablation-and-cross-model-external-policy-transfer~cross-model-universal-plus-delta-transfer -->
+
+          **限制。** headline baseline 使用的 backbone 并不完全匹配；完整系统同时改变 distillation、persona gate、rule flow、selection 与 policy optimization，且长期维护 / 删除成本未给全。 <!-- timefirst:caveat=heterogeneous-backbones-and-bundled-policy-package~full-personalized-policy-lifecycle-cost-incomplete -->
+
+          **地图。** `early_signal` — 单篇结果不足以建立 durable personalized-memory-policy 方向。
+
+          **链接。** [论文](https://arxiv.org/abs/2608.25329) · [中文深读](papers/2026/2608.25329.zh.md) · [英文深读](papers/2026/2608.25329.md)
+
+          </details>
+
+          <a id="entry-2608-25553"></a>
+          <details><summary><strong>2026-08-28 · When Stale Constraints Go Unchecked</strong> · 有预算的陈旧记忆验证 <!-- timefirst:area=stale-memory-verification-allocation --> — provenance 完整仍不够；稀缺 verification slot 必须分配到真正可能失效的约束。 <!-- timefirst:delta=available-provenance-to-budgeted-critical-path-verification --></summary>
+
+          **问题。** 当 memory 与 archive 都保留 provenance 时，stale-memory harm 是否仍主要来自 verification allocation？ <!-- timefirst:question=isolate-stale-memory-harm-as-fixed-budget-verification-allocation -->
+
+          **证据。** 在固定 `k=2` verification budget 下，只把一个现有 slot 强制指向 critical provenance path，就让 superseded-world 的 current-record-consistent decisions 提升 **61.3–74.0pp**；valid-world 只变化 **0–2.0pp**。 <!-- timefirst:evidence=fixed-budget-critical-path-intervention-changes-later-decisions~same-k2-budget -->
+
+          **限制。** forced-critical arm 使用 experimenter 知道的 oracle path，只是 causal identification instrument，不是可部署 scheduler；真实 store 的多跳 authority resolution 与维护成本尚未测量。 <!-- timefirst:caveat=oracle-critical-path-and-synthetic-provenance-store~deployable-verification-policy-missing -->
+
+          **地图。** `early_signal` — 它识别了 allocation failure，但尚未给出可学习的 production verification policy。
+
+          **链接。** [论文](https://arxiv.org/abs/2608.25553) · [中文深读](papers/2026/2608.25553.zh.md) · [英文深读](papers/2026/2608.25553.md)
+
+          </details>
+
+          <a id="entry-2608-25570"></a>
+          <details><summary><strong>2026-08-28 · KOPE</strong> · 执行证据驱动的 Experience Graph Memory <!-- timefirst:area=execution-grounded-experience-graph --> — 把 compile/test/profile outcome 持久化成 decision→outcome experience state，并在固定 context budget 下重用。 <!-- timefirst:delta=discarded-tool-trajectories-to-persistent-execution-grounded-experience-state --></summary>
+
+          **问题。** 冻结模型参数后，持久执行经验能否真正改变后续 tool decision，同时降低 context 成本？ <!-- timefirst:question=test-persistent-execution-experience-under-fixed-model-and-context-budget -->
+
+          **证据。** 同一 GLM-5.2 workflow 上，active-context ablation 的 pass rate **60.0%→84.6%**，optimization tokens **15.9B→1.113B**；Experience Graph Memory ablation 的 full-suite pass rate **55.2%→84.6%**。 <!-- timefirst:evidence=same-workflow-experience-state-changes-pass-rate-and-context-cost~fixed-glm-5.2-workflow -->
+
+          **限制。** active context 同时改变 selection、compression 与 injection；graph downstream-outcome score 是 retrieval heuristic 而非 causal label，完整 memory construction / index / maintenance 成本也未配平。 <!-- timefirst:caveat=active-context-package-confound-and-incomplete-lifecycle-cost~selection-compression-injection-coupled -->
+
+          **地图。** `early_signal` — 证据支持 execution-grounded external state，但不能把 package gain 全归因于 graph representation。
+
+          **链接。** [论文](https://arxiv.org/abs/2608.25570) · [中文深读](papers/2026/2608.25570.zh.md) · [英文深读](papers/2026/2608.25570.md)
+
+          </details>
+
+          <a id="entry-2608-25655"></a>
+          <details><summary><strong>2026-08-28 · SCALE-QA / TSIM</strong> · Episode integrity reconstruction <!-- timefirst:area=episode-integrity-reconstruction --> — 对交错 conversation 先恢复 coherent episode，再做层级检索与 evidence assembly。 <!-- timefirst:delta=turn-level-retrieval-to-episode-reconstruction-before-evidence-assembly --></summary>
+
+          **问题。** mixed-topic history 的失败来自“没搜到相似 turn”，还是更早的 episode localization / reconstruction？ <!-- timefirst:question=separate-episode-localization-from-ordinary-turn-level-retrieval -->
+
+          **证据。** 在三个 backend 上 TSIM 相对 strongest matched baseline 提升 **5.6–17.6 accuracy points**；同一 flat history 上，standard RAG→fixed-token→semantic-drift→full TSIM 的 pipeline accuracy 约为 **26.2→43.4→55.5→74.2**。 <!-- timefirst:evidence=episode-reconstruction-package-improves-flat-interleaved-memory~three-backend-matched-settings -->
+
+          **限制。** segmentation、deterministic summary、hierarchy 与 routing 联合变化；SCALE-QA 是 synthetic four-choice benchmark，且 TSIM ingest / retrieval overhead 明显高于 standard RAG。 <!-- timefirst:caveat=segmentation-summary-hierarchy-routing-package-and-synthetic-benchmark~full-lifecycle-cost-must-be-matched -->
+
+          **地图。** `early_signal` — episode integrity 是值得单独测的边界，但当前 package 尚未隔离哪个 representation operation 承担增益。
+
+          **链接。** [论文](https://arxiv.org/abs/2608.25655) · [中文深读](papers/2026/2608.25655.zh.md) · [英文深读](papers/2026/2608.25655.md)
+
+          </details>
+
+          <a id="entry-2608-26005"></a>
+          <details><summary><strong>2026-08-28 · VoiceMem</strong> · Streaming dual-brain memory <!-- timefirst:area=streaming-dual-brain-memory --> — 将 factual/entity state 与 affect/persona state 分成并行 streaming memory path，并让上层 organization/routing 可跨 backend 复用。 <!-- timefirst:delta=single-text-memory-path-to-streaming-factual-and-affective-state-contracts --></summary>
+
+          **问题。** 实时多模态对话 memory 是否需要给 factual truth 与 persona/affect continuity 不同 state contract？ <!-- timefirst:question=test-separate-factual-and-affective-memory-contracts-under-streaming-budget -->
+
+          **证据。** 同一个 upper memory layer 加到 Mem0、LangMem、Zep 后，均值由 **60.26→83.00（+22.73pp）**；top-5 operating point 报告约 **430 memory tokens / 134ms retrieval**。 <!-- timefirst:evidence=portable-upper-memory-layer-improves-multiple-backends~same-upper-layer-transfer -->
+
+          **限制。** `134ms` 只是 memory retrieval latency，不是端到端 conversational latency；async extraction / tagging / graph write 把成本移出 critical path，但完整 backlog、energy、consistency 与 deletion cost 未配平。 <!-- timefirst:caveat=retrieval-latency-not-end-to-end-and-async-write-cost-incomplete~full-streaming-lifecycle-cost-missing -->
+
+          **地图。** `early_signal` — 双路径 organization 有可迁移证据，但 component-level causal attribution 仍受 package confound 限制。
+
+          **链接。** [论文](https://arxiv.org/abs/2608.26005) · [中文深读](papers/2026/2608.26005.zh.md) · [英文深读](papers/2026/2608.26005.md) · [代码](https://github.com/xzf-thu/VoiceMem)
+
+          </details>
+
+          '''
+
+          en_entries = r'''<a id="entry-2608-25329"></a>
+          <details><summary><strong>2026-08-28 · HiPS</strong> · Hierarchical personalized memory policy <!-- timefirst:area=personalized-memory-policy-evolution --> — splits memory-management policy into shared rules plus persona deltas and lets rules migrate across levels. <!-- timefirst:delta=global-memory-policy-to-shared-plus-persona-specific-policy-state --></summary>
+
+          **Question.** Does personalized memory management add user-specific policy state, or mainly benefit from backbone and bundled training differences? <!-- timefirst:question=isolate-personalized-memory-policy-state-from-backbone-and-package -->
+
+          **Evidence.** In matched PERMA ablations, full HiPS scores **66.95/56.56/63.83/56.30** versus **45.39/40.87/43.12/36.50** without Cross-Level Rule Flow; learned universal+delta rules also transfer across Qwen, GPT-4o-mini, Gemini 2.5 Flash, and GPT-5 without carrying the original RL policy. <!-- timefirst:evidence=matched-rule-flow-ablation-and-cross-model-external-policy-transfer~cross-model-universal-plus-delta-transfer -->
+
+          **Caveat.** Headline baselines do not use fully matched backbones; the package jointly changes distillation, persona gating, rule flow, selection, and policy optimization, while long-run maintenance and deletion cost are incomplete. <!-- timefirst:caveat=heterogeneous-backbones-and-bundled-policy-package~full-personalized-policy-lifecycle-cost-incomplete -->
+
+          **Map.** `early_signal` — one result does not establish a durable personalized-memory-policy direction.
+
+          **Links.** [Paper](https://arxiv.org/abs/2608.25329) · [中文深读](papers/2026/2608.25329.zh.md) · [English deep note](papers/2026/2608.25329.md)
+
+          </details>
+
+          <a id="entry-2608-25553"></a>
+          <details><summary><strong>2026-08-28 · When Stale Constraints Go Unchecked</strong> · Budgeted stale-memory verification <!-- timefirst:area=stale-memory-verification-allocation --> — intact provenance is insufficient when scarce verification slots are allocated away from the constraint most costly to leave stale. <!-- timefirst:delta=available-provenance-to-budgeted-critical-path-verification --></summary>
+
+          **Question.** When memory and archive both retain provenance, is stale-memory harm still primarily a verification-allocation failure? <!-- timefirst:question=isolate-stale-memory-harm-as-fixed-budget-verification-allocation -->
+
+          **Evidence.** At the same `k=2` verification budget, replacing one existing slot with the critical provenance path raises current-record-consistent decisions in superseded worlds by **61.3–74.0pp**, while valid-world outcomes move only **0–2.0pp**. <!-- timefirst:evidence=fixed-budget-critical-path-intervention-changes-later-decisions~same-k2-budget -->
+
+          **Caveat.** The forced-critical arm knows the oracle path and is a causal-identification instrument, not a deployable scheduler; real stores may require multi-hop authority resolution and unmeasured maintenance cost. <!-- timefirst:caveat=oracle-critical-path-and-synthetic-provenance-store~deployable-verification-policy-missing -->
+
+          **Map.** `early_signal` — the study identifies allocation failure but does not yet supply a learned production verification policy.
+
+          **Links.** [Paper](https://arxiv.org/abs/2608.25553) · [中文深读](papers/2026/2608.25553.zh.md) · [English deep note](papers/2026/2608.25553.md)
+
+          </details>
+
+          <a id="entry-2608-25570"></a>
+          <details><summary><strong>2026-08-28 · KOPE</strong> · Execution-grounded Experience Graph Memory <!-- timefirst:area=execution-grounded-experience-graph --> — persists compile/test/profile outcomes as decision→outcome experience state and reuses it under a fixed context budget. <!-- timefirst:delta=discarded-tool-trajectories-to-persistent-execution-grounded-experience-state --></summary>
+
+          **Question.** With model parameters frozen, can persistent execution experience change later tool decisions while reducing context cost? <!-- timefirst:question=test-persistent-execution-experience-under-fixed-model-and-context-budget -->
+
+          **Evidence.** In the same GLM-5.2 workflow, the active-context ablation raises pass rate **60.0%→84.6%** while optimization tokens fall **15.9B→1.113B**; the Experience Graph Memory ablation raises full-suite pass rate **55.2%→84.6%**. <!-- timefirst:evidence=same-workflow-experience-state-changes-pass-rate-and-context-cost~fixed-glm-5.2-workflow -->
+
+          **Caveat.** Active context jointly changes selection, compression, and injection; graph downstream-outcome score is a retrieval heuristic rather than a causal label, and full construction/index/maintenance costs are not matched. <!-- timefirst:caveat=active-context-package-confound-and-incomplete-lifecycle-cost~selection-compression-injection-coupled -->
+
+          **Map.** `early_signal` — evidence supports execution-grounded external state, not attribution of the whole package gain to graph representation.
+
+          **Links.** [Paper](https://arxiv.org/abs/2608.25570) · [中文深读](papers/2026/2608.25570.zh.md) · [English deep note](papers/2026/2608.25570.md)
+
+          </details>
+
+          <a id="entry-2608-25655"></a>
+          <details><summary><strong>2026-08-28 · SCALE-QA / TSIM</strong> · Episode integrity reconstruction <!-- timefirst:area=episode-integrity-reconstruction --> — reconstructs coherent episodes from interleaved conversation before hierarchical retrieval and evidence assembly. <!-- timefirst:delta=turn-level-retrieval-to-episode-reconstruction-before-evidence-assembly --></summary>
+
+          **Question.** Do mixed-topic histories fail because similar turns are missed, or because episode localization/reconstruction fails before ordinary retrieval? <!-- timefirst:question=separate-episode-localization-from-ordinary-turn-level-retrieval -->
+
+          **Evidence.** Across three backends TSIM improves **5.6–17.6 accuracy points** over the strongest matched baseline; on the same flat history, pipeline accuracy progresses roughly **26.2→43.4→55.5→74.2** from standard RAG to fixed-token, semantic-drift, and full TSIM. <!-- timefirst:evidence=episode-reconstruction-package-improves-flat-interleaved-memory~three-backend-matched-settings -->
+
+          **Caveat.** Segmentation, deterministic summaries, hierarchy, and routing co-vary; SCALE-QA is a synthetic four-choice benchmark, and TSIM incurs materially higher ingest/retrieval overhead than standard RAG. <!-- timefirst:caveat=segmentation-summary-hierarchy-routing-package-and-synthetic-benchmark~full-lifecycle-cost-must-be-matched -->
+
+          **Map.** `early_signal` — episode integrity deserves a separate measurement boundary, but the package does not isolate which representation operation carries the gain.
+
+          **Links.** [Paper](https://arxiv.org/abs/2608.25655) · [中文深读](papers/2026/2608.25655.zh.md) · [English deep note](papers/2026/2608.25655.md)
+
+          </details>
+
+          <a id="entry-2608-26005"></a>
+          <details><summary><strong>2026-08-28 · VoiceMem</strong> · Streaming dual-brain memory <!-- timefirst:area=streaming-dual-brain-memory --> — gives factual/entity state and affect/persona state parallel streaming memory paths while keeping the upper organization/routing layer reusable across backends. <!-- timefirst:delta=single-text-memory-path-to-streaming-factual-and-affective-state-contracts --></summary>
+
+          **Question.** Should real-time multimodal memory use different state contracts for factual truth and persona/affect continuity? <!-- timefirst:question=test-separate-factual-and-affective-memory-contracts-under-streaming-budget -->
+
+          **Evidence.** Adding the same upper memory layer to Mem0, LangMem, and Zep raises their mean from **60.26→83.00 (+22.73pp)**; the top-5 operating point reports about **430 memory tokens / 134ms retrieval**. <!-- timefirst:evidence=portable-upper-memory-layer-improves-multiple-backends~same-upper-layer-transfer -->
+
+          **Caveat.** `134ms` is memory retrieval latency, not end-to-end conversational latency; asynchronous extraction/tagging/graph writes move cost off the critical path without matching backlog, energy, consistency, or deletion cost. <!-- timefirst:caveat=retrieval-latency-not-end-to-end-and-async-write-cost-incomplete~full-streaming-lifecycle-cost-missing -->
+
+          **Map.** `early_signal` — dual-path organization has portability evidence, but component-level causal attribution remains package-confounded.
+
+          **Links.** [Paper](https://arxiv.org/abs/2608.26005) · [中文深读](papers/2026/2608.26005.zh.md) · [English deep note](papers/2026/2608.26005.md) · [Code](https://github.com/xzf-thu/VoiceMem)
+
+          </details>
+
+          '''
+
+          # Dedent here because YAML block indentation becomes literal in the heredoc.
+          import textwrap
+          zh_entries = textwrap.dedent(zh_entries)
+          en_entries = textwrap.dedent(en_entries)
+
+          directions = [
+              ('personalized-memory-policy-evolution','2608.25329','high','separate-personalization-policy-from-backbone-and-package',
+               '把 persona-specific policy state 与 backbone、distillation、RL package 分开归因。',
+               'separate persona-specific policy state from backbone, distillation, and the RL package.'),
+              ('stale-memory-verification-allocation','2608.25553','high','learn-critical-verification-allocation-under-fixed-budget',
+               '在固定 audit budget 下学习选择真正需要 freshness check 的 belief，而不是依赖 oracle path。',
+               'learn which belief needs a freshness check under a fixed audit budget instead of relying on an oracle path.'),
+              ('execution-grounded-experience-graph','2608.25570','high','isolate-experience-reuse-from-context-packaging',
+               '固定 source experience 与 token budget，拆开 graph relation、ranking、compression 与 injection。',
+               'freeze source experience and token budget, then separate graph relations, ranking, compression, and injection.'),
+              ('episode-integrity-reconstruction','2608.25655','medium','isolate-episode-reconstruction-from-hierarchy-and-summary',
+               '固定 evidence 与 context budget，独立变化 segmentation、summary、hierarchy 与 routing。',
+               'freeze evidence and context budget, then vary segmentation, summaries, hierarchy, and routing independently.'),
+              ('streaming-dual-brain-memory','2608.26005','medium','measure-streaming-memory-end-to-end-lifecycle-cost',
+               '把 factual/affective organization 的收益与 async write、retrieval、response 全链路成本一起测。',
+               'measure factual/affective organization together with asynchronous write, retrieval, and end-to-end response cost.'),
+          ]
+
+          def direction_block(lang):
+              lines = []
+              for key, ident, conf, implication, zh_imp, en_imp in directions:
+                  witness = key.replace('-', ' ')
+                  if lang == 'zh':
+                      lines.append(
+                          f'- **`new_signal` · {witness}：新增早期信号。** 支撑：[{ident}](#entry-{ident.replace(".", "-")})；'
+                          f'置信度：**{conf}**；时间依据：`radar_published_at`；先验地图证据：`none`。'
+                          f'研究设计含义（{implication.replace("-", " ")}）：{zh_imp}精确合成时间：`{NEW_SYNTH}`。 '
+                          f'<!-- timefirst:direction key="{key}" state="new_signal" supports="{ident}" confidence="{conf}" '
+                          f'implication="{implication}" timing="radar_published_at" synthesized="{NEW_SYNTH}" prior="none" -->'
+                      )
+                  else:
+                      lines.append(
+                          f'- **`new_signal` · {witness}: new early signal.** Supports: [{ident}](#entry-{ident.replace(".", "-")}); '
+                          f'confidence: **{conf}**; timing basis: `radar_published_at`; prior map evidence: `none`. '
+                          f'Research-design implication ({implication.replace("-", " ")}): {en_imp} Exact synthesis time: `{NEW_SYNTH}`. '
+                          f'<!-- timefirst:direction key="{key}" state="new_signal" supports="{ident}" confidence="{conf}" '
+                          f'implication="{implication}" timing="radar_published_at" synthesized="{NEW_SYNTH}" prior="none" -->'
+                      )
+              return '\n\n'.join(lines) + '\n\n'
+
+          def update_readme(path, lang):
+              text = read(path)
+              if lang == 'zh':
+                  text = must_replace(text, '最后更新：**2026-08-27**', '最后更新：**2026-08-28**', path, 1)
+                  seven_old = '### 过去 7 天：2026-08-21—2026-08-27'
+                  seven_new = '### 过去 7 天：2026-08-22—2026-08-28'
+                  thirty_old = '### 过去 30 天：2026-07-29—2026-08-27'
+                  thirty_new = '### 过去 30 天：2026-07-30—2026-08-28'
+                  read_old = '| **结构何时值得额外成本？** | ReFind → CABLE → ArborMem → QUMem | 从原始记录基线、互补关系读到状态定位和面向使用方的状态重建，逐层检查每个阶段是否提供了无法低成本替代的操作。 |'
+                  read_new = '| **结构何时值得额外成本？** | ReFind → CABLE → SCALE-QA / TSIM → QUMem → VoiceMem | 从原始记录基线读到 episode reconstruction、consumer-state reconstruction 与 streaming factual/affective contracts；每一步都要用匹配的 construction/query budget 证明结构值得。 |\n| **Self-evolving memory 到底改了什么？** | Recuris → HiPS → KOPE | 分别定位 working-state/invocation control、共享/个性化 memory policy，以及 execution-grounded experience reuse；先找 adaptive state，再谈 self-improvement。 |'
+              else:
+                  text = must_replace(text, 'Last updated: **2026-08-27**', 'Last updated: **2026-08-28**', path, 1)
+                  seven_old = '### Last 7 days: 2026-08-21—2026-08-27'
+                  seven_new = '### Last 7 days: 2026-08-22—2026-08-28'
+                  thirty_old = '### Last 30 days: 2026-07-29—2026-08-27'
+                  thirty_new = '### Last 30 days: 2026-07-30—2026-08-28'
+                  read_old = '| **When does structure earn its cost?** | ReFind → CABLE → ArborMem → QUMem | Move from a raw-record baseline through complementary relations, state localization, and consumer-state reconstruction; at each stage ask whether the new operation is unavailable more cheaply. |'
+                  read_new = '| **When does structure earn its cost?** | ReFind → CABLE → SCALE-QA / TSIM → QUMem → VoiceMem | Move from raw-record baselines through episode reconstruction, consumer-state reconstruction, and streaming factual/affective contracts; require matched construction/query budgets at every stage. |\n| **What actually evolves in self-improving memory?** | Recuris → HiPS → KOPE | Localize working-state/invocation control, shared-versus-personal memory policy, and execution-grounded experience reuse before calling a package self-improving. |'
+              text = must_replace(text, seven_old, seven_new, path, 1)
+              text = must_replace(text, thirty_old, thirty_new, path, 1)
+              text = text.replace(OLD_SYNTH, NEW_SYNTH)
+              first_old = '<a id="entry-2608-24876"></a>'
+              if '<a id="entry-2608-25329"></a>' not in text:
+                  text = must_replace(text, first_old, (zh_entries if lang == 'zh' else en_entries) + first_old, path, 1)
+              # Insert the five exact-direction early signals at the start of each rolling section.
+              for heading in (seven_new, thirty_new):
+                  marker = heading + '\n\n'
+                  if f'key="personalized-memory-policy-evolution"' not in text[text.index(heading): text.index(heading) + 5000]:
+                      text = must_replace(text, marker, marker + direction_block(lang), path, 1)
+              if read_old in text:
+                  text = text.replace(read_old, read_new, 1)
+              write(path, text)
+
+          update_readme('README.md', 'zh')
+          update_readme('README.en.md', 'en')
+
+          # Memory-learning category: add the two accepted policy/evolution signals without claiming a trend.
+          path = 'categories/memory-learning-evolution.md'
+          text = read(path)
+          marker = '|---|---|---|---:|---|\n'
+          rows = (
+              '| 2026-08-26 | [HiPS](../papers/2026/2608.25329.md) | `procedural` `structured` `personalization` | 4/5 | Shared-plus-persona rule state transfers across foundation models; matched ablations make rule flow/gating more credible than the heterogeneous headline leaderboard. |\n'
+              '| 2026-08-26 | [KOPE](../papers/2026/2608.25570.md) | `episodic` `procedural` `graph` `structured` `general-agent` | 4/5 | Execution-grounded experience changes later kernel decisions under a fixed model, but graph memory and active-context packaging remain partially confounded. |\n'
+          )
+          if '[HiPS](../papers/2026/2608.25329.md)' not in text:
+              text = must_replace(text, marker, marker + rows, path, 1)
+          argument_add = ('\n**HiPS** adds a different adaptive-state boundary: the memory-management policy itself can split into shared rules and persona-local deltas, with matched ablations showing that rule flow and gating matter especially OOD. **KOPE** makes execution outcomes persistent experience state under a frozen model and fixed prompt budget; its evidence supports reusable external control state, while graph structure, ranking, compression, and injection are not yet fully separated.\n')
+          if 'the memory-management policy itself can split into shared rules' not in text:
+              pos = text.index('\n| Date | Paper | Tags | Importance | Research take |')
+              text = text[:pos] + argument_add + text[pos:]
+          write(path, text)
+
+          path = 'categories/zh/memory-learning-evolution.md'
+          text = read(path)
+          if '**HiPS：**' not in text:
+              target = '- **Recuris：** verified working state 进入 skill invocation，并把 structured trace 转成 component-local、gate-controlled memory patch。\n'
+              additions = (
+                  '- **HiPS：** memory-management policy 本身拆成 shared rule 与 persona delta；matched ablation 表明 Cross-Level Rule Flow / gating 在 OOD 下是 load-bearing control。\n'
+                  '- **KOPE：** compile/test/profile outcome 被持久化为 execution-grounded experience state；固定模型下会改变后续 kernel decision，但 graph 与 active-context packaging 仍部分耦合。\n'
+              )
+              text = must_replace(text, target, target + additions, path, 1)
+          if 'HiPS 与 KOPE 又把 adaptive state' not in text:
+              anchor = '“Self-evolving memory” 这个标签太粗。'
+              text = must_replace(text, anchor, 'HiPS 与 KOPE 又把 adaptive state 推到两个不同层面：前者是“哪些 memory-management rule 应共享或个性化”，后者是“哪些 execution outcome 应持久化并在以后重新进入决策”。两者都支持外部状态会改变 later behavior，但都还不足以把 package gain 归因给单一 memory component。\n\n' + anchor, path, 1)
+          write(path, text)
+
+          # Library: refine two existing lines and add the representation line exposed by SCALE/VoiceMem.
+          path = 'library/README.md'
+          text = read(path)
+          old = '[SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) / [SPADE](../papers/2026/2608.19197.zh.md) → [Recuris](../papers/2026/2608.24876.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) / [Harness Continual Learning](../papers/2026/2608.19013.zh.md)'
+          new = '[SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) / [SPADE](../papers/2026/2608.19197.zh.md) → [Recuris](../papers/2026/2608.24876.zh.md) / [HiPS](../papers/2026/2608.25329.zh.md) / [KOPE](../papers/2026/2608.25570.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) / [Harness Continual Learning](../papers/2026/2608.19013.zh.md)'
+          if old in text:
+              text = text.replace(old, new, 1)
+          old2 = '[Remember, Verify, or Ask?](../papers/2026/2608.19564.zh.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.zh.md) → [MemTrapBench](../papers/2026/2608.20202.zh.md)'
+          new2 = '[Remember, Verify, or Ask?](../papers/2026/2608.19564.zh.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.zh.md) → [When Stale Constraints Go Unchecked](../papers/2026/2608.25553.zh.md) → [MemTrapBench](../papers/2026/2608.20202.zh.md)'
+          if old2 in text:
+              text = text.replace(old2, new2, 1)
+          section = '''### Flat interleaved history → episode reconstruction → streaming state contracts
+
+[SCALE-QA / TSIM](../papers/2026/2608.25655.zh.md) → [VoiceMem](../papers/2026/2608.26005.zh.md)
+
+先问当前 query 延续的是哪一个 coherent episode，再问 factual/entity state 与 affect/persona state 是否应该走不同 runtime contract。前者的 segmentation/summary/hierarchy 仍是 package，后者的低 latency 仍只覆盖 retrieval path；两者都需要完整 lifecycle cost 对照。
+
+'''
+          marker_year = '## 按年份浏览\n'
+          if '### Flat interleaved history → episode reconstruction → streaming state contracts' not in text:
+              text = must_replace(text, marker_year, section + marker_year, path, 1)
+          write(path, text)
+
+          path = 'library/README.en.md'
+          text = read(path)
+          old = '[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [Recuris](../papers/2026/2608.24876.md) → [TRUSS](../papers/2026/2608.17588.md) / [Harness Continual Learning](../papers/2026/2608.19013.md)'
+          new = '[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [Recuris](../papers/2026/2608.24876.md) / [HiPS](../papers/2026/2608.25329.md) / [KOPE](../papers/2026/2608.25570.md) → [TRUSS](../papers/2026/2608.17588.md) / [Harness Continual Learning](../papers/2026/2608.19013.md)'
+          if old in text:
+              text = text.replace(old, new, 1)
+          old2 = '[Remember, Verify, or Ask?](../papers/2026/2608.19564.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.md) → [MemTrapBench](../papers/2026/2608.20202.md)'
+          new2 = '[Remember, Verify, or Ask?](../papers/2026/2608.19564.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.md) → [When Stale Constraints Go Unchecked](../papers/2026/2608.25553.md) → [MemTrapBench](../papers/2026/2608.20202.md)'
+          if old2 in text:
+              text = text.replace(old2, new2, 1)
+          section = '''### Flat interleaved history → episode reconstruction → streaming state contracts
+
+[SCALE-QA / TSIM](../papers/2026/2608.25655.md) → [VoiceMem](../papers/2026/2608.26005.md)
+
+First identify which coherent episode the current query continues, then ask whether factual/entity state and affect/persona state need different runtime contracts. TSIM still bundles segmentation/summary/hierarchy, while VoiceMem's low-latency figure covers retrieval rather than the full streaming lifecycle; both need matched lifecycle-cost controls.
+
+'''
+          marker_year = '## Browse by Year\n'
+          if '### Flat interleaved history → episode reconstruction → streaming state contracts' not in text:
+              text = must_replace(text, marker_year, section + marker_year, path, 1)
+          write(path, text)
+
+          # Advance exact rolling-window contract and its regression tests by one day.
+          path = 'scripts/validate_reading.py'
+          text = read(path)
+          text = must_replace(text, f'SYNTHESIS_TIMESTAMP = "{OLD_SYNTH}"', f'SYNTHESIS_TIMESTAMP = "{NEW_SYNTH}"', path, 1)
+          text = must_replace(text, '"last-7-days": (date(2026, 8, 21), date(2026, 8, 27))', '"last-7-days": (date(2026, 8, 22), date(2026, 8, 28))', path, 1)
+          text = must_replace(text, '"last-30-days": (date(2026, 7, 29), date(2026, 8, 27))', '"last-30-days": (date(2026, 7, 30), date(2026, 8, 28))', path, 1)
+          write(path, text)
+
+          for p in (ROOT / 'tests').glob('*.py'):
+              text = p.read_text(encoding='utf-8')
+              newer = (text.replace(OLD_SYNTH, NEW_SYNTH)
+                       .replace('2026-08-21—2026-08-27', '2026-08-22—2026-08-28')
+                       .replace('2026-07-29—2026-08-27', '2026-07-30—2026-08-28'))
+              if newer != text:
+                  p.write_text(newer, encoding='utf-8')
+
+          # Staging helper must not survive into the validated tree.
+          Path('.github/workflows/radar-finalize-2026-08-28.yml').unlink()
+          PY
+      - name: Install validation dependencies
+        run: pip install -r requirements.txt
+      - name: Run binding repository validators
+        run: |
+          python -m unittest discover -s tests -v
+          python scripts/validate_canonical.py
+          python scripts/validate_reading.py
+          python scripts/validate.py
+          git diff --check
+      - name: Commit validated staging transaction
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Finalize Aug 28 Agent Memory radar transaction"
+          git push origin HEAD:research-radar-reading-v1
