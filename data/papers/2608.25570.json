@@ -1,0 +1,83 @@
+{
+  "id": "2608.25570",
+  "title": "Beyond Scaling: Self-Evolving LLM Agents for Hardware Kernel Optimization via an Experience-Driven Workflow and Experience Graph Memory",
+  "authors": [
+    "Siyuan Chen",
+    "Runlin Hou",
+    "Shenxiu Wu",
+    "Yansong Sun",
+    "Junming Cao",
+    "Yiyu Zhang",
+    "Shudi Shao",
+    "Junhao Qiu",
+    "Zhichao Lu",
+    "Qingfu Zhang"
+  ],
+  "published": "2026-08-26",
+  "first_seen": "2026-08-28",
+  "published_at": "2026-08-26T09:27:39Z",
+  "first_seen_at": "2026-08-28T00:11:01Z",
+  "radar_published_at": "2026-08-28T00:20:27Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "execution-grounded-experience-graph"
+  ],
+  "paper_url": "https://arxiv.org/abs/2608.25570",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": [
+    "episodic",
+    "procedural",
+    "graph",
+    "structured",
+    "general-agent"
+  ],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-28",
+    "blocker": "A paper-specific mechanism figure has not yet passed grounded VISUAL_POLICY.md review; the verified bilingual deep note carries the mechanism, controls, and lifecycle caveats meanwhile."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/list/cs.LG/recent",
+      "https://arxiv.org/abs/2608.25570"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/abs/2608.25570"
+    ],
+    "last_verified": "2026-08-28"
+  },
+  "analysis": {
+    "tldr": "KOPE turns compiler/correctness/performance outcomes into persistent experience graph state and reuses it under a fixed context budget; same-workflow ablations show both active context management and graph memory affect later kernel decisions, but the paper still couples retrieval, compression, and injection inside the active-context mechanism.",
+    "problem": "Kernel-optimization agents repeatedly discover hardware-specific strategies and failures but normally discard execution evidence after each run; replaying all trajectories is too expensive and obscures which earlier decision/outcome is useful for the current optimization state.",
+    "core_idea": "Persist each optimization attempt as a journal plus structured case linked in a decision-to-outcome graph; retain positive and negative execution evidence, rank experience using relevance plus observed downstream outcomes, and actively inject a bounded warm subset before each fixed-model optimization decision.",
+    "memory_design": {
+      "write": "Every compile/test/profile attempt is recorded, including failed or regressing candidates, as narrative Journal plus structured Case with code change, outcome, measurements, confidence, session/step, and predecessor ids.",
+      "organize": "Cases form a directed acyclic experience forest over decision lineage and alternative branches; observed step outcome and discounted downstream outcomes are ranking heuristics, not causal labels.",
+      "read": "Active Context Management rebuilds each prompt with required hot task state plus graph-ranked warm experience and bounded cold knowledge under fixed caps, so an event from one step or task can alter later optimization decisions.",
+      "update_forget": "Memory is append/evolve oriented and persists across tasks; the paper evaluates selection under a token budget but does not establish long-horizon deletion, consolidation, privacy, or graph-maintenance governance."
+    },
+    "compared_to": [
+      "Passive agent-led context construction with the same GLM-5.2 workflow and complete 53-operator suite",
+      "The same workflow with versus without Experience Graph Memory",
+      "CANNBot and CUDA-Agent under matched models/target suite where possible"
+    ],
+    "evidence": "On the complete 53-operator, 1,060-case active-context ablation, pass rate rises from 60.0% (636/1,060) to 84.6% (897/1,060) while optimization tokens fall from 15.9B to 1.113B (−93.0%); score rises 636.00→2004.49. The graph-memory ablation fixes the GLM-5.2 workflow and raises full-suite pass rate from 55.2% to 84.6%; on 412 paired valid timing cases the graph-enabled variant has a 1.43× geometric-mean speedup ratio. The paper explicitly notes that active context jointly changes selection, compression, and injection.",
+    "why_it_matters": "This is unusually concrete evidence that execution-grounded external memory can change future tool decisions while reducing context cost: memory value is not recall of old text but preserving decision→outcome evidence that a later optimizer can consume at the right state.",
+    "limitations": [
+      "Active Context Management is an integrated ablation that co-varies retrieval ranking, context compression, and injection, so its internal credit assignment remains unresolved.",
+      "The graph's downstream-outcome score is a retrieval heuristic over observed lineage, not an identified causal contribution of an earlier optimization decision.",
+      "Primary evidence is hardware-kernel optimization on Ascend/CANN Bench; transfer to other agent domains and long-running heterogeneous stores remains open.",
+      "Token consumption is reported, but full memory construction, embedding/index, graph maintenance, storage, dollar, and energy lifecycle costs are not."
+    ],
+    "confidence": "high"
+  }
+}
