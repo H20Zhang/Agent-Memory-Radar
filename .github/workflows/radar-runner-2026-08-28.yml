@@ -32,6 +32,7 @@ jobs:
           Path('/tmp/finalize_radar.py').write_text(body, encoding='utf-8')
           PY
           python /tmp/finalize_radar.py
+          python scripts/fixup_aug28_staging.py
           rm -f .github/workflows/radar-runner-2026-08-28.yml
       - name: Install validation dependencies
         run: pip install -r requirements.txt
