@@ -35,6 +35,7 @@ jobs:
           python scripts/fixup_aug28_staging.py
           python scripts/fixup_aug28_staging_v2.py
           python scripts/fixup_aug28_staging_v3.py
+          python scripts/fixup_aug28_staging_v4.py
           rm -f .github/workflows/radar-runner-2026-08-28.yml
       - name: Install validation dependencies
         run: pip install -r requirements.txt
