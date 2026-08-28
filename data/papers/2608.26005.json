@@ -1,0 +1,86 @@
+{
+  "id": "2608.26005",
+  "title": "VoiceMem: Streaming Dual-Brain Memory for Real-Time Interaction",
+  "authors": [
+    "Zhifei Xie",
+    "Jiaqi Lang",
+    "Ze An",
+    "Yifan Zhao",
+    "Dongchao Yang",
+    "Kai Li",
+    "Ziyang Ma",
+    "Mingbao Lin",
+    "Chunyan Miao",
+    "Shuicheng Yan"
+  ],
+  "published": "2026-08-26",
+  "first_seen": "2026-08-28",
+  "published_at": "2026-08-26T16:50:05Z",
+  "first_seen_at": "2026-08-28T00:11:01Z",
+  "radar_published_at": "2026-08-28T00:20:27Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "streaming-dual-brain-memory"
+  ],
+  "paper_url": "https://arxiv.org/abs/2608.26005",
+  "code_url": "https://github.com/xzf-thu/VoiceMem",
+  "project_url": "https://xzf-thu.github.io/VoiceMem/",
+  "primary_category": "representation_organization",
+  "tags": [
+    "semantic",
+    "structured",
+    "graph",
+    "multimodal",
+    "personalization"
+  ],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-28",
+    "blocker": "A paper-specific mechanism figure has not yet passed grounded VISUAL_POLICY.md review; the verified bilingual deep note carries the mechanism, controls, and lifecycle caveats meanwhile."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/list/cs.AI/recent",
+      "https://arxiv.org/abs/2608.26005"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/abs/2608.26005",
+      "https://github.com/xzf-thu/VoiceMem",
+      "https://xzf-thu.github.io/VoiceMem/"
+    ],
+    "last_verified": "2026-08-28"
+  },
+  "analysis": {
+    "tldr": "VoiceMem separates factual and affect/persona state into parallel streaming memory paths and shows that the same upper memory layer can improve several interchangeable backends; its 134 ms figure is retrieval latency, not full response latency, and write/update lifecycle cost remains incomplete.",
+    "problem": "Real-time speech agents need persistent factual memory, persona/affect continuity, and low-latency retrieval at once; text-only stores often flatten emotional evidence or require large candidate sets incompatible with streaming interaction.",
+    "core_idea": "Use an informational 'left brain' for structured factual/entity memory and an emotional 'right brain' for persona/affect state, connect them through streaming read/write paths, and keep the upper memory layer decoupled from the underlying backend so retrieval can remain small-K and task-conditioned.",
+    "memory_design": {
+      "write": "Streaming interaction is parsed into factual/entity information and affect/persona evidence, which are written through separate informational and emotional paths; the project notes that extraction/tagging/graph writes are intentionally off the conversational critical path.",
+      "organize": "The informational path uses structured factual/entity memory while the emotional path maintains short-/long-horizon affect and persona nodes, including cross-entity relations rather than one flat text index.",
+      "read": "The runtime retrieves a small top-K set (default K=5) from the appropriate path and assembles it for the speech-language model; the paper reports 134 ms retrieval and about 430 memory tokens at K=5.",
+      "update_forget": "Streaming writes can update factual/persona structures asynchronously, but full consolidation, conflict repair, forgetting, privacy deletion, and long-term maintenance cost are not isolated."
+    },
+    "compared_to": [
+      "Classical memory backends such as Mem0 under much larger candidate counts",
+      "Persona-memory systems including MemOS under the same response model where available",
+      "The same Mem0, LangMem, and Zep backends with versus without the VoiceMem upper organization/routing layer",
+      "Text-only memory systems on the paper's long-form speech-memory benchmark"
+    ],
+    "evidence": "With top-5 retrieval the paper reports a factual average of 76.39 and substantial gains over larger-candidate classical memory systems. More diagnostic for mechanism portability, adding the same upper memory layer improves Mem0, LangMem, and Zep by +29.52, +15.76, and +22.92 points, raising their mean from 60.26 to 83.00 without replacing the backend. On persona evaluation with GPT-4o-mini, VoiceMem reports 74.16 versus 72.27 for MemOS; a separately fine-tuned responder reaches 76.56 and should not be treated as the same control. The system reports 134 ms dense dual-brain retrieval at K=5 and roughly 430 memory tokens.",
+    "why_it_matters": "Multimodal conversational memory may need separate state contracts for factual truth and affect/persona continuity, while a thin upper routing/organization layer can be more portable than replacing the storage backend. Real-time constraints make candidate-set size and retrieval-path latency first-class evaluation objects.",
+    "limitations": [
+      "The dual-brain package jointly changes extraction, representation, routing, graph structure, streaming I/O, and sometimes the responder, so component-level causal attribution is limited.",
+      "The reported 134 ms is memory retrieval latency within the streaming design, not end-to-end conversational response latency.",
+      "Write/extraction/tagging/graph maintenance is moved off the critical path but its full offline compute, dollar/energy cost, backlog behavior, and update consistency are not matched against baselines.",
+      "Some evaluation uses automated judges and a newly introduced speech-memory benchmark; annotation details and independent replication are limited."
+    ],
+    "confidence": "medium"
+  }
+}

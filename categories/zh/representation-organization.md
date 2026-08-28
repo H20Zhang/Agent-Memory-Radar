@@ -2,34 +2,34 @@
 
 [← Research Map](../README.md) · [English](../representation-organization.md) · [首页](../../README.md)
 
-> **核心问题：** 持久化的 archive 应该长什么样？下游 actor 最终消费的 state 是否必须和 archive 是同一个对象？
+> **核心问题：** persistent archive、当前 episode/state 与最终 actor context，是否应该是同一个对象？
 
 ## 当前判断
 
-**Archive fidelity 与 consumer usability 是两个目标。** 过去很多 memory system 默认把“更好的 persistent representation”直接等同于“更好的 actor context”；QUMem 与 QCR 让这个等式变得站不住。
+Representation 现在至少要拆成 **archive organization → state localization → consumer reconstruction** 三层。**SCALE-QA / TSIM** 说明 flat interleaved turn stream 先要恢复 coherent episode，普通 similarity search 才有机会拿到正确状态；**QCR** 与 **QUMem** 又说明 selected evidence 本身仍可能不是 actor 最适合消费的形式，需要 target-conditioned rebinding 或 current-user-state reconstruction。
 
-QUMem 的阶段消融显示，query-time user-state reconstruction 的贡献大于 episode construction 或 typed decomposition；QCR 则在 trajectory reuse 中固定 selected trajectory，再通过 target-conditioned rebinding 避免 stale source binding。两者都指向同一个 boundary：**selected evidence 仍可能需要面向当前任务的 reconstruction。**
+**VoiceMem** 再增加一条 streaming multimodal boundary：factual/entity state 与 affect/persona state 可以走不同 representation / access path，而 upper organization/routing layer 又能跨 Mem0、LangMem、Zep backend 复用。这里真正重要的不是“dual brain” 命名，而是 **不同 state contract 是否在同样 write/query cost 下改变下游行为。**
 
 ## Strongest signal
 
-目前最强的信号不是某一种 schema 赢了，而是：
+目前更合理的抽象是：
 
-`archive evidence → selected evidence → consumer state`
+`source stream → archival units → episode/state localization → selected evidence → actor-facing state`
 
-这三者应该允许不同。Representation 的价值要看它是否保留足够 provenance/fidelity，让后续 reconstruction 能处理时间、冲突、binding drift，而不是只追求更容易检索。
+这几个对象应该允许不同。TSIM 把 episode reconstruction 放到 retrieval 前；QUMem/QCR 把 reconstruction 放到 retrieval 后；VoiceMem 则提醒 factual 与 affect/persona state 甚至可能需要不同的在线路径。
 
 ## 最大未解问题
 
-Transformation 越强，越容易压掉 source detail 或 hallucinate current state。真正困难的是在 preference drift、conflicting memories、revocation 与不确定性下，既能重构可用 state，又能追溯到原始 evidence。
+Transformation 越多，越容易引入 hallucination、丢 provenance，或者把 cost 从 query path 偷移到异步 write path。当前证据还没有把 segmentation、summary、routing、reconstruction、backend 与完整 lifecycle cost 真正配平。
 
 ## 下一项 decisive evidence
 
-固定相同 retrieved evidence 与 synthesis budget，比较：
+固定相同 source stream、consumer 与总预算，独立比较：
 
-`raw evidence` vs `source-only summary` vs `target-conditioned support` vs `explicit reconstructed state`
+`flat turns vs episode localization × raw evidence vs reconstructed state × unified vs factual/affective split`
 
-并在 conflict/drift/authority setting 下同时测 downstream action quality 与 provenance fidelity。
+同时测 conflict/drift 下的 downstream action、provenance fidelity、write backlog、query latency 与完整 maintenance cost。
 
 ## 继续读
 
-[QUMem 中文笔记](../../papers/2026/2608.16168.zh.md) · [QCR](../../papers/2026/2608.12847.md) · [LeanMem](../../papers/2026/2608.03463.md)
+[TSIM 中文笔记](../../papers/2026/2608.25655.zh.md) · [VoiceMem 中文笔记](../../papers/2026/2608.26005.zh.md) · [QUMem 中文笔记](../../papers/2026/2608.16168.zh.md) · [QCR](../../papers/2026/2608.12847.md)

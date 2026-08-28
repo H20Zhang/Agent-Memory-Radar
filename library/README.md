@@ -42,13 +42,13 @@ Outcome diversity 可能帮助 procedure construction，普通 write path 也形
 
 ### Candidate 承诺 → 状态取代 → 面向当前使用方的适用性判断
 
-[Remember, Verify, or Ask?](../papers/2026/2608.19564.zh.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.zh.md) → [MemTrapBench](../papers/2026/2608.20202.zh.md)
+[Remember, Verify, or Ask?](../papers/2026/2608.19564.zh.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.zh.md) → [When Stale Constraints Go Unchecked](../papers/2026/2608.25553.zh.md) → [MemTrapBench](../papers/2026/2608.20202.zh.md)
 
 持久状态需要三种不同决策：candidate information 是否有 authority 进入 memory，哪些旧状态被它取代，以及 retrieval 后的历史是否适用于当前 consumer。现有证据仍受 benchmark 限制，还没有在一条真实执行的 lifecycle 中把三个阶段连起来。
 
 ### 学得访问 / 编写 / 课程策略 → 状态落地与定位式演化 → 经认证产物 / Harness 提交
 
-[SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) / [SPADE](../papers/2026/2608.19197.zh.md) → [Recuris](../papers/2026/2608.24876.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) / [Harness Continual Learning](../papers/2026/2608.19013.zh.md)
+[SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) / [SPADE](../papers/2026/2608.19197.zh.md) → [Recuris](../papers/2026/2608.24876.zh.md) / [HiPS](../papers/2026/2608.25329.zh.md) / [KOPE](../papers/2026/2608.25570.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) / [Harness Continual Learning](../papers/2026/2608.19013.zh.md)
 
 程序性学习的收益可能来自 read/write policy、training-side experience、verified working state、invocation control、failure localization 或 promotion gate。Recuris 的 same-library 与 retry-matched 对照进一步说明：先定位真正改变 later behavior 的控制层，再讨论“self-improving memory”。
 
@@ -75,6 +75,12 @@ Outcome diversity 可能帮助 procedure construction，普通 write path 也形
 [LeanMem](../papers/2026/2608.03463.md) → [FTA-Mem](../papers/2026/2608.16303.zh.md) → [LycheeMemory V2](../papers/2026/2608.12990.md)
 
 写入粒度和保留/更新语义会随工作负载改变，不适合作为全局固定的 schema 选择。
+
+### Flat interleaved history → episode reconstruction → streaming state contracts
+
+[SCALE-QA / TSIM](../papers/2026/2608.25655.zh.md) → [VoiceMem](../papers/2026/2608.26005.zh.md)
+
+先问当前 query 延续的是哪一个 coherent episode，再问 factual/entity state 与 affect/persona state 是否应该走不同 runtime contract。前者的 segmentation/summary/hierarchy 仍是 package，后者的低 latency 仍只覆盖 retrieval path；两者都需要完整 lifecycle cost 对照。
 
 ## 按年份浏览
 

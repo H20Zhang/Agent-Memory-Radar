@@ -46,7 +46,7 @@ def repository_records() -> list[dict[str, object]]:
 
 def native_record(
     identity: str = "native",
-    radar_published_at: str = "2026-08-21T01:18:00Z",
+    radar_published_at: str = "2026-08-28T00:30:00Z",
     *,
     map_delta: str = "early_signal",
     direction_keys: tuple[str, ...] = ("memory-radar-acceptance-time",),
@@ -56,7 +56,7 @@ def native_record(
         "title": identity.upper(),
         "published": "2026-08-01",
         "published_at": "2026-08-01T00:00:00Z",
-        "first_seen_at": "2026-08-21T01:18:00Z",
+        "first_seen_at": "2026-08-28T00:30:00Z",
         "radar_published_at": radar_published_at,
         "time_provenance": "native_v2",
         "map_delta": map_delta,
@@ -85,7 +85,7 @@ def direction_line(
     confidence: str = "high",
     implication: str = "require-native-v2-times-for-period-claims",
     timing: str = "radar_published_at",
-    synthesized: str = "2026-08-27T00:34:29Z",
+    synthesized: str = "2026-08-28T01:07:50Z",
     prior: str = "none",
     visible_supports: tuple[str, ...] | None = None,
 ) -> str:
@@ -158,11 +158,11 @@ def projection_readme(
     thirty_line: str | None = None,
 ) -> str:
     if language == "zh":
-        seven_heading = "### 过去 7 天：2026-08-21—2026-08-27"
-        thirty_heading = "### 过去 30 天：2026-07-29—2026-08-27"
+        seven_heading = "### 过去 7 天：2026-08-22—2026-08-28"
+        thirty_heading = "### 过去 30 天：2026-07-30—2026-08-28"
     else:
-        seven_heading = "### Last 7 days: 2026-08-21—2026-08-27"
-        thirty_heading = "### Last 30 days: 2026-07-29—2026-08-27"
+        seven_heading = "### Last 7 days: 2026-08-22—2026-08-28"
+        thirty_heading = "### Last 30 days: 2026-07-30—2026-08-28"
     text = replace_period_section(
         text,
         "last-7-days",
@@ -205,7 +205,7 @@ def prepend_timeline_entries(
     records: list[dict[str, object]],
     language: str,
 ) -> str:
-    marker = '<a id="entry-2608-17911"></a>'
+    marker = '<a id="entry-2608-25329"></a>'
     insertion = "".join(timeline_entry(record, language) for record in records)
     return text.replace(marker, insertion + marker, 1)
 
@@ -236,7 +236,7 @@ class CanonicalMemoryTimeContractTest(unittest.TestCase):
 
     def test_native_v2_requires_event_order(self):
         record = native_record()
-        record["published_at"] = "2026-08-22T00:00:00Z"
+        record["published_at"] = "2026-08-28T00:31:00Z"
         errors = validate_reading.validate_record_time_contract(record)
         self.assertTrue(
             any("published_at <= first_seen_at <= radar_published_at" in error for error in errors),
@@ -301,7 +301,7 @@ class CanonicalMemoryTimeContractTest(unittest.TestCase):
             "id": "legacy",
             "published": "2026-08",
             "published_at": "2026-08",
-            "first_seen_at": "2026-08-27T00:34:29Z",
+            "first_seen_at": "2026-08-28T01:07:50Z",
             "radar_published_at": None,
             "time_provenance": "legacy_unknown",
             "map_delta": "early_signal",
@@ -410,8 +410,8 @@ class CanonicalMemoryTimeContractTest(unittest.TestCase):
         native = deepcopy(explicit_legacy)
         native.update(
             published_at="2026-08-18T00:00:00Z",
-            first_seen_at="2026-08-27T00:34:29Z",
-            radar_published_at="2026-08-27T00:34:29Z",
+            first_seen_at="2026-08-28T01:07:50Z",
+            radar_published_at="2026-08-28T01:07:50Z",
             time_provenance="native_v2",
             direction_keys=["memory-radar-acceptance-time"],
         )
@@ -687,7 +687,7 @@ class MemoryProjectionContractTest(unittest.TestCase):
 
     def test_native_timeline_rejects_acceptance_after_public_synthesis_cutoff(self):
         zh, en = valid_projection_pair()
-        late = native_record("2608.90001", "2026-08-27T01:00:00Z")
+        late = native_record("2608.90001", "2026-08-28T02:00:00Z")
         records = [*repository_records(), late]
         zh = prepend_timeline_entries(zh, [late], "zh")
         en = prepend_timeline_entries(en, [late], "en")
@@ -696,7 +696,7 @@ class MemoryProjectionContractTest(unittest.TestCase):
 
     def test_support_at_0100_cannot_backdate_a_0000_direction_synthesis(self):
         zh, en = valid_projection_pair()
-        late = native_record("2608.90001", "2026-08-27T01:00:00Z")
+        late = native_record("2608.90001", "2026-08-28T02:00:00Z")
         records = [*repository_records(), late]
         zh = prepend_timeline_entries(zh, [late], "zh")
         en = prepend_timeline_entries(en, [late], "en")
@@ -724,10 +724,10 @@ class MemoryProjectionContractTest(unittest.TestCase):
         zh, en = valid_projection_pair()
         records = repository_records()
         variants = {
-            "wrong": zh.replace("2026-08-21—2026-08-27", "2026-08-13—2026-08-20", 1),
+            "wrong": zh.replace("2026-08-22—2026-08-28", "2026-08-13—2026-08-20", 1),
             "duplicate": zh.replace(
                 direction_line("zh"),
-                direction_line("zh") + " 2026-08-21—2026-08-27",
+                direction_line("zh") + " 2026-08-22—2026-08-28",
                 1,
             ),
         }
@@ -778,13 +778,13 @@ class MemoryProjectionContractTest(unittest.TestCase):
             "synthesis": direction_line("zh", synthesized="2026-08-20"),
             "synthesis-laundering": direction_line("zh")
             .replace(
-                "精确合成时间：`2026-08-27T00:34:29Z`",
+                "精确合成时间：`2026-08-28T01:07:50Z`",
                 "精确合成时间：`2026-08-20`",
                 1,
             )
             .replace(
                 "仅原生接受时间可以支持窗口判断。",
-                "仅原生接受时间可以支持窗口判断。旁注：`2026-08-27T00:34:29Z`。",
+                "仅原生接受时间可以支持窗口判断。旁注：`2026-08-28T01:07:50Z`。",
                 1,
             ),
             "prior-visible": direction_line("zh").replace(
@@ -816,7 +816,7 @@ class MemoryProjectionContractTest(unittest.TestCase):
                 "supports": "旁注：支撑：**none**；",
                 "confidence": "旁注：置信度：**high**；",
                 "timing basis": "旁注：时间依据：`radar_published_at`；",
-                "synthesis": "旁注：精确合成时间：`2026-08-27T00:34:29Z`。",
+                "synthesis": "旁注：精确合成时间：`2026-08-28T01:07:50Z`。",
                 "implication": (
                     "旁注：研究设计含义（require native v2 times for period claims）：重复。"
                 ),
@@ -827,7 +827,7 @@ class MemoryProjectionContractTest(unittest.TestCase):
                 "supports": "Aside: Supports: **none**;",
                 "confidence": "Aside: confidence: **high**;",
                 "timing basis": "Aside: timing basis: `radar_published_at`;",
-                "synthesis": "Aside: Exact synthesis time: `2026-08-27T00:34:29Z`.",
+                "synthesis": "Aside: Exact synthesis time: `2026-08-28T01:07:50Z`.",
                 "implication": (
                     "Aside: Research-design implication "
                     "(require native v2 times for period claims): duplicate."
@@ -975,9 +975,9 @@ class MemoryProjectionContractTest(unittest.TestCase):
                 ),
                 (
                     "synthesis",
-                    "精确合成时间：`2026-08-27T00:34:29Z`。",
+                    "精确合成时间：`2026-08-28T01:07:50Z`。",
                     "精确合成时间缺少结构。旁注：精确合成时间："
-                    "`2026-08-27T00:34:29Z`。",
+                    "`2026-08-28T01:07:50Z`。",
                 ),
             ),
             "en": (
@@ -1012,9 +1012,9 @@ class MemoryProjectionContractTest(unittest.TestCase):
                 ),
                 (
                     "synthesis",
-                    "Exact synthesis time: `2026-08-27T00:34:29Z`.",
+                    "Exact synthesis time: `2026-08-28T01:07:50Z`.",
                     "Exact synthesis time lacks structure. Aside: Exact synthesis time: "
-                    "`2026-08-27T00:34:29Z`.",
+                    "`2026-08-28T01:07:50Z`.",
                 ),
             ),
         }
@@ -1502,13 +1502,13 @@ class MemoryProjectionContractTest(unittest.TestCase):
                 "post-cutoff": (
                     native_record(
                         identity,
-                        "2026-08-27T01:00:00Z",
+                        "2026-08-28T02:00:00Z",
                         map_delta=state,
                         direction_keys=(key,),
                     ),
                     (identity,),
                     "field-map",
-                    "accepted after direction synthesized=2026-08-27T00:34:29Z",
+                    "accepted after direction synthesized=2026-08-28T01:07:50Z",
                 ),
                 "incompatible-map-delta": (
                     native_record(

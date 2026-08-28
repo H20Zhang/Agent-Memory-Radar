@@ -1,0 +1,76 @@
+{
+  "id": "2608.25655",
+  "title": "Reconstructing the Right Episode: Evaluating Interleaved Conversational Memory Beyond Long Context",
+  "authors": [
+    "Zhexi Feng",
+    "Ruiyi Zhang",
+    "Yongbo Yang",
+    "Pengtao Xie"
+  ],
+  "published": "2026-08-26",
+  "first_seen": "2026-08-28",
+  "published_at": "2026-08-26T11:37:03Z",
+  "first_seen_at": "2026-08-28T00:11:01Z",
+  "radar_published_at": "2026-08-28T00:20:27Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "episode-integrity-reconstruction"
+  ],
+  "paper_url": "https://arxiv.org/abs/2608.25655",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "representation_organization",
+  "tags": [
+    "episodic",
+    "hierarchical",
+    "text",
+    "general-agent"
+  ],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-08-28",
+    "blocker": "A paper-specific mechanism figure has not yet passed grounded VISUAL_POLICY.md review; the verified bilingual deep note carries the mechanism, controls, and lifecycle caveats meanwhile."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/list/cs.CL/recent",
+      "https://arxiv.org/abs/2608.25655"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/abs/2608.25655"
+    ],
+    "last_verified": "2026-08-28"
+  },
+  "analysis": {
+    "tldr": "SCALE-QA exposes flat interleaved conversation as an episode-localization problem, while TSIM reconstructs coherent episodes before hierarchical retrieval; the package wins by 5.6–17.6 accuracy points across three backends, but segmentation, summaries, and routing are not independently isolated.",
+    "problem": "Long-running chats mix unrelated topics without explicit session boundaries. Raw long context and ordinary RAG may retrieve locally similar turns yet fail to reconstruct the causally coherent earlier episode that determines the current task answer.",
+    "core_idea": "Segment a flat turn stream into temporally and semantically coherent episodes, retain deterministic episode summaries and multiple hierarchical views, then route a query through cluster and episode-level views before assembling the evidence needed for the current request.",
+    "memory_design": {
+      "write": "Conversation turns are accumulated and deterministically segmented into coherent episode units rather than stored only as a flat chronological stream.",
+      "organize": "TSIM builds a hierarchical multi-view index over episodes, including episode summaries and cluster-routing views that preserve episode integrity across interleaved topics.",
+      "read": "A query first localizes relevant clusters/episodes and then reconstructs evidence from the selected episode rather than relying on one-shot turn-level similarity or the whole transcript.",
+      "update_forget": "The system incrementally reconstructs/indexes episodes as history grows, but the paper does not establish a separate forgetting, conflict-repair, revocation, or long-term governance policy."
+    },
+    "compared_to": [
+      "Long-context LLM baselines on the same flat interleaved threads",
+      "Strong RAG baselines over the same conversational evidence",
+      "TSIM across three open-source and proprietary model backends"
+    ],
+    "evidence": "SCALE-QA contains 3,000 audited deterministic four-choice questions across 10 domains, evaluated through 128K context with a 400-question 1M diagnostic. Across three model backends TSIM is best in every corresponding setting and improves accuracy by 5.6–17.6 points over the strongest matched baseline. The evidence establishes package-level value for episode reconstruction under interleaving, not the isolated contribution of segmentation versus summaries versus cluster routing.",
+    "why_it_matters": "The representation boundary moves from 'which turns are relevant?' to 'which prior episode is the current task actually continuing?'. That makes episode integrity a state-localization problem before ordinary retrieval scoring, especially when one thread multiplexes many tasks.",
+    "limitations": [
+      "TSIM co-varies segmentation, deterministic summaries, hierarchical views, and cluster routing, so the paper does not isolate which representation operation carries the gain.",
+      "SCALE-QA and TSIM are co-designed around flat interleaving; broader transfer to open-ended tool-using agents and naturally occurring thread structure remains to be established.",
+      "The paper reports task accuracy but does not fully match construction, indexing, update, query latency, token, dollar, and energy costs across all baselines.",
+      "Benchmark genealogy is evaluation infrastructure; this Radar uses SCALE-QA only as evidence for a memory-representation claim rather than treating benchmark novelty as the central contribution."
+    ],
+    "confidence": "medium"
+  }
+}
