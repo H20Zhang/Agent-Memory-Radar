@@ -10,6 +10,7 @@ Compactions answer a different question from paper notes: **what changed in the 
 
 | Horizon | Report | Research takeaway |
 |---|---|---|
+| **Weekly** | [2026-W35 — Persistent state needs a qualification policy before consumption](weekly/2026-W35.md) ([中文](weekly/2026-W35.zh.md)) | Twenty early signals shift the causal focus from stored representation toward supersession, applicability, verification allocation, skill-set selection, invocation, and execution-grounded reuse; mechanism claims still need matched raw/verbatim controls and lifecycle cost. |
 | **Weekly** | [2026-W34 — Persistent state needs qualified access, selection, and commit gates](weekly/2026-W34.md) ([中文](weekly/2026-W34.zh.md)) | Five separate early signals sharpen evidence completion, skill selection, judge qualification, guarded harness commits, and training-side experience reuse; none is yet a trend. |
 | **Weekly** | [2026-W33 — Memory architecture decomposes into stage-specific controls](weekly/2026-W33.md) | Archive, access, consumer state/reuse, evolution, and lifecycle cost need matched controls rather than one architecture-level score. |
 | **Weekly** | [2026-W32 — Structure only matters when control can use it](weekly/2026-W32.md) | Added structure should be credited only when a downstream controller/operator actually exploits it. |
@@ -22,7 +23,7 @@ Compactions answer a different question from paper notes: **what changed in the 
 - **Recent 3 calendar months → monthly:** rebuild the design-space map and record which weekly claims persist or weaken.
 - **Covered years → yearly:** retain only durable shifts, field-shaping evidence, corrections, and open problems.
 
-W34 is closed and immutable. Papers accepted after 2026-08-23 remain in the rolling 7/30-day and monthly views; they are not backdated into the weekly digest by source publication date.
+W35 is closed and immutable. Papers accepted after 2026-08-30 remain in the rolling 7/30-day and later compaction views; they are not backdated into the weekly digest by source publication date.
 
 ## Reading a compaction
 
