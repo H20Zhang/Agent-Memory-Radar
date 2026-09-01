@@ -14,7 +14,7 @@ Compactions answer a different question from paper notes: **what changed in the 
 | **Weekly** | [2026-W34 — Persistent state needs qualified access, selection, and commit gates](weekly/2026-W34.md) ([中文](weekly/2026-W34.zh.md)) | Five separate early signals sharpen evidence completion, skill selection, judge qualification, guarded harness commits, and training-side experience reuse; none is yet a trend. |
 | **Weekly** | [2026-W33 — Memory architecture decomposes into stage-specific controls](weekly/2026-W33.md) | Archive, access, consumer state/reuse, evolution, and lifecycle cost need matched controls rather than one architecture-level score. |
 | **Weekly** | [2026-W32 — Structure only matters when control can use it](weekly/2026-W32.md) | Added structure should be credited only when a downstream controller/operator actually exploits it. |
-| **Monthly** | [2026-08 — rolling through Aug 24](monthly/2026-08.md) | August now also separates candidate commitment, state supersession, and post-retrieval applicability; all remain one-paper signals without a durable map edit. |
+| **Monthly** | [2026-08 — closed](monthly/2026-08.md) ([中文](monthly/2026-08.zh.md)) | Twenty-five native-v2 acceptances shift the causal unit from stored artifacts toward qualification, state-conditioned skill policy, downstream executable behavior, and lifecycle-matched attribution; no one-paper direction earns a durable map edit. |
 | **Yearly** | [2026 — rolling, incomplete](yearly/2026.md) | Current evidence supports a multi-stage memory-state interface, but coverage begins in August with limited backfill and is not a full-year reconstruction. |
 
 ## Time hierarchy
@@ -23,7 +23,7 @@ Compactions answer a different question from paper notes: **what changed in the 
 - **Recent 3 calendar months → monthly:** rebuild the design-space map and record which weekly claims persist or weaken.
 - **Covered years → yearly:** retain only durable shifts, field-shaping evidence, corrections, and open problems.
 
-W35 is closed and immutable. Papers accepted after 2026-08-30 remain in the rolling 7/30-day and later compaction views; they are not backdated into the weekly digest by source publication date.
+W35 and the 2026-08 monthly digest are closed and immutable by period membership. Later Radar acceptances remain in rolling 7/30-day and future compaction views; they are never backdated into a closed digest by source publication date.
 
 ## Reading a compaction
 
