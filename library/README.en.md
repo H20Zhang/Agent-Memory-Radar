@@ -48,9 +48,9 @@ Persistent state needs three different decisions: whether candidate information 
 
 ### Learned access/writer/curriculum → state-grounded localized evolution → certified artifact / harness commit
 
-[SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [Recuris](../papers/2026/2608.24876.md) / [HiPS](../papers/2026/2608.25329.md) / [KOPE](../papers/2026/2608.25570.md) → [TRUSS](../papers/2026/2608.17588.md) / [Harness Continual Learning](../papers/2026/2608.19013.md)
+[Hindsight Memory-PRM](../papers/2026/2608.29605.md) / [SkillGate](../papers/2026/2608.18852.md) / [WER](../papers/2026/2608.17587.md) / [SPADE](../papers/2026/2608.19197.md) → [Recuris](../papers/2026/2608.24876.md) / [HiPS](../papers/2026/2608.25329.md) / [KOPE](../papers/2026/2608.25570.md) → [TRUSS](../papers/2026/2608.17588.md) / [Harness Continual Learning](../papers/2026/2608.19013.md)
 
-Procedural-learning gains can come from read/write policy, training-side experience, verified working state, invocation control, failure localization, or promotion gates. Recuris adds same-library and retry-matched controls that make the credit location more explicit before the package is called “self-improving memory.”
+Procedural-learning gains can come from credit assignment, read/write policy, training-side experience, verified working state, invocation control, failure localization, or promotion gates. Hindsight further requires entry-presence utility to be separated from action-level credit and charges audit compute as supervision cost. Recuris adds same-library and retry-matched controls that make the credit location more explicit before the package is called “self-improving memory.”
 
 ### Retrieval score → stage attribution → gate qualification → feature-promotion evidence
 

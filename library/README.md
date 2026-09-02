@@ -48,9 +48,9 @@ Outcome diversity 可能帮助 procedure construction，普通 write path 也形
 
 ### 学得访问 / 编写 / 课程策略 → 状态落地与定位式演化 → 经认证产物 / Harness 提交
 
-[SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) / [SPADE](../papers/2026/2608.19197.zh.md) → [Recuris](../papers/2026/2608.24876.zh.md) / [HiPS](../papers/2026/2608.25329.zh.md) / [KOPE](../papers/2026/2608.25570.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) / [Harness Continual Learning](../papers/2026/2608.19013.zh.md)
+[Hindsight Memory-PRM](../papers/2026/2608.29605.zh.md) / [SkillGate](../papers/2026/2608.18852.zh.md) / [WER](../papers/2026/2608.17587.zh.md) / [SPADE](../papers/2026/2608.19197.zh.md) → [Recuris](../papers/2026/2608.24876.zh.md) / [HiPS](../papers/2026/2608.25329.zh.md) / [KOPE](../papers/2026/2608.25570.zh.md) → [TRUSS](../papers/2026/2608.17588.zh.md) / [Harness Continual Learning](../papers/2026/2608.19013.zh.md)
 
-程序性学习的收益可能来自 read/write policy、training-side experience、verified working state、invocation control、failure localization 或 promotion gate。Recuris 的 same-library 与 retry-matched 对照进一步说明：先定位真正改变 later behavior 的控制层，再讨论“self-improving memory”。
+程序性学习的收益可能来自 credit assignment、read/write policy、training-side experience、verified working state、invocation control、failure localization 或 promotion gate。Hindsight 进一步要求先区分 entry-presence utility 与 action-level credit，并把 audit compute 计入监督成本。Recuris 的 same-library 与 retry-matched 对照进一步说明：先定位真正改变 later behavior 的控制层，再讨论“self-improving memory”。
 
 ### 检索分数 → 阶段归因 → Gate 资格 → 功能上线证据
 

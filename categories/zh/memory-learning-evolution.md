@@ -6,6 +6,8 @@
 
 ## 当前判断
 
+**Hindsight Memory-PRM** 在更宽泛的 self-evolution 之前增加了一个可审计监督边界：同一 scaffold 下把 outcome-only reward、observational attribution 与 controlled deletion credit 拆开。Deletion 能识别固定 reader 下的 entry-presence utility，但不是理想 action causality，而且数百万次 offline audit 必须计入 lifecycle cost。
+
 **Recuris** 把新的关键边界暴露出来：persistent skill 和“当前状态决定何时调用 skill”不是一回事。其 same-library control 显示 verified working state / invocation control 承担了最清楚的增益；跨任务 localized patch 能迁移，但 retry-matched Terminal-Bench adaptation 仍是 null。**CONTRAMEM** 与 **BASM** 则分别补充 outcome contrast 和 validity boundary，它们共同把 procedural memory 拆成 artifact、state、access 与 update policy。
 
 HiPS 与 KOPE 又把 adaptive state 推到两个不同层面：前者是“哪些 memory-management rule 应共享或个性化”，后者是“哪些 execution outcome 应持久化并在以后重新进入决策”。两者都支持外部状态会改变 later behavior，但都还不足以把 package gain 归因给单一 memory component。

@@ -1,0 +1,91 @@
+{
+  "id": "2608.29605",
+  "title": "Hindsight Memory-PRM: Supervising Memory Management with Auditable Hindsight Credit",
+  "authors": [
+    "Haoxuan Jia",
+    "Yang Liu",
+    "Yingguang Yang",
+    "Yancheng Chen",
+    "Chongyang Zhang",
+    "Hao Zheng",
+    "Qian Li",
+    "Yulin Huang",
+    "Jianshen Zhang",
+    "Yongzhi Qi",
+    "Shang Luo",
+    "Kefu Xu",
+    "Hao Peng",
+    "Junyu Lu",
+    "Du Cheng",
+    "Philip S. Yu",
+    "Bin Chong"
+  ],
+  "published": "2026-08-30",
+  "first_seen": "2026-09-02",
+  "published_at": "2026-08-30T06:53:13Z",
+  "first_seen_at": "2026-09-02T00:53:45Z",
+  "radar_published_at": "2026-09-02T01:11:20Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "intervention-calibrated-memory-credit"
+  ],
+  "paper_url": "https://arxiv.org/abs/2608.29605",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "memory_learning_evolution",
+  "tags": [
+    "episodic",
+    "semantic",
+    "procedural",
+    "structured",
+    "general-agent"
+  ],
+  "relevance": 1.0,
+  "importance": 5,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-09-02",
+    "blocker": "A paper-specific mechanism figure has not yet passed grounded VISUAL_POLICY.md review; the verified bilingual deep note carries the intervention, matched controls, and lifecycle-cost caveats meanwhile."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/abs/2608.29605"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/html/2608.29605",
+      "https://arxiv.org/pdf/2608.29605"
+    ],
+    "last_verified": "2026-09-02"
+  },
+  "analysis": {
+    "tldr": "Hindsight Memory-PRM turns downstream memory use into auditable supervision: retrieval logs, answer citations, and controlled deletion-and-reanswer produce intervention-calibrated credit for Write/Merge/Noop decisions. Its strongest evidence is a same-scaffold ladder that separates sparse outcome reward, observational attribution, and intervention information under a fixed reader.",
+    "problem": "Long-horizon memory managers take dozens of Write, Merge, or Noop decisions before an episode-level answer reward arrives, so outcome-only RL gives nearly every operation the same delayed credit and makes it hard to tell which memory action later mattered.",
+    "core_idea": "Log every memory operation and read path, certify zero contribution for entries never touched by retrieval, construct source-anchored probes, and run one deletion-and-reanswer for probe-linked entries. Combine those measured flips with retrieval/citation traces to train an operation-conditioned memory-utility critic and to settle online ordinal entry credit that is propagated through retained version chains as an action-level proxy reward.",
+    "memory_design": {
+      "write": "A Qwen3-8B policy chooses Write, Merge, or Noop for event and profile layers while a verbatim layer losslessly preserves every turn; destructive deletion is excluded from the evaluated policy.",
+      "organize": "Entries live in event/profile/verbatim layers; Merge appends a new version while retaining older versions. The learned policy tends to consolidate same-topic facts into multi-version chains, but the interface provides the version structure.",
+      "read": "Management uses deterministic top-4 retrieval per managed layer; answering uses a cross-layer top-10 plus one provenance-expansion step. Retrieval logs and answer-time citations form the observational audit trail used for credit.",
+      "update_forget": "Merge creates non-destructive version chains and the learned policy adapts which facts to merge. The paper deliberately avoids destructive forgetting, so deletion rights, retention budgets, and long-term revocation remain outside the demonstrated lifecycle."
+    },
+    "compared_to": [
+      "Outcome-only GRPO under the same memory scaffold, retrieval stack, answerer, and judge",
+      "Observational attribution without the intervention-calibrated flip/toxicity branches",
+      "Matched-scale, shuffled-flip, flip-only, toxicity-only, and critic ablations",
+      "SFT/untrained same-scaffold managers plus reproduced external memory systems for system-level context"
+    ],
+    "evidence": "On held-out LoCoMo, the same-scaffold ladder goes from 58.6 untrained to 62.5 SFT, 63.4 outcome-only GRPO, 70.2 observational attribution, and 77.5 for the full method. The final two ladder arms differ only in intervention-calibrated flip promotion and toxicity terms, adding 7.3 points beyond observational attribution; matched-scale and shuffled-flip controls stay near 70.5. The full 2x2 shows approximately additive critic and audited-term effects. On LongMemEval, the ladder is 66.0 outcome-only, 72.5 observational, and 79.0 full. The audit also verifies that deleting 74.6% of entries outside every logged read path changes accuracy by only -0.1 points, while deleting cited entries costs 12.4 points.",
+    "why_it_matters": "This is a stronger causal template for memory learning than rewarding a packaged trajectory: it asks whether a specific persisted entry changes a fixed downstream reader, then uses that intervention to supervise the memory-management policy. The next benchmark for learned memory writers should distinguish entry-presence counterfactuals, action-level credit, and total supervision cost instead of treating episode reward as component evidence.",
+    "limitations": [
+      "The controlled deletion establishes entry-presence utility for a fixed answerer/prompt/decoding setup, not the ideal per-action difference reward; version-chain propagation is an approximation and sampled action-level replay reports Spearman 0.72.",
+      "The storage schema is domain-coupled: direct LoCoMo-to-LongMemEval transfer falls to 58.4, while schema adaptation without policy retraining reaches 71.2 versus 79.0 native training.",
+      "The evaluated store is lossless and intentionally avoids destructive forgetting or hard retention budgets, so overwrite, revocation, privacy deletion, and bounded-storage behavior are not established.",
+      "Offline supervision is expensive: three LoCoMo seeds use about 1.6M API calls (~$1,100), and the LongMemEval experiment about 9.8M calls (~$6,500); this cost must be charged against outcome-only or simpler writer baselines."
+    ],
+    "confidence": "high"
+  }
+}

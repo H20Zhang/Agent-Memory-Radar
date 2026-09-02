@@ -6,12 +6,15 @@ How memory content, writer policy, retrieval policy, structural relations, or fe
 
 ## Current argument
 
+**Hindsight Memory-PRM** adds an auditable supervision boundary before broader self-evolution claims: under one shared scaffold it separates outcome-only reward, observational attribution, and controlled deletion credit. The deletion test establishes entry-presence utility for a fixed reader, not ideal per-action causality, and its multi-million-call offline audit must be charged as lifecycle cost.
+
 “Self-improving memory” hides several adaptive states. **SkillEvo** improves the feedback surface; **WER** trains the skill-writer policy; **SPADE** lets a bounded environment buffer condition future curriculum generation; **TRUSS** certifies candidate artifacts; **ERSkill** evolves the read policy; **HyperSkill** operationalizes relations. **Recuris** now separates persistent skills from verified working state and state-grounded invocation, then uses structured traces for component-local evolution. **Harness Continual Learning** widens the boundary further to jointly version memory, interface, capability map, and router under a commit gate. The question is **what state changes, from which evidence, and under what promotion/governance rule**.
 
 **HiPS** adds a different adaptive-state boundary: the memory-management policy itself can split into shared rules and persona-local deltas, with matched ablations showing that rule flow and gating matter especially OOD. **KOPE** makes execution outcomes persistent experience state under a frozen model and fixed prompt budget; its evidence supports reusable external control state, while graph structure, ranking, compression, and injection are not yet fully separated.
 
 | Date | Paper | Tags | Importance | Research take |
 |---|---|---|---:|---|
+| 2026-08-30 | [Hindsight Memory-PRM](../papers/2026/2608.29605.md) | `episodic` `semantic` `procedural` `structured` `general-agent` | 5/5 | Same-scaffold intervention credit cleanly beats outcome-only and observational arms, but entry deletion is only a proxy for action-level credit and costs millions of audit calls. |
 | 2026-08-26 | [HiPS](../papers/2026/2608.25329.md) | `procedural` `structured` `personalization` | 4/5 | Shared-plus-persona rule state transfers across foundation models; matched ablations make rule flow/gating more credible than the heterogeneous headline leaderboard. |
 | 2026-08-26 | [KOPE](../papers/2026/2608.25570.md) | `episodic` `procedural` `graph` `structured` `general-agent` | 4/5 | Execution-grounded experience changes later kernel decisions under a fixed model, but graph memory and active-context packaging remain partially confounded. |
 | 2026-08-25 | [Recuris](../papers/2026/2608.24876.md) | `procedural` `working` `structured` `general-agent` | 4/5 | Same-library controls make verified working state and state-grounded invocation the clearest gain; cross-task patches transfer, while retry-matched Terminal-Bench adaptation is null. |
