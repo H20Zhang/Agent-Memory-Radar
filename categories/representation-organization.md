@@ -6,10 +6,13 @@ How agent memory is represented, structured, and transformed for the current con
 
 ## Current argument
 
+**Agent Zero Memory** adds a provenance/admission boundary to representation: the same history is exposed as timeline, graph, and documentary views, while citation lock restricts the final answer to evidence actually opened. Its cleanest ablation isolates hybrid retrieval rather than the three-store organization, so architecture attribution still needs matched store/provenance interventions and full build/maintenance cost.
+
 Representation now has **three separable stages**: archive organization, state localization, and actor-facing reconstruction. **SCALE-QA / TSIM** shows that a flat interleaved turn stream may first need to be reconstructed into coherent episodes before ordinary retrieval can work reliably. **QCR** and **QUMem** then show that even selected evidence can still be the wrong representation for the acting consumer: source trajectories or typed historical facts may need target-conditioned rebinding/state reconstruction. **VoiceMem** adds a streaming multimodal boundary: factual/entity state and affect/persona state can require different paths, while the upper organization/routing layer may stay portable across backends. Structure earns its cost only when a downstream operation can exploit it under matched construction and query budgets.
 
 | Date | Paper | Tags | Importance | Research take |
 |---|---|---|---:|---|
+| 2026-08-30 | [Agent Zero Memory](../papers/2026/2608.29606.md) | `episodic` `semantic` `structured` `graph` `hierarchical` `timeline` `general-agent` | 4/5 | Provenance-linked parallel views plus citation-locked reading make evidence admission explicit; the matched ablation supports hybrid retrieval, not the causal value of the three-store architecture. |
 | 2026-08-26 | [VoiceMem](../papers/2026/2608.26005.md) | `semantic` `structured` `graph` `multimodal` `personalization` | 4/5 | A shared upper organization/routing layer improves several interchangeable backends, but retrieval latency is not end-to-end latency and asynchronous write cost remains incomplete. |
 | 2026-08-26 | [SCALE-QA / TSIM](../papers/2026/2608.25655.md) | `episodic` `hierarchical` `text` `general-agent` | 4/5 | Flat interleaved history benefits from episode reconstruction before evidence assembly; segmentation, summaries, hierarchy, and routing remain package-confounded. |
 | 2026-08-17 | [QUMem](../papers/2026/2608.16168.md) | `semantic` `structured` `timeline` `personalization` | 4/5 | The biggest ablation effect comes after storage/retrieval: query-conditioned user-state reconstruction turns distributed historical evidence into currently applicable state. |
