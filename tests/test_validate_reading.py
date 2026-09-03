@@ -21,6 +21,7 @@ TIMELINE_SUMMARY_RE = re.compile(
 )
 CJK_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
 EXPECTED_TIMELINE_TITLES = {
+    "2608-29606": "2026-09-03 · Agent Zero Memory",
     "2608-29605": "2026-09-02 · Hindsight Memory-PRM",
     "2608-25329": "2026-08-28 · HiPS",
     "2608-25553": "2026-08-28 · When Stale Constraints Go Unchecked",

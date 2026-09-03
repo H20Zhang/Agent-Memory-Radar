@@ -1,0 +1,78 @@
+{
+  "id": "2608.29606",
+  "title": "Agent Zero Memory: Provenance-Aware Long-Term Memory for LLM Agents",
+  "authors": [
+    "Ming Wu",
+    "Pengyuan Zhu"
+  ],
+  "published": "2026-08-30",
+  "first_seen": "2026-09-03",
+  "published_at": "2026-08-30T06:55:59Z",
+  "first_seen_at": "2026-09-03T01:10:47Z",
+  "radar_published_at": "2026-09-03T01:19:15Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "provenance-aware-layered-memory"
+  ],
+  "paper_url": "https://arxiv.org/abs/2608.29606",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "representation_organization",
+  "tags": [
+    "episodic",
+    "semantic",
+    "structured",
+    "graph",
+    "hierarchical",
+    "timeline",
+    "general-agent"
+  ],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-09-03",
+    "blocker": "A paper-specific mechanism figure has not yet passed grounded VISUAL_POLICY.md review; the verified bilingual deep note carries the layered-store, retrieval-control, and lifecycle-cost caveats meanwhile."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/abs/2608.29606"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/abs/2608.29606",
+      "https://arxiv.org/html/2608.29606v1"
+    ],
+    "last_verified": "2026-09-03"
+  },
+  "analysis": {
+    "tldr": "Agent Zero Memory exposes one persistent history through three provenance-linked views—an episodic timeline, an entity-event graph, and citation-locked documentary memory—and reads them through a routed hybrid-search interface. The cleanest matched evidence supports complementary retrieval channels, not the causal value of the three-store architecture itself.",
+    "problem": "A single memory representation can lose temporal change, cross-session associations, or source-faithful durable facts, while a retrieved answer can still overclaim if the final reader is not constrained to evidence it actually opened.",
+    "core_idea": "Preserve raw sources while building three parallel, provenance-carrying memory views. At query time, an intent gate and source router launch concurrent agentic searches over each view with hybrid dense-plus-lexical retrieval; the final integrator is citation-locked to opened evidence and may abstain when support is insufficient.",
+    "memory_design": {
+      "write": "Conversations, files, and connected sources remain in a raw dense-plus-lexical index while memory build extracts timestamped Memory Events, entity-event relations, and curated HDM facts, each with an origin and evidence pointer.",
+      "organize": "The same history is exposed as an episodic timeline, an associative entity-event graph, and semantic Hierarchical Documentary Memory rather than being collapsed into one canonical store.",
+      "read": "An intent gate skips memory for self-contained turns; otherwise a source router launches three concurrent tool-using search loops. Each uses hybrid embedding plus lexical retrieval with agent-controlled filters, and only opened evidence may be cited by the final answer.",
+      "update_forget": "Factual memory is re-synchronized and experiential memory can be refined while timestamps and provenance are retained. The evaluated design does not establish principled conflict arbitration, destructive forgetting, tombstone policy, or bounded-retention behavior."
+    },
+    "compared_to": [
+      "A fixed-pipeline LongMemEval retrieval ablation: hybrid embedding+lexical versus embedding-only, grep-only, and lexical-only retrieval with gpt-5.6-sol",
+      "A fixed memory/retriever/control backbone sweep across eight LLMs to expose model, latency, and price sensitivity",
+      "Published LongMemEval and LoCoMo systems only as contextual cross-system references because judge, prompting, retrieval budget, and harness are not matched"
+    ],
+    "evidence": "With gpt-5.6-sol and every other component fixed, LongMemEval is 95.20 with hybrid retrieval, 94.00 with embedding only, 93.60 with grep only, and 93.40 with lexical only. Under fixed memory, retriever, and control logic, the eight-backbone LongMemEval study spans 92.20 to 95.60 accuracy while per-query cost varies by roughly 30x. The paper also reports 95.60 on LongMemEval and 93.60 on LoCoMo, but those headline comparisons are not matched component controls.",
+    "why_it_matters": "The reusable research boundary is provenance-aware admission at read time: retrieval quality, source traceability, and permission to use evidence are separate variables. A convincing next study should freeze the reader, evidence surface, and budget, then independently remove one store, provenance/citation locking, and routing while charging full build and maintenance cost.",
+    "limitations": [
+      "The paper does not report matched remove-one-store, provenance-off, or intent-gate ablations, so the three-store organization and citation lock are not isolated as causes of the headline benchmark scores.",
+      "External LongMemEval and LoCoMo comparisons use heterogeneous judges, prompting, retrieval budgets, and harnesses; the reported +0.73/+1.10 headline deltas are therefore contextual rather than component-attributable.",
+      "All benchmark accuracies are single-run under the benchmark LLM judge, leaving judge variance and calibration incompletely characterized.",
+      "Query-time latency, token counts, and dollar cost are reported, but extraction, graph linking, indexing, re-synchronization, and ongoing maintenance cost are not fully accounted for.",
+      "Conflict arbitration across multiple valid versions/sources and explicit forgetting or tombstone semantics remain future work, so provenance does not by itself establish correct current-state resolution."
+    ],
+    "confidence": "high"
+  }
+}

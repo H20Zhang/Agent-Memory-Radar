@@ -36,9 +36,9 @@ Outcome diversity 可能帮助 procedure construction，普通 write path 也形
 
 ### 原始存档 → 互补 / 多源访问 → 状态定位 → 面向使用方的状态重建
 
-[ReFind](../papers/2026/2608.12888.zh.md) → [CABLE](../papers/2026/2608.17911.zh.md) / [MemFuse](../papers/2026/2608.18704.zh.md) → [ArborMem](../papers/2026/2608.17534.zh.md) → [QUMem](../papers/2026/2608.16168.zh.md)
+[ReFind](../papers/2026/2608.12888.zh.md) → [CABLE](../papers/2026/2608.17911.zh.md) / [MemFuse](../papers/2026/2608.18704.zh.md) / [Agent Zero Memory](../papers/2026/2608.29606.zh.md) → [ArborMem](../papers/2026/2608.17534.zh.md) → [QUMem](../papers/2026/2608.16168.zh.md)
 
-结构化记忆与原始记录不是一次性二选一。先用更强的原始记录接口作为基线，再检验预存关系是否改变可达性；历史若包含多条交错的轨迹，需要先定位当前状态；检索到的证据最后仍可能需要转换为 Agent 实际使用的状态。
+结构化记忆与原始记录不是一次性二选一。先用更强的原始记录接口作为基线，再检验预存关系是否改变可达性；历史若包含多条交错的轨迹，需要先定位当前状态；检索到的证据最后仍可能需要转换为 Agent 实际使用的状态。 Agent Zero Memory 又加入并行的来源追踪视图和 citation lock，但三存储组织本身仍缺 matched component ablation。
 
 ### Candidate 承诺 → 状态取代 → 面向当前使用方的适用性判断
 

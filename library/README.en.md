@@ -36,9 +36,9 @@ Procedural construction benefits from outcome diversity, while ordinary write pa
 
 ### Raw archive → complementary/multi-source access → state localization → consumer-state reconstruction
 
-[ReFind](../papers/2026/2608.12888.md) → [CABLE](../papers/2026/2608.17911.md) / [MemFuse](../papers/2026/2608.18704.md) → [ArborMem](../papers/2026/2608.17534.md) → [QUMem](../papers/2026/2608.16168.md)
+[ReFind](../papers/2026/2608.12888.md) → [CABLE](../papers/2026/2608.17911.md) / [MemFuse](../papers/2026/2608.18704.md) / [Agent Zero Memory](../papers/2026/2608.29606.md) → [ArborMem](../papers/2026/2608.17534.md) → [QUMem](../papers/2026/2608.16168.md)
 
-“Structured vs raw” is not one decision. Start with a stronger raw-interface baseline, then test whether stored relations change reachability. If history contains interleaved trajectories, localize the active state; retrieved evidence may still need to be converted into actor-facing state.
+“Structured vs raw” is not one decision. Start with a stronger raw-interface baseline, then test whether stored relations change reachability. If history contains interleaved trajectories, localize the active state; retrieved evidence may still need to be converted into actor-facing state. Agent Zero adds parallel provenance-linked views and citation-locked reading, but its three-store organization still lacks a matched component ablation.
 
 ### Candidate commitment → supersession → applicability-aware consumption
 

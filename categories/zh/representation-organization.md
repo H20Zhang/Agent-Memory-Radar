@@ -6,6 +6,8 @@
 
 ## 当前判断
 
+**Agent Zero Memory** 又补了一条“来源与准入”边界：同一段历史同时保留为时间线、图和文档三种视图，而 citation lock 只允许最终回答使用本轮真正打开过的证据。现有 matched ablation 只证明混合检索优于单一检索通道，还没有隔离三存储组织本身；要给架构记功，仍需固定 reader / evidence / budget 后做 store/provenance 干预，并补齐构建与维护成本。
+
 Representation 现在至少要拆成 **archive organization → state localization → consumer reconstruction** 三层。**SCALE-QA / TSIM** 说明 flat interleaved turn stream 先要恢复 coherent episode，普通 similarity search 才有机会拿到正确状态；**QCR** 与 **QUMem** 又说明 selected evidence 本身仍可能不是 actor 最适合消费的形式，需要 target-conditioned rebinding 或 current-user-state reconstruction。
 
 **VoiceMem** 再增加一条 streaming multimodal boundary：factual/entity state 与 affect/persona state 可以走不同 representation / access path，而 upper organization/routing layer 又能跨 Mem0、LangMem、Zep backend 复用。这里真正重要的不是“dual brain” 命名，而是 **不同 state contract 是否在同样 write/query cost 下改变下游行为。**
@@ -32,4 +34,4 @@ Transformation 越多，越容易引入 hallucination、丢 provenance，或者�
 
 ## 继续读
 
-[TSIM 中文笔记](../../papers/2026/2608.25655.zh.md) · [VoiceMem 中文笔记](../../papers/2026/2608.26005.zh.md) · [QUMem 中文笔记](../../papers/2026/2608.16168.zh.md) · [QCR](../../papers/2026/2608.12847.md)
+[Agent Zero Memory](../../papers/2026/2608.29606.zh.md) · [TSIM 中文笔记](../../papers/2026/2608.25655.zh.md) · [VoiceMem 中文笔记](../../papers/2026/2608.26005.zh.md) · [QUMem 中文笔记](../../papers/2026/2608.16168.zh.md) · [QCR](../../papers/2026/2608.12847.md)
