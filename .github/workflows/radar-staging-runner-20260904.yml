@@ -34,22 +34,23 @@ jobs:
           python - <<'PY'
           from pathlib import Path
 
-          # Roll synthetic contract fixtures forward with the public window without
-          # changing their semantics: defaults remain inside the 7-day window and
-          # explicit post-cutoff cases remain after the exact synthesis timestamp.
           p = Path('tests/test_memory_v2_contract.py')
           t = p.read_text(encoding='utf-8')
           t = t.replace('radar_published_at: str = "2026-08-28T00:30:00Z"', 'radar_published_at: str = "2026-08-29T00:30:00Z"', 1)
           t = t.replace('"2026-09-03T23:59:59Z"', '"2026-09-04T23:59:59Z"')
           p.write_text(t, encoding='utf-8')
 
-          # Chinese Timeline expansions must remain Chinese prose; identifiers stay
-          # canonical only where they improve protocol/model recognition.
           p = Path('README.md')
           t = p.read_text(encoding='utf-8')
           t = t.replace('在同一模型/serving path 下，row-level invalidation 让 post-drift first-try compliance 提高', '在同一模型与 serving path 下，row-level invalidation 让漂移后的首次尝试采用率提高')
           t = t.replace('且 row oracle 的 eviction precision 为', '且 row oracle 的淘汰精确率为')
           t = t.replace('grant、revocation 与 replacement 反复更新时，持久记忆何时会把不存在的权限写成“事实”，并让后续 executor 据此行动？', '当授权授予、撤销与替换反复更新时，持久记忆何时会把不存在的权限写成“事实”，并让后续执行器据此行动？')
+          t = t.replace('typed incremental finance 的 false-authority formation 达 **50.2%**；对自然生成的错误 typed memory，固定 request / executor / tools / canonical state 后，非法动作率为 **98.6%**，只把 memory 换成 oracle-exact state 后降到 **0%**，形成', '在结构化增量更新的金融场景中，错误权限形成率达 **50.2%**；对自然生成的错误 typed memory，固定请求、执行器、工具与真实授权状态后，非法动作率为 **98.6%**，只把 memory 换成 oracle-exact state 后降到 **0%**，形成')
+          t = t.replace('来源权威 Gate 可把 pooled unauthorized submission **25.3→7.3%**，但 authorized use 同时 **93.3→53.8%**。', '来源权威 Gate 可把汇总非法动作提交率从 **25.3% 降到 7.3%**，但合法使用率也从 **93.3% 降到 53.8%**。')
+          p.write_text(t, encoding='utf-8')
+
+          p = Path('papers/2026/2609.01836.zh.md')
+          t = p.read_text(encoding='utf-8').replace('(2608.01679.md)', '(2608.01679.zh.md)')
           p.write_text(t, encoding='utf-8')
           PY
       - name: Run every test and validator
