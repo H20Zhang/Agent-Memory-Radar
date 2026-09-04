@@ -31,6 +31,27 @@ jobs:
           Path('/tmp/stage.py').write_text('\n'.join(lines) + '\n', encoding='utf-8')
           PY
           python /tmp/stage.py
+          python - <<'PY'
+          from pathlib import Path
+
+          # Roll synthetic contract fixtures forward with the public window without
+          # changing their semantics: defaults remain inside the 7-day window and
+          # explicit post-cutoff cases remain after the exact synthesis timestamp.
+          p = Path('tests/test_memory_v2_contract.py')
+          t = p.read_text(encoding='utf-8')
+          t = t.replace('radar_published_at: str = "2026-08-28T00:30:00Z"', 'radar_published_at: str = "2026-08-29T00:30:00Z"', 1)
+          t = t.replace('"2026-09-03T23:59:59Z"', '"2026-09-04T23:59:59Z"')
+          p.write_text(t, encoding='utf-8')
+
+          # Chinese Timeline expansions must remain Chinese prose; identifiers stay
+          # canonical only where they improve protocol/model recognition.
+          p = Path('README.md')
+          t = p.read_text(encoding='utf-8')
+          t = t.replace('在同一模型/serving path 下，row-level invalidation 让 post-drift first-try compliance 提高', '在同一模型与 serving path 下，row-level invalidation 让漂移后的首次尝试采用率提高')
+          t = t.replace('且 row oracle 的 eviction precision 为', '且 row oracle 的淘汰精确率为')
+          t = t.replace('grant、revocation 与 replacement 反复更新时，持久记忆何时会把不存在的权限写成“事实”，并让后续 executor 据此行动？', '当授权授予、撤销与替换反复更新时，持久记忆何时会把不存在的权限写成“事实”，并让后续执行器据此行动？')
+          p.write_text(t, encoding='utf-8')
+          PY
       - name: Run every test and validator
         run: |
           python -m unittest discover -s tests -v
