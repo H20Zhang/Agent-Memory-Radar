@@ -1,0 +1,533 @@
+name: Stage Sep 4 Agent Memory radar transaction
+
+on:
+  push:
+    branches: [radar-staging-20260904]
+
+permissions:
+  contents: write
+
+jobs:
+  stage:
+    if: github.event.head_commit.message != 'Stage Sep 4 Agent Memory radar transaction'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validation dependencies
+        run: pip install -r requirements.txt
+      - name: Apply accepted research transaction
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          ROOT = Path('.')
+          FIRST_SEEN = '2026-09-04T00:45:06Z'
+          RADAR_TIME = '2026-09-04T00:58:49Z'
+          OLD_SYNTH = '2026-09-03T01:19:15Z'
+
+          def write(path, text):
+              p = ROOT / path
+              p.parent.mkdir(parents=True, exist_ok=True)
+              p.write_text(text.rstrip() + '\n', encoding='utf-8')
+
+          def replace_once(text, old, new, label):
+              if text.count(old) != 1:
+                  raise RuntimeError(f'{label}: expected one occurrence, found {text.count(old)}')
+              return text.replace(old, new, 1)
+
+          def replace_section(text, start_anchor, end_anchor, replacement):
+              start = text.index(f'<a id="{start_anchor}"></a>')
+              end = text.index(f'<a id="{end_anchor}"></a>', start + 1)
+              return text[:start] + replacement.rstrip() + '\n\n' + text[end:]
+
+          eal = {
+            'id': '2609.01836',
+            'title': 'Agent Memory Is a Surface for Endogenous Authorization Laundering',
+            'authors': ['Tommaso Cerruti', 'Mika Okamoto', 'Ansel Kaplan Erol'],
+            'published': '2026-09-01',
+            'first_seen': '2026-09-04',
+            'published_at': '2026-09-01T20:12:08Z',
+            'first_seen_at': FIRST_SEEN,
+            'radar_published_at': RADAR_TIME,
+            'time_provenance': 'native_v2',
+            'map_delta': 'early_signal',
+            'direction_keys': ['authorization-state-integrity'],
+            'paper_url': 'https://arxiv.org/abs/2609.01836',
+            'code_url': 'https://github.com/tommasocerruti/eal-bench',
+            'project_url': None,
+            'primary_category': 'evaluation_analysis',
+            'tags': ['semantic', 'text', 'structured', 'general-agent'],
+            'relevance': 1.0,
+            'importance': 4,
+            'visual_explainer': {
+              'status': 'blocked', 'path': None, 'format': 'webp', 'generator': 'gpt-image',
+              'grounding': 'full-paper', 'last_verified': '2026-09-04',
+              'blocker': 'A paper-specific formation-to-propagation intervention figure has not yet passed grounded VISUAL_POLICY.md review; the verified bilingual deep note carries the exact-repair evidence, mitigation trade-off, and lifecycle-cost caveats meanwhile.'
+            },
+            'provenance': {
+              'discovered_from': ['https://arxiv.org/abs/2609.01836'],
+              'analyzed_from': ['https://arxiv.org/abs/2609.01836', 'https://arxiv.org/html/2609.01836v1', 'https://github.com/tommasocerruti/eal-bench'],
+              'last_verified': '2026-09-04'
+            },
+            'analysis': {
+              'tldr': 'EAL-Bench separates false authorization formed during persistent-memory updates from its propagation to downstream tool action. The strongest causal evidence is an exact memory-only repair: naturally erroneous typed memories lead calibrated executors to unauthorized action in 98.6% of matched trials, while oracle-exact replacement reduces that behavior to 0%.',
+              'problem': 'Persistent memory can silently become an agent authorization policy: grants, revocations, restrictions, and replacements may be distorted during repeated updates even when the underlying organizational history is authentic and non-malicious.',
+              'core_idea': 'Replay a deterministic hidden authorization ledger across evolving histories, have a memory writer maintain bounded free-text or typed state, and then give an executor only that stored memory plus a matched request. Formation and propagation are measured separately, with faithful-memory controls and exact-state repair holding request, executor, tools, and canonical state fixed.',
+              'memory_design': {
+                'write': 'A LangMem profile writer converts an evolving organizational history into bounded persistent memory. One-shot writers see the full history; incremental writers receive only prior memory plus the new block, with one validation-informed repair attempt.',
+                'organize': 'Memory is either one free-text profile or schema-validated typed authorization records carrying domain-native scope and source identifiers. A mitigation alternative stores a bounded event log and derives current authorization through a deterministic reducer.',
+                'read': 'The downstream executor sees only frozen stored memory and the request, never the original history or canonical ledger, and selects native terminal tool actions. Paired authorized and unauthorized requests differ in one authorization-relevant field.',
+                'update_forget': 'Grant, restriction, revocation, and replacement events repeatedly update persistent state. The benchmark tests exact repair and two safeguards, but does not establish a production policy for bounded retention, destructive deletion, cross-source conflict repair, or long-running maintenance.'
+              },
+              'compared_to': [
+                'AuthMem-Bench as the closest authority-memory predecessor: it varies source authority for a fixed claim/task but does not evaluate repeated grant/revocation/replacement updates or exact memory repair',
+                'Faithful-text and faithful-typed executor controls that must achieve 100% authorized use and 0% unauthorized submission before an executor is used for causal replay',
+                'Exact-state repair of naturally erroneous typed memories, holding request, executor, tools, and canonical authorization state fixed',
+                'Source-authority gating and bounded event sourcing as mitigation packages; their safety gains are evaluated together with legitimate-use loss rather than treated as isolated component effects'
+              ],
+              'evidence': 'Under typed incremental updating, false-authority formation reaches 28.3% in procurement, 10.4% in cybersecurity, and 50.2% in finance; downstream unauthorized submission is 28.9%, 10.4%, and 51.0%. Across naturally generated erroneous typed memories, calibrated executors take the unauthorized action in 98.6% of matched replays; replacing only memory with oracle-exact state reduces this to 0%. A source-authority gate reduces pooled unauthorized submission from 25.3% to 7.3% and bounded event sourcing to 9.0%, while authorized use falls from 93.3% to 53.8% and 64.7%, respectively.',
+              'why_it_matters': 'The reusable boundary is authorization-state integrity, not generic recall. A memory writer can create a state that is internally plausible yet operationally over-authoritative, and exact repair shows that the stored artifact itself can be the causal path to action. Future work should hold writer/executor/task budgets fixed while independently intervening on update semantics, provenance/authority checks, and derived-state representation.',
+              'limitations': [
+                'The benchmark uses structured synthetic organizational histories and deterministic ledgers across three domains; it measures a failure mechanism, not its prevalence in live deployments.',
+                'Representation-level formation is deterministic only for typed memory; free-text memory relies on downstream behavioral interventions rather than an equally direct formation label.',
+                'The two safeguards are not single-component ablations: bounded event sourcing changes the memory architecture, while source-authority gating assumes authority metadata is known and both sacrifice legitimate authorized use.',
+                'Some writer-side robustness analyses are single-seed, and additional inference shifts the bottleneck from generation to candidate selection rather than proving a universal compute remedy.',
+                'The study reports project inference expenditure but does not fully match production storage growth, update latency, maintenance, revocation/deletion, privacy, or recovery cost over a live lifecycle.'
+              ],
+              'confidence': 'high'
+            }
+          }
+
+          inv = {
+            'id': '2609.00243',
+            'title': 'Invalidation Contracts for Cross-Episode Agent Memory',
+            'authors': ['Michael Wu', 'Arquimedes Canedo'],
+            'published': '2026-08-31',
+            'first_seen': '2026-09-04',
+            'published_at': '2026-08-31T18:45:07Z',
+            'first_seen_at': FIRST_SEEN,
+            'radar_published_at': RADAR_TIME,
+            'time_provenance': 'native_v2',
+            'map_delta': 'early_signal',
+            'direction_keys': ['versioned-memory-invalidation'],
+            'paper_url': 'https://arxiv.org/abs/2609.00243',
+            'code_url': 'https://github.com/arquicanedo/self-reflective-apis',
+            'project_url': 'https://github.com/beining1008/cross-episode-memory-client',
+            'primary_category': 'write_update_consolidation',
+            'tags': ['procedural', 'structured', 'general-agent'],
+            'relevance': 1.0,
+            'importance': 4,
+            'visual_explainer': {
+              'status': 'blocked', 'path': None, 'format': 'webp', 'generator': 'gpt-image',
+              'grounding': 'full-paper', 'last_verified': '2026-09-04',
+              'blocker': 'A paper-specific validity-versus-compliance and row-versus-table invalidation figure has not yet passed grounded VISUAL_POLICY.md review; the paired deep note preserves the A0/A1/A2/A2D control ladder and cost caveats meanwhile.'
+            },
+            'provenance': {
+              'discovered_from': ['https://arxiv.org/abs/2609.00243'],
+              'analyzed_from': ['https://arxiv.org/abs/2609.00243', 'https://arxiv.org/html/2609.00243v1', 'https://github.com/arquicanedo/self-reflective-apis', 'https://github.com/beining1008/cross-episode-memory-client'],
+              'last_verified': '2026-09-04'
+            },
+            'analysis': {
+              'tldr': 'Invalidation Contracts version cross-episode recovery memories so server drift can evict only stale suggestions. Its useful control ladder separates memory reuse from invalidation: naive memory already saves tokens over no memory, while finer row-level invalidation changes post-drift compliance and preserves more reusable state than table-level eviction.',
+              'problem': 'Cross-episode procedural memory can amortize repeated API recovery work, but external data or schema drift can silently make cached fixes stale. Re-deriving every episode restores correctness by giving back the very savings memory was meant to create.',
+              'core_idea': 'Attach cacheability and version metadata to recovery suggestions, expose deterministic validity through the serving protocol, and let the client evict stale entries before planning. The evaluation separates validity, determined by the protocol, from compliance, determined by whether a planner actually uses a still-valid suggestion on the first attempt.',
+              'memory_design': {
+                'write': 'Successful recovery suggestions from one API episode are persisted for reuse in later episodes, together with cacheability and version dependency metadata supplied by the server.',
+                'organize': 'Entries are keyed by reusable recovery advice and dependency scope. Table-level stamps invalidate all co-located entries, while row-level diffs preserve unaffected entries and evict only memories whose dependency version changed.',
+                'read': 'On a later episode the client checks validity metadata before exposing cached recovery advice to the planner. The same wire contract can yield very different first-try compliance across planner models.',
+                'update_forget': 'Drift advances server versions; invalidation removes stale cached suggestions and retains valid ones. The benchmark measures deterministic eviction precision and payload overhead, but not long-lived production storage, security, deletion, or maintenance behavior.'
+              },
+              'compared_to': [
+                'A0 no-memory versus A1 cross-episode memory without invalidation, which separates the value of remembering recovery advice from the value of invalidation',
+                'A1 versus A2 table-level invalidation and A2D row-level invalidation under the same model, serving path, and compliance-capable protocol',
+                'Within-model and within-serving-path token accounting only; cross-model or cross-provider token totals are intentionally not treated as comparable',
+                'Row-level oracle validity provides an upper-bound precision instrument rather than evidence that real production servers can always expose equally exact dependencies'
+              ],
+              'evidence': 'Across seven models, three serving paths, two domains, and about 9,400 episodes, naive cross-episode memory without invalidation saves roughly 5-28% tokens over no memory, so total memory savings cannot be credited to invalidation. Under the same model/path protocol, row-level invalidation raises post-drift first-try compliance by 0 to 66.7 percentage points, including 55.6-66.7 points on three models, while table-level invalidation drives the affected post-drift rate to 0% on five of seven. Row-level eviction precision is 1.00 under the paper\'s row oracle, the contract adds about 15% to response payload, and four of seven models recover 29-33% of their no-memory baseline token cost in the full row-level arm.',
+              'why_it_matters': 'Persistent memory needs an invalidation contract whenever the world that made a stored procedure correct can change independently of the agent. The key research separation is memory reuse versus validity precision versus model compliance: a versioning protocol can keep state fresh, but it cannot force a planner to use valid memory, and headline token savings mix all three.',
+              'limitations': [
+                'The workloads use two synthetic hand-written API domains and controlled server drift, so deployment generality and real drift prevalence remain unmeasured.',
+                'The row-level dependency oracle is deliberately precise; the paper does not isolate the cost and error of learning or maintaining those dependency scopes in a live service.',
+                'Compliance is strongly model-dependent even with identical protocol bytes, so validity metadata cannot by itself guarantee realized task behavior.',
+                'The contract adds about 15% payload and can impose overhead when nothing drifts; full storage, invalidation-check, maintenance, latency, energy, and deletion costs are not lifecycle-matched.',
+                'Security controls such as signing, access control, and abuse resistance for version metadata are discussed rather than implemented and evaluated.'
+              ],
+              'confidence': 'high'
+            }
+          }
+
+          write('data/papers/2609.01836.json', json.dumps(eal, ensure_ascii=False, indent=2))
+          write('data/papers/2609.00243.json', json.dumps(inv, ensure_ascii=False, indent=2))
+
+          eal_en = r'''# Agent Memory Is a Surface for Endogenous Authorization Laundering
+
+[← Latest Papers](../../README.en.md#latest-papers) · [Research Map](../../README.en.md#field-map) · [Evaluation & Analysis](../../categories/evaluation-analysis.md) · [中文](2609.01836.zh.md)
+
+**Paper:** [arXiv:2609.01836](https://arxiv.org/abs/2609.01836) · **Published:** 2026-09-01 · **Importance:** 4/5
+
+> **Research delta.** EAL-Bench turns authorization-state integrity into a memory lifecycle measurement: it separates false authority formed during repeated writes from downstream propagation, then replaces only memory to test whether the stored artifact causally drives unauthorized action.
+
+## Problem
+
+Persistent memory can become an agent's effective authorization policy. A forgotten revocation, broadened scope, or non-authoritative statement absorbed into memory can make a later tool action look authorized even when the underlying history never granted it.
+
+## Mechanism
+
+Each case has an evolving organizational history and a hidden deterministic ledger. A writer maintains bounded free-text or typed memory either one-shot or incrementally; an executor later sees only frozen memory plus a matched request. Authorized and unauthorized requests differ in one authorization-relevant field. The benchmark measures false-authority formation separately from propagation, qualifies executors on faithful-memory controls, and applies an exact-state repair that swaps only the memory while request, executor, tools, and canonical state stay fixed. It also tests source-authority gating and bounded event sourcing as safeguards.
+
+## Compared with
+
+The closest predecessor is **AuthMem-Bench**, which varies source authority while holding a claim and downstream task fixed. EAL-Bench adds repeated grant/revocation/replacement updates, long-horizon state, separate formation versus propagation, and exact memory repair. The strongest causal control is therefore not a cross-system leaderboard: it is the same executor/request/tool state with naturally erroneous memory versus an oracle-exact replacement. The two safeguards are architecture-level interventions and should be judged with their legitimate-use cost, not credited as isolated components.
+
+## Decisive evidence
+
+With typed incremental updates, false-authority formation reaches **28.3% procurement / 10.4% cybersecurity / 50.2% finance**, while downstream unauthorized submission is **28.9 / 10.4 / 51.0%**. More decisively, naturally generated erroneous typed memories cause calibrated executors to take the unauthorized action in **98.6%** of matched replays; replacing only memory with exact canonical state reduces that behavior to **0%**. This is unusually direct evidence that stored state, not executor unreliability, changes later action. The source-authority gate reduces pooled unauthorized submission **25.3→7.3%**, and bounded event sourcing to **9.0%**, but authorized use falls **93.3→53.8% / 64.7%**.
+
+## Main caveat
+
+This is a controlled mechanism study, not a prevalence estimate. Histories and ledgers are synthetic and structured; deterministic formation labels apply only to typed memory. The safeguards bundle different architectural changes, assume usable authority/version metadata, and trade safety against legitimate utility. Production storage growth, update latency, maintenance, deletion/revocation, privacy, and recovery cost are not lifecycle-matched.
+
+## Memory lifecycle
+
+`authentic history → bounded one-shot/incremental write → free-text or typed authorization state → frozen memory-only executor view → tool action → exact repair / authority gate / event-sourced update → governance and lifecycle cost`
+
+The measured failure sits at **update/governance → later action**: a wrong persistent authorization state can survive into a faithful executor and become an operational permission.
+
+## Why it matters
+
+The field should stop treating memory correctness as recall alone. When persistent state carries permissions, **state integrity is policy integrity**. The next decisive design freezes writer, executor, task, tool surface, and budget, then independently varies update semantics, provenance/authority enforcement, and derived-state representation while measuring both unauthorized and legitimate action plus full lifecycle cost.
+
+## Related reading
+
+[AuthMem-Bench](2608.01679.md) isolates source-authority collapse at consolidation; [StateMem](2608.19652.md) studies superseded current state; [When Stale Constraints Go Unchecked](2608.25553.md) isolates verification allocation under a fixed budget. EAL-Bench extends that line by showing that a wrong authorization state can be repaired in memory alone and thereby remove the downstream violation.
+'''
+
+          eal_zh = r'''# Agent Memory Is a Surface for Endogenous Authorization Laundering：持久记忆中的授权漂白
+
+[← 最新论文](../../README.md#latest-papers) · [领域地图](../../README.md#field-map) · [Evaluation & Analysis](../../categories/zh/evaluation-analysis.md) · [English](2609.01836.md)
+
+**论文：** [arXiv:2609.01836](https://arxiv.org/abs/2609.01836) · **发布日期：** 2026-09-01 · **重要性：** 4/5
+
+> **研究增量。** EAL-Bench 把“授权状态是否被记忆正确维护”变成独立的生命周期测量：先区分错误权限在反复写入中如何形成，再看它是否传播到后续工具动作，最后只替换 memory 来验证持久状态本身是否是因果路径。
+
+## 问题
+
+持久记忆可能事实上变成 Agent 的授权策略。一次被遗忘的撤销、被放大的权限范围，或被误当权威来源的普通记录，都可能让后续工具动作在 memory 中显得“有权限”，即使真实历史从未授予这项权限。
+
+## 机制
+
+每个样例都包含持续演化的组织历史和一个隐藏的确定性授权账本。writer 以 one-shot 或 incremental 方式维护有容量上限的自由文本/结构化记忆；executor 之后只能看到冻结的 memory 与当前请求。成对的合法/非法请求只差一个与授权相关的字段。评测分别测 false-authority formation 与 downstream propagation；executor 必须先通过 faithful-memory 校准。最关键的干预是 exact-state repair：固定请求、executor、工具与真实授权状态，只把错误 memory 替换成 oracle-exact state。论文还测试了来源权威 Gate 与 bounded event sourcing 两种防护。
+
+## 与什么比较
+
+最近的前序工作是 **AuthMem-Bench**：它固定 claim 与下游任务，只改变来源权威；EAL-Bench 进一步覆盖 grant/revocation/replacement 的反复更新、长周期状态、formation 与 propagation 分解，以及 memory-only exact repair。因此最强的因果对照不是跨系统榜单，而是**同一个 executor / request / tool state 下，仅替换持久记忆**。两种防护都改变了系统架构，并且牺牲合法请求通过率，不能把整套收益归给某一个小组件。
+
+## 决定性证据
+
+在 typed incremental 更新中，错误权限形成率达到 **采购 28.3% / 网络安全 10.4% / 金融 50.2%**，对应非法动作提交率为 **28.9 / 10.4 / 51.0%**。更关键的是，对自然生成且已确认存在错误权限的 typed memory，校准后的 executor 在 **98.6%** 的匹配 replay 中执行非法动作；只把 memory 换成精确真实状态后降到 **0%**。这直接说明后续行为由持久状态改变，而不是 executor 自身不可靠。来源权威 Gate 将汇总非法提交率从 **25.3% 降到 7.3%**，bounded event sourcing 降到 **9.0%**；与此同时合法使用率从 **93.3%** 降到 **53.8% / 64.7%**。
+
+## 主要限制
+
+这是一项受控机制研究，不是线上发生率估计。历史与账本是合成且结构化的；只有 typed memory 能直接得到确定性的 formation label。两种防护同时改变不同架构边界，需要已有的 authority/version metadata，并形成明显的安全—效用权衡。生产环境中的存储增长、更新延迟、维护、删除/撤销、隐私与恢复成本没有做完整生命周期配平。
+
+## 记忆生命周期
+
+`真实历史 → 有界 one-shot / incremental 写入 → 自由文本或结构化授权状态 → executor 只读冻结 memory → 工具动作 → exact repair / authority gate / event-sourced update → 治理与生命周期成本`
+
+这里测到的关键边界是 **更新/治理 → 后续动作**：一旦错误授权进入持久状态，即使 executor 完全忠实于它，仍会把错误状态转成真实权限动作。
+
+## 为什么重要
+
+记忆正确性不能只按 recall 理解。当 persistent state 携带权限时，**状态完整性就是策略完整性**。下一步应固定 writer、executor、任务、工具面与预算，分别干预更新语义、来源/授权约束和派生状态表示，并同时报告非法动作、合法效用与完整生命周期成本。
+
+## 相关阅读
+
+[AuthMem-Bench](2608.01679.md) 隔离了 consolidation 时的来源权威丢失；[StateMem](2608.19652.zh.md) 处理 superseded current state；[When Stale Constraints Go Unchecked](2608.25553.zh.md) 在固定预算下隔离 freshness verification allocation。EAL-Bench 再向前一步：只修复 memory 就能消除下游非法动作。
+'''
+
+          inv_en = r'''# Invalidation Contracts for Cross-Episode Agent Memory
+
+[← Latest Papers](../../README.en.md#latest-papers) · [Research Map](../../README.en.md#field-map) · [Write, Update & Consolidation](../../categories/write-update-consolidation.md) · [中文](2609.00243.zh.md)
+
+**Paper:** [arXiv:2609.00243](https://arxiv.org/abs/2609.00243) · **Published:** 2026-08-31 · **Importance:** 4/5
+
+> **Research delta.** Invalidation Contracts make staleness an explicit cross-episode memory contract and separate three variables that headline token savings often mix: the value of remembering a recovery procedure, whether it remains valid after server drift, and whether the planner actually complies with valid memory.
+
+## Problem
+
+Agents can cache a recovery suggestion from one API episode and reuse it later, avoiding repeated reasoning. But external server state can drift independently of the agent. A stale procedure then becomes silent persistent state; re-deriving on every episode restores correctness by forfeiting memory's reuse savings.
+
+## Mechanism
+
+The server attaches cacheability and version dependencies to recovery suggestions. A client keeps successful suggestions across episodes and checks those dependencies before exposing memory to the planner. The paper distinguishes **validity**—whether cached advice is still correct—from **compliance**—whether the model applies valid advice on its first attempt. The A0/A1/A2/A2D ladder compares no memory, memory without invalidation, table-level invalidation, and row-level differential invalidation across fixed models and serving paths.
+
+## Compared with
+
+The critical attribution control is **A0 no memory versus A1 memory/no invalidation**: naive memory already saves tokens, so the full 29–33% saving cannot be credited to invalidation. **A1/A2/A2D** then asks what invalidation granularity adds under the same model/path protocol. Token totals are only compared within the same model and serving path because providers and tokenizers differ. Row-level validity is an oracle-quality protocol signal in this benchmark, not proof that production systems can cheaply expose equally precise dependencies.
+
+## Decisive evidence
+
+Across seven models, three serving paths, two domains, and roughly **9,400 episodes**, naive memory saves about **5–28%** tokens over no memory. Row-level invalidation then raises post-drift first-try compliance by **0–66.7pp** across models, including **55.6–66.7pp** on three, while table-level invalidation sends the affected post-drift rate to **0% on five of seven models** by evicting co-located valid entries. Row-level eviction precision is **1.00** under the benchmark's row oracle. The full row-level arm recovers **29–33%** of no-memory baseline token cost on four of seven models, but that total mixes basic memory reuse with invalidation. The contract adds about **15%** response payload.
+
+## Main caveat
+
+The environment contains two synthetic hand-written APIs and controlled drift. Dependency precision is provided by the protocol rather than learned under noisy production state. Identical valid bytes still produce sharply different compliance across models, so version correctness is not behavior correctness. Payload, storage, validity-check latency, security, maintenance, and deletion costs are not fully lifecycle-matched.
+
+## Memory lifecycle
+
+`API failure → recovery suggestion → cross-episode persistent cache + version dependencies → validity check → planner exposure/compliance → server drift → row/table invalidation → retained valid memory / eviction → maintenance cost`
+
+The main boundary is **update/forget**: external state can invalidate a procedure without the memory store itself observing a new user episode.
+
+## Why it matters
+
+Memory systems need a first-class answer to “what makes this stored procedure stop being true?” The important decomposition is **reuse × validity × compliance**. Future experiments should hold task/model/path budget fixed, compare no-memory and memory-only controls, then independently vary dependency precision and invalidation scope while charging the full checking and maintenance path.
+
+## Related reading
+
+[StateMem](2608.19652.md) studies supersession inside maintained user state; [When Stale Constraints Go Unchecked](2608.25553.md) asks where a fixed verification budget should go; [EAL-Bench](2609.01836.md) shows the higher-stakes case where stale or broadened permission state becomes an authorization policy. Invalidation Contracts supplies a protocol-level mechanism for state whose validity depends on an external versioned world.
+'''
+
+          inv_zh = r'''# Invalidation Contracts for Cross-Episode Agent Memory：跨 Episode 记忆的失效契约
+
+[← 最新论文](../../README.md#latest-papers) · [领域地图](../../README.md#field-map) · [Write, Update & Consolidation](../../categories/zh/write-update-consolidation.md) · [English](2609.00243.md)
+
+**论文：** [arXiv:2609.00243](https://arxiv.org/abs/2609.00243) · **发布日期：** 2026-08-31 · **重要性：** 4/5
+
+> **研究增量。** Invalidation Contracts 把“什么时候一条跨 episode 记忆已经失效”做成显式契约，并拆开 headline token saving 经常混在一起的三个变量：记住 recovery procedure 本身的价值、外部状态漂移后它是否仍有效，以及 planner 是否真的会使用仍然有效的记忆。
+
+## 问题
+
+Agent 可以把一次 API 失败后的恢复办法持久化，在后续 episode 直接复用，从而避免重复推理。但外部 server state 可以独立变化；此时 cached procedure 会静默变旧。每次都重新推导当然更安全，却会把记忆原本节省的成本全部还回去。
+
+## 机制
+
+服务端给 recovery suggestion 附加 cacheability 与版本依赖；客户端跨 episode 保留成功的建议，并在暴露给 planner 前先检查依赖是否仍有效。论文明确区分 **validity**（建议在漂移后是否仍正确）与 **compliance**（模型是否在第一次尝试中采用有效建议）。A0/A1/A2/A2D 控制链分别对应无记忆、只有跨 episode 记忆、table-level 失效、row-level differential 失效，并在固定模型与 serving path 内比较。
+
+## 与什么比较
+
+归因上最关键的是 **A0 无记忆 vs. A1 有记忆但无失效机制**：A1 本身已经节省 token，因此完整 A2D 的 29–33% 总节省不能全部记在 invalidation 名下。接着用 **A1/A2/A2D** 隔离失效粒度。由于不同 provider/tokenizer 不可直接比较，token 只在同一个模型和 serving path 内对照。row-level validity 在该实验里接近 oracle protocol signal，不能自动外推为生产系统能低成本获得同样精确的 dependency scope。
+
+## 决定性证据
+
+七个模型、三条 serving path、两个 domain、约 **9,400 个 episode** 中，只有跨 episode memory、没有 invalidation 时，相对无记忆已经节省约 **5–28% token**。在相同模型/路径协议下，row-level invalidation 让漂移后的 first-try compliance 提高 **0–66.7 个百分点**，其中三个模型提高 **55.6–66.7 个百分点**；table-level invalidation 因为连同同表有效条目一起删除，使五个模型的受影响 post-drift rate 变成 **0%**。row-level eviction precision 在论文的 row oracle 下为 **1.00**。完整 A2D 在四个模型上回收无记忆基线 **29–33%** 的 token 成本，但这包含了“有记忆”与“会失效”的共同贡献。协议本身增加约 **15%** response payload。
+
+## 主要限制
+
+环境只有两个手工构造的合成 API，并且漂移是受控注入的。dependency precision 由协议直接给出，而不是在噪声生产状态中学习。即使 wire bytes 完全相同且 memory 有效，不同模型的 compliance 仍差异很大，因此版本正确不等于行为正确。payload、存储、有效性检查延迟、安全、维护与删除成本也没有完整配平。
+
+## 记忆生命周期
+
+`API 失败 → recovery suggestion → 跨 episode 持久缓存 + version dependency → validity check → 暴露给 planner / compliance → server drift → row/table invalidation → 保留有效记忆 / 淘汰失效记忆 → 维护成本`
+
+关键边界在 **更新/遗忘**：外部世界发生变化时，即使 Agent 本身没有新的用户 episode，一条程序性记忆也可能已经失效。
+
+## 为什么重要
+
+记忆系统必须回答一个长期被忽略的问题：**什么条件会让这条 procedure 不再成立？** 真正要拆开的变量是 **复用 × 有效性 × compliance**。下一步应固定任务、模型、serving path 与预算，先用 no-memory / memory-only 控制，再独立变化 dependency precision 和 invalidation scope，并把检查、维护与淘汰成本全部计入。
+
+## 相关阅读
+
+[StateMem](2608.19652.zh.md) 处理维护状态内部的 supersession；[When Stale Constraints Go Unchecked](2608.25553.zh.md) 研究固定核验预算应该分配到哪里；[EAL-Bench](2609.01836.zh.md) 则展示更高风险的情形：过期或放大的权限状态会直接成为授权策略。Invalidation Contracts 给出了一个面向外部版本化世界的 protocol-level 失效机制。
+'''
+
+          write('papers/2026/2609.01836.md', eal_en)
+          write('papers/2026/2609.01836.zh.md', eal_zh)
+          write('papers/2026/2609.00243.md', inv_en)
+          write('papers/2026/2609.00243.zh.md', inv_zh)
+
+          inv_entry_zh = f'''<a id="entry-2609-00243"></a>
+          <details><summary><strong>2026-09-04 · Invalidation Contracts</strong> · 版本化记忆失效 <!-- timefirst:area=versioned-memory-invalidation --> — 给跨 episode 的 recovery memory 加版本依赖，把“仍有效”和“模型会使用”拆成两个阶段。 <!-- timefirst:delta=unversioned-cross-episode-reuse-to-explicit-validity-and-compliance -->></summary>
+
+          **问题。** 外部 API 状态漂移后，能否只淘汰真正失效的持久 procedure，同时保留仍有效的跨 episode 复用？ <!-- timefirst:question=separate-memory-reuse-from-validity-and-compliance-after-drift -->
+
+          **证据。** `A0→A1` 显示 memory 本身已节省约 **5–28% token**；在同一模型/serving path 下，row-level invalidation 让 post-drift first-try compliance 提高 **0–66.7pp**，且 row oracle 的 eviction precision 为 **1.00**。完整 A2D 在四个模型上回收无记忆基线 **29–33%** 的 token 成本，但不能把总收益都归给 invalidation；最干净的对照是 `same model A0 A1 A2 A2D ladder`。 <!-- timefirst:evidence=matched-no-memory-memory-only-and-invalidation-ladder~same-model-a0-a1-a2-a2d-ladder -->
+
+          **限制。** 两个合成 API 的 dependency/version signal 由协议直接提供；相同有效 bytes 在不同模型上的 compliance 仍大幅变化，且 payload、检查、存储、安全、维护和删除成本没有全生命周期配平，即 `memory savings and invalidation gain must be separated`。 <!-- timefirst:caveat=synthetic-version-oracle-model-dependent-compliance-and-incomplete-lifecycle-cost~memory-savings-and-invalidation-gain-must-be-separated -->
+
+          **地图。** `early_signal` — 单篇证据足以把版本化失效列为独立 update/forget 边界，但不足以形成 durable direction。
+
+          **链接。** [论文](https://arxiv.org/abs/2609.00243) · [中文深读](papers/2026/2609.00243.zh.md) · [English deep note](papers/2026/2609.00243.md) · [服务端代码](https://github.com/arquicanedo/self-reflective-apis) · [客户端 Harness](https://github.com/beining1008/cross-episode-memory-client)
+
+          </details>'''.replace('\n          ', '\n').lstrip()
+
+          eal_entry_zh = f'''<a id="entry-2609-01836"></a>
+          <details><summary><strong>2026-09-04 · EAL-Bench</strong> · 授权状态完整性 <!-- timefirst:area=authorization-state-integrity --> — 把错误权限在 memory 中的形成与后续非法动作分开，并只替换持久状态做因果定位。 <!-- timefirst:delta=memory-recall-to-authorization-state-formation-and-propagation -->></summary>
+
+          **问题。** grant、revocation 与 replacement 反复更新时，持久记忆何时会把不存在的权限写成“事实”，并让后续 executor 据此行动？ <!-- timefirst:question=test-memory-mediated-authorization-state-integrity-and-downstream-action -->
+
+          **证据。** typed incremental finance 的 false-authority formation 达 **50.2%**；对自然生成的错误 typed memory，固定 request / executor / tools / canonical state 后，非法动作率为 **98.6%**，只把 memory 换成 oracle-exact state 后降到 **0%**，形成 `exact memory repair 98.6 to 0` 的直接行为证据。来源权威 Gate 可把 pooled unauthorized submission **25.3→7.3%**，但 authorized use 同时 **93.3→53.8%**。 <!-- timefirst:evidence=memory-only-exact-repair-localizes-authorization-failure~exact-memory-repair-98.6-to-0 -->
+
+          **限制。** 这是结构化合成组织历史上的机制研究；formation 的确定性标签只适用于 typed memory，两种防护都改变系统边界并牺牲合法效用，生产存储/更新/撤销/隐私/维护成本也未配平，即 `mitigation package and production lifecycle unmatched`。 <!-- timefirst:caveat=synthetic-authorization-histories-and-unmatched-mitigation-lifecycle~mitigation-package-and-production-lifecycle-unmatched -->
+
+          **地图。** `early_signal` — 单篇强 intervention 把 authorization-state integrity 提升为值得单测的治理边界，但不能据此宣布 durable trend。
+
+          **链接。** [论文](https://arxiv.org/abs/2609.01836) · [中文深读](papers/2026/2609.01836.zh.md) · [English deep note](papers/2026/2609.01836.md) · [代码](https://github.com/tommasocerruti/eal-bench)
+
+          </details>'''.replace('\n          ', '\n').lstrip()
+
+          inv_entry_en = f'''<a id="entry-2609-00243"></a>
+          <details><summary><strong>2026-09-04 · Invalidation Contracts</strong> · versioned memory invalidation <!-- timefirst:area=versioned-memory-invalidation --> — version cross-episode recovery memory so validity and model compliance become separate stages. <!-- timefirst:delta=unversioned-cross-episode-reuse-to-explicit-validity-and-compliance -->></summary>
+
+          **Question.** After external API state drifts, can the system evict only procedures that became stale while preserving still-valid cross-episode reuse? <!-- timefirst:question=separate-memory-reuse-from-validity-and-compliance-after-drift -->
+
+          **Evidence.** `A0→A1` shows that memory alone already saves roughly **5–28% tokens**. Within the same model/serving path, row-level invalidation changes post-drift first-try compliance by **0–66.7pp**, with row-oracle eviction precision **1.00**. The full A2D arm recovers **29–33%** of no-memory baseline token cost on four models, but that total cannot be attributed to invalidation alone; the clean control is the `same model A0 A1 A2 A2D ladder`. <!-- timefirst:evidence=matched-no-memory-memory-only-and-invalidation-ladder~same-model-a0-a1-a2-a2d-ladder -->
+
+          **Caveat.** The two synthetic APIs expose dependency/version signals directly; identical valid bytes still produce strongly model-dependent compliance, and payload, checking, storage, security, maintenance, and deletion are not lifecycle-matched — `memory savings and invalidation gain must be separated`. <!-- timefirst:caveat=synthetic-version-oracle-model-dependent-compliance-and-incomplete-lifecycle-cost~memory-savings-and-invalidation-gain-must-be-separated -->
+
+          **Map.** `early_signal` — one study is enough to isolate versioned invalidation as an update/forget boundary, not to establish a durable direction.
+
+          **Links.** [Paper](https://arxiv.org/abs/2609.00243) · [中文深读](papers/2026/2609.00243.zh.md) · [English deep note](papers/2026/2609.00243.md) · [Server code](https://github.com/arquicanedo/self-reflective-apis) · [Client harness](https://github.com/beining1008/cross-episode-memory-client)
+
+          </details>'''.replace('\n          ', '\n').lstrip()
+
+          eal_entry_en = f'''<a id="entry-2609-01836"></a>
+          <details><summary><strong>2026-09-04 · EAL-Bench</strong> · authorization state integrity <!-- timefirst:area=authorization-state-integrity --> — separate false authority formed in memory from later unauthorized action, then replace only persistent state for causal localization. <!-- timefirst:delta=memory-recall-to-authorization-state-formation-and-propagation -->></summary>
+
+          **Question.** Across repeated grants, revocations, and replacements, when does persistent memory turn authority that never existed into state that a later executor acts on? <!-- timefirst:question=test-memory-mediated-authorization-state-integrity-and-downstream-action -->
+
+          **Evidence.** Typed incremental finance reaches **50.2%** false-authority formation. For naturally erroneous typed memories, holding request / executor / tools / canonical state fixed yields **98.6%** unauthorized action; replacing only memory with oracle-exact state reduces it to **0%**, an `exact memory repair 98.6 to 0` behavioral intervention. Source-authority gating lowers pooled unauthorized submission **25.3→7.3%**, but authorized use also falls **93.3→53.8%**. <!-- timefirst:evidence=memory-only-exact-repair-localizes-authorization-failure~exact-memory-repair-98.6-to-0 -->
+
+          **Caveat.** This is a mechanism study on structured synthetic organizational histories; deterministic formation labels cover typed memory, the safeguards change system boundaries and sacrifice legitimate utility, and production storage/update/revocation/privacy/maintenance cost is unmatched — `mitigation package and production lifecycle unmatched`. <!-- timefirst:caveat=synthetic-authorization-histories-and-unmatched-mitigation-lifecycle~mitigation-package-and-production-lifecycle-unmatched -->
+
+          **Map.** `early_signal` — one strong intervention makes authorization-state integrity worth isolating, but it is not a durable trend.
+
+          **Links.** [Paper](https://arxiv.org/abs/2609.01836) · [中文深读](papers/2026/2609.01836.zh.md) · [English deep note](papers/2026/2609.01836.md) · [Code](https://github.com/tommasocerruti/eal-bench)
+
+          </details>'''.replace('\n          ', '\n').lstrip()
+
+          def direction_zh(key, support, confidence, implication, explanation):
+              heading = key.replace('-', ' ')
+              return f'- **`new_signal` · {heading}：新增早期信号。** 支撑：[{support}](#entry-{support.replace(".", "-")})；置信度：**{confidence}**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（{implication.replace("-", " ")}）：{explanation}。精确合成时间：`{RADAR_TIME}`。 <!-- timefirst:direction key="{key}" state="new_signal" supports="{support}" confidence="{confidence}" implication="{implication}" timing="radar_published_at" synthesized="{RADAR_TIME}" prior="none" -->'
+
+          def direction_en(key, support, confidence, implication, explanation):
+              heading = key.replace('-', ' ')
+              return f'- **`new_signal` · {heading}: new early signal.** Supports: [{support}](#entry-{support.replace(".", "-")}); confidence: **{confidence}**; timing basis: `radar_published_at`; prior map evidence: `none`. Research-design implication ({implication.replace("-", " ")}): {explanation}. Exact synthesis time: `{RADAR_TIME}`. <!-- timefirst:direction key="{key}" state="new_signal" supports="{support}" confidence="{confidence}" implication="{implication}" timing="radar_published_at" synthesized="{RADAR_TIME}" prior="none" -->'
+
+          new_dirs_zh = [
+            direction_zh('versioned-memory-invalidation', '2609.00243', 'high', 'separate-memory-reuse-from-invalidation-precision-and-compliance', '固定模型、serving path 与任务预算，先量 memory-only reuse，再独立改变 dependency precision 与 invalidation scope，并把检查/维护成本计入'),
+            direction_zh('authorization-state-integrity', '2609.01836', 'high', 'test-authorization-state-integrity-with-memory-only-interventions', '固定 request、executor、tools 与 canonical state，只替换 memory；再单独改变更新语义与 authority/provenance gate，同时报告合法效用'),
+          ]
+          new_dirs_en = [
+            direction_en('versioned-memory-invalidation', '2609.00243', 'high', 'separate-memory-reuse-from-invalidation-precision-and-compliance', 'hold model, serving path, task, and budget fixed; measure memory-only reuse first, then vary dependency precision and invalidation scope while charging checking and maintenance cost'),
+            direction_en('authorization-state-integrity', '2609.01836', 'high', 'test-authorization-state-integrity-with-memory-only-interventions', 'hold request, executor, tools, and canonical state fixed while swapping only memory; then vary update semantics and authority/provenance gates and report legitimate utility'),
+          ]
+
+          old_29606_zh = '- **`new_signal` · provenance aware layered memory：来源可追踪的分层记忆。** 支撑：[2608.29606](#entry-2608-29606)；置信度：**high**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate layered memory from retrieval interface and lifecycle cost）：固定 reader / evidence surface / budget，再分别改变单个 store、provenance/citation lock 与 routing，并完整计入 build、access、update、maintenance cost。精确合成时间：`' + RADAR_TIME + '`。 <!-- timefirst:direction key="provenance-aware-layered-memory" state="new_signal" supports="2608.29606" confidence="high" implication="separate-layered-memory-from-retrieval-interface-and-lifecycle-cost" timing="radar_published_at" synthesized="' + RADAR_TIME + '" prior="none" -->'
+          old_29605_zh = '- **`new_signal` · intervention calibrated memory credit：干预校准的记忆信用。** 支撑：[2608.29605](#entry-2608-29605)；置信度：**high**；时间依据：`radar_published_at`；先验地图证据：`none`。研究设计含义（separate entry presence utility from memory action causality）：固定 scaffold / reader / budget，分别测 entry 是否必要、原始 memory action 的反事实价值与完整 supervision cost。精确合成时间：`' + RADAR_TIME + '`。 <!-- timefirst:direction key="intervention-calibrated-memory-credit" state="new_signal" supports="2608.29605" confidence="high" implication="separate-entry-presence-utility-from-memory-action-causality" timing="radar_published_at" synthesized="' + RADAR_TIME + '" prior="none" -->'
+          old_29606_en = '- **`new_signal` · provenance aware layered memory: provenance-aware layered memory.** Supports: [2608.29606](#entry-2608-29606); confidence: **high**; timing basis: `radar_published_at`; prior map evidence: `none`. Research-design implication (separate layered memory from retrieval interface and lifecycle cost): hold reader, evidence surface, and budget fixed, then vary one store, provenance/citation lock, and routing separately while charging build, access, update, and maintenance cost. Exact synthesis time: `' + RADAR_TIME + '`. <!-- timefirst:direction key="provenance-aware-layered-memory" state="new_signal" supports="2608.29606" confidence="high" implication="separate-layered-memory-from-retrieval-interface-and-lifecycle-cost" timing="radar_published_at" synthesized="' + RADAR_TIME + '" prior="none" -->'
+          old_29605_en = '- **`new_signal` · intervention calibrated memory credit: intervention-calibrated memory credit.** Supports: [2608.29605](#entry-2608-29605); confidence: **high**; timing basis: `radar_published_at`; prior map evidence: `none`. Research-design implication (separate entry presence utility from memory action causality): hold scaffold, reader, and budget fixed, then measure entry necessity, the counterfactual value of the original memory action, and full supervision cost separately. Exact synthesis time: `' + RADAR_TIME + '`. <!-- timefirst:direction key="intervention-calibrated-memory-credit" state="new_signal" supports="2608.29605" confidence="high" implication="separate-entry-presence-utility-from-memory-action-causality" timing="radar_published_at" synthesized="' + RADAR_TIME + '" prior="none" -->'
+
+          zh7 = '<a id="last-7-days"></a>\n### 过去 7 天：2026-08-29—2026-09-04\n\n' + '\n\n'.join(new_dirs_zh + [old_29606_zh, old_29605_zh])
+          en7 = '<a id="last-7-days"></a>\n### Last 7 days: 2026-08-29—2026-09-04\n\n' + '\n\n'.join(new_dirs_en + [old_29606_en, old_29605_en])
+
+          for path, entry_pair, new_dirs, heading_old, heading_new, seven in [
+            ('README.md', (inv_entry_zh, eal_entry_zh), new_dirs_zh, '### 过去 30 天：2026-08-05—2026-09-03', '### 过去 30 天：2026-08-06—2026-09-04', zh7),
+            ('README.en.md', (inv_entry_en, eal_entry_en), new_dirs_en, '### Last 30 days: 2026-08-05—2026-09-03', '### Last 30 days: 2026-08-06—2026-09-04', en7),
+          ]:
+              p = ROOT / path
+              text = p.read_text(encoding='utf-8')
+              text = text.replace(OLD_SYNTH, RADAR_TIME)
+              if path == 'README.md':
+                  text = replace_once(text, '最后更新：**2026-09-03**', '最后更新：**2026-09-04**', path + ' last updated')
+              else:
+                  text = replace_once(text, 'Last updated: **2026-09-03**', 'Last updated: **2026-09-04**', path + ' last updated')
+              marker = '<a id="entry-2608-29606"></a>'
+              text = replace_once(text, marker, entry_pair[0] + '\n\n' + entry_pair[1] + '\n\n' + marker, path + ' timeline marker')
+              text = replace_section(text, 'last-7-days', 'last-30-days', seven)
+              text = replace_once(text, heading_old, heading_new, path + ' 30d heading')
+              text = replace_once(text, heading_new + '\n\n', heading_new + '\n\n' + '\n\n'.join(new_dirs) + '\n\n', path + ' 30d insertion')
+              if path == 'README.md':
+                  row = '| **持久状态何时失效或越权？** | StateMem → When Stale Constraints Go Unchecked → Invalidation Contracts → EAL-Bench | 先区分状态取代与核验分配，再看版本失效和授权状态完整性；每一步都要证明持久状态本身改变后续行为。 |\n\n'
+              else:
+                  row = '| **When does persistent state become stale or over-authoritative?** | StateMem → When Stale Constraints Go Unchecked → Invalidation Contracts → EAL-Bench | Separate supersession from verification allocation, then test version invalidation and authorization-state integrity; each step should show that stored state itself changes later behavior. |\n\n'
+              text = replace_once(text, '<a id="library"></a>', row + '<a id="library"></a>', path + ' reading path insertion')
+              write(path, text)
+
+          # Library: add one compact research line that binds the two new records to the existing stale-state genealogy.
+          lib_zh = (ROOT / 'library/README.md').read_text(encoding='utf-8')
+          insert_zh = r'''### 状态取代 → 核验分配 → 版本失效 → 授权完整性
+
+[StateMemBench / StateMem](../papers/2026/2608.19652.zh.md) → [When Stale Constraints Go Unchecked](../papers/2026/2608.25553.zh.md) → [Invalidation Contracts](../papers/2026/2609.00243.zh.md) → [EAL-Bench](../papers/2026/2609.01836.zh.md)
+
+“历史里有什么”与“现在仍有效什么”是两件事。StateMem 处理 supersession，Stale Constraints 把固定核验预算的分配单独拿出来，Invalidation Contracts 再让外部版本变化直接淘汰失效 procedure，EAL-Bench 则用 memory-only exact repair 证明错误授权状态会因果传播到后续动作。四步共同指向同一个研究要求：状态有效性、使用方行为和完整生命周期成本必须分开测。
+
+'''
+          lib_zh = replace_once(lib_zh, '### 学得访问 / 编写 / 课程策略 → 状态落地与定位式演化 → 经认证产物 / Harness 提交', insert_zh + '### 学得访问 / 编写 / 课程策略 → 状态落地与定位式演化 → 经认证产物 / Harness 提交', 'zh library insertion')
+          write('library/README.md', lib_zh)
+
+          lib_en = (ROOT / 'library/README.en.md').read_text(encoding='utf-8')
+          insert_en = r'''### Supersession → verification allocation → version invalidation → authorization integrity
+
+[StateMemBench / StateMem](../papers/2026/2608.19652.md) → [When Stale Constraints Go Unchecked](../papers/2026/2608.25553.md) → [Invalidation Contracts](../papers/2026/2609.00243.md) → [EAL-Bench](../papers/2026/2609.01836.md)
+
+“What was stored” and “what remains valid now” are different questions. StateMem handles supersession, Stale Constraints isolates fixed-budget verification allocation, Invalidation Contracts lets external versions evict stale procedures, and EAL-Bench uses memory-only exact repair to show that incorrect authorization state causally propagates to action. Together they demand separate measurement of state validity, consumer behavior, and full lifecycle cost.
+
+'''
+          lib_en = replace_once(lib_en, '### Learned access/writer/curriculum → state-grounded localized evolution → certified artifact / harness commit', insert_en + '### Learned access/writer/curriculum → state-grounded localized evolution → certified artifact / harness commit', 'en library insertion')
+          write('library/README.en.md', lib_en)
+
+          # Category projections: benchmark/failure analysis for EAL, update/forget system contract for invalidation.
+          cat = ROOT / 'categories/evaluation-analysis.md'
+          t = cat.read_text(encoding='utf-8')
+          t = replace_once(t, '## Current argument\n\n', '## Current argument\n\n**EAL-Bench** adds a stronger authorization-state intervention: it separates false authority formed during repeated memory updates from downstream propagation, then repairs only the memory while keeping executor, request, tools, and canonical state fixed. Naturally erroneous typed memories drive unauthorized action in 98.6% of matched replays; exact replacement drops that behavior to 0%. The mechanism is strong, but the synthetic histories and safety–utility cost of the mitigations keep it an early signal rather than a durable map change.\n\n', 'evaluation category argument')
+          table_marker = '|---|---|---|---:|---|\n'
+          row = '| 2026-09-01 | [EAL-Bench](../papers/2026/2609.01836.md) | `semantic` `text` `structured` `general-agent` | 4/5 | Memory-only exact repair localizes authorization failures to persistent state; mitigation reduces violations but also rejects legitimate actions. |\n'
+          t = replace_once(t, table_marker, table_marker + row, 'evaluation category row')
+          write(cat, t)
+
+          cat = ROOT / 'categories/zh/evaluation-analysis.md'
+          t = cat.read_text(encoding='utf-8')
+          t = replace_once(t, '## 当前判断\n\n', '## 当前判断\n\n**EAL-Bench** 把授权状态完整性推进到更直接的干预：先区分错误权限在反复更新中形成还是在 executor 端传播，再固定 request / executor / tools / canonical state，只替换 memory。自然生成的错误 typed memory 让非法动作率达到 98.6%，精确修复持久状态后降到 0%。这个因果链很强，但合成历史和防护带来的合法效用损失决定了它仍是 early signal。\n\n', 'zh evaluation argument')
+          write(cat, t)
+
+          cat = ROOT / 'categories/write-update-consolidation.md'
+          t = cat.read_text(encoding='utf-8')
+          t = replace_once(t, '## Current argument\n\n', '## Current argument\n\n**Invalidation Contracts** adds a separate update/forget contract for state whose truth depends on an external versioned world. The A0/A1/A2/A2D ladder matters because memory without invalidation already saves 5–28% tokens; row-level invalidation then preserves unaffected entries and changes post-drift compliance under the same model/path, so reuse value and invalidation value should not be conflated.\n\n', 'write category argument')
+          row = '| 2026-08-31 | [Invalidation Contracts](../papers/2026/2609.00243.md) | `procedural` `structured` `general-agent` | 4/5 | Versioned row-level invalidation preserves unaffected cross-episode procedures; naive memory already saves tokens, so total savings must be split into reuse, validity, and compliance. |\n'
+          t = replace_once(t, table_marker, table_marker + row, 'write category row')
+          write(cat, t)
+
+          cat = ROOT / 'categories/zh/write-update-consolidation.md'
+          t = cat.read_text(encoding='utf-8')
+          t = replace_once(t, '## 当前判断\n\n', '## 当前判断\n\n**Invalidation Contracts** 增加了一个不同于 supersession 的 update/forget contract：一条 procedure 的真实性可能因为外部版本变化而失效。A0/A1/A2/A2D 控制链尤其重要，因为没有 invalidation 的跨 episode memory 已经节省 5–28% token；row-level invalidation 的额外价值应与“单纯记住了”分开归因，并继续受 model compliance 与维护成本约束。\n\n', 'zh write argument')
+          write(cat, t)
+
+          # Advance the exact time-first cutoff and rolling windows. Unit-test fixture literals move with the public contract.
+          vr = ROOT / 'scripts/validate_reading.py'
+          t = vr.read_text(encoding='utf-8')
+          t = replace_once(t, 'SYNTHESIS_TIMESTAMP = "2026-09-03T01:19:15Z"', f'SYNTHESIS_TIMESTAMP = "{RADAR_TIME}"', 'validator synthesis')
+          t = replace_once(t, '(date(2026, 8, 28), date(2026, 9, 3))', '(date(2026, 8, 29), date(2026, 9, 4))', 'validator 7d window')
+          t = replace_once(t, '(date(2026, 8, 5), date(2026, 9, 3))', '(date(2026, 8, 6), date(2026, 9, 4))', 'validator 30d window')
+          write(vr, t)
+
+          test = ROOT / 'tests/test_memory_v2_contract.py'
+          t = test.read_text(encoding='utf-8')
+          t = t.replace('2026-09-03T01:19:15Z', RADAR_TIME)
+          t = t.replace('2026-08-28—2026-09-03', '2026-08-29—2026-09-04')
+          t = t.replace('2026-08-05—2026-09-03', '2026-08-06—2026-09-04')
+          # Only update explicit expected public-window tuples; do not rewrite arbitrary fixture acceptance dates.
+          t = t.replace('(date(2026, 8, 28), date(2026, 9, 3))', '(date(2026, 8, 29), date(2026, 9, 4))')
+          t = t.replace('(date(2026, 8, 5), date(2026, 9, 3))', '(date(2026, 8, 6), date(2026, 9, 4))')
+          write(test, t)
+          PY
+      - name: Run every test and validator
+        run: |
+          python -m unittest discover -s tests -v
+          python scripts/validate_canonical.py
+          python scripts/validate_reading.py
+          python scripts/validate.py
+      - name: Commit validated staging tree
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md README.en.md library categories data/papers papers/2026 scripts/validate_reading.py tests/test_memory_v2_contract.py
+          git commit -m 'Stage Sep 4 Agent Memory radar transaction'
+          git push origin HEAD:radar-staging-20260904
