@@ -1,0 +1,46 @@
+name: Run Sep 4 Agent Memory staging transaction
+
+on:
+  push:
+    branches: [radar-staging-20260904]
+
+permissions:
+  contents: write
+
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validation dependencies
+        run: pip install -r requirements.txt
+      - name: Extract and run staged research transaction
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          text = Path('.github/workflows/radar-staging-20260904.yml').read_text(encoding='utf-8')
+          start = text.index("          python - <<'PY'\n") + len("          python - <<'PY'\n")
+          end = text.index("\n          PY\n", start)
+          lines = text[start:end].splitlines()
+          lines = [line[10:] if line.startswith('          ') else line for line in lines]
+          Path('/tmp/stage.py').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          PY
+          python /tmp/stage.py
+      - name: Run every test and validator
+        run: |
+          python -m unittest discover -s tests -v
+          python scripts/validate_canonical.py
+          python scripts/validate_reading.py
+          python scripts/validate.py
+      - name: Commit validated staging tree
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md README.en.md library categories data/papers papers/2026 scripts/validate_reading.py tests/test_memory_v2_contract.py
+          git commit -m 'Stage Sep 4 Agent Memory radar transaction'
+          git push origin HEAD:radar-staging-20260904
