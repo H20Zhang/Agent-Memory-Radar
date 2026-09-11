@@ -10,6 +10,7 @@ Compactions answer a different question from paper notes: **what changed in the 
 
 | Horizon | Report | Research takeaway |
 |---|---|---|
+| **Weekly** | [2026-W36 — Attribution before architecture](weekly/2026-W36.md) ([中文](weekly/2026-W36.zh.md)) | Two early signals raise the bar for intervention-calibrated memory credit and component-matched multi-view memory evaluation; the durable map stays unchanged. |
 | **Weekly** | [2026-W35 — Persistent state needs a qualification policy before consumption](weekly/2026-W35.md) ([中文](weekly/2026-W35.zh.md)) | Twenty early signals shift the causal focus from stored representation toward supersession, applicability, verification allocation, skill-set selection, invocation, and execution-grounded reuse; mechanism claims still need matched raw/verbatim controls and lifecycle cost. |
 | **Weekly** | [2026-W34 — Persistent state needs qualified access, selection, and commit gates](weekly/2026-W34.md) ([中文](weekly/2026-W34.zh.md)) | Five separate early signals sharpen evidence completion, skill selection, judge qualification, guarded harness commits, and training-side experience reuse; none is yet a trend. |
 | **Weekly** | [2026-W33 — Memory architecture decomposes into stage-specific controls](weekly/2026-W33.md) | Archive, access, consumer state/reuse, evolution, and lifecycle cost need matched controls rather than one architecture-level score. |
@@ -23,7 +24,7 @@ Compactions answer a different question from paper notes: **what changed in the 
 - **Recent 3 calendar months → monthly:** rebuild the design-space map and record which weekly claims persist or weaken.
 - **Covered years → yearly:** retain only durable shifts, field-shaping evidence, corrections, and open problems.
 
-W35 and the 2026-08 monthly digest are closed and immutable by period membership. Later Radar acceptances remain in rolling 7/30-day and future compaction views; they are never backdated into a closed digest by source publication date.
+W36, W35, and the 2026-08 monthly digest are closed and immutable by period membership. Later Radar acceptances remain in rolling 7/30-day and future compaction views; they are never backdated into a closed digest by source publication date.
 
 ## Reading a compaction
 

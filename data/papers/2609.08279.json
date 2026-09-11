@@ -1,0 +1,71 @@
+{
+  "id": "2609.08279",
+  "title": "What Eviction Destroys: A Restore-Counterfactual Audit of Forgetting in Agent Memory",
+  "authors": [
+    "Chen Shen"
+  ],
+  "published": "2026-09-08",
+  "first_seen": "2026-09-11",
+  "published_at": "2026-09-08T05:48:10Z",
+  "first_seen_at": "2026-09-11T00:25:15Z",
+  "radar_published_at": "2026-09-11T00:43:34Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "restore-counterfactual-eviction-audit"
+  ],
+  "paper_url": "https://arxiv.org/abs/2609.08279",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "evaluation_analysis",
+  "tags": [
+    "episodic",
+    "text",
+    "general-agent"
+  ],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-09-11",
+    "blocker": "No paper-specific visual has yet passed grounded VISUAL_POLICY.md review; the bilingual deep note is the current researcher-facing explanation."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/abs/2609.08279"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/abs/2609.08279",
+      "https://arxiv.org/html/2609.08279"
+    ],
+    "last_verified": "2026-09-11"
+  },
+  "analysis": {
+    "tldr": "The paper adds a per-question restore counterfactual that distinguishes evidence destroyed by eviction from evidence retained but missed by retrieval and evidence the reader still fails to use. It is a diagnostic instrument, not a new memory policy.",
+    "problem": "Budget-accuracy curves conflate three different failure locations: the store may have evicted indispensable evidence, the retriever may fail to surface retained evidence, or the reader may fail even when evidence is present.",
+    "core_idea": "For each oracle-answerable policy error, restore the question gold evidence into the same read-time pipeline and rerun the frozen reader. Combine whether correctness flips with whether gold evidence survived the store to label the error irreversible, recoverable, or residual.",
+    "memory_design": {
+      "write": "The audit does not change the original write path; it evaluates external stores after an eviction policy has enforced a token budget.",
+      "organize": "Stored units remain LongMemEval-S turn/session units so gold evidence can be aligned exactly with retained versus evicted state.",
+      "read": "The restore intervention holds reader, prompt, decoding, judge, and retrieval setting fixed while injecting gold evidence to localize the failure stage.",
+      "update_forget": "Eviction is treated as destructive forgetting for task evidence. The audit measures its task cost but does not prescribe whether retention is desirable under privacy or deletion obligations."
+    },
+    "compared_to": [
+      "Ordinary budget-versus-accuracy evaluation that cannot localize loss",
+      "FIFO, random, redundancy-aware, and LLM-importance eviction at 80k/30k/8k budgets under both top-k and forced-gold read regimes"
+    ],
+    "evidence": "Under realistic top-k retrieval at 80k tokens, the irreversible share among restoration-corrected errors is 0.71 FIFO, 0.73 random, 0.67 redundancy-aware, and 0.60 LLM-importance; at 8k it reaches 1.00 for all four. An exploratory matched-accuracy analysis detects no policy-pair difference in irreversible rate at 1.2–6 percentage-point resolution, while detecting a deliberately destructive control.",
+    "why_it_matters": "A single memory accuracy number cannot tell whether to spend engineering effort on retention, retrieval, or consumer utilization. Restore counterfactuals make those remedies separable and require retrieval regime to accompany budget-frontier claims.",
+    "limitations": [
+      "The study uses LongMemEval-S, two readers, one primary judge, and gold evidence labels; the instrument is mainly a benchmark audit.",
+      "Derived or heavily consolidated memories are excluded because their units no longer align cleanly with gold source units.",
+      "Restoring gold evidence changes the read-time context and relies on oracle-answerability assumptions; residual errors remain reader-dependent.",
+      "The null among matched-accuracy policy pairs is specific to tested policies, budgets, and statistical resolution and does not identify a universally best eviction policy."
+    ],
+    "confidence": "high"
+  }
+}

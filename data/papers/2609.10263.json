@@ -1,0 +1,72 @@
+{
+  "id": "2609.10263",
+  "title": "What Should an Agent Forget? Separating What Is Stored from What Is Used",
+  "authors": [
+    "Yuhang Li",
+    "Yuchen Li"
+  ],
+  "published": "2026-09-09",
+  "first_seen": "2026-09-11",
+  "published_at": "2026-09-09T14:48:09Z",
+  "first_seen_at": "2026-09-11T00:25:15Z",
+  "radar_published_at": "2026-09-11T00:43:34Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "query-conditioned-storage-use-separation"
+  ],
+  "paper_url": "https://arxiv.org/abs/2609.10263",
+  "code_url": null,
+  "project_url": null,
+  "primary_category": "write_update_consolidation",
+  "tags": [
+    "semantic",
+    "structured",
+    "general-agent"
+  ],
+  "relevance": 1.0,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-09-11",
+    "blocker": "No paper-specific visual has yet passed grounded VISUAL_POLICY.md review; the bilingual deep note is the current researcher-facing explanation."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/abs/2609.10263"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/abs/2609.10263",
+      "https://arxiv.org/html/2609.10263"
+    ],
+    "last_verified": "2026-09-11"
+  },
+  "analysis": {
+    "tldr": "RD-Forget keeps the source archive intact while constructing a query-conditioned answer-time memory view that suppresses superseded same-slot facts for current-state questions and can recover them for historical questions. The strongest evidence is a matched Luna ablation, so the defensible claim is about use control rather than physical deletion.",
+    "problem": "Persistent history can contain facts that are obsolete for a current-state answer but still necessary for historical or evolution queries. Storage retention and answer-time influence therefore need separate policies.",
+    "core_idea": "A frozen LM curator extracts query-relevant evidence into semantic slots, links same-slot replacements, preserves complementary multi-hop relations, and packs an eligible view under a 2,048-token memory budget. Superseded entries stay in the retained source archive and can become eligible again for historical intent.",
+    "memory_design": {
+      "write": "Source observations remain in a retained archive; query-time curation materializes active and superseded entries rather than destructively rewriting the archive.",
+      "organize": "Atomic facts receive subject|relation|scope slots and replacement links so competing values are distinguished from complementary relations.",
+      "read": "The current query controls curation, eligibility, lexical ranking, LM selection, and budgeted packing; historical intent can rescue superseded evidence.",
+      "update_forget": "Forgetting is query-local suppression of superseded evidence in the used view. It is not physical erasure; older source observations remain available for later recuration."
+    },
+    "compared_to": [
+      "ACE and ReasoningBank under the same answering pipeline as contextual system baselines",
+      "Matched GPT-5.6-Luna variants that disable forgetting, archive rescue, semantic slots, relation closure, or question-conditioned curation on the same 264 tasks"
+    ],
+    "evidence": "Across Qwen3.5-flash, GPT-5.6-Luna, MiniMax-M2.5, and Kimi-K2.5, RD-Forget is best in all 12 model-by-main-suite cells. In the matched Luna batch, Full scores 91.86/93.59/74.00 on AMB-Text/LME-KU/MAB-FC; removing forgetting falls to 68.60/60.26/51.00, and removing query conditioning falls to 77.91/82.05/56.00.",
+    "why_it_matters": "The useful lifecycle boundary is storage versus admission to the current consumer. A memory can remain retained while its authority for one query is revoked, so evaluation should separate preservation, current-state suppression, historical recovery, and final behavioral effect.",
+    "limitations": [
+      "The retained archive means the method does not implement privacy deletion, legal erasure, or storage minimization.",
+      "The curator receives the current question and task metadata; model-based evaluation is within-protocol rather than an independent external judge.",
+      "The main system comparisons change memory organization, so component attribution should rely on the matched ablations.",
+      "The paper reports answer-time token caps but not a complete construction, curation, retrieval, latency, and maintenance cost frontier."
+    ],
+    "confidence": "high"
+  }
+}

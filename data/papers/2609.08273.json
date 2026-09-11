@@ -1,0 +1,86 @@
+{
+  "id": "2609.08273",
+  "title": "MemForest: Efficient Agent Memory Management via EventTree Partitioning and Progressive Merging",
+  "authors": [
+    "Junxi Wang",
+    "Te Sun",
+    "Jiayi Zhu",
+    "Chen Zhang",
+    "Siyuan Li",
+    "Xuyang Liu",
+    "Zichen Wen",
+    "Xiaobing Tu",
+    "Jinkui Ren",
+    "Xiantao Zhang",
+    "Ziqi Yuan",
+    "Linfeng Zhang"
+  ],
+  "published": "2026-09-08",
+  "first_seen": "2026-09-11",
+  "published_at": "2026-09-08T05:30:30Z",
+  "first_seen_at": "2026-09-11T00:25:15Z",
+  "radar_published_at": "2026-09-11T00:43:34Z",
+  "time_provenance": "native_v2",
+  "map_delta": "early_signal",
+  "direction_keys": [
+    "event-structured-posthoc-compression"
+  ],
+  "paper_url": "https://arxiv.org/abs/2609.08273",
+  "code_url": "https://github.com/Celina-love-sweet/MemForest",
+  "project_url": null,
+  "primary_category": "representation_organization",
+  "tags": [
+    "episodic",
+    "structured",
+    "hierarchical",
+    "timeline",
+    "multimodal",
+    "general-agent"
+  ],
+  "relevance": 0.99,
+  "importance": 4,
+  "visual_explainer": {
+    "status": "blocked",
+    "path": null,
+    "format": "webp",
+    "generator": "gpt-image",
+    "grounding": "full-paper",
+    "last_verified": "2026-09-11",
+    "blocker": "No paper-specific visual has yet passed grounded VISUAL_POLICY.md review; the bilingual deep note is the current researcher-facing explanation."
+  },
+  "provenance": {
+    "discovered_from": [
+      "https://arxiv.org/abs/2609.08273"
+    ],
+    "analyzed_from": [
+      "https://arxiv.org/abs/2609.08273",
+      "https://arxiv.org/html/2609.08273"
+    ],
+    "last_verified": "2026-09-11"
+  },
+  "analysis": {
+    "tldr": "MemForest post-processes accumulated memory into semantic-temporal EventTrees, progressively merges similar nodes, and optionally changes retrieval with anchor-guided temporal propagation. It shows a useful quality/size/speed tradeoff, but compression and AGPR must be credited separately.",
+    "problem": "External memory grows continuously, increasing storage and retrieval work. Generation-time summarization does not bound an already accumulated store, while generic pruning or merging can ignore event continuity and temporal structure.",
+    "core_idea": "Partition memory nodes using global embedding similarity plus local temporal continuity, build a maximum spanning tree within each event, then repeatedly merge high-weight pairs with an LM until a target compression ratio. AGPR reranks a larger candidate pool using temporal proximity to anchor hits.",
+    "memory_design": {
+      "write": "MemForest consumes memory nodes already produced by an underlying system such as Mem0 or M3-Agent; it is a post-processing compression stage rather than the original writer.",
+      "organize": "Nodes are assigned to event-centric units using semantic similarity and temporal continuity, represented as EventTrees, and progressively merged by LM-generated fused nodes.",
+      "read": "Base similarity retrieval can operate on the compressed store; optional AGPR adds temporal-neighborhood propagation around high-similarity anchors.",
+      "update_forget": "Compression destructively replaces pairs with fused nodes to reach a preset ratio. Incremental updates, conflict-aware deletion, provenance preservation, and long-run repartitioning policy are not evaluated."
+    },
+    "compared_to": [
+      "The uncompressed Mem0 and M3-Agent stores",
+      "Random Pruning, KMeans, DART, StreamMeCo, Random Merging, and ToMe at matched compression ratios",
+      "MemForest without AGPR versus MemForest+AGPR to separate representation compression from the changed retrieval policy"
+    ],
+    "evidence": "With Mem0, 50% compression retains 97.1% of the uncompressed aggregate performance and MemForest+AGPR retains 98.3%; at 70% compression plain MemForest falls to 93.3%, showing a quality boundary. Retrieval time at 50%+AGPR falls from 0.48 to 0.24 s on LoCoMo, 8.30 to 4.32 s on LongMemEval, and 4.90 to 2.78 s on PersonaMem. Experiments average three runs and use GPT-4o-mini for merging.",
+    "why_it_matters": "The result makes post-hoc store size a first-class lifecycle variable: compression should be evaluated against strong pruning/merging controls while separately pricing the retrieval policy used to recover lost temporal structure.",
+    "limitations": [
+      "AGPR changes the read policy together with the compressed representation, so quality gains of the combined package cannot be assigned to compression alone.",
+      "LM fusion can erase provenance, exact wording, or conflicting states; those failure modes are not directly evaluated.",
+      "The study is largely static post-processing; incremental repartitioning, update invalidation, and sustained maintenance cost are not characterized.",
+      "Reported retrieval speed excludes the complete lifecycle cost of embedding, partitioning, repeated LM merges, storage updates, and future recompression."
+    ],
+    "confidence": "high"
+  }
+}

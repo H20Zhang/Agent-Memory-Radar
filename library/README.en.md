@@ -18,7 +18,7 @@ Browse by research problem, research line, or year. If you know the question but
 
 ### Uniform compaction → typed preservation → persistent lifecycle evidence
 
-[The Compaction Cliff](../papers/2026/2608.22752.md) → [MemGuard](../papers/2026/2608.21867.md)
+[The Compaction Cliff](../papers/2026/2608.22752.md) → [MemForest](../papers/2026/2609.08273.md) → [MemGuard](../papers/2026/2608.21867.md)
 
 First ask which memory types require exact retention, then whether reliability evidence survives admission to govern later access and maintenance. Both are one-paper signals with unresolved upstream and governance cost.
 
@@ -42,7 +42,7 @@ Procedural construction benefits from outcome diversity, while ordinary write pa
 
 ### Candidate commitment → supersession → applicability-aware consumption
 
-[Remember, Verify, or Ask?](../papers/2026/2608.19564.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.md) → [When Stale Constraints Go Unchecked](../papers/2026/2608.25553.md) → [MemTrapBench](../papers/2026/2608.20202.md)
+[Remember, Verify, or Ask?](../papers/2026/2608.19564.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.md) → [RD-Forget](../papers/2026/2609.10263.md) → [When Stale Constraints Go Unchecked](../papers/2026/2608.25553.md) → [MemTrapBench](../papers/2026/2608.20202.md)
 
 Persistent state needs three different decisions: whether candidate information is authorized to enter memory, which older state it supersedes, and whether the resulting retrieved history is applicable to the current consumer. Current evidence is benchmark-bounded and does not yet join these stages in one executed lifecycle.
 
@@ -54,7 +54,7 @@ Procedural-learning gains can come from credit assignment, read/write policy, tr
 
 ### Retrieval score → stage attribution → gate qualification → feature-promotion evidence
 
-[Demystifying Agent Skills](../papers/2026/2608.14036.md) → [Competence, Not Accuracy](../papers/2026/2608.18719.md) → [D²ACCI](../papers/2026/2608.17756.md)
+[What Eviction Destroys](../papers/2026/2609.08279.md) → [Demystifying Agent Skills](../papers/2026/2608.14036.md) → [Competence, Not Accuracy](../papers/2026/2608.18719.md) → [D²ACCI](../papers/2026/2608.17756.md)
 
 Retrieval labels, actual use, downstream success, and deployment decisions are different evaluation objects. A memory feature ultimately needs paired, localized, non-regressing evidence; an architecture-level score alone is insufficient.
 

@@ -18,7 +18,7 @@
 
 ### 统一压缩 → Typed preservation → 持久生命周期证据
 
-[The Compaction Cliff](../papers/2026/2608.22752.zh.md) → [MemGuard](../papers/2026/2608.21867.zh.md)
+[The Compaction Cliff](../papers/2026/2608.22752.zh.md) → [MemForest](../papers/2026/2609.08273.zh.md) → [MemGuard](../papers/2026/2608.21867.zh.md)
 
 先判断哪些 memory type 必须精确保留，再判断 reliability evidence 是否在 admission 后继续控制 access 与 maintenance。两者都只有单篇证据，上游与治理成本仍未解决。
 
@@ -42,7 +42,7 @@ Outcome diversity 可能帮助 procedure construction，普通 write path 也形
 
 ### Candidate 承诺 → 状态取代 → 面向当前使用方的适用性判断
 
-[Remember, Verify, or Ask?](../papers/2026/2608.19564.zh.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.zh.md) → [When Stale Constraints Go Unchecked](../papers/2026/2608.25553.zh.md) → [MemTrapBench](../papers/2026/2608.20202.zh.md)
+[Remember, Verify, or Ask?](../papers/2026/2608.19564.zh.md) → [StateMemBench / StateMem](../papers/2026/2608.19652.zh.md) → [RD-Forget](../papers/2026/2609.10263.zh.md) → [When Stale Constraints Go Unchecked](../papers/2026/2608.25553.zh.md) → [MemTrapBench](../papers/2026/2608.20202.zh.md)
 
 持久状态需要三种不同决策：candidate information 是否有 authority 进入 memory，哪些旧状态被它取代，以及 retrieval 后的历史是否适用于当前 consumer。现有证据仍受 benchmark 限制，还没有在一条真实执行的 lifecycle 中把三个阶段连起来。
 
@@ -54,7 +54,7 @@ Outcome diversity 可能帮助 procedure construction，普通 write path 也形
 
 ### 检索分数 → 阶段归因 → Gate 资格 → 功能上线证据
 
-[Demystifying Agent Skills](../papers/2026/2608.14036.zh.md) → [Competence, Not Accuracy](../papers/2026/2608.18719.zh.md) → [D²ACCI](../papers/2026/2608.17756.zh.md)
+[What Eviction Destroys](../papers/2026/2609.08279.zh.md) → [Demystifying Agent Skills](../papers/2026/2608.14036.zh.md) → [Competence, Not Accuracy](../papers/2026/2608.18719.zh.md) → [D²ACCI](../papers/2026/2608.17756.zh.md)
 
 检索标签、实际使用、下游成功和部署决策对应不同的评估对象。记忆功能最终需要成对、可定位且无回归的证据，架构层面的分数本身并不充分。
 
