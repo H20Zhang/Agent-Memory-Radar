@@ -45,10 +45,22 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           from datetime import datetime, timezone, timedelta
-          import os, re
+          import json, os, re
 
           ts=os.environ['RADAR_TS']
           late=(datetime.strptime(ts, '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)+timedelta(seconds=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+          # Constrain tags to the repository-owned taxonomy axes.
+          tag_sets={
+              '2609.10263':['semantic','structured','general-agent'],
+              '2609.08279':['episodic','text','general-agent'],
+              '2609.08273':['episodic','structured','hierarchical','timeline','multimodal','general-agent'],
+          }
+          for ident,tags in tag_sets.items():
+              p=Path('data/papers')/f'{ident}.json'
+              obj=json.loads(p.read_text())
+              obj['tags']=tags
+              p.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n')
 
           ids=['2609-08273','2609-08279','2609-10263']
           heading_witness={
