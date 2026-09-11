@@ -34,6 +34,9 @@ jobs:
           p=Path('/tmp/radar_apply.py')
           t=p.read_text()
           t=t.replace("timefirst:area={area.lower().replace(' ','-')}", "timefirst:area={area_map[pid]}")
+          t=t.replace("marker='| **Weekly** |'", "marker='| **Weekly** |' if path.name=='README.md' else '| **周度** |'")
+          t=t.replace("row='| **周报** |", "row='| **周度** |")
+          t=t.replace("t=t.replace('W35 与 2026-08 月报已经封存','W36、W35 与 2026-08 月报已经封存')", "t=t.replace('W35 与 2026-08 月报均已按周期关闭。','W36、W35 与 2026-08 月报均已按周期关闭。')")
           p.write_text(t)
           PY
           git checkout --detach "$FROZEN_MAIN"
