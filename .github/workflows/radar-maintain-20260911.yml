@@ -50,9 +50,12 @@ jobs:
           ts=os.environ['RADAR_TS']
           late=(datetime.strptime(ts, '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)+timedelta(seconds=1)).strftime('%Y-%m-%dT%H:%M:%SZ')
 
-          # The three accepted records share one atomic publication timestamp; the repository
-          # tie-breaker is ascending identity before older native records.
           ids=['2609-08273','2609-08279','2609-10263']
+          heading_witness={
+              'MemForest':'event structured posthoc compression',
+              'What Eviction Destroys':'restore counterfactual eviction audit',
+              'RD-Forget':'query conditioned storage use separation',
+          }
           for name in ('README.md','README.en.md'):
               p=Path(name); text=p.read_text()
               blocks={}
@@ -65,14 +68,17 @@ jobs:
                   text=text[:m.start()]+text[m.end():]
               marker='<a id="entry-2608-29606"></a>'
               text=text.replace(marker,''.join(blocks[i] for i in ids)+marker,1)
+              for label,witness in heading_witness.items():
+                  text=text.replace(f'- **`new_signal` · {label} ·',f'- **`new_signal` · {witness} · {label} ·')
               if name=='README.md':
                   text=text.replace('“存储”和“当前允许使用”值得分开评测；单篇论文不足以形成稳定遗忘方向。','存储状态和当前使用权限值得分开评测；单篇论文不足以形成稳定遗忘方向。')
                   text=text.replace('AGPR 与压缩同时改变读取，语言模型融合还可能损失来源和冲突状态，且缺少持续分区与合并的完整维护成本，即','其中 AGPR 与压缩同时改变读取，语言模型融合还可能损失来源和冲突状态，且缺少持续分区与合并的完整维护成本，即')
               p.write_text(text)
 
-          # Advance contract fixtures without weakening their assertions.
           p=Path('tests/test_memory_v2_contract.py'); text=p.read_text()
           text=text.replace('2026-08-28T00:30:00Z','2026-09-10T00:30:00Z')
+          text=text.replace('radar_published_at: str = "2026-09-10T00:30:00Z"',f'radar_published_at: str = "{ts}"')
+          text=text.replace('2026-08-28T00:31:00Z','2026-09-10T00:31:00Z')
           text=text.replace('2026-09-03T01:19:15Z',ts)
           text=text.replace('2026-09-03T23:59:59Z',late)
           text=text.replace('2026-08-28—2026-09-03','2026-09-05—2026-09-11')
