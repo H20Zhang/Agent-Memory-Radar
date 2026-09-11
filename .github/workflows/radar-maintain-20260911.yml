@@ -83,6 +83,7 @@ jobs:
           text=text.replace('2026-09-03T23:59:59Z',late)
           text=text.replace('2026-08-28—2026-09-03','2026-09-05—2026-09-11')
           text=text.replace('2026-08-05—2026-09-03','2026-08-13—2026-09-11')
+          text=text.replace("marker = '<a id=\"entry-2608-25329\"></a>'", "marker = '<a id=\"entry-2609-08273\"></a>'")
           p.write_text(text)
 
           p=Path('tests/test_validate_reading.py'); text=p.read_text()
