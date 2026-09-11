@@ -1,0 +1,53 @@
+name: Stage Agent Memory Radar maintenance
+
+on:
+  push:
+    branches: [radar-maintain-20260911]
+
+permissions:
+  contents: write
+
+jobs:
+  apply-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: radar-maintain-20260911
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install validation dependencies
+        run: pip install -r requirements.txt
+      - name: Freeze main, apply accepted research, validate, and stage atomic candidate
+        env:
+          FROZEN_MAIN: 6e93856b8c2a89ba5a18aa1fa0625b49eb090028
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$FROZEN_MAIN"
+          cp scripts/.radar_apply_20260911.py /tmp/radar_apply.py
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('/tmp/radar_apply.py')
+          t=p.read_text()
+          t=t.replace("timefirst:area={area.lower().replace(' ','-')}", "timefirst:area={area_map[pid]}")
+          p.write_text(t)
+          PY
+          git checkout --detach "$FROZEN_MAIN"
+          export RADAR_TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          python /tmp/radar_apply.py
+          python -m unittest discover -s tests -v
+          python scripts/validate_canonical.py
+          python scripts/validate_reading.py
+          python scripts/validate.py
+          git diff --check
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$FROZEN_MAIN"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Update Agent Memory radar through 2026-09-11'
+          git push origin HEAD:radar-candidate-20260911
